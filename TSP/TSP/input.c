@@ -5,15 +5,16 @@
 #include <stdlib.h>
 #include <assert.h>
 
+int verb = VERBOSE;
+
 void parse_cmd(char** argv, int argc, tsp_instance* tsp_in)
 {
 	//at leat one param + program name
-	assert(argc < 2);
+	assert(argc >1 );
 	char** commands = malloc(sizeof(char*)*NUM_COMMANDS);
 
-	//verbose
 	tsp_in->num_nodes = -1;
-	tsp_in->num_nodes = DEADLINE_MAX;
+	tsp_in->deadline = DEADLINE_MAX;
 
 	int def_deadline = 0;
 
@@ -26,6 +27,11 @@ void parse_cmd(char** argv, int argc, tsp_instance* tsp_in)
 		if(strncmp(argv[i], "-alg")==0)
 			argv[++i]
 		*/
+		if (strncmp(argv[i], "-v", 2) == 0 || strncmp(argv[i], "-verbose", 8) == 0)
+		{
+			verb = 100;
+		}
+
 		if ((strncmp(argv[i], "-d",2) == 0 || strncmp(argv[i], "-dead",5) == 0 || strncmp(argv[i], "-deadline",9) == 0) && !def_deadline)
 		{
 			def_deadline = 1;
@@ -35,32 +41,65 @@ void parse_cmd(char** argv, int argc, tsp_instance* tsp_in)
 
 		if ((strncmp(argv[i], "-f", 2) == 0 || strncmp(argv[i], "-file", 5) == 0 || strncmp(argv[i], "-input", 6) == 0))
 		{
-			if (strncmp(tsp_in->input, "NULL", 2))
+			if (strncmp(tsp_in->input, "NULL", 4) == 0)
 			{
 				strcpy(tsp_in->input, argv[++i]);
 				continue;
 			}
+			
 		}
 
-		if ((strncmp(argv[i], "-help", 5) == 0))
+		if ((strncmp(argv[i], "-help", 5) == 0 || strncmp(argv[i], "-h", 2) == 0) && (argc ==2))
 		{
 			help();
 			continue;
 		}
 	}
 
-	//VERBOSE
+	if (verb > 80)
+	{
+		printf(LINE);
+		printf("List of parameters specified : \n");
+		int i;
+		for (i=1; i<argc; i=i+2)
+		{
+			int v_check = strncmp(argv[i], "-v", 2) == 0 || strncmp(argv[i], "-verbose", 8) == 0;
+			int h_check = strncmp(argv[i], "-help", 5) == 0 || strncmp(argv[i], "-h", 2) == 0;
+			
+			if ( v_check|| h_check )
+			{
+				printf("%s\n", argv[i]);
+				i = i - 1;
+			}
+			else
+			{
+				printf("%s : %s\n", argv[i], argv[i + 1]);
+			}
+			
+		}
+		printf(LINE);
+	}
 }
 
 void help()
 {
-	printf("Help\n");
+	printf(LINE);
+	printf("                                       Help\n");
 	printf(LINE);
 	printf("Insert the file in input\n");
-
+	printf("-f file_name.tsp\n");
+	printf("-file file_name.tsp         where file_name = name of tsp file (input instance)\n");
+	printf("-input file_name.tsp\n");
+	printf(STAR_LINE);
 	printf("Insert the max time of the execution\n");
+	printf("-d dead_time\n");
+	printf("-deadline dead_time         where dead_time = max execution time in seconds\n");
+	printf("-dead dead_time\n");
+	printf(STAR_LINE);
+	printf("Write -v or -verbose if you want information during the execution\n");
+	printf(LINE);
 
-	printf("Ask for help about commands\n");
+	exit(0);
 
 }
 
@@ -69,7 +108,7 @@ void parse_file(tsp_instance* tsp_in)
 {
 	FILE* f = fopen(tsp_in->input, "r");
 
-	assert(f == NULL);
+	assert(f != NULL);
 	
 	tsp_in->num_nodes = -1;
 
@@ -81,7 +120,7 @@ void parse_file(tsp_instance* tsp_in)
 	{
 		token = strtok(line, " :");
 	
-		//Controllo parole chiave in file
+		//Check key words in tsp file
 		if (strncmp(token, "NAME", 4) == 0)
 			continue;
 
@@ -91,11 +130,11 @@ void parse_file(tsp_instance* tsp_in)
 		if (strncmp(token, "TYPE", 4) == 0)
 			continue;
 
-		if (strncmp(token, "DIMENSIONS", 10) == 0)
+		if (strncmp(token, "DIMENSION", 9) == 0)
 		{
-			if(tsp_in->num_nodes<0)
-				tsp_in->num_nodes=atoi(strtok(NULL, " :"));
-	
+			if (tsp_in->num_nodes < 0)
+				tsp_in->num_nodes = atoi(strtok(NULL, " :"));
+
 			continue;
 		}
 
@@ -104,8 +143,8 @@ void parse_file(tsp_instance* tsp_in)
 
 		if (strncmp(token, "NODE_COORD_SECTION", 18) == 0)
 		{
-
-			assert(tsp_in->num_nodes < 1); 			//Abbiamo già la dimensione del grafo?
+			//The number of nodes must be defined before this section
+			assert(tsp_in->num_nodes > 0);  
 
 			tsp_in->x_coords = (double*) calloc(tsp_in->num_nodes, sizeof(double));
 			tsp_in->y_coords = (double*) calloc(tsp_in->num_nodes, sizeof(double));
@@ -115,7 +154,7 @@ void parse_file(tsp_instance* tsp_in)
 			{
 				int i = atoi(strtok(line, " "));
 				
-				assert(i<1 || i>(tsp_in->num_nodes)); //indice del nodo non valido
+				assert(i>0 && i<=(tsp_in->num_nodes)); //Index in {1,num_nodes} 
 
 				tsp_in->x_coords[i - 1] = atof(strtok(NULL, " "));
 				tsp_in->y_coords[i - 1] = atof(strtok(NULL, " "));
@@ -123,7 +162,7 @@ void parse_file(tsp_instance* tsp_in)
 				count++;
 			}
 
-			assert(count < (tsp_in->num_nodes)); //meno nodi del numero dichiarato
+			assert(count >= (tsp_in->num_nodes)); //Few nodes declarations
 			continue;
 		}
 
@@ -133,5 +172,29 @@ void parse_file(tsp_instance* tsp_in)
 		}
 	}
 
-	//VERBOSE
+	fclose(f);
+
+	if (verb > 80)
+	{
+		printf(LINE);
+		printf("Name of the input instance : %s\n", tsp_in->input);
+		printf("Number of input nodes : %d\n",tsp_in->num_nodes);
+		if (tsp_in->deadline < DEADLINE_MAX)
+			printf("Deadline time : %d\n",tsp_in->deadline);
+
+		printf("\nInput nodes coordinates:\n");
+
+		for (int i = 0; i < tsp_in->num_nodes; i++)
+		{
+			printf("node %3d : x = %10.2f  y=%10.2f\n", i + 1, tsp_in->x_coords[i], tsp_in->y_coords[i]);
+		}
+
+		printf(LINE);
+	}
+}
+
+void dealloc_inst(tsp_instance* tsp_in)
+{
+	free(tsp_in->x_coords);
+	free(tsp_in->y_coords);
 }

@@ -5,6 +5,7 @@
 
 #define NUM_COMMANDS 8
 #define DEADLINE_MAX 1000000
+#define VERBOSE 150
 
 typedef struct
 {
