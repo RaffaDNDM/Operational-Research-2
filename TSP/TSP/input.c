@@ -46,7 +46,7 @@ void parse_cmd(char** argv, int argc, tsp_instance* tsp_in)
 				strcpy(tsp_in->input, argv[++i]);
 				continue;
 			}
-			
+
 		}
 
 		if ((strncmp(argv[i], "-help", 5) == 0 || strncmp(argv[i], "-h", 2) == 0) && (argc ==2))
@@ -65,7 +65,7 @@ void parse_cmd(char** argv, int argc, tsp_instance* tsp_in)
 		{
 			int v_check = strncmp(argv[i], "-v", 2) == 0 || strncmp(argv[i], "-verbose", 8) == 0;
 			int h_check = strncmp(argv[i], "-help", 5) == 0 || strncmp(argv[i], "-h", 2) == 0;
-			
+
 			if ( v_check|| h_check )
 			{
 				printf("%s\n", argv[i]);
@@ -75,7 +75,7 @@ void parse_cmd(char** argv, int argc, tsp_instance* tsp_in)
 			{
 				printf("%s : %s\n", argv[i], argv[i + 1]);
 			}
-			
+
 		}
 		printf(LINE);
 	}
@@ -109,7 +109,7 @@ void parse_file(tsp_instance* tsp_in)
 	FILE* f = fopen(tsp_in->input, "r");
 
 	assert(f != NULL);
-	
+
 	tsp_in->num_nodes = -1;
 
 	char line[LINE_SIZE];
@@ -119,7 +119,7 @@ void parse_file(tsp_instance* tsp_in)
 	while (fgets(line, LINE_SIZE, f) != NULL)
 	{
 		token = strtok(line, " :");
-	
+
 		//Check key words in tsp file
 		if (strncmp(token, "NAME", 4) == 0)
 			continue;
@@ -144,7 +144,7 @@ void parse_file(tsp_instance* tsp_in)
 		if (strncmp(token, "NODE_COORD_SECTION", 18) == 0)
 		{
 			//The number of nodes must be defined before this section
-			assert(tsp_in->num_nodes > 0);  
+			assert(tsp_in->num_nodes > 0);
 
 			tsp_in->x_coords = (double*) calloc(tsp_in->num_nodes, sizeof(double));
 			tsp_in->y_coords = (double*) calloc(tsp_in->num_nodes, sizeof(double));
@@ -153,8 +153,8 @@ void parse_file(tsp_instance* tsp_in)
 			while (fgets(line, LINE_SIZE, f) != NULL && count<=(tsp_in->num_nodes))
 			{
 				int i = atoi(strtok(line, " "));
-				
-				assert(i>0 && i<=(tsp_in->num_nodes)); //Index in {1,num_nodes} 
+
+				assert(i>0 && i<=(tsp_in->num_nodes)); //Index in {1,num_nodes}
 
 				tsp_in->x_coords[i - 1] = atof(strtok(NULL, " "));
 				tsp_in->y_coords[i - 1] = atof(strtok(NULL, " "));
@@ -197,4 +197,6 @@ void dealloc_inst(tsp_instance* tsp_in)
 {
 	free(tsp_in->x_coords);
 	free(tsp_in->y_coords);
+	tsp_in->x_coords = NULL;
+	tsp_in->y_coords = NULL;
 }
