@@ -1,7 +1,6 @@
 \chapter{Introduzione}
-Problema TSP generale e quello più utilizzato:\\
-Definizione del problema a parole\\
-Sistema\\
+L'intera tesina verterà sul Travelling Salesman Problem. Quest'ultimo si pone l'obiettivo di trovare un tour ottimo,ovvero di costo minimo, all'intero di un grafo orientato.\\
+In questa trattazione verranno analizzate soluzioni algoritmiche per una sua variante, detta simmetrica, che viene applicata a un grafo completo non orientato.\\ Di seguito viene riportata la formulazione matematica di tale versione:
 $$
 \begin{cases}
 min \underset{e\in E}\sum{c_e\;x_e} \\\\
@@ -9,9 +8,22 @@ min \underset{e\in E}\sum{c_e\;x_e} \\\\
 \underset{e\in E(S)}\sum{\;x_e} \leq \vert S\vert - 1\;\;\;\;\;\;\;\;\forall\;S\underset{\neq} \subset V: \vert S\vert\geq 3\\
 \end{cases}
 $$
-Modo di scrittura di un tour\\
-Un tour è definito dalla sequenza in cui i vertici del grafo vengono visitati. Viene quindi descritto con una permutazione di quest'ultimo. Poichè non esiste un'origine e una fine, ogni tour può essere descritto da più permutazioni diverse.\\
-Due diverse categorie di soluzioni del problema: esatte e attraverso algoritmi euristici\\
-William Cook \cite{cook}\\
-generazione di istanze enormi per il problema Monnalisa \cite{monnalisa}\\
+Un'istanza di tale problema viene definita normalmente da un grafo, per cui ad ogni nodo viene associata un numero intero (Ex. $\Pi = \{1,2,3,..,n\}$). 
+Una soluzione del problema corrisponde invece ad una sequenza di nodi, definita come una permutazione dell'istanza (Ex. $S = \{x_1,x_2,...,x_n\}$ tale che $x_i=x_j\;\;x_i \in \Pi\;\forall\;x_i\in S\;\wedge\; x_i!=x_j\;\forall\;i\neq j$). Poichè in questa variante non esiste alcuna origine, ogni tour può essere descritto da più permutazioni, due per ogni nodo del grafo. Una volta definita la soluzione $S$, infatti, questa può essere percorsa in entrambi i versi e l'origine può essere uno qualsiasi dei nodi del grafo.\\
+I risolutori che verranno applicati al problema sono di due tipologie:
+\begin{itemize}
+\item{\textbf{Risolutori esatti}\\ basati sul Branch \& Bound. I più conosciuti sono:
+\begin{itemize}
+\item{\textbf{IBM ILOG CPLEX}\\
+gratuito se utilizzato solo a livello accademico.}
+\item{\textbf{XPRESS}}
+\item{\textbf{Gurobi}}
+\item{\textbf{CBC}\\
+l'unico Open-Source tra questi}
+\end{itemize}
+}
+\item{\textbf{Risolutori euristici (meta-euristici)}\\
+algoritmi che forniscono una soluzione approssimata.}
+\end{itemize}
 Esempio di risolutori: Concorde \cite{concorde}\\
+William Cook \cite{cook}\\
