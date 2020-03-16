@@ -32,13 +32,15 @@ typedef struct
 /**
 	Compute the solution of the TSP problem 
 	looking to the algorithm chosen by user on command line
-	0 no permutation (default algorithm)
+	1 no permutation (default algorithm)
 	\param tsp_in reference to tsp instance structure
 */
 void solution(tsp_instance*);
 
 /**
 	Evaluate the cost of the solution already computed
+	(on default the distance is computed through double operations
+	if user types -int or -i, it'computed through integer operations)
 	\param tsp_in reference to tsp instance structure
 */
 void evaluate_sol(tsp_instance*);

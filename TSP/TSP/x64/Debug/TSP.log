@@ -1,4 +1,9 @@
-﻿  input.c
-C:\Users\User\Desktop\ingegneria\Ricerca Operativa 2\Operational-Research-2-master\TSP\TSP\input.c(30,1): warning C4244: 'inizializzazione': conversione da 'double' a 'float'. Possibile perdita di dati.
-C:\Users\User\Desktop\ingegneria\Ricerca Operativa 2\Operational-Research-2-master\TSP\TSP\input.c(55,1): warning C4244: 'inizializzazione': conversione da 'double' a 'float'. Possibile perdita di dati.
-  TSP.vcxproj -> C:\Users\User\Desktop\ingegneria\Ricerca Operativa 2\Operational-Research-2-master\TSP\x64\Debug\TSP.exe
+﻿  algorithms.c
+  input.c
+D:\github\OperationalResearch2\TSP\TSP\input.c(30,1): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+D:\github\OperationalResearch2\TSP\TSP\input.c(55,1): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  tsp.c
+D:\github\OperationalResearch2\TSP\TSP\tsp.c(15,16): warning C4013: 'print_solution' undefined; assuming extern returning int
+D:\github\OperationalResearch2\TSP\TSP\tsp.c(89,72): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+  Generating Code...
+  TSP.vcxproj -> D:\github\OperationalResearch2\TSP\x64\Debug\TSP.exe

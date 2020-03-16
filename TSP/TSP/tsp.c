@@ -1,5 +1,6 @@
 #include "tsp.h"
 #include "input.h"
+#include "algorithms.h"
 #include <assert.h>
 #include <stdio.h>
 #include <math.h>
@@ -11,6 +12,7 @@ int main(int argc,char** argv)
 	parse_cmd(argv, argc, &tsp_in);
 	parse_file(&tsp_in);
 	solution(&tsp_in);
+	print_solution(&tsp_in);
 
 	dealloc_inst(&tsp_in);
 	
@@ -23,17 +25,11 @@ void solution(tsp_instance* tsp_in)
 
 	//default behaviour 
 	if (tsp_in->alg == 1)
-	{
-		int i = 0;
-		for (; i < tsp_in->num_nodes; i++)
-		{
-			tsp_in->sol[i] = i ;
-			//verbose
-		}
-	}
+		default_alg(tsp_in);
 
 	evaluate_sol(tsp_in);
 
+	
 	printf(LINE);
 	printf("The solution cost is:\n");
 	
@@ -99,3 +95,16 @@ void dist(int node1, int node2, tsp_instance* tsp_in, void* dist,  int costInt)
 	*distD = sqrt(x_dist*x_dist + y_dist*y_dist);
 }
 
+void print_solution(tsp_instance* tsp_in)
+{
+	//Print of solution on output file
+	FILE* f = fopen("solution.txt", "w");
+
+	int i = 0;
+	for (; i < tsp_in->num_nodes; i++)
+	{
+		fprintf(f, "%d ", tsp_in->sol[i]);
+	}
+
+	fclose(f);
+}
