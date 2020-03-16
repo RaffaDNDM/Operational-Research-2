@@ -1,4 +1,4 @@
 ﻿  input.c
-  tsp.c
-  Generazione del codice in corso...
+C:\Users\User\Desktop\ingegneria\Ricerca Operativa 2\Operational-Research-2-master\TSP\TSP\input.c(30,1): warning C4244: 'inizializzazione': conversione da 'double' a 'float'. Possibile perdita di dati.
+C:\Users\User\Desktop\ingegneria\Ricerca Operativa 2\Operational-Research-2-master\TSP\TSP\input.c(55,1): warning C4244: 'inizializzazione': conversione da 'double' a 'float'. Possibile perdita di dati.
   TSP.vcxproj -> C:\Users\User\Desktop\ingegneria\Ricerca Operativa 2\Operational-Research-2-master\TSP\x64\Debug\TSP.exe

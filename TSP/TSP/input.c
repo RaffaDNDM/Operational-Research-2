@@ -15,6 +15,8 @@ void parse_cmd(char** argv, int argc, tsp_instance* tsp_in)
 
 	tsp_in->num_nodes = -1;
 	tsp_in->deadline = DEADLINE_MAX;
+	tsp_in->alg = 1;
+	tsp_in->integerDist = 0; 
 
 	int def_deadline = 0;
 
@@ -23,19 +25,43 @@ void parse_cmd(char** argv, int argc, tsp_instance* tsp_in)
 	int i = 1;
 	for (; i < argc; i++)
 	{
-		/*
-		if(strncmp(argv[i], "-alg")==0)
-			argv[++i]
-		*/
+		if (strncmp(argv[i], "-alg", 4) == 0)
+		{
+			float algF = atof(argv[++i]);
+			int alg = (int) algF;
+			
+			//the value inserted by the user must be an integer (alg!=0 && algF==alg) 
+			//but also the value must be greater than zero
+			assert(alg>0 && alg<=NUM_ALGS && algF==alg); 
+			tsp_in->alg = alg;
+
+			continue;
+		}
+
+		if (strncmp(argv[i], "-int", 4) == 0 || strncmp(argv[i], "-i", 2) == 0)
+		{
+			tsp_in->integerDist = 1;
+			continue;
+		}
+
 		if (strncmp(argv[i], "-v", 2) == 0 || strncmp(argv[i], "-verbose", 8) == 0)
 		{
 			verb = 100;
+			continue;
 		}
 
-		if ((strncmp(argv[i], "-d",2) == 0 || strncmp(argv[i], "-dead",5) == 0 || strncmp(argv[i], "-deadline",9) == 0) && !def_deadline)
+		if ((strncmp(argv[i], "-d", 2) == 0 || strncmp(argv[i], "-dead",5) == 0 || strncmp(argv[i], "-deadline",9) == 0) && !def_deadline)
 		{
+			float deadlineF = atof(argv[++i]);
+			long deadline = (long) deadlineF;
+
+
+			//the value inserted by the user must be an integer (deadline!=0 && deadlineF==deadline) 
+			//but also the value must be greater than zero
+			assert(deadline > 0 && deadline <= DEADLINE_MAX && deadlineF==deadline);
+
 			def_deadline = 1;
-			tsp_in->deadline = atol(argv[++i]);
+			tsp_in->deadline = deadline;
 			continue;
 		}
 
@@ -46,7 +72,7 @@ void parse_cmd(char** argv, int argc, tsp_instance* tsp_in)
 				strcpy(tsp_in->input, argv[++i]);
 				continue;
 			}
-
+			
 		}
 
 		if ((strncmp(argv[i], "-help", 5) == 0 || strncmp(argv[i], "-h", 2) == 0) && (argc ==2))
@@ -59,13 +85,13 @@ void parse_cmd(char** argv, int argc, tsp_instance* tsp_in)
 	if (verb > 80)
 	{
 		printf(LINE);
-		printf("List of parameters specified : \n");
+		printf("List of parameters specified on command line: \n");
 		int i;
 		for (i=1; i<argc; i=i+2)
 		{
 			int v_check = strncmp(argv[i], "-v", 2) == 0 || strncmp(argv[i], "-verbose", 8) == 0;
 			int h_check = strncmp(argv[i], "-help", 5) == 0 || strncmp(argv[i], "-h", 2) == 0;
-
+			
 			if ( v_check|| h_check )
 			{
 				printf("%s\n", argv[i]);
@@ -75,7 +101,7 @@ void parse_cmd(char** argv, int argc, tsp_instance* tsp_in)
 			{
 				printf("%s : %s\n", argv[i], argv[i + 1]);
 			}
-
+			
 		}
 		printf(LINE);
 	}
@@ -109,7 +135,7 @@ void parse_file(tsp_instance* tsp_in)
 	FILE* f = fopen(tsp_in->input, "r");
 
 	assert(f != NULL);
-
+	
 	tsp_in->num_nodes = -1;
 
 	char line[LINE_SIZE];
@@ -119,7 +145,7 @@ void parse_file(tsp_instance* tsp_in)
 	while (fgets(line, LINE_SIZE, f) != NULL)
 	{
 		token = strtok(line, " :");
-
+	
 		//Check key words in tsp file
 		if (strncmp(token, "NAME", 4) == 0)
 			continue;
@@ -144,7 +170,7 @@ void parse_file(tsp_instance* tsp_in)
 		if (strncmp(token, "NODE_COORD_SECTION", 18) == 0)
 		{
 			//The number of nodes must be defined before this section
-			assert(tsp_in->num_nodes > 0);
+			assert(tsp_in->num_nodes > 0);  
 
 			tsp_in->x_coords = (double*) calloc(tsp_in->num_nodes, sizeof(double));
 			tsp_in->y_coords = (double*) calloc(tsp_in->num_nodes, sizeof(double));
@@ -153,8 +179,8 @@ void parse_file(tsp_instance* tsp_in)
 			while (fgets(line, LINE_SIZE, f) != NULL && count<=(tsp_in->num_nodes))
 			{
 				int i = atoi(strtok(line, " "));
-
-				assert(i>0 && i<=(tsp_in->num_nodes)); //Index in {1,num_nodes}
+				
+				assert(i>0 && i<=(tsp_in->num_nodes)); //Index in {1,num_nodes} 
 
 				tsp_in->x_coords[i - 1] = atof(strtok(NULL, " "));
 				tsp_in->y_coords[i - 1] = atof(strtok(NULL, " "));
@@ -197,6 +223,8 @@ void dealloc_inst(tsp_instance* tsp_in)
 {
 	free(tsp_in->x_coords);
 	free(tsp_in->y_coords);
+	free(tsp_in->sol);
 	tsp_in->x_coords = NULL;
 	tsp_in->y_coords = NULL;
+	tsp_in->sol = NULL;
 }
