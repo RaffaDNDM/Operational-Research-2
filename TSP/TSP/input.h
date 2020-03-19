@@ -1,11 +1,20 @@
 #ifndef INPUT
 
 #define INPUT
-#include <string.h>
+
 #include "tsp.h"
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <assert.h>
+
 #define LINE "----------------------------------------------------------------------------------\n"
 #define STAR_LINE "**********************************************************************************\n"
 #define LINE_SIZE 180
+//#define GNUPLOT_EXE "D:/Programs/Gnuplot/bin/gnuplot.exe -persistent"
+#define GNUPLOT_EXE "D:/Programs/Gnuplot/bin/gnuplot.exe -persistent"
+#define GNUPLOT_STYLE "style.txt"
+#define SOLUTION_FILENAME "solution.dat"
 
 /**
 	Parser of command line
@@ -20,6 +29,12 @@ void parse_cmd(char**, int, tsp_instance*);
 	\param tsp_in reference to tsp instance structure 
 */
 void parse_file(tsp_instance*);
+
+/**
+	Plot solutions in 2D plane
+	\param tsp_in reference to tsp instance structure
+*/
+void plot_solution(tsp_instance*);
 
 /**
 	Deallocation of a tsp instance 

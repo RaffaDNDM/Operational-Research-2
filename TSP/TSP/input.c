@@ -1,9 +1,4 @@
-#include "tsp.h"
 #include "input.h"
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <assert.h>
 
 int verb = VERBOSE;
 
@@ -17,6 +12,7 @@ void parse_cmd(char** argv, int argc, tsp_instance* tsp_in)
 	tsp_in->deadline = DEADLINE_MAX;
 	tsp_in->alg = 1;
 	tsp_in->integerDist = 0; 
+	tsp_in->plot = 1;
 
 	int def_deadline = 0;
 
@@ -47,6 +43,13 @@ void parse_cmd(char** argv, int argc, tsp_instance* tsp_in)
 		if (strncmp(argv[i], "-v", 2) == 0 || strncmp(argv[i], "-verbose", 8) == 0)
 		{
 			verb = 100;
+			continue;
+		}
+
+		if (strncmp(argv[i], "-noplot", 2) == 0 || strncmp(argv[i], "-np", 8) == 0)
+		{
+			verb = 100; //more print because no plotting of solution
+			tsp_in->plot = 0;
 			continue;
 		}
 
@@ -124,7 +127,8 @@ void help()
 	printf(STAR_LINE);
 	printf("Write -v or -verbose if you want information during the execution\n");
 	printf(LINE);
-
+	printf("Write -np or -noplot if you want only verbose info and no plot \n");
+	printf(LINE);
 	exit(0);
 
 }
@@ -217,6 +221,34 @@ void parse_file(tsp_instance* tsp_in)
 
 		printf(LINE);
 	}
+}
+
+void plot_solution(tsp_instance* tsp_in)
+{
+	//Print of solution on output file
+	FILE* f = fopen(SOLUTION_FILENAME, "w");
+	
+	int i = 0;
+	for (; i < tsp_in->num_nodes; i++)
+	{
+		fprintf(f, "%f ", tsp_in->x_coords[tsp_in->sol[i]]);
+		fprintf(f, "%f ", tsp_in->y_coords[tsp_in->sol[i]]);
+		fprintf(f, "%d \n", i + 1);
+	}
+
+	fclose(f);
+
+	FILE* pipe = _popen(GNUPLOT_EXE, "w");
+	f = fopen(GNUPLOT_STYLE, "r");
+
+	char line[LINE_SIZE];
+	while(fgets(line, LINE_SIZE, f)!=NULL)
+	{
+		fprintf(pipe, "%s ", line);
+	}
+
+	fclose(f);
+	_pclose(pipe);
 }
 
 void dealloc_inst(tsp_instance* tsp_in)

@@ -1,7 +1,12 @@
 #ifndef TSP
 
 #define TSP
+
 #include <string.h>
+#include <assert.h>
+#include <stdio.h>
+#include <math.h>
+#include <stdlib.h>
 
 #define NUM_COMMANDS 8
 #define DEADLINE_MAX 1000000
@@ -21,6 +26,7 @@ typedef struct
 	long deadline;
 	int alg;
 	int integerDist;
+	int plot;
 
 	//Output
 	int* sol;

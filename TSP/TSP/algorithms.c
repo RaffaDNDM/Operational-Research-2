@@ -1,4 +1,4 @@
-#include "tsp.h"
+#include "algorithms.h"
 
 void default_alg(tsp_instance* tsp_in)
 {
