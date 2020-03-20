@@ -51,24 +51,34 @@ void evaluate_sol(tsp_instance* tsp_in)
 
 	if (tsp_in->integerDist)
 	{
+		int distI;
+
 		for (; i < tsp_in->num_nodes; i++)
 		{
-			int distI;
-
 			dist(i - 1, i, tsp_in, &distI, 1);
 			costI += distI;
 		}
+
+		//Cost evaluation of the last edge 
+		dist(0, tsp_in->num_nodes - 1, tsp_in, &distI, 1);
+		costI += distI;
+
 		tsp_in->bestCostI = costI;
 	}
 	else
 	{
+		double distD;
+
 		for (; i < tsp_in->num_nodes; i++)
 		{
-			double distD;
-
 			dist(i - 1, i, tsp_in, &distD, 0);
 			costD += distD;
 		}
+
+		//Cost evaluation of the last edge 
+		dist(0, tsp_in->num_nodes - 1, tsp_in, &distD, 1);
+		costD += distD;
+
 		tsp_in->bestCostD = costD;
 	}
 }

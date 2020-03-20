@@ -46,7 +46,7 @@ void parse_cmd(char** argv, int argc, tsp_instance* tsp_in)
 			continue;
 		}
 
-		if (strncmp(argv[i], "-noplot", 2) == 0 || strncmp(argv[i], "-np", 8) == 0)
+		if (strncmp(argv[i], "-noplot", 7) == 0 || strncmp(argv[i], "-np", 3) == 0)
 		{
 			verb = 100; //more print because no plotting of solution
 			tsp_in->plot = 0;
@@ -235,6 +235,11 @@ void plot_solution(tsp_instance* tsp_in)
 		fprintf(f, "%f ", tsp_in->y_coords[tsp_in->sol[i]]);
 		fprintf(f, "%d \n", i + 1);
 	}
+	
+	//Copy of the first node as the end of the file
+	fprintf(f, "%f ", tsp_in->x_coords[tsp_in->sol[0]]);
+	fprintf(f, "%f ", tsp_in->y_coords[tsp_in->sol[0]]);
+	fprintf(f, "%d \n", 0 + 1);
 
 	fclose(f);
 
