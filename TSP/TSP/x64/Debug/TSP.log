@@ -1,4 +1,7 @@
 ﻿  input.c
 D:\github\OperationalResearch2\TSP\TSP\input.c(26,1): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
 D:\github\OperationalResearch2\TSP\TSP\input.c(58,1): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  tsp.c
+D:\github\OperationalResearch2\TSP\TSP\tsp.c(87,72): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+  Generating Code...
   TSP.vcxproj -> D:\github\OperationalResearch2\TSP\x64\Debug\TSP.exe

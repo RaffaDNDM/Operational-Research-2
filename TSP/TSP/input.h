@@ -1,6 +1,7 @@
 #ifndef INPUT
 
 #define INPUT
+#define CIAO 1
 
 #include "tsp.h"
 #include <stdio.h>
