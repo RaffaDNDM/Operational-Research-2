@@ -1,7 +1,5 @@
 #include "input.h"
 
-int verb = VERBOSE;
-
 void parse_cmd(char** argv, int argc, tsp_instance* tsp_in)
 {
 	//at leat one param + program name
@@ -13,6 +11,7 @@ void parse_cmd(char** argv, int argc, tsp_instance* tsp_in)
 	tsp_in->alg = 1;
 	tsp_in->integerDist = 0; 
 	tsp_in->plot = 1;
+	tsp_in->verbose = VERBOSE;
 
 	int def_deadline = 0;
 
@@ -42,13 +41,13 @@ void parse_cmd(char** argv, int argc, tsp_instance* tsp_in)
 
 		if (strncmp(argv[i], "-v", 2) == 0 || strncmp(argv[i], "-verbose", 8) == 0)
 		{
-			verb = 100;
+			tsp_in->verbose = 100;
 			continue;
 		}
 
 		if (strncmp(argv[i], "-noplot", 7) == 0 || strncmp(argv[i], "-np", 3) == 0)
 		{
-			verb = 100; //more print because no plotting of solution
+			tsp_in->verbose = 100; //more print because no plotting of solution
 			tsp_in->plot = 0;
 			continue;
 		}
@@ -83,7 +82,7 @@ void parse_cmd(char** argv, int argc, tsp_instance* tsp_in)
 		}
 	}
 
-	if (verb > 80)
+	if (tsp_in->verbose > 80)
 	{
 		printf(LINE);
 		printf("List of parameters specified on command line: \n");
@@ -202,7 +201,7 @@ void parse_file(tsp_instance* tsp_in)
 
 	fclose(f);
 
-	if (verb > 80)
+	if (tsp_in->verbose > 80)
 	{
 		printf(LINE);
 		printf("Name of the input instance : %s\n", tsp_in->input);

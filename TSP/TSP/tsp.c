@@ -28,19 +28,25 @@ void solution(tsp_instance* tsp_in)
 
 	//default behaviour 
 	if (tsp_in->alg == 1)
+	{
 		default_alg(tsp_in);
-
-	evaluate_sol(tsp_in);
-
 	
+		evaluate_sol(tsp_in);
+	}
+
+	if (tsp_in->alg == 2)
+	{
+		cplex_solver(tsp_in);
+	}
+
 	printf(LINE);
 	printf("The solution cost is:\n");
-	
+
 	if (tsp_in->integerDist)
 		printf("int cost %d\n", tsp_in->bestCostI);
 	else
-		printf("double cost %10.31f\n",tsp_in->bestCostD);
-	
+		printf("double cost %10.31f\n", tsp_in->bestCostD);
+
 	printf(LINE);
 }
 
@@ -60,7 +66,7 @@ void evaluate_sol(tsp_instance* tsp_in)
 
 		for (; i < tsp_in->num_nodes+1; i++)
 		{
-			dist(tsp_in->sol[i - 1],tsp_in->sol[i], tsp_in, &distI, 1);
+			dist(tsp_in->sol[i - 1],tsp_in->sol[i], tsp_in, &distI);
 			costI += distI;
 		}
 
@@ -72,7 +78,7 @@ void evaluate_sol(tsp_instance* tsp_in)
 
 		for (; i < tsp_in->num_nodes+1; i++)
 		{
-			dist(tsp_in->sol[i - 1], tsp_in->sol[i], tsp_in, &distD, 0);
+			dist(tsp_in->sol[i - 1], tsp_in->sol[i], tsp_in, &distD);
 			costD += distD;
 		}
 
@@ -80,12 +86,12 @@ void evaluate_sol(tsp_instance* tsp_in)
 	}
 }
 
-void dist(int node1, int node2, tsp_instance* tsp_in, void* dist,  int costInt)
+void dist(int node1, int node2, tsp_instance* tsp_in, void* dist)
 {
 	double x_dist = tsp_in->x_coords[node1] - tsp_in->x_coords[node2];
 	double y_dist = tsp_in->y_coords[node1] - tsp_in->y_coords[node2];
 	
-	if (costInt)
+	if (tsp_in->integerDist)
 	{	
 		int x_distI = (int) (x_dist + CAST_PRECISION);
 		int y_distI = (int) (y_dist + CAST_PRECISION);

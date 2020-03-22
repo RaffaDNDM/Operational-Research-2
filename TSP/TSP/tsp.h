@@ -12,7 +12,7 @@
 #define DEADLINE_MAX 1000000
 #define VERBOSE 150
 #define CAST_PRECISION 0.4999999999
-#define NUM_ALGS 1
+#define NUM_ALGS 2
 
 typedef struct
 {
@@ -27,6 +27,7 @@ typedef struct
 	int alg;
 	int integerDist;
 	int plot;
+	int verbose;
 
 	//Output
 	int* sol;
@@ -53,13 +54,13 @@ void evaluate_sol(tsp_instance*);
 
 /**
 	Compute the distance between two nodes
+	(looking to the specified way of computing distances in *tsp_in)
 	\param node1 index of first node (index of the node specified in TSP file)
 	\param node2 index of second node (index of the node specified in TSP file)
 	\param tsp_in reference to tsp instance structure
 	\param dist container of the distance computed (coherent with costInt)
-	\param costInt 1 if you want intenger distance, 0 otherwise  
 */
-void dist(int, int, tsp_instance*, void*, int);
+void dist(int, int, tsp_instance*, void*);
 
 #endif
 
