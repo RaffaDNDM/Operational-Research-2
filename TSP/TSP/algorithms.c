@@ -7,4 +7,5 @@ void default_alg(tsp_instance* tsp_in)
 	{
 		tsp_in->sol[i] = i;
 	}
+	tsp_in->sol[tsp_in->num_nodes] = tsp_in->sol[0];
 }

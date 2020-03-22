@@ -1,7 +1,6 @@
 ﻿  input.c
 C:\Users\User\github\Operational-Research-2\TSP\TSP\input.c(26,1): warning C4244: 'inizializzazione': conversione da 'double' a 'float'. Possibile perdita di dati.
-C:\Users\User\github\Operational-Research-2\TSP\TSP\input.c(58,1): warning C4244: 'inizializzazione': conversione da 'double' a 'float'. Possibile perdita di dati.
+C:\Users\User\github\Operational-Research-2\TSP\TSP\input.c(211,11): warning C4477: 'printf': con la stringa di formato '%d' è necessario un argomento di tipo 'int', ma il tipo dell'argomento variadic 1 è 'double'
   tsp.c
-C:\Users\User\github\Operational-Research-2\TSP\TSP\tsp.c(97,72): warning C4244: '=': conversione da 'double' a 'int'. Possibile perdita di dati.
   Generazione del codice in corso...
   TSP.vcxproj -> C:\Users\User\github\Operational-Research-2\TSP\x64\Debug\TSP.exe

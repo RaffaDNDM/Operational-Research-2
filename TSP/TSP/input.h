@@ -11,10 +11,9 @@
 #define LINE "----------------------------------------------------------------------------------\n"
 #define STAR_LINE "**********************************************************************************\n"
 #define LINE_SIZE 180
-//#define GNUPLOT_EXE "D:/Programs/Gnuplot/bin/gnuplot.exe -persistent"
-#define GNUPLOT_EXE "C:/PROGRA~1/gnuplot/bin/gnuplot.exe -persistent"
-#define GNUPLOT_STYLE "styleC.txt"
-//#define GNUPLOT_STYLE_R "style.txt"
+
+#define GNUPLOT_EXE "%GNUPLOT%/bin/gnuplot.exe -persistent"
+#define GNUPLOT_STYLE "style.txt"
 #define SOLUTION_FILENAME "solution.dat"
 
 /**

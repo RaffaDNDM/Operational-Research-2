@@ -1,4 +1,5 @@
-\chapter{Istanze del problema}
+\chapter{Istanze del problema e soluzioni}
+\section{Istanze}
 Le istanze del problema solitamente sono punti dello spazio 2D, che sono quindi definiti da due coordinate, $x$ e $y$.
 Per generare istanza enormi del problema, si utilizza un approccio particolare in cui viene definito un insieme di punti a partire da un'immagine già esistente.\\
 La vicinanzae dei punti generati dipende dalla scala di grigi all'interno dell'immagine (Ex. generazione di punti a partire dal dipinto della Gioconda\cite{monnalisa}).\\
@@ -15,12 +16,15 @@ seguito dal commento associato all'istanza}
 \item{\textbf{TYPE}\\
 seguito dalla tipologia dell'istanza}
 \item{\textbf{DIMENSION}\\
-seguito dal numero di nodi nel grafo ($num_nodi$)}
+seguito dal numero di nodi nel grafo ($num\_nodi$)}
 \item{\textbf{EDGE\_WEIGHT\_TYPE}\\
 seguito dalla specifica del tipo di calcolo che viene effettuato per ricavare il costo del tour}
 \item{\textbf{NODE\_COORD\_SECTION}\\
-inizio della sezione composta di $num_nodi$ righe in cui vengono riportate le caratteriste di ciascun nodo, nella forma seguente:\\
+inizio della sezione composta di $num\_nodi$ righe in cui vengono riportate le caratteriste di ciascun nodo, nella forma seguente:\\
 \textbf{indice\_nodo  x  y}}
 \item{\textbf{EOF}\\
 decreta la fine del file}
 \end{itemize}
+
+\section{Soluzioni}
+

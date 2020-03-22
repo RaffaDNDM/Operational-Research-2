@@ -55,13 +55,11 @@ void parse_cmd(char** argv, int argc, tsp_instance* tsp_in)
 
 		if ((strncmp(argv[i], "-d", 2) == 0 || strncmp(argv[i], "-dead",5) == 0 || strncmp(argv[i], "-deadline",9) == 0) && !def_deadline)
 		{
-			float deadlineF = atof(argv[++i]);
-			long deadline = (long) deadlineF;
+			double deadline =(double) atof(argv[++i]);
 
-
-			//the value inserted by the user must be an integer (deadline!=0 && deadlineF==deadline) 
+			//the value inserted by the user must be a floating point number (deadline!=0 ) 
 			//but also the value must be greater than zero
-			assert(deadline > 0 && deadline <= DEADLINE_MAX && deadlineF==deadline);
+			assert(deadline > 0 && deadline <= DEADLINE_MAX);
 
 			def_deadline = 1;
 			tsp_in->deadline = deadline;
@@ -122,7 +120,7 @@ void help()
 	printf(STAR_LINE);
 	printf("Insert the max time of the execution\n");
 	printf("-d dead_time\n");
-	printf("-deadline dead_time         where dead_time = max execution time in seconds\n");
+	printf("-deadline dead_time         where dead_time = max execution time in seconds (float)\n");
 	printf("-dead dead_time\n");
 	printf(STAR_LINE);
 	printf("Write -v or -verbose if you want information during the execution\n");
@@ -229,18 +227,14 @@ void plot_solution(tsp_instance* tsp_in)
 	FILE* f = fopen(SOLUTION_FILENAME, "w");
 	
 	int i = 0;
-	for (; i < tsp_in->num_nodes; i++)
+	for (; i < tsp_in->num_nodes+1; i++)
 	{
 		fprintf(f, "%f ", tsp_in->x_coords[tsp_in->sol[i]]);
 		fprintf(f, "%f ", tsp_in->y_coords[tsp_in->sol[i]]);
-		fprintf(f, "%d \n", i + 1);
+		int x = (i == tsp_in->num_nodes) ? 1 : i+1;
+		fprintf(f, "%d \n", x);
 	}
 	
-	//Copy of the first node as the end of the file
-	fprintf(f, "%f ", tsp_in->x_coords[tsp_in->sol[0]]);
-	fprintf(f, "%f ", tsp_in->y_coords[tsp_in->sol[0]]);
-	fprintf(f, "%d \n", 0 + 1);
-
 	fclose(f);
 
 	FILE* pipe = _popen(GNUPLOT_EXE, "w");

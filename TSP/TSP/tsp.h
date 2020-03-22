@@ -23,7 +23,7 @@ typedef struct
 
 	//Parameters
 	char input[500];
-	long deadline;
+	double deadline;
 	int alg;
 	int integerDist;
 	int plot;
