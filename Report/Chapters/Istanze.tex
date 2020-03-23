@@ -27,4 +27,32 @@ decreta la fine del file}
 \end{itemize}
 
 \section{Soluzioni}
+Una soluzione del problema è data da una sequenza di nodi, definita come una permutazione dell'istanza (Ex. $S = \{x_1,x_2,...,x_n\}$ tale che $x_i=x_j\;\;x_i \in \Pi\;\forall\;x_i\in S\;\wedge\; x_i!=x_j\;\forall\;i\neq j$). Poichè in questa variante non esiste alcuna origine, ogni tour può essere descritto da più permutazioni, due per ogni nodo del grafo. Una volta definita la soluzione $S$, infatti, questa può essere percorsa in entrambi i versi e l'origine può essere uno qualsiasi dei nodi del grafo.\\
+\subsection{Gnuplot}
+Una volta ottenuta la soluzione al problema di ottimizzazione ne viene disegnato il grafo per facilitarne la comprensione. Per fare ciò viene utilizzato un programma di tipo command-driven detto Gnuplot.\\
+Per poter utilizzare Gnuplot all'interno del proprio programma esistono due metodi:\\
+\begin{itemize}
+\item{Collegarne la libreria ed invocare direttamente le sue funzioni all'interno del programma;}
+\item{Collegare l'eseguibile interattivo al proprio programma. In questo caso i comandi deve essere passati all'eseguibile attraverso un file di testo.}
+\end{itemize}
+In questa trattazione è stato scelto il secondo metodo. All'interno del file è possibile specificare a Gnuplot le caratteristiche grafiche che deve aver il grafo (stile e spessore della linea, dimensione dei punti, se presenti delle etichette dove devono essere posizionate ecc). Di seguito è riportato un esempio di tale file.\\
 
+\lstinputlisting[caption={\footnotesize{esempio.tsp}}, style=code, firstnumber=1, firstline=1, lastline=8, label=style_example]{Source/style_example.txt}
+
+In questo caso "solution.dat" è il file che contiene le informazioni relative al grafico. In particolare sono presenti le coordinate dei punti, uno per riga, seguite dall'etichetta a loro associata.\\
+\begin{table}[h]
+\centering
+\begin{tabular}{ccc} 
+$x_i$         & $y_i$         & $label_i$
+\end{tabular}
+\end{table}
+\\
+La terza colonna può anche essere lasciata vuota, in quanto la presenza delle etichette non è obbligatoria (in quel caso deve essere modificato il file relativo allo stile rispetto all'esempio, eliminando questa specifica).
+Nel caso in cui i nodi siano descritti su righe consecutive una all'altra (senza righe vuote tra loro) Gnuplot graficherà un ramo che colleghi i nodi su due righe adiacenti. Se invece si vogliono disegnare rami singolo è sufficiente inserire una riga vuota ogni due nodi (gli estremi del ramo che si vuole rappresentare).  
+
+
+
+
+
+
+%creazione pipe

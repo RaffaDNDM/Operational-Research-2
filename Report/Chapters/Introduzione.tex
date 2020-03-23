@@ -8,8 +8,7 @@ min \underset{e\in E}\sum{c_e\;x_e} \\\\
 \underset{e\in E(S)}\sum{\;x_e} \leq \vert S\vert - 1\;\;\;\;\;\;\;\;\forall\;S\underset{\neq} \subset V: \vert S\vert\geq 3\\
 \end{cases}
 $$
-Un'istanza di tale problema viene definita normalmente da un grafo, per cui ad ogni nodo viene associata un numero intero (Ex. $\Pi = \{1,2,3,..,n\}$). 
-Una soluzione del problema corrisponde invece ad una sequenza di nodi, definita come una permutazione dell'istanza (Ex. $S = \{x_1,x_2,...,x_n\}$ tale che $x_i=x_j\;\;x_i \in \Pi\;\forall\;x_i\in S\;\wedge\; x_i!=x_j\;\forall\;i\neq j$). Poichè in questa variante non esiste alcuna origine, ogni tour può essere descritto da più permutazioni, due per ogni nodo del grafo. Una volta definita la soluzione $S$, infatti, questa può essere percorsa in entrambi i versi e l'origine può essere uno qualsiasi dei nodi del grafo.\\
+Un'istanza di tale problema viene definita normalmente da un grafo, per cui ad ogni nodo viene associata un numero intero (Ex. $\Pi = \{1,2,3,..,n\}$). \\
 I risolutori che verranno applicati al problema sono di due tipologie:
 \begin{itemize}
 \item{\textbf{Risolutori esatti}\\ basati sul Branch \& Bound. I più conosciuti sono:

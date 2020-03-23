@@ -2,4 +2,5 @@
 \BOOKMARK [0][-]{chapter.2}{Istanze del problema e soluzioni}{}% 2
 \BOOKMARK [1][-]{section.2.1}{Istanze}{chapter.2}% 3
 \BOOKMARK [1][-]{section.2.2}{Soluzioni}{chapter.2}% 4
-\BOOKMARK [0][-]{chapter.3}{CPLEX}{}% 5
+\BOOKMARK [2][-]{subsection.2.2.1}{Gnuplot}{section.2.2}% 5
+\BOOKMARK [0][-]{chapter.3}{CPLEX}{}% 6
