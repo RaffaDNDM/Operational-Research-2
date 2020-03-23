@@ -8,6 +8,13 @@
 #include <math.h>
 #include <stdlib.h>
 
+#define GP_DEFAULT_STYLE "style.txt"
+#define DEFAULT_DAT "solution.dat"
+#define CPLEX_DAT "solutionCPLEX.dat"
+#define GP_CPLEX_STYLE "styleCPLEX.txt"
+#define LP_FILENAME "model.lp"
+#define GNUPLOT_EXE "%GNUPLOT%/bin/gnuplot.exe -persistent"
+
 #define NUM_COMMANDS 8
 #define DEADLINE_MAX 1000000
 #define VERBOSE 150
@@ -35,22 +42,6 @@ typedef struct
 	double bestCostD;
 
 } tsp_instance;
-
-/**
-	Compute the solution of the TSP problem 
-	looking to the algorithm chosen by user on command line
-	1 no permutation (default algorithm)
-	\param tsp_in reference to tsp instance structure
-*/
-void solution(tsp_instance*);
-
-/**
-	Evaluate the cost of the solution already computed
-	(on default the distance is computed through double operations
-	if user types -int or -i, it'computed through integer operations)
-	\param tsp_in reference to tsp instance structure
-*/
-void evaluate_sol(tsp_instance*);
 
 /**
 	Compute the distance between two nodes

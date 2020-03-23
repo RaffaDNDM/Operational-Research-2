@@ -8,6 +8,47 @@ void default_alg(tsp_instance* tsp_in)
 		tsp_in->sol[i] = i;
 	}
 	tsp_in->sol[tsp_in->num_nodes] = tsp_in->sol[0];
+
+	evaluate_sol(tsp_in);
+	print_sol(tsp_in);
+	
+	if(tsp_in->plot)
+		plot_solution(tsp_in);
+}
+
+void evaluate_sol(tsp_instance* tsp_in)
+{
+	int i = 1;
+	int costI = 0;
+	double costD = 0.0;
+
+	tsp_in->bestCostD = 0;
+	tsp_in->bestCostI = 0;
+
+	if (tsp_in->integerDist)
+	{
+		int distI;
+
+		for (; i < tsp_in->num_nodes + 1; i++)
+		{
+			dist(tsp_in->sol[i - 1], tsp_in->sol[i], tsp_in, &distI);
+			costI += distI;
+		}
+
+		tsp_in->bestCostI = costI;
+	}
+	else
+	{
+		double distD;
+
+		for (; i < tsp_in->num_nodes + 1; i++)
+		{
+			dist(tsp_in->sol[i - 1], tsp_in->sol[i], tsp_in, &distD);
+			costD += distD;
+		}
+
+		tsp_in->bestCostD = costD;
+	}
 }
 
 void cplex_solver(tsp_instance* tsp_in) 
@@ -33,8 +74,10 @@ void cplex_solver(tsp_instance* tsp_in)
 	double* x = calloc(sizeof(double), CPXgetnumcols(env,lp));
 	assert(CPXgetmipx(env, lp, x, 0, CPXgetnumcols(env, lp)-1)==0);
 	
-	//RICOMINCIARE DA QUI
-	path_tsp(x, CPXgetnumcols(env, lp), tsp_in);
+	print_sol(tsp_in);
+	
+	if (tsp_in->plot)
+		plot_cplex(x, CPXgetnumcols(env, lp), tsp_in);
 	
 	CPXfreeprob(env, &lp);
 	CPXcloseCPLEX(&env);
@@ -122,68 +165,55 @@ int xpos(tsp_instance* tsp_in, int i, int j)
 	return (tsp_in->num_nodes*i + j) - ((i+1)*(i+2))/2;
 }
 
-void path_tsp(double *x, int size, tsp_instance* tsp_in)
+void plot_cplex(double *x, int size, tsp_instance* tsp_in)
 {
 	int i = 0;
 	int k = 0;
 
-	double** matrix = calloc(sizeof(double), tsp_in->num_nodes);
-	
-	for(; i<tsp_in->num_nodes; i++)
-		matrix[i]= calloc(sizeof(double), tsp_in->num_nodes);
-
-	i = 0;
+	FILE* f = fopen(CPLEX_DAT, "w");
 
 	for (; i < tsp_in->num_nodes && k<size; i++)
 	{
 		int j;
 		for (j=i+1; j < tsp_in->num_nodes && k<size; j++)
 		{
-			matrix[i][j] = x[k];
+			if (x[k] == 1.0)
+			{
+				fprintf(f, "%f ", tsp_in->x_coords[i]);
+				fprintf(f, "%f ", tsp_in->y_coords[i]);
+				fprintf(f, "\n");
+				fprintf(f, "%f ", tsp_in->x_coords[j]);
+				fprintf(f, "%f ", tsp_in->y_coords[j]);
+				fprintf(f, "\n\n");		
+			}
+
 			k++;
 		}
 	}
 
-	int start = 0;
-	int count = 0;
-	int j;
+	fclose(f);
 
-	printf("%d \n",start+1);
-	for (i = 0; i < tsp_in->num_nodes;)
+	FILE* pipe = _popen(GNUPLOT_EXE, "w");
+	f = fopen(GP_CPLEX_STYLE, "r");
+
+	char line[LINE_SIZE];
+	while (fgets(line, LINE_SIZE, f) != NULL)
 	{
-		int check = 1;
-		
-		for (j = i + 1; j < tsp_in->num_nodes && check; j++)
-		{
-			if (matrix[i][j] == 1.0)
-			{
-				matrix[i][j] = -1.0;
-				printf("%d \n", j+1);
-				count++;
-				i = j;
-				check = 0;
-			}
-		}
-
-		if(check)
-			j = i;
-	
-		for (i=0; i < j && check; i++)
-		{
-			if (matrix[i][j] == 1.0)
-			{
-				matrix[i][j] = -1.0;
-				printf("%d \n", i+1);
-				count++;
-				check = 0;
-			}
-		}
-
-		if (check)
-		{
-			start++;
-			i = start;
-			printf("start=%d \n", i+1);
-		}
+		fprintf(pipe, "%s ", line);
 	}
+
+	fclose(f);
+	_pclose(pipe);
+}
+
+
+void print_sol(tsp_instance* tsp_in)
+{
+	printf(LINE);
+	printf("The solution cost is:\n");
+	if (tsp_in->integerDist)
+		printf("int cost %d\n", tsp_in->bestCostI);
+	else
+		printf("double cost %10.31f\n", tsp_in->bestCostD);
+	printf(LINE);
 }

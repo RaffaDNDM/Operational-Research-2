@@ -22,7 +22,7 @@ void parse_cmd(char** argv, int argc, tsp_instance* tsp_in)
 	{
 		if (strncmp(argv[i], "-alg", 4) == 0)
 		{
-			float algF = atof(argv[++i]);
+			double algF = atof(argv[++i]);
 			int alg = (int) algF;
 			
 			//the value inserted by the user must be an integer (alg!=0 && algF==alg) 
@@ -207,7 +207,7 @@ void parse_file(tsp_instance* tsp_in)
 		printf("Name of the input instance : %s\n", tsp_in->input);
 		printf("Number of input nodes : %d\n",tsp_in->num_nodes);
 		if (tsp_in->deadline < DEADLINE_MAX)
-			printf("Deadline time : %d\n",tsp_in->deadline);
+			printf("Deadline time : %f\n",tsp_in->deadline);
 
 		printf("\nInput nodes coordinates:\n");
 
@@ -222,8 +222,10 @@ void parse_file(tsp_instance* tsp_in)
 
 void plot_solution(tsp_instance* tsp_in)
 {
+	int count = 0;
+
 	//Print of solution on output file
-	FILE* f = fopen(SOLUTION_FILENAME, "w");
+	FILE* f = fopen(DEFAULT_DAT, "w");
 	
 	int i = 0;
 	for (; i < tsp_in->num_nodes+1; i++)
@@ -237,7 +239,7 @@ void plot_solution(tsp_instance* tsp_in)
 	fclose(f);
 
 	FILE* pipe = _popen(GNUPLOT_EXE, "w");
-	f = fopen(GNUPLOT_STYLE, "r");
+	f = fopen(GP_DEFAULT_STYLE, "r");
 
 	char line[LINE_SIZE];
 	while(fgets(line, LINE_SIZE, f)!=NULL)
