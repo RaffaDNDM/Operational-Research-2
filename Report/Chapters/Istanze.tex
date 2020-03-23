@@ -1,18 +1,18 @@
-\chapter{Istanze del problema e soluzioni}
+\chapter{Istanze e soluzioni del problema}
 \section{Istanze}
-Le istanze del problema solitamente sono punti dello spazio 2D, che sono quindi definiti da due coordinate, $x$ e $y$.
+Le istanze del problema, analizzate durante il corso, sono punti dello spazio 2D, identificati quindi da due coordinate ($x$,$y$).
 Per generare istanza enormi del problema, si utilizza un approccio particolare in cui viene definito un insieme di punti a partire da un'immagine già esistente.\\
-La vicinanzae dei punti generati dipende dalla scala di grigi all'interno dell'immagine (Ex. generazione di punti a partire dal dipinto della Gioconda\cite{monnalisa}).\\
-Le istanze che verranno utilizzate dai programmi, creati durante il corso, utilizzano il template \textbf{TSPlib}. Di seguito viene riportato il contenuto di un file di questa tipologia.
+La vicinanza dei punti generati dipende dalla scala di grigi all'interno dell'immagine (es. generazione di punti a partire dal dipinto della Gioconda\cite{monnalisa}).\\
+Le istanze che vengono elaborate dai programmi, creati durante il corso, utilizzano il template \textbf{TSPlib}. Di seguito viene riportato il contenuto di un file di questa tipologia.
  
 \lstinputlisting[caption={\footnotesize{esempio.tsp}}, style=code, firstnumber=1, firstline=1, lastline=12, label=tsp_instance]{Source/esempio.tsp}
 
-Le parole chiave solitamente contenute in questi file \ref{tsp_instance} sono:
+Le parole chiave più importanti, contenute in questi file \ref{tsp_instance}, sono:
 \begin{itemize}
 \item{\textbf{NAME}\\
 seguito dal nome dell'istanza TSPlib}
 \item{\textbf{COMMENT}\\
-seguito dal commento associato all'istanza}
+seguito da un commento associato all'istanza}
 \item{\textbf{TYPE}\\
 seguito dalla tipologia dell'istanza}
 \item{\textbf{DIMENSION}\\
@@ -20,39 +20,48 @@ seguito dal numero di nodi nel grafo ($num\_nodi$)}
 \item{\textbf{EDGE\_WEIGHT\_TYPE}\\
 seguito dalla specifica del tipo di calcolo che viene effettuato per ricavare il costo del tour}
 \item{\textbf{NODE\_COORD\_SECTION}\\
-inizio della sezione composta di $num\_nodi$ righe in cui vengono riportate le caratteriste di ciascun nodo, nella forma seguente:\\
-\textbf{indice\_nodo  x  y}}
+inizio della sezione composta di $num\_nodi$ righe in cui vengono riportate le caratteriste di ciascun nodo, nella forma seguente:
+\begin{lstlisting}[linewidth=250pt,basicstyle=\footnotesize\sffamily,]     
+indice_nodo  coordinata_x  coordinata_y
+\end{lstlisting}}
 \item{\textbf{EOF}\\
 decreta la fine del file}
 \end{itemize}
 
 \section{Soluzioni}
-Una soluzione del problema è data da una sequenza di nodi, definita come una permutazione dell'istanza (Ex. $S = \{x_1,x_2,...,x_n\}$ tale che $x_i=x_j\;\;x_i \in \Pi\;\forall\;x_i\in S\;\wedge\; x_i!=x_j\;\forall\;i\neq j$). Poichè in questa variante non esiste alcuna origine, ogni tour può essere descritto da più permutazioni, due per ogni nodo del grafo. Una volta definita la soluzione $S$, infatti, questa può essere percorsa in entrambi i versi e l'origine può essere uno qualsiasi dei nodi del grafo.\\
-\subsection{Gnuplot}
-Una volta ottenuta la soluzione al problema di ottimizzazione ne viene disegnato il grafo per facilitarne la comprensione. Per fare ciò viene utilizzato un programma di tipo command-driven detto Gnuplot.\\
-Per poter utilizzare Gnuplot all'interno del proprio programma esistono due metodi:\\
+Una soluzione del problema è una sequenza di nodi che corrisponde ad una permutazione dell'istanza (es. $S = \{x_1,x_2,...,x_n\}$ tale che $x_i=x_j\;\;x_i \in \Pi\;\forall\;x_i\in S\;\wedge\; x_i!=x_j\;\forall\;i\neq j$). Poichè in questa variante non esiste alcuna origine, ogni tour può essere descritto da due versi di percorrenza e l'origine può essere un nodo qualsiasi del grafo.
+\subsection{Gnuplot}\label{gnuplot}
+Una volta ottenuta la soluzione del problema di ottimizzazione, viene disegnato il grafo per facilitare all'utente la comprensione della sua correttezza. Per fare ciò viene utilizzato Gnuplot, un programma di tipo command-driven.\\
+Per poterlo utilizzare all'interno del proprio programma esistono due metodi:
 \begin{itemize}
-\item{Collegarne la libreria ed invocare direttamente le sue funzioni all'interno del programma;}
-\item{Collegare l'eseguibile interattivo al proprio programma. In questo caso i comandi deve essere passati all'eseguibile attraverso un file di testo.}
+\item{Collegare la libreria ed invocare le sue funzioni all'interno del nostro programma}
+\item{Collegare l'eseguibile interattivo al proprio programma. In questo caso i comandi deve essere passati all'eseguibile attraverso un file di testo e l'utilizzo di un pipe.}\\
 \end{itemize}
-In questa trattazione è stato scelto il secondo metodo. All'interno del file è possibile specificare a Gnuplot le caratteristiche grafiche che deve aver il grafo (stile e spessore della linea, dimensione dei punti, se presenti delle etichette dove devono essere posizionate ecc). Di seguito è riportato un esempio di tale file.\\
+In questa trattazione è stato scelto il secondo metodo. All'interno del file è possibile specificare a Gnuplot le caratteristiche grafiche che deve aver il grafo. Di seguito viene riportato un esempio di tale file.\\
 
-\lstinputlisting[caption={\footnotesize{esempio.tsp}}, style=code, firstnumber=1, firstline=1, lastline=8, label=style_example]{Source/style_example.txt}
+\lstinputlisting[caption={\footnotesize{style.txt}}, style=code, firstnumber=1, firstline=1, lastline=12, label=style_example]{Source/style_example.txt}
 
-In questo caso "solution.dat" è il file che contiene le informazioni relative al grafico. In particolare sono presenti le coordinate dei punti, uno per riga, seguite dall'etichetta a loro associata.\\
-\begin{table}[h]
-\centering
-\begin{tabular}{ccc} 
-$x_i$         & $y_i$         & $label_i$
-\end{tabular}
-\end{table}
-\\
-La terza colonna può anche essere lasciata vuota, in quanto la presenza delle etichette non è obbligatoria (in quel caso deve essere modificato il file relativo allo stile rispetto all'esempio, eliminando questa specifica).
-Nel caso in cui i nodi siano descritti su righe consecutive una all'altra (senza righe vuote tra loro) Gnuplot graficherà un ramo che colleghi i nodi su due righe adiacenti. Se invece si vogliono disegnare rami singolo è sufficiente inserire una riga vuota ogni due nodi (gli estremi del ramo che si vuole rappresentare).  
-
-
-
-
-
-
-%creazione pipe
+Nell'esempio sopra riportato, nella prima parte viene definito lo stile, il colore delle linee e la tipologia di punti, che verrano in seguito visualizzati all'interno del grafico prodotto.\\In seguito viene effettuato il plot del grafo in una finestra, utilizzando il primo e secondo valore di ciascuna riga del file \textbf{solution.dat} come coordinate mentre il terzo valore viene utilizzato come etichetta.\\\\
+Il file \textbf{solution.dat} contiene le informazioni relative alla soluzione del grafico in cui ciascuna riga ha la seguente forma:
+\begin{lstlisting}[linewidth=290pt,basicstyle=\footnotesize\sffamily,]     
+coordinata_x   coordinata_y   posizione_in_tour
+\end{lstlisting}
+\textbf{coordinata\_x} rappresenta la coordinata x del nodo;\\
+\textbf{posizione\_in\_tour} rappresenta la coordinata y del nodo;\\
+\textbf{posizione\_in\_tour} rappresenta l'ordine del nodo all'interno del tour, assunto come nodo di origine il nodo 1.\\\\
+Il grafico viene generato dal comando \textbf{plot}, leggendo tutte le righe non vuote e disegnando un punto nella posizione \textbf{(coordinata\_x,coordinata\_y)} del grafico 2D. In seguito viene tracciata una linea solo tra coppie di punti, legati a righe consecutive non vuote all'interno di \textbf{solution.dat}.\\\\
+Attraverso le istruzioni riportate nelle righe 10-12 di \textbf{style.txt}, viene invece salvato il grafico appena generato nell'immagine \textbf{solution.png}.\\\\
+Di seguito vengono riportate le varie fasi necessarie alla definizione di un pipe e al passaggio di questo al programma GNUplot:
+\begin{itemize}
+\item{\textbf{Definizione del pipe}
+\lstinputlisting[style=code, firstnumber=1, firstline=1, lastline=1, label=style_example language=C]{Source/gnuplotC.txt}
+dove \textbf{GNUPLOT\_EXE} è una stringa composta dal percorso completo dell'eseguibile di GNUplot, seguita dall'argomento \textbf{-persistent} (es. \textit{"D:/Programs/GNUplot/bin/gnuplot -persistent"}).
+}
+\item{\textbf{Passaggio delle istruzioni a GNUplot}
+\lstinputlisting[style=code, firstnumber=2, firstline=2, lastline=10, label=style_example, language=C]{Source/gnuplotC.txt}
+viene passata una riga alla volta, del file \textbf{style.txt}, a GNUplot mediante il pipe precedentemente creato.
+}
+\item{\textbf{Chiusura del pipe}
+\lstinputlisting[style=code, firstnumber=11, firstline=11, lastline=11, label=style_example, language=C]{Source/gnuplotC.txt}
+}
+\end{itemize}

@@ -1,0 +1,11 @@
+FILE* pipe = _popen(GNUPLOT_EXE, "w");
+f = fopen("style.txt", "r");
+
+char line[180];
+while (fgets(line, 180, f) != NULL)
+{
+	fprintf(pipe, "%s ", line);
+}
+
+fclose(f);
+_pclose(pipe);
