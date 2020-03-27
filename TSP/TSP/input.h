@@ -3,14 +3,11 @@
 #define INPUT
 
 #include "tsp.h"
+#include "utility.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <assert.h>
-
-#define LINE "----------------------------------------------------------------------------------\n"
-#define STAR_LINE "**********************************************************************************\n"
-#define LINE_SIZE 180
 
 /**
 	Parser of command line
@@ -36,8 +33,6 @@ void dealloc_inst(tsp_instance*);
 	Print all command line parameters
 */
 void help();
-
-
 
 #endif 
 

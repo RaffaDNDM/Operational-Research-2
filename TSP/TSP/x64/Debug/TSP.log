@@ -1,3 +1,4 @@
-﻿  algorithms.c
-C:\Users\User\github\Operational-Research-2\TSP\TSP\algorithms.c(197,25): warning C4047: '=': 'int' differisce da 'int *' nei livelli di riferimento indiretto
-  TSP.vcxproj -> C:\Users\User\github\Operational-Research-2\TSP\x64\Debug\TSP.exe
+﻿  cplex_solver.c
+D:\github\OperationalResearch2\TSP\TSP\cplex_solver.c(166,25): warning C4047: '=': 'int' differs in levels of indirection from 'int *'
+D:\github\OperationalResearch2\TSP\TSP\cplex_solver.c(235,8): warning C4013: 'gets' undefined; assuming extern returning int
+  TSP.vcxproj -> D:\github\OperationalResearch2\TSP\x64\Debug\TSP.exe
