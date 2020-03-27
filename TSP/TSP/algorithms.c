@@ -77,8 +77,19 @@ void cplex_solver(tsp_instance* tsp_in)
 	print_sol(tsp_in);
 	
 	if (tsp_in->plot)
-		plot_cplex(x, CPXgetnumcols(env, lp), tsp_in);
-	
+	{
+		int n_comps;
+		int* succ = calloc(tsp_in->num_nodes, sizeof(int));
+		int* comp = calloc(tsp_in->num_nodes, sizeof(int));
+
+		define_tour(x, tsp_in, succ, comp, &n_comps);
+		plot_cplex(tsp_in, succ, comp, &n_comps);
+
+		free(succ);
+		free(comp);
+	}
+
+	free(x);
 	CPXfreeprob(env, &lp);
 	CPXcloseCPLEX(&env);
 }
@@ -165,31 +176,84 @@ int xpos(tsp_instance* tsp_in, int i, int j)
 	return (tsp_in->num_nodes*i + j) - ((i+1)*(i+2))/2;
 }
 
-void plot_cplex(double *x, int size, tsp_instance* tsp_in)
+//AGGIUNGERE CONTROLLO
+
+void define_tour(double* x, tsp_instance* tsp_in, int* succ, int* comp, int* n_comps)
 {
-	int i = 0;
-	int k = 0;
-
-	FILE* f = fopen(CPLEX_DAT, "w");
-
-	for (; i < tsp_in->num_nodes && k<size; i++)
+	//Sappiamo dal controllo che le soluzioni sono 0 e 1 
+	//e ogni nodo ha solo 2 archi che lo toccano
+	
+	int i;
+	for (i = 0; i < tsp_in->num_nodes; succ[i++] = -1);
+	
+	*n_comps = 0;
+	int begin;
+	
+	for (begin = 0; begin < tsp_in->num_nodes; begin++)
 	{
-		int j;
-		for (j=i+1; j < tsp_in->num_nodes && k<size; j++)
+		if (succ[begin]==-1)
 		{
-			if (x[k] == 1.0)
+			(*n_comps)++;
+			comp[begin] = n_comps;
+			
+			int j = begin;
+			
+			for (i = 0; i < tsp_in->num_nodes; i++)
 			{
-				fprintf(f, "%f ", tsp_in->x_coords[i]);
-				fprintf(f, "%f ", tsp_in->y_coords[i]);
-				fprintf(f, "\n");
-				fprintf(f, "%f ", tsp_in->x_coords[j]);
-				fprintf(f, "%f ", tsp_in->y_coords[j]);
-				fprintf(f, "\n\n");		
-			}
+				if (i == j)
+					continue;
 
-			k++;
+				if (x[xpos(tsp_in, j, i)]>0.5 && comp[i]==0)
+				{
+					succ[j] = i;
+					comp[i] = *n_comps;					
+					j = i;
+					i = -1;
+				}
+			}
+			
+			succ[j] = begin;
 		}
 	}
+}
+
+void plot_cplex(tsp_instance* tsp_in, int* succ, int* comp, int* n_comps)
+{
+	FILE* f = fopen(CPLEX_DAT, "w");
+
+	int count_comp=1;
+	for(; count_comp<=(*n_comps); count_comp++)
+	{
+		int i;
+		for (i = 0; i < tsp_in->num_nodes && comp[i] != count_comp; i++);
+		
+		if (i == tsp_in->num_nodes)
+			break;
+
+		int begin=i; //first node of the count_comp-th component
+
+		fprintf(f, "%f ", tsp_in->x_coords[begin]);
+		fprintf(f, "%f ", tsp_in->y_coords[begin]);
+		fprintf(f, "%d \n", 1);
+		
+		int k = 2;
+		int check=1;
+
+		int node=-1;
+		do
+		{
+			node = succ[i];
+			fprintf(f, "%f ", tsp_in->x_coords[node]);
+			fprintf(f, "%f ", tsp_in->y_coords[node]);	
+			int label = (node != begin) ? k++ : 1;
+			fprintf(f, "%d \n", label);
+			i = node;
+		} 
+		while (node != begin);
+
+		fprintf(f, "\n\n");
+	}
+
 
 	fclose(f);
 

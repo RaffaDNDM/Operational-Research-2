@@ -3,7 +3,7 @@ set style line 1 \
     linetype 1 linewidth 1 \
     pointtype 7 pointsize 0.5
 
-plot 'solutionCPLEX.dat' with linespoints linestyle 1 
+plot 'solutionCPLEX.dat' with linespoints linestyle 1 title "Solution",'' using 1:2:(sprintf("%d", $3)) notitle with labels center offset 1
 
 set term png
 set output "solutionCPLEX.png"

@@ -50,6 +50,17 @@ void cplex_build_model(tsp_instance*, CPXENVptr, CPXLPptr);
 int xpos(tsp_instance*, int, int);
 
 /*
+	Define the tour fo the solution
+	\param x array of the point in the solution
+	\param tsp_in reference to tsp instance structure
+	\param succ array of the successor of each node 
+	\param comp array with the component of each node
+	\param n_comps number of components
+*/
+
+void define_tour(double*, tsp_instance*, int*, int*, int*);
+
+/*
 	Print value of the solution of TSP problem
 	\param tsp_in reference to tsp instance structure
 */
@@ -61,5 +72,12 @@ void print_sol(tsp_instance* tsp_in);
 */
 void plot_solution(tsp_instance*);
 
+/*
+	Plot the CPLEX solution
+	\param tsp_in reference to tsp instance structure
+	\param succ array of the successor of each node
+	\param comp array with the component of each node
+	\param n_comps number of components
+*/
 
-void plot_cplex(double* x, int size, tsp_instance* tsp_in);
+void plot_cplex(tsp_instance* tsp_in, int* succ, int* comp, int* n_comps);
