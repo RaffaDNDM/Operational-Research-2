@@ -1,8 +1,8 @@
 \babel@toc {italian}{}
 \babel@toc {italian}{}
-\contentsline {chapter}{\numberline {1}Introduzione}{1}{chapter.1}%
-\contentsline {chapter}{\numberline {2}Istanze e soluzioni del problema}{3}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Istanze}{3}{section.2.1}%
-\contentsline {section}{\numberline {2.2}Soluzioni}{4}{section.2.2}%
-\contentsline {subsection}{\numberline {2.2.1}Gnuplot}{4}{subsection.2.2.1}%
-\contentsline {chapter}{\numberline {3}CPLEX}{7}{chapter.3}%
+\contentsline {chapter}{\numberline {1}Introduzione}{1}{chapter.1}% 
+\contentsline {chapter}{\numberline {2}Istanze e soluzioni del problema}{3}{chapter.2}% 
+\contentsline {section}{\numberline {2.1}Istanze}{3}{section.2.1}% 
+\contentsline {section}{\numberline {2.2}Soluzioni}{4}{section.2.2}% 
+\contentsline {subsection}{\numberline {2.2.1}Gnuplot}{4}{subsection.2.2.1}% 
+\contentsline {chapter}{\numberline {3}CPLEX}{7}{chapter.3}% 
