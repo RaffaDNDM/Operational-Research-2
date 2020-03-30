@@ -31,7 +31,7 @@ void cplex_solver(tsp_instance* tsp_in)
 		int* succ = calloc(tsp_in->num_nodes, sizeof(int));
 		int* comp = calloc(tsp_in->num_nodes, sizeof(int));
 
-		define_tour(x, tsp_in, succ, comp, &n_comps);
+		cplex_define_tour(x, tsp_in, succ, comp, &n_comps);
 		plot_cplex(tsp_in, succ, comp, &n_comps);
 
 		free(succ);
@@ -78,7 +78,7 @@ void cplex_build_model(tsp_instance* tsp_in, CPXENVptr env, CPXLPptr lp)
 			assert(CPXnewcols(env, lp, 1, &c, &lb, &ub, &bin, edge) == 0);
 			//Check if the index that we use to identify the edge 
 			//corresponds to the index that it should have
-			assert(CPXgetnumcols(env, lp) - 1 == xpos(tsp_in, i, j));
+			assert(CPXgetnumcols(env, lp) - 1 == xpos_cplex(tsp_in, i, j));
 		}
 	}
 
@@ -102,7 +102,7 @@ void cplex_build_model(tsp_instance* tsp_in, CPXENVptr env, CPXLPptr lp)
 			if (j == h)
 				continue;
 
-			assert(CPXchgcoef(env, lp, lastrow, xpos(tsp_in, j, h), 1.0) == 0);
+			assert(CPXchgcoef(env, lp, lastrow, xpos_cplex(tsp_in, j, h), 1.0) == 0);
 		}
 	}
 
@@ -115,17 +115,17 @@ void cplex_build_model(tsp_instance* tsp_in, CPXENVptr env, CPXLPptr lp)
 	free(constraint);
 }
 
-int xpos(tsp_instance* tsp_in, int i, int j)
+int xpos_cplex(tsp_instance* tsp_in, int i, int j)
 {
 	assert(i != j); //error if ring edge
 
 	if (i > j)
-		return xpos(tsp_in, j, i);
+		return xpos_cplex(tsp_in, j, i);
 
 	return (tsp_in->num_nodes * i + j) - ((i + 1) * (i + 2)) / 2;
 }
 
-void define_tour(double* x, tsp_instance* tsp_in, int* succ, int* comp, int* n_comps)
+void cplex_define_tour(double* x, tsp_instance* tsp_in, int* succ, int* comp, int* n_comps)
 {
 	int i = 0;
 
@@ -137,9 +137,9 @@ void define_tour(double* x, tsp_instance* tsp_in, int* succ, int* comp, int* n_c
 			int j;
 			for (j = i + 1; j < tsp_in->num_nodes; j++)
 			{
-				assert(x[xpos(tsp_in, i, j)] <= EPS || x[xpos(tsp_in, i, j)] >= (1.0 - EPS));
+				assert(x[xpos_cplex(tsp_in, i, j)] <= EPS || x[xpos_cplex(tsp_in, i, j)] >= (1.0 - EPS));
 
-				if (x[xpos(tsp_in, i, j)] > 0.5)
+				if (x[xpos_cplex(tsp_in, i, j)] > 0.5)
 				{
 					degree[i]++;
 					degree[j]++;
@@ -172,7 +172,7 @@ void define_tour(double* x, tsp_instance* tsp_in, int* succ, int* comp, int* n_c
 				if (i == j)
 					continue;
 
-				if (x[xpos(tsp_in, j, i)] > 0.5 && comp[i] == 0)
+				if (x[xpos_cplex(tsp_in, j, i)] > 0.5 && comp[i] == 0)
 				{
 					succ[j] = i;
 					comp[i] = *n_comps;

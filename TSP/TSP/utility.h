@@ -1,19 +1,23 @@
+#ifndef UTILITY
+
+#define UTILITY
+
 #include "tsp.h"
 
 #define LINE "----------------------------------------------------------------------------------\n"
 #define STAR_LINE "**********************************************************************************\n"
-#define LINE_SIZE 180
 
-#define NAME_SIZE 30
+#define LINE_SIZE 180 //size of the line gets from the input
+#define NAME_SIZE 30 //size of the variable name in the cplex model
 
-#define GP_DEFAULT_STYLE "style.txt"
-#define DEFAULT_DAT "solution.dat"
-#define CPLEX_DAT "solutionCPLEX.dat"
-#define GP_CPLEX_STYLE "styleCPLEX.txt"
-#define LP_FILENAME "model.lp"
-#define GNUPLOT_EXE "%GNUPLOT%/bin/gnuplot.exe -persistent"
+#define GP_DEFAULT_STYLE "style.txt" //name of the style file needed by Gnuplot
+#define DEFAULT_DAT "solution.dat" //name of the file where to print the solution of the default algoritm
+#define CPLEX_DAT "solutionCPLEX.dat" //name of the file where to print the cplex solution
+#define GP_CPLEX_STYLE "styleCPLEX.txt" //name of the style file for the cplex solution needed by Gnuplot
+#define LP_FILENAME "model.lp" //name fo the file that conteins the cplex model 
+#define GNUPLOT_EXE "%GNUPLOT%/bin/gnuplot.exe -persistent" //path of  where is gnuplot.exe 
 
-#define CAST_PRECISION 0.4999999999
+#define CAST_PRECISION 0.4999999999 //quantity to add to correctly approximate double into int
 
 /**
 	Compute the distance between two nodes
@@ -30,3 +34,5 @@ void dist(int, int, tsp_instance*, void*);
 	\param tsp_in reference to tsp instance structure
 */
 void print_cost(tsp_instance* tsp_in);
+
+#endif

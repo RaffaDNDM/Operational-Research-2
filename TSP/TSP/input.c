@@ -4,7 +4,7 @@ void parse_cmd(char** argv, int argc, tsp_instance* tsp_in)
 {
 	//at leat one param + program name
 	assert(argc >1 );
-	char** commands = malloc(sizeof(char*)*NUM_COMMANDS);
+	//char** commands = malloc(sizeof(char*)*NUM_COMMANDS);
 
 	tsp_in->num_nodes = -1;
 	tsp_in->deadline = DEADLINE_MAX;

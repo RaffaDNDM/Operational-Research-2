@@ -1,4 +1,7 @@
-#include "tsp.h"
+#ifndef CPLEX_SOLVER
+
+#define CPLEX_SOLVER
+
 #include "utility.h"
 #include <cplex.h>
 
@@ -6,7 +9,10 @@
 #define SOLUTION_CORRECTNESS 1
 
 #ifdef SOLUTION_CORRECTNESS
+	
+	//Approximation value for the cplex result values
 	#define EPS 1e-5
+
 #endif
 
 /**
@@ -31,7 +37,7 @@ void cplex_build_model(tsp_instance*, CPXENVptr, CPXLPptr);
 	\param comp array with the component of each node
 	\param n_comps number of components
 */
-void define_tour(double*, tsp_instance*, int*, int*, int*);
+void cplex_define_tour(double*, tsp_instance*, int*, int*, int*);
 
 /*
 	Plot the CPLEX solution
@@ -49,6 +55,6 @@ void plot_cplex(tsp_instance* tsp_in, int* succ, int* comp, int* n_comps);
 	\param i first index
 	\param j second index
 */
-int xpos(tsp_instance*, int, int);
+int xpos_cplex(tsp_instance*, int, int);
 
-//fine if
+#endif

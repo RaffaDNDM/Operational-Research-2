@@ -7,9 +7,15 @@
 #include <stdlib.h>
 #include <string.h>
 
+//Maximum time for the computation of the solution
 #define DEADLINE_MAX 1000000
+
+//Number of algoritms implemented
 #define NUM_ALGS 2
-#define NUM_COMMANDS 8
+
+//#define NUM_COMMANDS 8
+
+//default value of verbose
 #define VERBOSE 150
 
 typedef struct

@@ -1,3 +1,7 @@
+#ifndef DEFAULT_ALG
+
+#define DEFAULT_ALG
+
 #include "tsp.h"
 #include "utility.h"
 
@@ -20,3 +24,5 @@ void evaluate_sol(tsp_instance*);
 	\param tsp_in reference to tsp instance structure
 */
 void plot_solution(tsp_instance*);
+
+#endif
