@@ -15,15 +15,14 @@ void cplex_solver(tsp_instance* tsp_in)
 		case 2:
 			mtz_build_model(tsp_in, env, lp);
 			break;
-		/*
-			case 3:
+		
+		case 3:
 			gg_build_model(tsp_in, env, lp);
 			break;
-		*/
+		
 	}
 
-	
-
+	/*
 	CPXmipopt(env, lp);
 
 	if (tsp_in->integerDist)
@@ -39,6 +38,7 @@ void cplex_solver(tsp_instance* tsp_in)
 	double* x = calloc(sizeof(double), tsp_in->num_nodes);
 
 	//switch su quante  variabili prendere per plottare
+	
 	switch (tsp_in->model)
 	{
 		case 1:
@@ -80,8 +80,11 @@ void cplex_solver(tsp_instance* tsp_in)
 			
 			case 2:
 			case 3:
+			{
+				n_comps = 1;
 				compact_define_tour(x, tsp_in, succ, comp);
 				break;
+			}
 		}
 
 		plot_cplex(tsp_in, succ, comp, &n_comps);
@@ -91,6 +94,7 @@ void cplex_solver(tsp_instance* tsp_in)
 	}
 
 	free(x);
+	*/
 	CPXfreeprob(env, &lp);
 	CPXcloseCPLEX(&env);
 }
@@ -431,6 +435,89 @@ int compact_xpos(tsp_instance* tsp_in, int i, int j)
 
 void gg_build_model(tsp_instance* tsp_in, CPXENVptr env, CPXLPptr lp)
 {
+	//Properties of each edge
+	char type = 'B';
+	char** edge = calloc(sizeof(char*), 1);
+	edge[0] = calloc(sizeof(char), NAME_SIZE);
+
+	//i<j => j in [i+1, num_nodes-1]
+	int i = 0;
+
+	for (; i < tsp_in->num_nodes; i++)
+	{
+		int j = 0;
+		for (; j < tsp_in->num_nodes; j++)
+		{
+			sprintf(edge[0], "x%d,%d", i + 1, j + 1);
+
+			double c; //cost of the edge
+
+			if (tsp_in->integerDist)
+			{
+				int x;
+				dist(i, j, tsp_in, &x);
+				c = (double)x;
+			}
+			else
+				dist(i, j, tsp_in, &c);
+
+			double lb = 0.0;
+			double ub = (i == j) ? 0.0 : 1.0;
+
+			//Check if the column has been added correctly
+			assert(CPXnewcols(env, lp, 1, &c, &lb, &ub, &type, edge) == 0);
+			//Check if the index that we use to identify the edge 
+			//corresponds to the index that it should have
+			assert(CPXgetnumcols(env, lp) - 1 == compact_xpos(tsp_in, i, j));
+		}
+	}
+
+	//for yij => n*n variabili in più
+	type = 'I';
+	i = 0;
+
+	for (; i < tsp_in->num_nodes; i++)
+	{
+		sprintf(edge[0], "u%d", i + 1);
+
+		double lb = 0.0;
+		double ub = (i == 0) ? 0.0 : (double)(tsp_in->num_nodes - 2);
+
+		double c = 0.0;
+
+		//Check if the column has been added correctly
+		assert(CPXnewcols(env, lp, 1, &c, &lb, &ub, &type, edge) == 0);
+	}
+
+	//for yij => n*n variabili in più
+	type = 'I';
+	i = 0;
+
+	for (; i < tsp_in->num_nodes; i++)
+	{
+		int j = 0;
+		for (; j < tsp_in->num_nodes; j++)
+		{
+			sprintf(edge[0], "y%d,%d", i + 1, j + 1);
+
+			double c = 0.0; //cost of the edge
+
+			double lb = 0.0;
+			double ub = (i == j) ? 0.0 : ((j==1) ? 0.0: 1.0);
+
+			//Check if the column has been added correctly
+			assert(CPXnewcols(env, lp, 1, &c, &lb, &ub, &type, edge) == 0);
+		}
+	}
+
+
+	if (tsp_in->verbose >= 100)
+		CPXwriteprob(env, lp, LP_FILENAME, NULL);
+
+	free(edge[0]);
+	//free(constraint[0]);
+	free(edge);
+	//free(constraint);
 }
 
 void compact_define_tour(double* x, tsp_instance* tsp_in, int* succ, int* comp)
