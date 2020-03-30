@@ -12,6 +12,7 @@ void parse_cmd(char** argv, int argc, tsp_instance* tsp_in)
 	tsp_in->integerDist = 0; 
 	tsp_in->plot = 1;
 	tsp_in->verbose = VERBOSE;
+	tsp_in->model = 1;
 
 	int def_deadline = 0;
 
@@ -29,6 +30,27 @@ void parse_cmd(char** argv, int argc, tsp_instance* tsp_in)
 			//but also the value must be greater than zero
 			assert(alg>0 && alg<=NUM_ALGS && algF==alg); 
 			tsp_in->alg = alg;
+
+			continue;
+		}
+
+		if (strncmp(argv[i], "-model", 6) == 0)
+		{
+			if (tsp_in->alg == 2)
+			{
+				double modelF = atof(argv[++i]);
+				int model = (int) modelF;
+
+				//the value inserted by the user must be an integer (model!=0 && modelF==model) 
+				//but also the value must be greater than zero
+				assert(model > 0 && model <= NUM_MODELS && modelF == model);
+				tsp_in->model = model;
+			}
+			else
+			{
+				fprintf(stderr, "You need to specify first the algorithm you want to use\n");
+				fprintf(stderr, "or this algorithm approach doesn't support model option\n");
+			}
 
 			continue;
 		}

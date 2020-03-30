@@ -1,6 +1,4 @@
 ﻿  cplex_solver.c
-C:\Users\User\github\Operational-Research-2\TSP\TSP\cplex_solver.c(166,25): warning C4047: '=': 'int' differisce da 'int *' nei livelli di riferimento indiretto
-C:\Users\User\github\Operational-Research-2\TSP\TSP\cplex_solver.c(235,8): warning C4013: 'gets' non definita. Verrà considerata come esterna che restituisce un int.
-  tsp.c
-  Generazione del codice in corso...
+C:\Users\User\github\Operational-Research-2\TSP\TSP\cplex_solver.c(218,25): warning C4047: '=': 'int' differisce da 'int *' nei livelli di riferimento indiretto
+C:\Users\User\github\Operational-Research-2\TSP\TSP\cplex_solver.c(287,8): warning C4013: 'gets' non definita. Verrà considerata come esterna che restituisce un int.
   TSP.vcxproj -> C:\Users\User\github\Operational-Research-2\TSP\x64\Debug\TSP.exe

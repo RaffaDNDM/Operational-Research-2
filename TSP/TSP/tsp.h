@@ -7,6 +7,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define NUM_MODELS 3
+
 //Maximum time for the computation of the solution
 #define DEADLINE_MAX 1000000
 
@@ -32,6 +34,7 @@ typedef struct
 	int integerDist;
 	int plot;
 	int verbose;
+	int model;
 
 	//Output
 	int* sol;

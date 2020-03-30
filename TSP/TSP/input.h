@@ -2,7 +2,6 @@
 
 #define INPUT
 
-#include "tsp.h"
 #include "utility.h"
 #include <stdio.h>
 #include <string.h>

@@ -20,10 +20,16 @@ void solution(tsp_instance* tsp_in)
 {
 	tsp_in->sol = (int*)calloc(((size_t)tsp_in->num_nodes) +1, sizeof(int));
 
-	//default behaviour 
-	if (tsp_in->alg == 1)
-		default_alg(tsp_in);
+	switch (tsp_in->alg)
+	{
+		//default behaviour 
+		case 1:
+			default_alg(tsp_in);
+			break;
 
-	if (tsp_in->alg == 2)
-		cplex_solver(tsp_in);
+		case 2:
+			cplex_solver(tsp_in);
+			break;
+	}
+	
 }
