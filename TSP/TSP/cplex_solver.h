@@ -5,14 +5,11 @@
 #include "utility.h"
 #include <cplex.h>
 
+//#define LAZY_CONSTRAINTS 1
 #define SOLUTION_CORRECTNESS 1
 
-#ifdef SOLUTION_CORRECTNESS
-	
-	//Approximation value for the cplex result values
-	#define EPS 1e-5
-
-#endif
+//Approximation value for the cplex result values
+#define EPS 1e-5
 
 /**
 	CPLEX solver
@@ -64,6 +61,15 @@ int xpos_cplex(tsp_instance*, int, int);
 */
 void mtz_build_model(tsp_instance*, CPXENVptr, CPXLPptr);
 
+/*
+	Define the tour fo the solution
+	\param x array of the point in the solution
+	\param tsp_in reference to tsp instance structure
+	\param succ array of the successor of each node
+	\param comp array with the component of each node
+	\param n_comps number of components
+*/
+void mtz_define_tour(double*, tsp_instance*, int*, int*);
 
 /**
 	CPLEX definition of the model
@@ -74,15 +80,6 @@ void mtz_build_model(tsp_instance*, CPXENVptr, CPXLPptr);
 void gg_build_model(tsp_instance*, CPXENVptr, CPXLPptr);
 
 /*
-	Return the position of the element (i,j) in the matrix
-	of corresponding edges, created from the nodes in the graph
-	\param tsp_in reference to tsp instance structure
-	\param i first index
-	\param j second index
-*/
-int compact_xpos(tsp_instance*, int, int);
-
-/*
 	Define the tour fo the solution
 	\param x array of the point in the solution
 	\param tsp_in reference to tsp instance structure
@@ -90,7 +87,16 @@ int compact_xpos(tsp_instance*, int, int);
 	\param comp array with the component of each node
 	\param n_comps number of components
 */
-void compact_define_tour(double*, tsp_instance*, int*, int*);
+void gg_define_tour(double*, tsp_instance*, int*, int*);
+
+/*
+	Return the position of the element (i,j) in the matrix
+	of corresponding edges, created from the nodes in the graph
+	\param tsp_in reference to tsp instance structure
+	\param i first index
+	\param j second index
+*/
+int compact_xpos(tsp_instance*, int, int);
 
 
 #endif

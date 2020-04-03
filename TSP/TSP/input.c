@@ -13,7 +13,7 @@ void parse_cmd(char** argv, int argc, tsp_instance* tsp_in)
 	tsp_in->plot = 1;
 	tsp_in->verbose = VERBOSE;
 	tsp_in->model = 1;
-
+	
 	int def_deadline = 0;
 
 	strcpy(tsp_in->input, "NULL");
