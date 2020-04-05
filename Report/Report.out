@@ -4,3 +4,13 @@
 \BOOKMARK [1][-]{section.2.2}{Soluzioni}{chapter.2}% 4
 \BOOKMARK [2][-]{subsection.2.2.1}{Gnuplot}{section.2.2}% 5
 \BOOKMARK [0][-]{chapter.3}{CPLEX}{}% 6
+\BOOKMARK [1][-]{section.3.1}{Modelli compatti}{chapter.3}% 7
+\BOOKMARK [2][-]{subsection.3.1.1}{Formulazione di Miller, Tucker e Zemlin}{section.3.1}% 8
+\BOOKMARK [2][-]{subsection.3.1.2}{Formulazione di Gavish e Graves}{section.3.1}% 9
+\BOOKMARK [0][-]{chapter.4}{Appendice}{}% 10
+\BOOKMARK [1][-]{section.4.1}{Funzioni}{chapter.4}% 11
+\BOOKMARK [2][-]{subsection.4.1.1}{Costruzione modello}{section.4.1}% 12
+\BOOKMARK [2][-]{subsection.4.1.2}{Lazy constraints}{section.4.1}% 13
+\BOOKMARK [2][-]{subsection.4.1.3}{Calcolo della soluzione}{section.4.1}% 14
+\BOOKMARK [1][-]{section.4.2}{Parametri}{chapter.4}% 15
+\BOOKMARK [1][-]{section.4.3}{Costanti utili}{chapter.4}% 16

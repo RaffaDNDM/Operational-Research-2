@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7250 64-bit) (preloaded format=pdflatex 2020.1.8)  30 MAR 2020 13:02
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7250 64-bit) (preloaded format=pdflatex 2020.1.8)  5 APR 2020 18:04
 entering extended mode
 **./Report.tex
 (Report.tex
@@ -722,6 +722,9 @@ Package: enumitem 2019/06/20 v3.9 Customized lists
 \enit@inbox=\box63
 \enit@count@id=\count304
 \enitdp@description=\count305
+) ("C:\Users\User\AppData\Local\Programs\MiKTeX 2.9\tex/latex/cases\cases.sty"
+Package: cases 2020/03/29 ver 3.2
+\numc@numwid=\dimen179
 )
 ("C:\Users\User\AppData\Local\Programs\MiKTeX 2.9\tex/latex/xcolor\xcolor.sty"
 Package: xcolor 2016/05/11 v2.12 LaTeX color extensions (UK)
@@ -760,14 +763,14 @@ ty"
 \lst@gtempboxa=\box64
 \lst@token=\toks32
 \lst@length=\count308
-\lst@currlwidth=\dimen179
+\lst@currlwidth=\dimen180
 \lst@column=\count309
 \lst@pos=\count310
-\lst@lostspace=\dimen180
-\lst@width=\dimen181
+\lst@lostspace=\dimen181
+\lst@width=\dimen182
 \lst@newlines=\count311
 \lst@lineno=\count312
-\lst@maxwidth=\dimen182
+\lst@maxwidth=\dimen183
 
 ("C:\Users\User\AppData\Local\Programs\MiKTeX 2.9\tex/latex/listings\lstmisc.st
 y"
@@ -861,7 +864,7 @@ Package: auxhook 2016/05/16 v1.4 Hooks for auxiliary files (HO)
 sty"
 Package: kvoptions 2016/05/16 v3.12 Key value format for package options (HO)
 )
-\@linkdim=\dimen183
+\@linkdim=\dimen184
 \Hy@linkcounter=\count315
 \Hy@pagecounter=\count316
 
@@ -891,7 +894,7 @@ Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
 Package hyperref Info: Bookmarks ON on input line 4788.
 \c@Hy@tempcnt=\count318
 LaTeX Info: Redefining \url on input line 5147.
-\XeTeXLinkMargin=\dimen184
+\XeTeXLinkMargin=\dimen185
 
 ("C:\Users\User\AppData\Local\Programs\MiKTeX 2.9\tex/generic/oberdiek\bitset.s
 ty"
@@ -903,8 +906,8 @@ Package: bigintcalc 2016/05/16 v1.4 Expandable calculations on big integers (HO
 )
 ))
 \Fld@menulength=\count319
-\Field@Width=\dimen185
-\Fld@charsize=\dimen186
+\Field@Width=\dimen186
+\Fld@charsize=\dimen187
 Package hyperref Info: Hyper figures OFF on input line 6418.
 Package hyperref Info: Link nesting OFF on input line 6423.
 Package hyperref Info: Hyper index ON on input line 6426.
@@ -979,41 +982,41 @@ LaTeX Warning: Label `style_example' multiply defined.
 )
 \openout1 = `Report.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 91.
-LaTeX Font Info:    ... okay on input line 91.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 91.
-LaTeX Font Info:    ... okay on input line 91.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 91.
-LaTeX Font Info:    ... okay on input line 91.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 91.
-LaTeX Font Info:    ... okay on input line 91.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 91.
-LaTeX Font Info:    ... okay on input line 91.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 91.
-LaTeX Font Info:    ... okay on input line 91.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 91.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 93.
+LaTeX Font Info:    ... okay on input line 93.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 93.
+LaTeX Font Info:    ... okay on input line 93.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 93.
+LaTeX Font Info:    ... okay on input line 93.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 93.
+LaTeX Font Info:    ... okay on input line 93.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 93.
+LaTeX Font Info:    ... okay on input line 93.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 93.
+LaTeX Font Info:    ... okay on input line 93.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 93.
 LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 9
-1.
+3.
  ("C:\Users\User\AppData\Local\Programs\MiKTeX 2.9\tex/latex/base\ts1cmr.fd"
 File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 91.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 91.
-LaTeX Font Info:    ... okay on input line 91.
-LaTeX Info: Redefining \it@ocap on input line 91.
-LaTeX Info: Redefining \it@ccap on input line 91.
+LaTeX Font Info:    ... okay on input line 93.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 93.
+LaTeX Font Info:    ... okay on input line 93.
+LaTeX Info: Redefining \it@ocap on input line 93.
+LaTeX Info: Redefining \it@ccap on input line 93.
 
 ("C:\Users\User\AppData\Local\Programs\MiKTeX 2.9\tex/context/base/mkii\supp-pd
 f.mkii"
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count327
-\scratchdimen=\dimen187
+\scratchdimen=\dimen188
 \scratchbox=\box66
 \nofMPsegments=\count328
 \nofMParguments=\count329
 \everyMPshowfont=\toks34
 \MPscratchCnt=\count330
-\MPscratchDim=\dimen188
+\MPscratchDim=\dimen189
 \MPnumerator=\count331
 \makeMPintoPDFobject=\count332
 \everyMPtoPDFconversion=\toks35
@@ -1049,7 +1052,7 @@ Package caption Info: rotating package is loaded.
 Package caption Info: End \AtBeginDocument code.
 \c@lstlisting=\count333
 \AtBeginShipoutBox=\box67
-Package hyperref Info: Link coloring ON on input line 91.
+Package hyperref Info: Link coloring ON on input line 93.
 
 ("C:\Users\User\AppData\Local\Programs\MiKTeX 2.9\tex/latex/hyperref\nameref.st
 y"
@@ -1065,20 +1068,20 @@ Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
 \c@section@level=\count334
 )
-LaTeX Info: Redefining \ref on input line 91.
-LaTeX Info: Redefining \pageref on input line 91.
-LaTeX Info: Redefining \nameref on input line 91.
+LaTeX Info: Redefining \ref on input line 93.
+LaTeX Info: Redefining \pageref on input line 93.
+LaTeX Info: Redefining \nameref on input line 93.
  (Report.out) (Report.out)
 \@outlinefile=\write3
 \openout3 = `Report.out'.
 
-<Images/UNIPD.png, id=27, 80.7486pt x 80.7486pt>
+<Images/UNIPD.png, id=67, 80.7486pt x 80.7486pt>
 File: Images/UNIPD.png Graphic file (type png)
 <use Images/UNIPD.png>
-Package pdftex.def Info: Images/UNIPD.png  used on input line 99.
+Package pdftex.def Info: Images/UNIPD.png  used on input line 101.
 (pdftex.def)             Requested size: 71.13658pt x 71.13188pt.
 
-Overfull \hbox (38.99643pt too wide) in paragraph at lines 97--109
+Overfull \hbox (38.99643pt too wide) in paragraph at lines 99--111
  []$$[]$ 
  []
 
@@ -1160,7 +1163,7 @@ y"
 File: lstmisc.sty 2019/09/10 1.8c (Carsten Heinz)
 ) (Source/gnuplotC.txt) (Source/gnuplotC.txt)) (Chapters/CPLEX.tex [6]
 Capitolo 3.
-<Images/cplex_structs.png, id=156, 272.01625pt x 191.71625pt>
+<Images/cplex_structs.png, id=206, 272.01625pt x 191.71625pt>
 File: Images/cplex_structs.png Graphic file (type png)
 <use Images/cplex_structs.png>
 Package pdftex.def Info: Images/cplex_structs.png  used on input line 20.
@@ -1168,78 +1171,123 @@ Package pdftex.def Info: Images/cplex_structs.png  used on input line 20.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-(Source/modelTSP.txt) [7
-
-] [8 <./Images/cplex_structs.png>]
-<Images/indices_matrix.png, id=177, 293.095pt x 282.05376pt>
+<Images/indices_matrix.png, id=208, 293.095pt x 282.05376pt>
 File: Images/indices_matrix.png Graphic file (type png)
 <use Images/indices_matrix.png>
-Package pdftex.def Info: Images/indices_matrix.png  used on input line 84.
+Package pdftex.def Info: Images/indices_matrix.png  used on input line 32.
 (pdftex.def)             Requested size: 142.26378pt x 136.90349pt.
 
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 90--91
-
- []
-
-[9]
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 128--131
-
- []
-
-[10 <./Images/indices_matrix.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 131--132
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 149--150
+Underfull \hbox (badness 10000) in paragraph at lines 26--38
 
  []
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[11]
-Underfull \hbox (badness 10000) in paragraph at lines 187--188
+[7
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 40--42
 
  []
 
-) (Chapters/Bibliografia.tex [12]
+[8 <./Images/cplex_structs.png> <./Images/indices_matrix.png>] [9]
+Underfull \hbox (badness 10000) in paragraph at lines 64--66
+
+ []
+
+[10]) (Chapters/Appendice.tex [11] [12
+
+]
+Capitolo 4.
+(Source/modelTSP.txt)
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[13]
+Underfull \hbox (badness 10000) in paragraph at lines 56--58
+
+ []
+
+[14]
+Underfull \hbox (badness 10000) in paragraph at lines 91--92
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 91--92
+
+ []
+
+[15]
+Overfull \hbox (49.38301pt too wide) in paragraph at lines 104--124
+[][] 
+ []
+
+<Images/lazy_constraints.png, id=280, 338.26375pt x 147.55125pt>
+File: Images/lazy_constraints.png Graphic file (type png)
+<use Images/lazy_constraints.png>
+Package pdftex.def Info: Images/lazy_constraints.png  used on input line 129.
+(pdftex.def)             Requested size: 169.13145pt x 73.77544pt.
+[16]
+Underfull \hbox (badness 10000) in paragraph at lines 137--138
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 155--156
+
+ []
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[17 <./Images/lazy_constraints.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 194--196
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 203--204
+
+ []
+
+[18]
+Overfull \hbox (13.19891pt too wide) in paragraph at lines 213--220
+[][] 
+ []
+
+) (Chapters/Bibliografia.tex [19] [20
+
+]
 LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 7
 .
 
 ("C:\Users\User\AppData\Local\Programs\MiKTeX 2.9\tex/latex/base\t1cmtt.fd"
 File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 ))
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 174.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 178.
 
-[13
-
-]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 174.
+[21]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 178.
  (Report.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 174.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 174.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 178.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 178.
 Package rerunfilecheck Info: File `Report.out' has not changed.
-(rerunfilecheck)             Checksum: 4CC4F993C51F9A04D33BC5D654C9B9D4;322.
+(rerunfilecheck)             Checksum: 8F2E2D8B4C260EEBCAC645A8918933BD;997.
 
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 25909 strings out of 492484
- 471726 string characters out of 3122055
- 733754 words of memory out of 3000000
- 29796 multiletter control sequences out of 15000+200000
+ 26003 strings out of 492484
+ 472866 string characters out of 3122055
+ 734356 words of memory out of 3000000
+ 29843 multiletter control sequences out of 15000+200000
  557316 words of font info for 80 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  50i,15n,67p,797b,1502s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -1273,9 +1321,9 @@ Data/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/User
 s/User/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.
 pfb><C:/Users/User/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfont
 s/cm/cmsy8.pfb>
-Output written on Report.pdf (17 pages, 318947 bytes).
+Output written on Report.pdf (25 pages, 362711 bytes).
 PDF statistics:
- 790 PDF objects out of 1000 (max. 8388607)
- 104 named destinations out of 1000 (max. 500000)
- 64 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 953 PDF objects out of 1000 (max. 8388607)
+ 144 named destinations out of 1000 (max. 500000)
+ 149 words of extra memory for PDF output out of 10000 (max. 10000000)
 

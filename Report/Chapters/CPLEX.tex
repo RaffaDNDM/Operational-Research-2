@@ -1,5 +1,5 @@
 \chapter{CPLEX}
-Per poter utilizzare gli algoritmi di risoluzione forniti da CPLEX è necessario costruire il modello matematico del problema, legato all'istanza sopra descritta.\\
+Per poter utilizzare gli algoritmi di risoluzione forniti da CPLEX è necessario costruire il modello matematico del problema, legato all'istanza precedentemente descritta.\\
 CPLEX ha due meccanismi di acquisizione dell'istanza:
 \begin{enumerate}
 \item{\textbf{modalità interattiva:}\\
@@ -24,59 +24,7 @@ Le strutture utilizzate da CPLEX sono due (vedi Figura \ref{strutture_cplex}):
 \end{figure}
 
 Ad ogni ENV è possibile associare più LP, in modo da poter risolvere in parallelo più problemi di ottimizzazione, ma nel nostro caso ne sarà sufficiente solo uno.\\
-Come prima cosa, per poter costruire il modello da analizzare, è necessario creare un puntatore alle due strutture dati utilizzate da CPLEX.
-\lstinputlisting[caption={\footnotesize{modelTSP.txt}}, style=code, firstnumber=1, firstline=27, lastline=29, label=tsp_model, language=c]{Source/modelTSP.txt}
-La funzione alla riga 2 alloca la memoria necessaria e riempie la struttura con valori di default. Nel caso in cui non termini con successo memorizza un codice d'errore in \textit{\&errore}.\\
-La funziona invocata nella riga successiva, invece, associa la struttura LP all'ENV che gli viene fornito. Il terzo parametro passato, nell'esempio "TSP", sarà il nome del modello creato.
-Al termine di queste operazioni verrà quindi creato un modello vuoto. All'interno del nostro programma per inizializzarlo è stata costruita la seguente funzione:
-\begin{center}
-\begin{tabular}{c}
-\begin{lstlisting}[linewidth=320pt, basicstyle=\footnotesize\sffamily,] 
-void cplex_build_model(istanza_problema, env , lv);
-\end{lstlisting}
-\end{tabular}
-\end{center}
-\begin{table}[h]
-\centering
-\begin{tabular}{rl}
-\textbf{istanza\_problema: } & {puntatore alla struttura che contiene} \\
-&  {l'istanza del problema (letta dal file TSPlib)} \\
-\textbf{env: } & {puntatore di tipo CPXENVptr alla}\\
-& {struttura ENV precedentemente creata}\\
-\textbf{lp: } & {puntatore di tipo CPXLPptr alla}\\
-& {struttura LP  precedentemente creata}\\
-\end{tabular}
-\end{table}
-All'interno di \textbf{build\_model()} viene aggiunta una colonna alla volta al modello, definendo quindi anche la funzione obiettivo. Le variabili aggiunte corrispondono agli archi del grafo e per ciascuno di questi viene calcolato il costo come distanza euclidea. La funzione necessaria ad inserire colonne e definire la funzione di costo è la seguente:
-\vspace{0.5cm}
-\begin{center}
-\begin{tabular}{c}
-\begin{lstlisting}[linewidth=350pt, basicstyle=\footnotesize\sffamily,]     
-CPXnewcols(env, lp, num_colonne, costi, lower_bound, 
-           upper_bound, tipi_variabili, nomi_variabili);
-\end{lstlisting}
-\end{tabular}
-\end{center}
-\begin{table}[h]
-\begin{tabular}{rl}
-\textbf{env:} & {puntatore di tipo CPXENVptr alla}\\
-& {struttura ENV precedentemente creata} \\
-\textbf{lp:} & {di tipo CPXLPptr, è un puntatore alla struttura LP}\\
-& {precedentemente creata}\\
-\textbf{num\_colonne:} & {numero di colonne da inserire} \\    
-\textbf{costi:} & {vettore dei costi relativi agli archi da inserire} \\
-\textbf{lower\_bound:} & {vettore contenente i lower bound dei valori}\\
-& {assumibili dalle variabili da inserire}\\              
-\textbf{upper\_bound:} & {vettore contenente gli upper bound dei valori}\\
-&  {assumibili dalle variabili da inserire} \\
-\textbf{tipi\_variabili:} & {vettore contenente la tipologia delle variabili}\\
-& da inserire\\
-\textbf{nomi\_variabili:} & {vettore di stringhe contenenti i nomi}\\
-& {delle variabili da inserire}
-\end{tabular}
-\end{table}
-La generica colonna \textbf{i}, aggiunta dalla funzione, sarà definita dalle informazioni contenute all'interno della posizione \textbf{i} degli array, ricevuti come parametri. Nel programma elaborato durante il corso, viene aggiunta una colonna alla volta all'interno del modello. Per far ciò, è necessario comunque utilizzare riferimenti alle informazioni da inserire, in modo da ovviare il problema riguardante la tipologia di argomenti richiesti, che sono array. Ad esempio, nel nostro caso, la tipologia di una nuova variabile inserita sarà un riferimento al carattere \textbf{'B'}, che la identifica come binaria.\\
-Per convenzione è stato deciso di etichettare i rami $(i,j)$, con $i\neq j$, rispettando la proprietà $i<j$. In Figura \ref{Indici_matrice} è riportato lo schema degli indici che vengono utilizzati per etichettare le variabili.\\ù
+Per convenzione è stato deciso di etichettare i rami $(i,j)$ dell'istanza rispettando la proprietà $i<j$. In Figura \ref{Indici_matrice} è riportato lo schema degli indici che vengono utilizzati per etichettare le variabili.\\
 In questa figura le celle $(i,j)$ bianche, sono quelle effettivamente utilizzate per indicare un arco secondo la convenzione. Il numero all'interno di queste caselle rappresenta invece l'ordine in cui queste variabili vengono inserite nel modello e quindi gli indici associati da CPLEX per accedere alla soluzione.
 \begin{figure}[h] 
 \begin{center} 
@@ -86,107 +34,44 @@ In questa figura le celle $(i,j)$ bianche, sono quelle effettivamente utilizzate
   \label{Indici_matrice} 
 \end{center} 
 \end{figure}
+Il modello così strutturato richiede però l'inserimento di un esponenziale numero di vincoli per l'eliminazione dei sub-tour, vengono quindi ora descritti altri modelli che ovvino a questo problema.\\  
 
-Per poter inserire il primo insieme di vincoli del problema\\
-$$
-\underset{e\in \delta(v)}\sum{\;x_e} = 2\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\forall\;v\in V \\\\
-$$
-\\
-viene invece sfruttata la seguente funzione:
+\section{Modelli compatti}
+I modelli compatti del Travelling Salesman Problem, sono formulazioni il cui numero di variabili e di vincoli è polinomiale nella taglia dell'istanza. In particolare, in quelle analizzate in seguito, sono entrambi $O(n^2)$, con \textit{n = numero di nodi}.\\
+I modelli compatti sono però applicabili solo a grafi orientati. Per poterli sfruttare per la risoluzione del TSP simmetrico, è necessario per ogni ramo dell'istanza $(i,j)$, inserire nel modello i corrispondenti rami orientati in entrambe le direzioni $(i,j)$ e $(j,i)$. Questo comporta un significativo rallentamento nella computazione della soluzione, in quanto l'algoritmo, ogni volta che scarta un ramo $(i,j)$ dalla soluzione ottima, verifica se il corrispondente $(j,i)$ potrebbe invece appartenerle. Questo non può però essere possibile, essendo i due rami in realtà lo stesso nella nostra istanza iniziale.\\ 
+\subsection{Formulazione di Miller, Tucker e Zemlin}
+Miller, Tucker e Zemlin, nella loro formulazione del modello, hanno introdotto una nuova variabile $u_i$ per ogni nodo \textit{i} e imposto che, nella soluzione ottima, il suo valore  rispettasse dei nuovi vincoli. Questi servivano a garantire che venisse seguito un ordine di percorrenza di tutti i nodi. In questo modo hanno eliminato la creazione di sub-tour, mantenendo il numero di vincoli e di variabili polinomiale. Nello specifico il loro modello è così strutturato:
+\begin{align}
+& min \underset{i\in V}\sum{}\underset{j\in V}\sum{c_{i,j}\; x_{i,j}} \\ \notag \\
+& \underset{i\in V}\sum{x_{ih}}\; =\; 1 & \forall\; h\in V \\ \notag \\
+& \underset{j\in V}\sum{x_{hj}}\; =\; 1 & \forall\; h\in V \\ \notag \\
+& u_i-u_j+n\; x_{i,j}\;\leq\; n-1 & \forall\; i,j\in V-\{ 1\} , i\neq j \\ \notag \\
+& 0\leq u_i\;\leq\; n-2 & \forall\; i\in V-\{ 1\} \\ \notag 
+\end{align}
+Esistono due diversi modi per implementare questo modello sfruttando le funzioni di CPLEX.\\
+Nel primo i nuovi vincoli vengono aggiunti come visto in precedenza. In questo modo, durante la fase di preprocessamento, il programma è già a conoscenza di tutti i vincoli che dovrà rispettare la soluzione ottima. Ciò gli permette di migliorare i coefficienti presenti, prima ancora di iniziare la computazione dell'ottimo.\\
+Il secondo metodo, invece, sfrutta l'inserimento nel modello di vincoli detti "lazy constraints". Questi non sono noti al programma dall'inizio, ma vengono inseriti all'interno di un pool di vincoli. Nel momento in cui viene calcolata una soluzione, CPLEX verifica che vengano rispettati tutti i vincoli presenti nel pool. Se ne trova uno violato lo aggiunge al modello e ripete la computazione. Questo approccio permette, per risolvere lo stesso problema, di eseguire calcoli su un modello più piccolo, ma può aumentare i tempi di computazione non fornendo a CPLEX tutte le informazioni dall'inizio.   
+
+\subsection{Formulazione di Gavish e Graves}
+Nella formulazione di Gavish e Graves, per impedire la formazione di sub-tour all'interno della soluzione ottima, è stato introdotto un nuovo vincolo per ogni ramo. Questo permette di regolare il flusso $y_{i,j}$, con $i\neq j$,  che lo attraversa.Inoltre è stato necessario aggiungere anche dei vincoli, detti "vincoli di accoppiamento", che collegassero i flussi alle variabili $x_{i,j}$ . Il loro modello è quindi così strutturato:
+\begin{align}
+& min\underset{i\in V}\sum{\underset{j\in V}\sum{c_{i,j}\; x_{i,j}}} \\ \notag \\
+& \underset{i\in V}\sum{x_{ih}}\;=\;1 & \forall\;h\in V \\ \notag\\
+& \underset{j\in V}\sum{x_{hj}}\;=\;1 & \forall\;h\in V \\ \notag\\
+& \underset{j\in V}\sum{y_{1,j}}\;=\;1\\ \notag\\
+& \underset{j\in V}\sum{y_{h,j}}\;=\;\underset{i\in V}\sum{y_{i,h}}\;-1 & \forall\;h\in V-\{1\}\\ \notag\\
+& y_{i,j}\leq\;(n-1)\;x_{i,j} & \forall\;i,j\in V, i\neq j\\ \notag
+\end{align}
+La soluzione di questo modello risulta però essere lontana dalla convex hull. Per migliorarla è possibile sostituire il vincolo \textit{(3.11)} con \\
 \begin{center}
-\begin{tabular}{c}
-\begin{lstlisting}[linewidth=330pt, basicstyle=\footnotesize\sffamily,]     
- CPXnewrows(env, lp, numero_righe,termini_noti,
-            tipi_vincoli, range_valori, nomi_vincoli);
-\end{lstlisting}
-\end{tabular}
+$y_{i,j}\leq\;(n-2)\;x_{i,j} \;\;\;\;\;\forall\; i\neq \; j$\\
 \end{center}
-\begin{table}[h]
-\begin{tabular}{rl}
-\textbf{env:} & {puntatore di tipo CPXENVptr alla struttura ENV}\\
-& {precedentemente creata}\\
-\textbf{lp:} & {puntatore di tipo CPXLPptr alla struttura LP}\\
-& {precedentemente creata}\\
-\textbf{numero\_righe:} & {numero di righe (vincoli) da inserire}\\
-\textbf{termini\_noti:} & {vettore dei termini noti del vincoli}\\
-\textbf{tipi\_vincoli:} & {vettore di caratteri che specifica il tipo di vincoli}\\
-&{da inserire. Ogni carattere può assumere:}\\
-&{\textit{'L'} per vincolo $\leq$}\\
-&{\textit{'E'} per vincolo $=$}\\
-&{\textit{'G'} per vincolo $\geq$}\\
-&{\textit{'R'} per vincolo definito in un intervallo}\\
-\end{tabular}
-\end{table}
-\begin{table}[h]
-\begin{tabular}{rl}
-\textbf{range\_valori:} & {vettore di range per i valori di ogni vincolo}\\
-& {(nel nostro caso è NULL)} \\
-\textbf{nomi\_vincoli} & vettore di stringhe contenenti i nomi  \\
-                  & delle variabili da inserire
-\end{tabular}
-\end{table}
-In modo analogo all'inserimento delle colonne, nel nostro programma viene aggiunta una riga alla volta nel modello. L'\textbf{i}-esima riga aggiunta corrisponderà al vincolo imposto sul nodo \textbf{i}-esimo, imponendo a 1 il coefficente della variabile $x_{k,j}$ se $k=i$ $j=i$ per ogni variabile del modello.\\\\
-Per ottenere la soluzione ottima del problema di ottimizzazione del problema correlato al modello definito in cplex, vengono utilizzate due fasi:
-\begin{itemize}
-\item{\textbf{Risoluzione del problema di ottimizzazione}\\
+mentre per gli altri valori di $i$ e $j$ è necessario lasciare i vincoli originali. 
+Per evitare che la soluzione ottima contenga sia l'arco $x_{i,j}$ che $x_{j,i}$, che nella nostra istanza iniziale corrispondono allo stesso arco, viene anche aggiunto il seguente vincolo:
 \begin{center}
-\begin{tabular}{c}
-\begin{lstlisting}[linewidth=120pt, basicstyle=\footnotesize\sffamily,]
-CPXmipopt(env, lp);
-\end{lstlisting}
-\end{tabular}
+$x_{i,j}+x_{j,i}\leq 1\;\;\;\; \forall i,j \in V$ con $i < j$
 \end{center}
-\begin{table}[h]
-\centering
-\begin{tabular}{rl}
-\textbf{env:} & {puntatore di tipo CPXENVptr alla struttura ENV}\\
-& {precedentemente creata}\\
-\textbf{lp:} & {puntatore di tipo CPXLPptr alla struttura LP}\\
-& {precedentemente creata}\\
-\end{tabular}
-\end{table}
-}
-\item{\textbf{Ottenimento della soluzione}\\
-\begin{center}
-\begin{tabular}{c}
-\begin{lstlisting}[linewidth=230pt, basicstyle=\footnotesize\sffamily,]
-CPXgetx(env, lp, x, inizio, fine);
-\end{lstlisting}
-\end{tabular}
-\end{center}
-\begin{table}[h]
-\centering
-\begin{tabular}{rl}
-\textbf{env:} & {puntatore di tipo CPXENVptr alla struttura ENV}\\
-& {precedentemente creata}\\
-\textbf{lp:} & {puntatore di tipo CPXLPptr alla struttura LP}\\
-& {precedentemente creata}\\
-\textbf{x:} & {puntatore a un vettore di double in cui verranno salvati}\\
-\end{tabular}
-\end{table}
-\begin{table}[h]
-\centering
-\begin{tabular}{rl}
-& {i valori delle variabili ottenuti dalla soluzione ottima}\\
-\textbf{inizio:} & {primo indice della variabile di cui si vuole memorizzare}\\
-& {ed analizzare il valore}\\
-\textbf{fine:} & {indice dell'ultima variabile di cui si vuole memorizzare}\\
-& {ed analizzare il valore}\\
-\end{tabular}
-\end{table}
-Questa funzione salva in x tutte le variabili che hanno indice $i\in [inizio, fine]$ e quindi x deve essere un vettore di almeno $fine-inizio+1$ valori. Nel nostro programma, vengono analizzati i valori di tutte le variabili in gioco.\\
-Per questo motivo \textbf{inizio=0} e \textbf{fine=num\_colonne - 1}\footnote{numero di variabili=CPXgetnumcols(env,lp);}\footnote{numero di vincoli=CPXgetnumrows(env,lp);}. In seguito il nostro programma analizza la correttezza della soluzione svolgendo la verifica su:
-\begin{itemize}
-\item{\textit{valori assunti dalle variabili}\\
-ciascun $x_{i,j}$ assume valore $0$ o $1$ con una tolleranza di $\epsilon=10^{-5}$}
-\item{\textit{grado di ciascun nodo}\\
-il tour è composto al massimo da due archi che toccano lo stesso nodo}
-\end{itemize}
-}
-\end{itemize}
-Resta però un problema da risolvere in tale modello, poichè non è stato inserito alcun sub-tour elimination. La soluzione ottenuta non è quindi ottima ma è costituita da diverse componenti connesse.\\
+
 
 %inserire immagine
 %\ref{nome label}
-
-
