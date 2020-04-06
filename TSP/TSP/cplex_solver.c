@@ -6,22 +6,32 @@ void cplex_solver(tsp_instance* tsp_in)
 	CPXENVptr env = CPXopenCPLEX(&error);
 	CPXLPptr lp = CPXcreateprob(env, &error, "TSP");
 
+	int* succ = calloc(tsp_in->num_nodes, sizeof(int));
+	int* comp = calloc(tsp_in->num_nodes, sizeof(int));;
+
 	switch (tsp_in->model)
 	{
 		case 1:
-			cplex_build_model(tsp_in, env, lp);
+		{
+			benders_solver(env, lp, tsp_in, succ, comp);
 			break;
+		}
 
 		case 2:
+		{
 			mtz_build_model(tsp_in, env, lp);
+			CPXmipopt(env, lp);
 			break;
-		
-		case 3:
-			gg_build_model(tsp_in, env, lp);
-			break;	
-	}
+		}
 
-	CPXmipopt(env, lp);
+		case 3:
+		{
+			gg_build_model(tsp_in, env, lp);
+			CPXmipopt(env, lp);
+			break;
+
+		}
+	}
 
 	if (tsp_in->integerDist)
 	{
@@ -35,15 +45,14 @@ void cplex_solver(tsp_instance* tsp_in)
 	print_cost(tsp_in);
 
 	//Values of variables in the solution
-	double* x = calloc(sizeof(double), tsp_in->num_nodes);
-
+	double* x = calloc(sizeof(double), tsp_in->num_nodes);;
 	//switch su quante  variabili prendere per plottare
 	
 	switch (tsp_in->model)
 	{
 		case 1:
 		{
-			x = realloc(x, sizeof(double)*CPXgetnumcols(env, lp));
+			x = (double*) realloc(x, sizeof(double) * CPXgetnumcols(env, lp));
 			assert(CPXgetmipx(env, lp, x, 0, CPXgetnumcols(env, lp) - 1) == 0);
 			break;
 		}
@@ -62,7 +71,7 @@ void cplex_solver(tsp_instance* tsp_in)
 		case 3:
 		{
 			int num_edges = (tsp_in->num_nodes) * (tsp_in->num_nodes);
-			x = realloc(x, sizeof(double) * num_edges);
+			x = calloc(sizeof(double), num_edges);
 
 			int start = num_edges;
 			int end = CPXgetnumcols(env, lp) - 1;
@@ -71,28 +80,24 @@ void cplex_solver(tsp_instance* tsp_in)
 			break;
 		}
 	}
-	
+
+	int n_comps = 1;
 	if (tsp_in->plot)
 	{
-		int n_comps;
-		int* succ = calloc(tsp_in->num_nodes, sizeof(int));
-		int* comp = calloc(tsp_in->num_nodes, sizeof(int));
-
 		switch (tsp_in->model)
-		{
-			case 1:
-				cplex_define_tour(x, tsp_in, succ, comp, &n_comps);
-				break;
-			
+		{			
 			case 2:
 			{
-				n_comps = 1;
+				succ = calloc(tsp_in->num_nodes, sizeof(int));
+				comp = calloc(tsp_in->num_nodes, sizeof(int));
 				mtz_define_tour(x, tsp_in, succ, comp);
 				break;
 			}
+
 			case 3:
 			{
-				n_comps = 1;
+				succ = calloc(tsp_in->num_nodes, sizeof(int));
+				comp = calloc(tsp_in->num_nodes, sizeof(int));
 				gg_define_tour(x, tsp_in, succ, comp);
 				break;
 			}
@@ -228,7 +233,7 @@ void cplex_define_tour(double* x, tsp_instance* tsp_in, int* succ, int* comp, in
 		if (succ[begin] == -1)
 		{
 			(*n_comps)++;
-			comp[begin] = n_comps;
+			comp[begin] = *n_comps;
 
 			int j = begin;
 
@@ -716,4 +721,71 @@ void gg_define_tour(double* x, tsp_instance* tsp_in, int* succ, int* comp)
 		k -= 1.0;
 	}
 	succ[i] = 0;
+}
+
+void benders_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ, int* comp)
+{
+	cplex_build_model(tsp_in, env, lp);
+
+	int n_comps = 3;
+	
+	double* x = calloc(sizeof(double), CPXgetnumcols(env, lp));
+	CPXmipopt(env, lp);
+	assert(CPXgetmipx(env, lp, x, 0, CPXgetnumcols(env, lp) - 1) == 0);
+	cplex_define_tour(x, tsp_in, succ, comp, &n_comps);
+	
+	while (n_comps >= 2)
+	{
+		add_sec_constraint(env, lp, tsp_in, comp, n_comps);
+
+		CPXmipopt(env, lp);
+		CPXgetbestobjval(env, lp, &tsp_in->bestCostD);
+		assert(CPXgetmipx(env, lp, x, 0, CPXgetnumcols(env, lp) - 1) == 0);
+		cplex_define_tour(x, tsp_in, succ, comp, &n_comps);
+		plot_cplex(tsp_in, succ, comp, &n_comps);
+	}
+
+	free(x);
+}
+
+void add_sec_constraint(CPXENVptr env, CPXLPptr lp, tsp_instance *tsp_in, int *comp, int n_comps)
+{
+	static int iteration = 0;
+	iteration++;
+
+	int* const_terms = calloc(sizeof(int), n_comps);
+	char type_constraint = 'L';
+	char** constraint = calloc(sizeof(char*), 1);
+	constraint[0] = calloc(sizeof(char), NAME_SIZE);
+	
+	int k = 0;
+	for (;k < tsp_in->num_nodes; k++)
+		const_terms[comp[k]-1]++;
+
+	for (k=1; k <= n_comps; k++)
+	{
+		double const_term = const_terms[k-1]-1.0;
+		int lastrow = CPXgetnumrows(env, lp);
+		sprintf(constraint[0], "SEC-constraint (%d, %d)", k, iteration);
+		//CPXnewrows(env, lp, numero righe, vettore di termini noti, vettore di tipo di vincoli, NULL, cname)
+		assert(CPXnewrows(env, lp, 1, &(const_term), &type_constraint, NULL, constraint) == 0); //one row for each node
+
+		int i = 0;
+		for (;i < tsp_in->num_nodes; i++)
+		{
+			int j;
+			for (j=i+1; j < tsp_in->num_nodes; j++)
+			{
+				if (comp[i] == k && comp[j] == k)
+					assert(!CPXchgcoef(env, lp, lastrow, xpos_cplex(tsp_in, i, j), 1.0));
+			}
+		}
+	}
+
+	if (tsp_in->verbose >= 100)
+		CPXwriteprob(env, lp, LP_FILENAME, NULL);
+
+	free(constraint[0]);
+	free(constraint);
+	free(const_terms);
 }

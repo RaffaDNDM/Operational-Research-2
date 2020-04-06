@@ -98,5 +98,23 @@ void gg_define_tour(double*, tsp_instance*, int*, int*);
 */
 int compact_xpos(tsp_instance*, int, int);
 
+/**
+	Benders definition of the model and resolution
+	\param env pointer to the ENV structure, used by CPLEX solver
+	\param lp pointer to the LP structure, used by CPLEX solver
+	\param tsp_in reference to tsp instance structure
+	\param succ
+	\param comp
+*/
+void benders_solver(CPXENVptr, CPXLPptr, tsp_instance*, int*, int *);
 
+/**
+	CPLEX definition of the model
+	\param env pointer to the ENV structure, used by CPLEX solver
+	\param lp pointer to the LP structure, used by CPLEX solver
+	\param tsp_in reference to tsp instance structure
+	\param succ
+	\param comp
+*/
+void add_sec_constraint(CPXENVptr, CPXLPptr, tsp_instance*, int*, int);
 #endif
