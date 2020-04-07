@@ -223,7 +223,8 @@ void cplex_define_tour(double* x, tsp_instance* tsp_in, int* succ, int* comp, in
 
 	#endif
 
-	for (i = 0; i < tsp_in->num_nodes; succ[i++] = -1);
+	for (i = 0; i < tsp_in->num_nodes; succ[i++] = -1)
+		comp[i] = 0;
 
 	*n_comps = 0;
 	int begin;
@@ -731,8 +732,11 @@ void benders_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ,
 	
 	double* x = calloc(sizeof(double), CPXgetnumcols(env, lp));
 	CPXmipopt(env, lp);
+	CPXgetbestobjval(env, lp, &tsp_in->bestCostD);
 	assert(CPXgetmipx(env, lp, x, 0, CPXgetnumcols(env, lp) - 1) == 0);
 	cplex_define_tour(x, tsp_in, succ, comp, &n_comps);
+	print_cost(tsp_in);
+	plot_cplex(tsp_in, succ, comp, &n_comps);
 	
 	while (n_comps >= 2)
 	{
