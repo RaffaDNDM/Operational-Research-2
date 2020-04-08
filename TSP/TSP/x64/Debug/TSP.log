@@ -1,3 +1,5 @@
 ﻿  cplex_solver.c
 C:\Users\User\github\Operational-Research-2\TSP\TSP\cplex_solver.c(306,8): warning C4013: 'gets' non definita. Verrà considerata come esterna che restituisce un int.
+C:\Users\User\github\Operational-Research-2\TSP\TSP\cplex_solver.c(440,7): warning C4101: 'indices2': variabile locale senza riferimenti
+C:\Users\User\github\Operational-Research-2\TSP\TSP\cplex_solver.c(441,10): warning C4101: 'values2': variabile locale senza riferimenti
   TSP.vcxproj -> C:\Users\User\github\Operational-Research-2\TSP\x64\Debug\TSP.exe

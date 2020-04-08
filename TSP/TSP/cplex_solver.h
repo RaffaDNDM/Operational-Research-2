@@ -5,7 +5,7 @@
 #include "utility.h"
 #include <cplex.h>
 
-//#define LAZY_CONSTRAINTS 1
+#define LAZY_CONSTRAINTS 1
 #define SOLUTION_CORRECTNESS 1
 
 //Approximation value for the cplex result values

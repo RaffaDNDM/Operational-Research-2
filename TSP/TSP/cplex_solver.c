@@ -442,6 +442,7 @@ void mtz_build_model(tsp_instance* tsp_in, CPXENVptr env, CPXLPptr lp)
 		first = 0;
 		const_term = 1;
 		count = 0;
+		i = 0;
 
 		for (; i < tsp_in->num_nodes; i++)
 		{
@@ -735,8 +736,8 @@ void benders_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ,
 	CPXgetbestobjval(env, lp, &tsp_in->bestCostD);
 	assert(CPXgetmipx(env, lp, x, 0, CPXgetnumcols(env, lp) - 1) == 0);
 	cplex_define_tour(x, tsp_in, succ, comp, &n_comps);
-	print_cost(tsp_in);
-	plot_cplex(tsp_in, succ, comp, &n_comps);
+	//print_cost(tsp_in);
+	//plot_cplex(tsp_in, succ, comp, &n_comps);
 	
 	while (n_comps >= 2)
 	{
@@ -746,7 +747,7 @@ void benders_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ,
 		CPXgetbestobjval(env, lp, &tsp_in->bestCostD);
 		assert(CPXgetmipx(env, lp, x, 0, CPXgetnumcols(env, lp) - 1) == 0);
 		cplex_define_tour(x, tsp_in, succ, comp, &n_comps);
-		plot_cplex(tsp_in, succ, comp, &n_comps);
+		//plot_cplex(tsp_in, succ, comp, &n_comps);
 	}
 
 	free(x);
