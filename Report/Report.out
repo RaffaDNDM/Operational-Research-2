@@ -7,10 +7,15 @@
 \BOOKMARK [1][-]{section.3.1}{Modelli compatti}{chapter.3}% 7
 \BOOKMARK [2][-]{subsection.3.1.1}{Formulazione di Miller, Tucker e Zemlin}{section.3.1}% 8
 \BOOKMARK [2][-]{subsection.3.1.2}{Formulazione di Gavish e Graves}{section.3.1}% 9
-\BOOKMARK [0][-]{chapter.4}{Appendice}{}% 10
-\BOOKMARK [1][-]{section.4.1}{Funzioni}{chapter.4}% 11
-\BOOKMARK [2][-]{subsection.4.1.1}{Costruzione modello}{section.4.1}% 12
-\BOOKMARK [2][-]{subsection.4.1.2}{Lazy constraints}{section.4.1}% 13
-\BOOKMARK [2][-]{subsection.4.1.3}{Calcolo della soluzione}{section.4.1}% 14
-\BOOKMARK [1][-]{section.4.2}{Parametri}{chapter.4}% 15
-\BOOKMARK [1][-]{section.4.3}{Costanti utili}{chapter.4}% 16
+\BOOKMARK [1][-]{section.3.2}{Benders}{chapter.3}% 10
+\BOOKMARK [0][-]{chapter.4}{Performance}{}% 11
+\BOOKMARK [1][-]{section.4.1}{Tabella}{chapter.4}% 12
+\BOOKMARK [1][-]{section.4.2}{Performance profiling}{chapter.4}% 13
+\BOOKMARK [1][-]{section.4.3}{Analisi degli algoritmi sviluppati}{chapter.4}% 14
+\BOOKMARK [0][-]{chapter.5}{Appendice}{}% 15
+\BOOKMARK [1][-]{section.5.1}{Funzioni}{chapter.5}% 16
+\BOOKMARK [2][-]{subsection.5.1.1}{Costruzione modello}{section.5.1}% 17
+\BOOKMARK [2][-]{subsection.5.1.2}{Lazy constraints}{section.5.1}% 18
+\BOOKMARK [2][-]{subsection.5.1.3}{Calcolo della soluzione}{section.5.1}% 19
+\BOOKMARK [1][-]{section.5.2}{Parametri}{chapter.5}% 20
+\BOOKMARK [1][-]{section.5.3}{Costanti utili}{chapter.5}% 21

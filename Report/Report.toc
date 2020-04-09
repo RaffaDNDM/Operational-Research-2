@@ -1,18 +1,23 @@
 \babel@toc {italian}{}
 \babel@toc {italian}{}
-\contentsline {chapter}{\numberline {1}Introduzione}{1}{chapter.1}%
-\contentsline {chapter}{\numberline {2}Istanze e soluzioni del problema}{3}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Istanze}{3}{section.2.1}%
-\contentsline {section}{\numberline {2.2}Soluzioni}{4}{section.2.2}%
-\contentsline {subsection}{\numberline {2.2.1}Gnuplot}{4}{subsection.2.2.1}%
-\contentsline {chapter}{\numberline {3}CPLEX}{7}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Modelli compatti}{8}{section.3.1}%
-\contentsline {subsection}{\numberline {3.1.1}Formulazione di Miller, Tucker e Zemlin}{9}{subsection.3.1.1}%
-\contentsline {subsection}{\numberline {3.1.2}Formulazione di Gavish e Graves}{10}{subsection.3.1.2}%
-\contentsline {chapter}{\numberline {4}Appendice}{13}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Funzioni}{13}{section.4.1}%
-\contentsline {subsection}{\numberline {4.1.1}Costruzione modello}{13}{subsection.4.1.1}%
-\contentsline {subsection}{\numberline {4.1.2}Lazy constraints}{16}{subsection.4.1.2}%
-\contentsline {subsection}{\numberline {4.1.3}Calcolo della soluzione}{17}{subsection.4.1.3}%
-\contentsline {section}{\numberline {4.2}Parametri}{18}{section.4.2}%
-\contentsline {section}{\numberline {4.3}Costanti utili}{19}{section.4.3}%
+\contentsline {chapter}{\numberline {1}Introduzione}{1}{chapter.1}% 
+\contentsline {chapter}{\numberline {2}Istanze e soluzioni del problema}{3}{chapter.2}% 
+\contentsline {section}{\numberline {2.1}Istanze}{3}{section.2.1}% 
+\contentsline {section}{\numberline {2.2}Soluzioni}{4}{section.2.2}% 
+\contentsline {subsection}{\numberline {2.2.1}Gnuplot}{4}{subsection.2.2.1}% 
+\contentsline {chapter}{\numberline {3}CPLEX}{7}{chapter.3}% 
+\contentsline {section}{\numberline {3.1}Modelli compatti}{8}{section.3.1}% 
+\contentsline {subsection}{\numberline {3.1.1}Formulazione di Miller, Tucker e Zemlin}{9}{subsection.3.1.1}% 
+\contentsline {subsection}{\numberline {3.1.2}Formulazione di Gavish e Graves}{10}{subsection.3.1.2}% 
+\contentsline {section}{\numberline {3.2}Benders}{11}{section.3.2}% 
+\contentsline {chapter}{\numberline {4}Performance}{13}{chapter.4}% 
+\contentsline {section}{\numberline {4.1}Tabella}{13}{section.4.1}% 
+\contentsline {section}{\numberline {4.2}Performance profiling}{13}{section.4.2}% 
+\contentsline {section}{\numberline {4.3}Analisi degli algoritmi sviluppati}{13}{section.4.3}% 
+\contentsline {chapter}{\numberline {5}Appendice}{15}{chapter.5}% 
+\contentsline {section}{\numberline {5.1}Funzioni}{15}{section.5.1}% 
+\contentsline {subsection}{\numberline {5.1.1}Costruzione modello}{15}{subsection.5.1.1}% 
+\contentsline {subsection}{\numberline {5.1.2}Lazy constraints}{18}{subsection.5.1.2}% 
+\contentsline {subsection}{\numberline {5.1.3}Calcolo della soluzione}{19}{subsection.5.1.3}% 
+\contentsline {section}{\numberline {5.2}Parametri}{20}{section.5.2}% 
+\contentsline {section}{\numberline {5.3}Costanti utili}{21}{section.5.3}% 

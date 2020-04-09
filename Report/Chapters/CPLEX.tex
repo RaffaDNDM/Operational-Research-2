@@ -72,6 +72,41 @@ Per evitare che la soluzione ottima contenga sia l'arco $x_{i,j}$ che $x_{j,i}$,
 $x_{i,j}+x_{j,i}\leq 1\;\;\;\; \forall i,j \in V$ con $i < j$
 \end{center}
 
+\section{Benders}
+Negli anni '60, Jacques F. Benders sviluppo un approccio generale, applicabile a qualsiasi problema di programmazione lineare, per ridurre il numero esponenziale di alcuni vincoli specifici inseriti nel modello.\\
+In questo metodo, il modello viene scritto senza quei vincoli e poi questi verranno aggiunti in seguito durante l'esecuzione del problema. Nel caso in cui la soluzione ottima, calcolata a partire da questo modello, non rispetti un vincolo di quelli rimossi, viene aggiuntoal modello. \\
+In seguito viene riportata l'appicazione specifica di Benders al TSP problem.
+I vincoli di Subtour Elimination sono in numero esponenziale e sono:\\
+\begin{align}
+&\underset{e\in E(S)}\sum{x_{e}} \leq \mid S\mid - 1\;\forall\;S\underset{\neq}{\subset}V\; : \; \mid S\mid\geq 2\\
+\end{align}
+o equivalentemente:
+\begin{align}
+&\underset{e\in \delta(S)}\sum{x_{e}}\geq 2\;\forall\;S\underset{\neq}{\subset}V\; : \; \mid S\mid\geq 2\\
+\end{align}
+Viene definito un nuovo modello per il problema del commesso viaggiatore simmetrico, in cui vengono rimossi tali vincoli, contemplando così la possibilità di avere dei subtour nella soluzione finale.\\
+Viene risolto il problema e nel caso in cui ci sia più di una componente connessa, viene aggiunto al modello un vincolo di subtour elimination per ogni ciclo, basato sui nodi che lo costituiscono.\\
 
-%inserire immagine
-%\ref{nome label}
+\begin{algorithm}
+\caption{Risoluzione del problema}
+\begin{algorithmic}
+\REQUIRE {$MODEL =$ Modello TSP simmetrico senza vincoli di Subtour elimination}
+\ENSURE {$x$: soluzione intera senza subtour}
+\STATE {}
+\STATE {$x \leftarrow solve(MODEL)$}
+\STATE {$num\_comps \leftarrow comps(x)$}
+\STATE {}
+\WHILE{$num\_comps \geq 2$}
+\STATE{Add $\underset{e\in \delta(S_k)}\sum{x_{e}}\leq \mid S_k\mid - 1\;\forall\; componente\; connessa\; S_k$}
+\STATE {}
+\IF{$num\_comps \geq 2$}
+\STATE {$x \leftarrow solve(MODEL)$}
+\STATE {$num\_comps \leftarrow comps(x)$}
+\ENDIF
+\STATE {}
+\ENDWHILE
+\end{algorithmic}
+\end{algorithm}
+Questo approccio permette di scrivere un modello con meno vincoli, riducendone la complessità di risoluzione. Il numero di iterazioni che vengono effettuate dall'algoritmo non è conosciuto e potrebbe essere anche molto elevato.\\
+Questo problema problema potrebbe impiegare numerose iterazioni e nel caso peggiore anche l'inserimento di un numero esponenziale di vincoli, ovvero tutti, con istanze clusterizzate.\\
+Inoltre il problema principale riscontrato in questo algoritmo riguarda la rigenerazione ad ogni iterazione di un albero completo di branching eliminando il precedente. Questo non accade invece per il Branch \& Bound in quanto vengono aggiunte nuove ramificazioni all'albero esistente.\\ In passato, con le versioni del MIP solver di CPLEX degli anni '60, questa operazione era molto onerosa mentre attualmente questo metodo garantisce la risoluzione anche di istanze molto grandi, in tempi ragionevoli.\\
