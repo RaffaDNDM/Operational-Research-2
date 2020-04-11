@@ -29,39 +29,5 @@ decreta la fine del file}
 \end{itemize}
 
 \section{Soluzioni}
-Una soluzione del problema è una sequenza di nodi che corrisponde ad una permutazione dell'istanza (es. $S = \{x_1,x_2,...,x_n\}$ tale che $x_i=x_j\;\;x_i \in \Pi\;\forall\;x_i\in S\;\wedge\; x_i!=x_j\;\forall\;i\neq j$). Poichè in questa variante non esiste alcuna origine, ogni tour può essere descritto da due versi di percorrenza e l'origine può essere un nodo qualsiasi del grafo.
-\subsection{Gnuplot}\label{gnuplot}
-Una volta ottenuta la soluzione del problema di ottimizzazione, viene disegnato il grafo per facilitare all'utente la comprensione della sua correttezza. Per fare ciò viene utilizzato Gnuplot, un programma di tipo command-driven.\\
-Per poterlo utilizzare all'interno del proprio programma esistono due metodi:
-\begin{itemize}
-\item{Collegare la libreria ed invocare le sue funzioni all'interno del nostro programma}
-\item{Collegare l'eseguibile interattivo al proprio programma. In questo caso i comandi deve essere passati all'eseguibile attraverso un file di testo e l'utilizzo di un pipe.}\\
-\end{itemize}
-In questa trattazione è stato scelto il secondo metodo. All'interno del file è possibile specificare a Gnuplot le caratteristiche grafiche che deve aver il grafo. Di seguito viene riportato un esempio di tale file.\\
-
-\lstinputlisting[caption={\footnotesize{style.txt}}, style=code, firstnumber=1, firstline=1, lastline=12, label=style_example]{Source/style_example.txt}
-
-Nell'esempio sopra riportato, nella prima parte viene definito lo stile, il colore delle linee e la tipologia di punti, che verrano in seguito visualizzati all'interno del grafico prodotto.\\In seguito viene effettuato il plot del grafo in una finestra, utilizzando il primo e secondo valore di ciascuna riga del file \textbf{solution.dat} come coordinate mentre il terzo valore viene utilizzato come etichetta.\\\\
-Il file \textbf{solution.dat} contiene le informazioni relative alla soluzione del grafico in cui ciascuna riga ha la seguente forma:
-\begin{lstlisting}[linewidth=290pt,basicstyle=\footnotesize\sffamily,]     
-coordinata_x   coordinata_y   posizione_in_tour
-\end{lstlisting}
-\textbf{coordinata\_x} rappresenta la coordinata x del nodo;\\
-\textbf{posizione\_in\_tour} rappresenta la coordinata y del nodo;\\
-\textbf{posizione\_in\_tour} rappresenta l'ordine del nodo all'interno del tour, assunto come nodo di origine il nodo 1.\\\\
-Il grafico viene generato dal comando \textbf{plot}, leggendo tutte le righe non vuote e disegnando un punto nella posizione \textbf{(coordinata\_x,coordinata\_y)} del grafico 2D. In seguito viene tracciata una linea solo tra coppie di punti, legati a righe consecutive non vuote all'interno di \textbf{solution.dat}.\\\\
-Attraverso le istruzioni riportate nelle righe 10-12 di \textbf{style.txt}, viene invece salvato il grafico appena generato nell'immagine \textbf{solution.png}.\\\\
-Di seguito vengono riportate le varie fasi necessarie alla definizione di un pipe e al passaggio di questo al programma GNUplot:
-\begin{itemize}
-\item{\textbf{Definizione del pipe}
-\lstinputlisting[style=code, firstnumber=1, firstline=1, lastline=1, label=style_example language=C]{Source/gnuplotC.txt}
-dove \textbf{GNUPLOT\_EXE} è una stringa composta dal percorso completo dell'eseguibile di GNUplot, seguita dall'argomento \textbf{-persistent} (es. \textit{"D:/Programs/GNUplot/bin/gnuplot -persistent"}).
-}
-\item{\textbf{Passaggio delle istruzioni a GNUplot}
-\lstinputlisting[style=code, firstnumber=2, firstline=2, lastline=10, label=style_example, language=C]{Source/gnuplotC.txt}
-viene passata una riga alla volta, del file \textbf{style.txt}, a GNUplot mediante il pipe precedentemente creato.
-}
-\item{\textbf{Chiusura del pipe}
-\lstinputlisting[style=code, firstnumber=11, firstline=11, lastline=11, label=style_example, language=C]{Source/gnuplotC.txt}
-}
-\end{itemize}
+Una soluzione del problema è una sequenza di nodi che corrisponde ad una permutazione dell'istanza (es. $S = \{x_1,x_2,...,x_n\}$ tale che $x_i=x_j\;\;x_i \in \Pi\;\forall\;x_i\in S\;\wedge\; x_i!=x_j\;\forall\;i\neq j$). Poichè in questa variante non esiste alcuna origine, ogni tour può essere descritto da due versi di percorrenza e l'origine può essere un nodo qualsiasi del grafo.\\
+La rappresentazione di tali istanze è stata svolta attraverso l'utilizzo del programma Gnuplot. Per avere dettagli riguardanti il suo utilizzo vedi Sezione \ref{gnuplot}.

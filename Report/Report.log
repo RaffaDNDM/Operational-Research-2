@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2020.1.11)  9 APR 2020 10:20
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2020.1.11)  11 APR 2020 16:09
 entering extended mode
 **./Report.tex
 (Report.tex
@@ -960,7 +960,7 @@ LaTeX Info: Redefining \nameref on input line 93.
 \@outlinefile=\write3
 \openout3 = `Report.out'.
 
-<Images/UNIPD.png, id=87, 80.7486pt x 80.7486pt>
+<Images/UNIPD.png, id=99, 80.7486pt x 80.7486pt>
 File: Images/UNIPD.png Graphic file (type png)
 <use Images/UNIPD.png>
 Package pdftex.def Info: Images/UNIPD.png  used on input line 101.
@@ -1001,51 +1001,10 @@ LaTeX Font Info:    Trying to load font information for T1+cmss on input line 8
 File: t1cmss.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 ) (Source/esempio.tsp) [3
 
-]
-Underfull \hbox (badness 10000) in paragraph at lines 38--39
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 40--41
-
- []
-
-[4] (Source/style_example.txt)
-Underfull \hbox (badness 10000) in paragraph at lines 44--46
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 49--56
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 49--56
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 49--56
-
- []
-
-[5] (Source/gnuplotC.txt
-LaTeX Font Info:    Trying to load font information for TS1+cmss on input line 
-1.
- (D:\Programs\Miktex\tex/latex/base\ts1cmss.fd
-File: ts1cmss.fd 2014/09/29 v2.5h Standard LaTeX font definitions
-))
-(D:\Programs\Miktex\tex/latex/listings\lstlang1.sty
-File: lstlang1.sty 2019/09/10 1.8c listings language file
-)
-(D:\Programs\Miktex\tex/latex/listings\lstmisc.sty
-File: lstmisc.sty 2019/09/10 1.8c (Carsten Heinz)
-) (Source/gnuplotC.txt)
-(Source/gnuplotC.txt)) (Chapters/CPLEX.tex [6]
+])
+(Chapters/Algoritmi.tex [4]
 Capitolo 3.
-<Images/cplex_structs.png, id=231, 272.01625pt x 191.71625pt>
+<Images/cplex_structs.png, id=208, 272.01625pt x 191.71625pt>
 File: Images/cplex_structs.png Graphic file (type png)
 <use Images/cplex_structs.png>
 Package pdftex.def Info: Images/cplex_structs.png  used on input line 20.
@@ -1053,7 +1012,7 @@ Package pdftex.def Info: Images/cplex_structs.png  used on input line 20.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<Images/indices_matrix.png, id=233, 293.095pt x 282.05376pt>
+<Images/indices_matrix.png, id=210, 293.095pt x 282.05376pt>
 File: Images/indices_matrix.png Graphic file (type png)
 <use Images/indices_matrix.png>
 Package pdftex.def Info: Images/indices_matrix.png  used on input line 32.
@@ -1066,19 +1025,19 @@ Underfull \hbox (badness 10000) in paragraph at lines 26--38
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[7
+[5
 
 ]
 Underfull \hbox (badness 10000) in paragraph at lines 40--42
 
  []
 
-[8 <./Images/cplex_structs.png> <./Images/indices_matrix.png>] [9]
+[6 <./Images/cplex_structs.png> <./Images/indices_matrix.png>] [7]
 Underfull \hbox (badness 10000) in paragraph at lines 64--66
 
  []
 
-[10]
+[8]
 Underfull \hbox (badness 10000) in paragraph at lines 76--80
 
  []
@@ -1090,55 +1049,71 @@ Underfull \hbox (badness 10000) in paragraph at lines 86--89
 
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
 put line 91.
-) (Chapters/Performance.tex
-Underfull \hbox (badness 10000) in paragraph at lines 110--1
-
- []
-
-[11] [12]
+) (Chapters/Performance.tex [9] [10]
 Capitolo 4.
-) (Chapters/Appendice.tex [13
-
-] [14
+[11
 
 ]
-Capitolo 5.
-(Source/modelTSP.txt)
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[15]
-Underfull \hbox (badness 10000) in paragraph at lines 56--58
+[12]
+<Images/perf_profile.png, id=288, 871.255pt x 529.98pt>
+File: Images/perf_profile.png Graphic file (type png)
+<use Images/perf_profile.png>
+Package pdftex.def Info: Images/perf_profile.png  used on input line 54.
+(pdftex.def)             Requested size: 348.49583pt x 211.98824pt.
+
+
+LaTeX Warning: Reference `perf_profile_py' on page 13 undefined on input line 6
+0.
+
+) (Chapters/Appendice.tex
+Underfull \vbox (badness 1297) has occurred while \output is active []
+
+ [13 <./Images/perf_profile.png>] [14]
+Capitolo 5.
+(D:\Programs\Miktex\tex/latex/listings\lstlang1.sty
+File: lstlang1.sty 2019/09/10 1.8c listings language file
+)
+(D:\Programs\Miktex\tex/latex/listings\lstmisc.sty
+File: lstmisc.sty 2019/09/10 1.8c (Carsten Heinz)
+) (Source/modelTSP.txt)
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[15
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 58--60
 
  []
 
 [16]
-Underfull \hbox (badness 10000) in paragraph at lines 91--92
+Underfull \hbox (badness 10000) in paragraph at lines 93--94
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 91--92
+Underfull \hbox (badness 10000) in paragraph at lines 93--94
 
  []
 
 [17]
-Overfull \hbox (49.38301pt too wide) in paragraph at lines 104--124
+Overfull \hbox (49.38301pt too wide) in paragraph at lines 106--126
 [][] 
  []
 
-<Images/lazy_constraints.png, id=332, 338.26375pt x 147.55125pt>
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+<Images/lazy_constraints.png, id=328, 338.26375pt x 147.55125pt>
 File: Images/lazy_constraints.png Graphic file (type png)
 <use Images/lazy_constraints.png>
-Package pdftex.def Info: Images/lazy_constraints.png  used on input line 129.
+Package pdftex.def Info: Images/lazy_constraints.png  used on input line 131.
 (pdftex.def)             Requested size: 169.13145pt x 73.77544pt.
-[18]
-Underfull \hbox (badness 10000) in paragraph at lines 137--138
 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 155--156
+Underfull \hbox (badness 10000) in paragraph at lines 139--140
 
  []
 
@@ -1146,24 +1121,119 @@ Underfull \hbox (badness 10000) in paragraph at lines 155--156
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 
+Underfull \hbox (badness 10000) in paragraph at lines 157--158
+
+ []
+
+[18 <./Images/lazy_constraints.png>]
+
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[19 <./Images/lazy_constraints.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 194--196
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[19]
+Underfull \hbox (badness 10000) in paragraph at lines 196--198
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 203--204
+Underfull \hbox (badness 10000) in paragraph at lines 205--206
 
+ []
+
+
+LaTeX Warning: Reference `param_table' on page 20 undefined on input line 218.
+
+
+Overfull \hbox (97.92403pt too wide) in paragraph at lines 215--222
+[][] 
+ []
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+Overfull \hbox (526.17632pt too wide) in paragraph at lines 226--234
+ [][] 
+ []
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+Overfull \hbox (36.61696pt too wide) in paragraph at lines 238--250
+[][] 
  []
 
 [20]
-Overfull \hbox (13.19891pt too wide) in paragraph at lines 213--220
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 257--258
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 259--260
+
+ []
+
+(Source/style_example.txt [21])
+Underfull \hbox (badness 10000) in paragraph at lines 263--265
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 268--275
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 268--275
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 268--275
+
+ []
+
+[22] (Source/gnuplotC.txt
+LaTeX Font Info:    Trying to load font information for TS1+cmss on input line 
+1.
+ (D:\Programs\Miktex\tex/latex/base\ts1cmss.fd
+File: ts1cmss.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+))
+(Source/gnuplotC.txt) (Source/gnuplotC.txt)
+Overfull \hbox (535.12834pt too wide) in paragraph at lines 292--311
 [][] 
  []
 
-) (Chapters/Bibliografia.tex [21] [22
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[23]
+Overfull \hbox (249.86519pt too wide) in paragraph at lines 318--319
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
+][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (221.23988pt too wide) in paragraph at lines 316--321
+ [] 
+ []
+
+<Images/profile_out.png, id=413, 500.46976pt x 401.70074pt>
+File: Images/profile_out.png Graphic file (type png)
+<use Images/profile_out.png>
+Package pdftex.def Info: Images/profile_out.png  used on input line 342.
+(pdftex.def)             Requested size: 250.23425pt x 200.84987pt.
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+) (Chapters/Bibliografia.tex [24] [25 <./Images/profile_out.png>] [26
 
 ]
 LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 7
@@ -1173,31 +1243,40 @@ LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 7
 File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 ))
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 179.
- [23]
+ [27]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 179.
  (Report.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 179.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 179.
-Package rerunfilecheck Info: File `Report.out' has not changed.
-(rerunfilecheck)             Checksum: 31A761C90C7C796AA9BDD018EA5A9ACB;1301.
+
+
+Package rerunfilecheck Warning: File `Report.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `Report.out':
+(rerunfilecheck)             Before: 0B3730D0BB44B69877D4A59A34C3B8C7;1523
+(rerunfilecheck)             After:  FB7A36B7ACDEA7C675D07F55CC2DDA4A;1532.
+
+LaTeX Warning: There were undefined references.
 
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 25612 strings out of 492452
- 458219 string characters out of 3134016
- 729023 words of memory out of 3000000
- 29496 multiletter control sequences out of 15000+200000
+ 25657 strings out of 492452
+ 459074 string characters out of 3134016
+ 727211 words of memory out of 3000000
+ 29519 multiletter control sequences out of 15000+200000
  557316 words of font info for 80 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 50i,15n,67p,797b,1508s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 50i,15n,67p,797b,2405s stack positions out of 5000i,500n,10000p,200000b,50000s
  <C:\Users\raffa\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\
 ecit1095.pk> <C:\Users\raffa\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/
-ec/dpi600\ecrm0700.pk> <C:\Users\raffa\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour
-/jknappen/ec/dpi600\ecrm0800.pk> <C:\Users\raffa\AppData\Local\MiKTeX\2.9\fonts
-/pk/ljfour/jknappen/ec/dpi600\tcss1000.pk> <C:\Users\raffa\AppData\Local\MiKTeX
+ec/dpi600\tcss1000.pk> <C:\Users\raffa\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour
+/jknappen/ec/dpi600\ecrm0700.pk> <C:\Users\raffa\AppData\Local\MiKTeX\2.9\fonts
+/pk/ljfour/jknappen/ec/dpi600\ecrm0800.pk> <C:\Users\raffa\AppData\Local\MiKTeX
 \2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1440.pk> <C:\Users\raffa\AppData\Lo
 cal\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1000.pk> <C:\Users\raffa\
 AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecss1000.pk> <C:\Us
@@ -1221,9 +1300,9 @@ x/fonts/type1/public/amsfonts/cm/cmmi8.pfb><D:/Programs/Miktex/fonts/type1/publ
 ic/amsfonts/cm/cmr12.pfb><D:/Programs/Miktex/fonts/type1/public/amsfonts/cm/cmr
 8.pfb><D:/Programs/Miktex/fonts/type1/public/amsfonts/cm/cmsy10.pfb><D:/Program
 s/Miktex/fonts/type1/public/amsfonts/cm/cmsy8.pfb>
-Output written on Report.pdf (27 pages, 387763 bytes).
+Output written on Report.pdf (31 pages, 485108 bytes).
 PDF statistics:
- 1029 PDF objects out of 1200 (max. 8388607)
- 169 named destinations out of 1000 (max. 500000)
- 189 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1102 PDF objects out of 1200 (max. 8388607)
+ 189 named destinations out of 1000 (max. 500000)
+ 223 words of extra memory for PDF output out of 10000 (max. 10000000)
 

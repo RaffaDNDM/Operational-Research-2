@@ -17,6 +17,7 @@ void parse_cmd(char** argv, int argc, tsp_instance* tsp_in)
 	int def_deadline = 0;
 
 	strcpy(tsp_in->input, "NULL");
+	strcpy(tsp_in->dir, "NULL");
 
 	int i = 1;
 	for (; i < argc; i++)
@@ -38,13 +39,20 @@ void parse_cmd(char** argv, int argc, tsp_instance* tsp_in)
 		{
 			if (tsp_in->alg == 2)
 			{
-				double modelF = atof(argv[++i]);
-				int model = (int) modelF;
+				if (strncmp(argv[++i], "all", 3) == 0)
+				{
+					tsp_in->model = 0;
+				}
+				else
+				{
+					double modelF = atof(argv[++i]);
+					int model = (int)modelF;
 
-				//the value inserted by the user must be an integer (model!=0 && modelF==model) 
-				//but also the value must be greater than zero
-				assert(model > 0 && model <= NUM_MODELS && modelF == model);
-				tsp_in->model = model;
+					//the value inserted by the user must be an integer (model!=0 && modelF==model) 
+					//but also the value must be greater than zero
+					assert(model > 0 && model <= NUM_MODELS && modelF == model);
+					tsp_in->model = model;
+				}
 			}
 			else
 			{
@@ -74,7 +82,7 @@ void parse_cmd(char** argv, int argc, tsp_instance* tsp_in)
 			continue;
 		}
 
-		if ((strncmp(argv[i], "-d", 2) == 0 || strncmp(argv[i], "-dead",5) == 0 || strncmp(argv[i], "-deadline",9) == 0) && !def_deadline)
+		if ((strncmp(argv[i], "-dead",5) == 0 || strncmp(argv[i], "-deadline",9) == 0) && !def_deadline)
 		{
 			double deadline =(double) atof(argv[++i]);
 
@@ -95,6 +103,16 @@ void parse_cmd(char** argv, int argc, tsp_instance* tsp_in)
 				continue;
 			}
 			
+		}
+
+		if (strncmp(argv[i], "-dir", 4) == 0)
+		{
+			if (strncmp(tsp_in->dir, "NULL", 4) == 0)
+			{
+				strcpy(tsp_in->dir, argv[++i]);
+				continue;
+			}
+
 		}
 
 		if ((strncmp(argv[i], "-help", 5) == 0 || strncmp(argv[i], "-h", 2) == 0) && (argc ==2))

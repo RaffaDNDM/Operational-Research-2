@@ -13,12 +13,16 @@ void cplex_solver(tsp_instance* tsp_in)
 	{
 		case 1:
 		{
+			printf(LINE);
+			printf("Loop solver\n\n");
 			loop_solver(env, lp, tsp_in, succ, comp);
 			break;
 		}
 
 		case 2:
 		{
+			printf(LINE);
+			printf("MTZ model\n\n");
 			time_t start = clock();
 			mtz_build_model(tsp_in, env, lp);
 			CPXmipopt(env, lp);
@@ -29,6 +33,8 @@ void cplex_solver(tsp_instance* tsp_in)
 
 		case 3:
 		{
+			printf(LINE);
+			printf("GG model\n\n");
 			time_t start = clock();
 			gg_build_model(tsp_in, env, lp);
 			CPXmipopt(env, lp);
@@ -53,6 +59,7 @@ void cplex_solver(tsp_instance* tsp_in)
 
 	//Values of variables in the solution
 	double* x = calloc(sizeof(double), tsp_in->num_nodes);
+	
 	//switch su quante  variabili prendere per plottare
 	
 	switch (tsp_in->model)
@@ -110,7 +117,7 @@ void cplex_solver(tsp_instance* tsp_in)
 			}
 		}
 
-		plot_cplex(tsp_in, succ, comp, &n_comps);
+		//plot_cplex(tsp_in, succ, comp, &n_comps);
 
 		free(succ);
 		free(comp);
@@ -324,6 +331,14 @@ void plot_cplex(tsp_instance* tsp_in, int* succ, int* comp, int* n_comps)
 
 void mtz_build_model(tsp_instance* tsp_in, CPXENVptr env, CPXLPptr lp)
 {
+	#ifdef METAHEURISTIC
+		CPXsetintparam(env, CPX_PARAM_RANDOMSEED, tsp_in->seed);
+
+		printf(LINE);
+		printf("Metaheuristic Procedure: \n");
+		printf("Seed: %d\n\n", tsp_in->seed);
+
+	#endif
 
 	//Properties of each edge
 	char type = 'B';
@@ -509,6 +524,15 @@ int compact_xpos(tsp_instance* tsp_in, int i, int j)
 
 void gg_build_model(tsp_instance* tsp_in, CPXENVptr env, CPXLPptr lp)
 {
+	#ifdef METAHEURISTIC
+		CPXsetintparam(env, CPX_PARAM_RANDOMSEED, tsp_in->seed);
+
+		printf(LINE);
+		printf("Metaheuristic Procedure: \n");
+		printf("Seed: %d\n\n", tsp_in->seed);
+
+	#endif
+
 	//Properties of each edge
 	char type = 'B';
 	char** edge = calloc(sizeof(char*), 1);
@@ -568,9 +592,6 @@ void gg_build_model(tsp_instance* tsp_in, CPXENVptr env, CPXLPptr lp)
 			assert(CPXnewcols(env, lp, 1, &c, &lb, &ub, &type, edge) == 0);
 		}
 	}
-
-
-
 
 	double const_term = 1.0;
 	char type_constraint = 'E';
@@ -735,16 +756,17 @@ void gg_define_tour(double* x, tsp_instance* tsp_in, int* succ, int* comp)
 void loop_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ, int* comp)
 {
 	#ifdef METAHEURISTIC
-		CPXsetintparam(env, CPX_PARAM_NODELIM, NODE_LIMIT);
-		CPXsetintparam(env, CPX_PARAM_POPULATELIM, ORDER_SOL);
-		CPXsetdblparam(env, CPX_PARAM_EPGAP, EPS_GAP);
-		CPXsetintparam(env, CPX_PARAM_RANDOMSEED, SEED);
+		CPXsetintparam(env, CPX_PARAM_NODELIM, tsp_in->node_lim);
+		CPXsetintparam(env, CPX_PARAM_POPULATELIM, tsp_in->sol_lim);
+		CPXsetdblparam(env, CPX_PARAM_EPGAP, tsp_in->eps_gap);
+		CPXsetintparam(env, CPX_PARAM_RANDOMSEED, tsp_in->seed);
 
 		printf(LINE);
 		printf("Metaheuristic Procedure: \n");
-		printf("Node limit: %d    ", NODE_LIMIT );
-		printf("Pool solution: %d    ", ORDER_SOL);
-		printf("Cplex precision: %lf\n\n", EPS_GAP);
+		printf("Node limit: %d    ", tsp_in->node_lim );
+		printf("Pool solution: %d    ", tsp_in->sol_lim);
+		printf("Cplex precision: %lf   ", tsp_in->eps_gap);
+		printf("Seed: %d\n\n", tsp_in->seed);
 
 	#endif
 

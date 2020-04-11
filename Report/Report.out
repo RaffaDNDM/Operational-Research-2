@@ -2,20 +2,23 @@
 \BOOKMARK [0][-]{chapter.2}{Istanze e soluzioni del problema}{}% 2
 \BOOKMARK [1][-]{section.2.1}{Istanze}{chapter.2}% 3
 \BOOKMARK [1][-]{section.2.2}{Soluzioni}{chapter.2}% 4
-\BOOKMARK [2][-]{subsection.2.2.1}{Gnuplot}{section.2.2}% 5
-\BOOKMARK [0][-]{chapter.3}{CPLEX}{}% 6
-\BOOKMARK [1][-]{section.3.1}{Modelli compatti}{chapter.3}% 7
-\BOOKMARK [2][-]{subsection.3.1.1}{Formulazione di Miller, Tucker e Zemlin}{section.3.1}% 8
-\BOOKMARK [2][-]{subsection.3.1.2}{Formulazione di Gavish e Graves}{section.3.1}% 9
-\BOOKMARK [1][-]{section.3.2}{Benders}{chapter.3}% 10
-\BOOKMARK [0][-]{chapter.4}{Performance}{}% 11
-\BOOKMARK [1][-]{section.4.1}{Tabella}{chapter.4}% 12
-\BOOKMARK [1][-]{section.4.2}{Performance profiling}{chapter.4}% 13
-\BOOKMARK [1][-]{section.4.3}{Analisi degli algoritmi sviluppati}{chapter.4}% 14
+\BOOKMARK [0][-]{chapter.3}{Risoluzione del problema}{}% 5
+\BOOKMARK [1][-]{section.3.1}{Modelli compatti}{chapter.3}% 6
+\BOOKMARK [2][-]{subsection.3.1.1}{Formulazione sequenziale}{section.3.1}% 7
+\BOOKMARK [2][-]{subsection.3.1.2}{Formulazione basata sul flusso}{section.3.1}% 8
+\BOOKMARK [1][-]{section.3.2}{Loop}{chapter.3}% 9
+\BOOKMARK [0][-]{chapter.4}{Performance}{}% 10
+\BOOKMARK [1][-]{section.4.1}{Performance variabilty}{chapter.4}% 11
+\BOOKMARK [1][-]{section.4.2}{Analisi tabulare}{chapter.4}% 12
+\BOOKMARK [1][-]{section.4.3}{Performance profiling}{chapter.4}% 13
+\BOOKMARK [1][-]{section.4.4}{Analisi degli algoritmi sviluppati}{chapter.4}% 14
 \BOOKMARK [0][-]{chapter.5}{Appendice}{}% 15
-\BOOKMARK [1][-]{section.5.1}{Funzioni}{chapter.5}% 16
-\BOOKMARK [2][-]{subsection.5.1.1}{Costruzione modello}{section.5.1}% 17
-\BOOKMARK [2][-]{subsection.5.1.2}{Lazy constraints}{section.5.1}% 18
-\BOOKMARK [2][-]{subsection.5.1.3}{Calcolo della soluzione}{section.5.1}% 19
-\BOOKMARK [1][-]{section.5.2}{Parametri}{chapter.5}% 20
-\BOOKMARK [1][-]{section.5.3}{Costanti utili}{chapter.5}% 21
+\BOOKMARK [1][-]{section.5.1}{CPLEX}{chapter.5}% 16
+\BOOKMARK [2][-]{subsection.5.1.1}{Funzioni}{section.5.1}% 17
+\BOOKMARK [3][-]{subsubsection.5.1.1.1}{Costruzione modello}{subsection.5.1.1}% 18
+\BOOKMARK [3][-]{subsubsection.5.1.1.2}{Lazy constraints}{subsection.5.1.1}% 19
+\BOOKMARK [3][-]{subsubsection.5.1.1.3}{Calcolo della soluzione}{subsection.5.1.1}% 20
+\BOOKMARK [2][-]{subsection.5.1.2}{Parametri}{section.5.1}% 21
+\BOOKMARK [2][-]{subsection.5.1.3}{Costanti utili}{section.5.1}% 22
+\BOOKMARK [1][-]{section.5.2}{Gnuplot}{chapter.5}% 23
+\BOOKMARK [1][-]{section.5.3}{perprof.py}{chapter.5}% 24

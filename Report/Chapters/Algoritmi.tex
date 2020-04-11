@@ -1,0 +1,115 @@
+\chapter{Risoluzione del problema}
+Per poter utilizzare gli algoritmi di risoluzione forniti da CPLEX è necessario costruire il modello matematico del problema, legato all'istanza precedentemente descritta.\\
+CPLEX ha due meccanismi di acquisizione dell'istanza:
+\begin{enumerate}
+\item{\textbf{modalità interattiva:}\\
+in cui il modello viene letto da un file precedentemente generato (\textit{model.lp})}
+\item{\textbf{creazione nel programma:}\\
+il modello viene creato attraverso le API del linguaggio usato per la scrittura del programma}
+\end{enumerate}
+
+Le strutture utilizzate da CPLEX sono due (vedi Figura \ref{strutture_cplex}):
+\begin{itemize}
+\item{\textbf{ENV (enviroment):} contiene i parametri necessari all'esecuzione e al salvataggio dei risultati}
+\item{\textbf{LP:} contiene il modello che viene analizzato da CPLEX durante la computazione del problema di ottimizzazione}
+\end{itemize}
+
+\begin{figure}[h] 
+\begin{center} 
+  % Requires \usepackage{graphicx} 
+  \includegraphics[scale=0.7]{Images/cplex_structs}\\ 
+  \caption{\footnotesize{Strutture CPLEX}}
+  \label{strutture_cplex} 
+\end{center} 
+\end{figure}
+
+Ad ogni ENV è possibile associare più LP, in modo da poter risolvere in parallelo più problemi di ottimizzazione, ma nel nostro caso ne sarà sufficiente solo uno.\\
+Per convenzione è stato deciso di etichettare i rami $(i,j)$ dell'istanza rispettando la proprietà $i<j$. In Figura \ref{Indici_matrice} è riportato lo schema degli indici che vengono utilizzati per etichettare le variabili.\\
+In questa figura le celle $(i,j)$ bianche, sono quelle effettivamente utilizzate per indicare un arco secondo la convenzione. Il numero all'interno di queste caselle rappresenta invece l'ordine in cui queste variabili vengono inserite nel modello e quindi gli indici associati da CPLEX per accedere alla soluzione.
+\begin{figure}[h] 
+\begin{center} 
+  % Requires \usepackage{graphicx} 
+  \includegraphics[width=5cm]{Images/indices_matrix}\\ 
+  \caption{\footnotesize{Indici della matrice}}
+  \label{Indici_matrice} 
+\end{center} 
+\end{figure}
+Il modello così strutturato richiede però l'inserimento di un esponenziale numero di vincoli per l'eliminazione dei sub-tour, vengono quindi ora descritti altri modelli che ovvino a questo problema.\\  
+
+\section{Modelli compatti}
+I modelli compatti del Travelling Salesman Problem, sono formulazioni il cui numero di variabili e di vincoli è polinomiale nella taglia dell'istanza. In particolare, in quelle analizzate in seguito, sono entrambi $O(n^2)$, con \textit{n = numero di nodi}.\\
+I modelli compatti sono però applicabili solo a grafi orientati. Per poterli sfruttare per la risoluzione del TSP simmetrico, è necessario per ogni ramo dell'istanza $(i,j)$, inserire nel modello i corrispondenti rami orientati in entrambe le direzioni $(i,j)$ e $(j,i)$. Questo comporta un significativo rallentamento nella computazione della soluzione, in quanto l'algoritmo, ogni volta che scarta un ramo $(i,j)$ dalla soluzione ottima, verifica se il corrispondente $(j,i)$ potrebbe invece appartenerle. Questo non può però essere possibile, essendo i due rami in realtà lo stesso nella nostra istanza iniziale.\\ 
+\subsection{Formulazione sequenziale}
+Miller, Tucker e Zemlin, nella loro formulazione del modello, hanno introdotto una nuova variabile $u_i$ per ogni nodo \textit{i} e imposto che, nella soluzione ottima, il suo valore  rispettasse dei nuovi vincoli. Questi servivano a garantire che venisse seguito un ordine di percorrenza di tutti i nodi. In questo modo hanno eliminato la creazione di sub-tour, mantenendo il numero di vincoli e di variabili polinomiale. Nello specifico il loro modello è così strutturato:
+\begin{align}
+& min \underset{i\in V}\sum{}\underset{j\in V}\sum{c_{i,j}\; x_{i,j}} \\ \notag \\
+& \underset{i\in V}\sum{x_{ih}}\; =\; 1 & \forall\; h\in V \\ \notag \\
+& \underset{j\in V}\sum{x_{hj}}\; =\; 1 & \forall\; h\in V \\ \notag \\
+& u_i-u_j+n\; x_{i,j}\;\leq\; n-1 & \forall\; i,j\in V-\{ 1\} , i\neq j \\ \notag \\
+& 0\leq u_i\;\leq\; n-2 & \forall\; i\in V-\{ 1\} \\ \notag 
+\end{align}
+Esistono due diversi modi per implementare questo modello sfruttando le funzioni di CPLEX.\\
+Nel primo i nuovi vincoli vengono aggiunti come visto in precedenza. In questo modo, durante la fase di preprocessamento, il programma è già a conoscenza di tutti i vincoli che dovrà rispettare la soluzione ottima. Ciò gli permette di migliorare i coefficienti presenti, prima ancora di iniziare la computazione dell'ottimo.\\
+Il secondo metodo, invece, sfrutta l'inserimento nel modello di vincoli detti "lazy constraints". Questi non sono noti al programma dall'inizio, ma vengono inseriti all'interno di un pool di vincoli. Nel momento in cui viene calcolata una soluzione, CPLEX verifica che vengano rispettati tutti i vincoli presenti nel pool. Se ne trova uno violato lo aggiunge al modello e ripete la computazione. Questo approccio permette, per risolvere lo stesso problema, di eseguire calcoli su un modello più piccolo, ma può aumentare i tempi di computazione non fornendo a CPLEX tutte le informazioni dall'inizio.   
+
+\subsection{Formulazione basata sul flusso}
+Nella formulazione di Gavish e Graves, per impedire la formazione di sub-tour all'interno della soluzione ottima, viene introdotto un nuovo vincolo per ogni ramo del grafo. Questo permette di regolare il flusso $y_{i,j}$, con $i\neq j$,  che lo attraversa.Inoltre è stato necessario aggiungere anche dei vincoli, detti "vincoli di accoppiamento", che collegassero i flussi alle variabili $x_{i,j}$ . Il loro modello è quindi così strutturato:
+\begin{align}
+& min\underset{i\in V}\sum{\underset{j\in V}\sum{c_{i,j}\; x_{i,j}}} \\ \notag \\
+& \underset{i\in V}\sum{x_{ih}}\;=\;1 & \forall\;h\in V \\ \notag\\
+& \underset{j\in V}\sum{x_{hj}}\;=\;1 & \forall\;h\in V \\ \notag\\
+& \underset{j\in V}\sum{y_{1,j}}\;=\;1\\ \notag\\
+& \underset{j\in V}\sum{y_{h,j}}\;=\;\underset{i\in V}\sum{y_{i,h}}\;-1 & \forall\;h\in V-\{1\}\\ \notag\\
+& y_{i,j}\leq\;(n-1)\;x_{i,j} & \forall\;i,j\in V, i\neq j\\ \notag
+\end{align}
+La soluzione di questo modello risulta però essere lontana dalla convex hull. Per migliorarla è possibile sostituire il vincolo \textit{(3.11)} con \\
+\begin{center}
+$y_{i,j}\leq\;(n-2)\;x_{i,j} \;\;\;\;\;\forall\; i\neq \; j$\\
+\end{center}
+mentre per gli altri valori di $i$ e $j$ è necessario lasciare i vincoli originali. 
+Per evitare che la soluzione ottima contenga sia l'arco $x_{i,j}$ che $x_{j,i}$, che nella nostra istanza iniziale corrispondono allo stesso arco, viene anche aggiunto il seguente vincolo:
+\begin{center}
+$x_{i,j}+x_{j,i}\leq 1\;\;\;\; \forall i,j \in V$ con $i < j$
+\end{center}
+
+\section{Loop}
+Negli anni '60, Jacques F. Benders sviluppo un approccio generale, applicabile a qualsiasi problema di programmazione lineare, per ridurre il numero esponenziale di alcuni vincoli specifici inseriti nel modello.\\
+In questo metodo, il modello viene scritto senza quei vincoli e poi questi verranno aggiunti in seguito durante l'esecuzione del problema. Nel caso in cui la soluzione ottima, calcolata a partire da questo modello, non rispetti un vincolo di quelli rimossi, viene aggiuntoal modello. \\
+In seguito viene riportata l'appicazione specifica di Benders al TSP problem.
+I vincoli di Subtour Elimination sono in numero esponenziale e sono:\\
+\begin{align}
+&\underset{e\in E(S)}\sum{x_{e}} \leq \mid S\mid - 1\;\forall\;S\underset{\neq}{\subset}V\; : \; \mid S\mid\geq 2\\
+\end{align}
+o equivalentemente:
+\begin{align}
+&\underset{e\in \delta(S)}\sum{x_{e}}\geq 2\;\forall\;S\underset{\neq}{\subset}V\; : \; \mid S\mid\geq 2\\
+\end{align}
+Viene definito un nuovo modello per il problema del commesso viaggiatore simmetrico, in cui vengono rimossi tali vincoli, contemplando così la possibilità di avere dei subtour nella soluzione finale.\\
+Viene risolto il problema e nel caso in cui ci sia più di una componente connessa, viene aggiunto al modello un vincolo di subtour elimination per ogni ciclo, basato sui nodi che lo costituiscono.\\
+
+\begin{algorithm}
+\caption{Risoluzione del problema}
+\begin{algorithmic}
+\REQUIRE {$MODEL =$ Modello TSP simmetrico senza vincoli di Subtour elimination}
+\ENSURE {$x$: soluzione intera senza subtour}
+\STATE {}
+\STATE {$x \leftarrow solve(MODEL)$}
+\STATE {$num\_comps \leftarrow comps(x)$}
+\STATE {}
+\WHILE{$num\_comps \geq 2$}
+\STATE{Add $\underset{e\in \delta(S_k)}\sum{x_{e}}\leq \mid S_k\mid - 1\;\forall\; componente\; connessa\; S_k$}
+\STATE {}
+\IF{$num\_comps \geq 2$}
+\STATE {$x \leftarrow solve(MODEL)$}
+\STATE {$num\_comps \leftarrow comps(x)$}
+\ENDIF
+\STATE {}
+\ENDWHILE
+\end{algorithmic}
+\end{algorithm}
+Il numero di iterazioni che vengono effettuate dall'algoritmo non è conosciuto e potrebbe essere anche molto elevato. All'aumentare del numero di vincoli, la soluzione fornita da CPLEX peggiora o resta identica alla precedente.\\
+Questo problema problema potrebbe impiegare numerose iterazioni e nel caso peggiore anche l'inserimento di un numero esponenziale di vincoli, soprattutto con istanze clusterizzate.\\
+Inoltre il problema principale riscontrato in questo algoritmo riguarda la rigenerazione ad ogni iterazione di un albero completo di branching eliminando il precedente. Questo non accade invece per il Branch \& Bound in quanto vengono aggiunte nuove ramificazioni all'albero esistente.\\
+In passato, con le versioni del MIP solver di CPLEX degli anni '60, questa operazione era molto onerosa mentre attualmente questo metodo garantisce la risoluzione anche di istanze molto grandi, in tempi ragionevoli.\\
+L'introduzione di nuovi vincoli di Subtour Elimination, solo nel momento in cui si presenta una loro violazione, permette di ridurre la dimensione del modello ma riduce l'attività di pre-processamento svolta da CPLEX prima di cominciare la risoluzione del problema.\\
+L'algoritmo può essere modificato svolgendo prima un algoritmo loop con l'aggiunta di parametri differenti da quelli di default del risolutore CPLEX. In seguito viene effettuato nuovamente l'algoritmo loop ma questa volta nella sua versione esatta, in modo da migliorare la soluzione meta-euristica trovata nella prima parte. 

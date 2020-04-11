@@ -1,7 +1,9 @@
 \chapter{Appendice}
-In questa sezione verranno approfondite alcune funzioni di CPLEX necessarie alle implementazioni descritte nei capitoli precedenti.
-\section{Funzioni}
-\subsection{Costruzione modello}
+In questa sezione verranno approfondite alcune funzioni di CPLEX necessarie ad implementare gli algoritmi descritti nei capitoli precedenti. Inoltre vengono analizzati tutti gli altri programmi, utilizzati nella stampa delle soluzioni e nell'analisi delle performance.
+
+\section{CPLEX}
+\subsection{Funzioni}
+\subsubsection{Costruzione modello}
 Per poter costruire il modello da analizzare, come prima cosa, è necessario creare un puntatore alle due strutture dati utilizzate da CPLEX.
 \lstinputlisting[caption={\footnotesize{modelTSP.txt}}, style=code, firstnumber=1, firstline=27, lastline=29, label=tsp_model, language=c]{Source/modelTSP.txt}
 La funzione alla riga 2 alloca la memoria necessaria e riempie la struttura con valori di default. Nel caso in cui non termini con successo memorizza un codice d'errore in \textit{\&error}.\\
@@ -89,7 +91,7 @@ viene invece sfruttata la seguente funzione:
 \end{tabular}
 \end{table}
 In modo analogo all'inserimento delle colonne, nel nostro programma viene aggiunta una riga alla volta nel modello. L'\textbf{i}-esima riga aggiunta corrisponderà al vincolo imposto sul nodo \textbf{i}-esimo, imponendo a 1 il coefficiente della variabile $x_{k,j}$ se $k=i$ $j=i$ per ogni variabile del modello.\\\\
-\subsection{Lazy constraints}
+\subsubsection{Lazy constraints}
 Nel caso in cui si voglia sfruttare la possibilità di verificare se è stato rispettato un vincolo, solo al termine della computazione della soluzione, è necessario inserire un "lazy constraint". Per fare ciò viene utilizzata la seguente funzione:
 \begin{center}
 \begin{tabular}{c}
@@ -131,7 +133,7 @@ In modo analogo alle due funzioni precedentemente descritte per l'aggiunta di ri
   \label{lazy_constraints} 
 \end{center} 
 \end{figure}
-\subsection{Calcolo della soluzione}
+\subsubsection{Calcolo della soluzione}
 Per ottenere la soluzione ottima del problema di ottimizzazione del problema correlato al modello definito in cplex, vengono utilizzate due fasi:
 \begin{itemize}
 \item{\textbf{Risoluzione del problema di ottimizzazione}\\
@@ -190,7 +192,7 @@ il tour è composto al massimo da due archi che toccano lo stesso nodo}
 \end{itemize}
 }
 \end{itemize}
-\section{Parametri}
+\subsection{Parametri}\label{param}
 Con le seguenti funzioni è possibile modificare i parametri di impostazione di CPLEX, altrimenti impostati ai valori di default.
 Nel caso in cui si tratti di parametri di tipo INT è necessario invocare:\\
 \begin{center}
@@ -213,17 +215,132 @@ In entrambe le funzioni
 \begin{tabular}{rl}
 \textbf{env:} & {puntatore di tipo CPXENVptr alla struttura ENV}\\
 & {di cui si vogliono cambiare i parametri}\\
-\textbf{numero\_parametro:} & {intero corrispondente al parametro da modificare}\\
+\textbf{numero\_parametro:} & {intero corrispondente al parametro da modificare (vedi Tabella \ref{param_table})}\\
 \textbf{nuovo\_valore:} & {nuovo valore (rispettivamente intero o double)}\\
 & {del parametro}\\
 \end{tabular}
 \end{table}
-\section{Costanti utili}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+{\textbf{CPX\_PARAM\_EPGAP}} & {tolleranza dell'intervalo tra la migliore funzione obiettivo intera e la funzione obiettivo del miglior nodo rimanente.}\\
+{\textbf{CPX\_PARAM\_NODELIM}} & {massimo numero di nodi da risolvere prima che l'algoritmo termini senza aver aggiunto l'ottimalità (0 impone di fermarsi alla radice).}\\
+{\textbf{CPX\_PARAM\_POPULATELIM}} & {Limita il numero di soluzioni MIP generate per il pool di soluzioni durante ogni chiamata alla procedura populate.}\\
+{\textbf{CPX\_PARAM\_SCRIND}} & {visione o meno dei messaggi di log di CPLEX}\\
+\hline
+\end{tabular}
+\end{table}
+\subsection{Costanti utili}
+Di seguito sono riportate alcune macro utili di CPLEX, insieme ai loro corrispondenti valori:
 \begin{table}[h]
 \begin{tabular}{|r|l|}
 \hline
-\textbf{CPX\_ON} & {1}\\ \hline
-\textbf{CPX\_OFF} & {0}\\ \hline
-\textbf{CPX\_INFBOUND} & {$\infty$}\\ \hline
+\textbf{CPX\_ON} & {\textbf{1}}\\
+{} & {valore da assegnare ad alcuni parametri per abilitarli}\\
+\hline
+\textbf{CPX\_OFF} & {0}\\
+{} & {valore da assegnare ad alcuni parametri per disabilitarli}\\
+\hline
+\textbf{CPX\_INFBOUND} & {$+\infty$}\\
+{} & {massimo valore intero utilizzabile in CPLEX}\\
+\hline
 \end{tabular}
 \end{table}
+
+\section{Gnuplot}\label{gnuplot}
+Una volta ottenuta la soluzione del problema di ottimizzazione, viene disegnato il grafo per facilitare all'utente la comprensione della sua correttezza. Per fare ciò viene utilizzato Gnuplot, un programma di tipo command-driven.\\
+Per poterlo utilizzare all'interno del proprio programma esistono due metodi:
+\begin{itemize}
+\item{Collegare la libreria ed invocare le sue funzioni all'interno del nostro programma}
+\item{Collegare l'eseguibile interattivo al proprio programma. In questo caso i comandi deve essere passati all'eseguibile attraverso un file di testo e l'utilizzo di un pipe.}\\
+\end{itemize}
+In questa trattazione è stato scelto il secondo metodo. All'interno del file è possibile specificare a Gnuplot le caratteristiche grafiche che deve aver il grafo. Di seguito viene riportato un esempio di tale file.\\
+
+\lstinputlisting[caption={\footnotesize{style.txt}}, style=code, firstnumber=1, firstline=1, lastline=12, label=style_example]{Source/style_example.txt}
+
+Nell'esempio sopra riportato, nella prima parte viene definito lo stile, il colore delle linee e la tipologia di punti, che verrano in seguito visualizzati all'interno del grafico prodotto.\\In seguito viene effettuato il plot del grafo in una finestra, utilizzando il primo e secondo valore di ciascuna riga del file \textbf{solution.dat} come coordinate mentre il terzo valore viene utilizzato come etichetta.\\\\
+Il file \textbf{solution.dat} contiene le informazioni relative alla soluzione del grafico in cui ciascuna riga ha la seguente forma:
+\begin{lstlisting}[linewidth=290pt,basicstyle=\footnotesize\sffamily,]     
+coordinata_x   coordinata_y   posizione_in_tour
+\end{lstlisting}
+\textbf{coordinata\_x} rappresenta la coordinata x del nodo;\\
+\textbf{posizione\_in\_tour} rappresenta la coordinata y del nodo;\\
+\textbf{posizione\_in\_tour} rappresenta l'ordine del nodo all'interno del tour, assunto come nodo di origine il nodo 1.\\\\
+Il grafico viene generato dal comando \textbf{plot}, leggendo tutte le righe non vuote e disegnando un punto nella posizione \textbf{(coordinata\_x,coordinata\_y)} del grafico 2D. In seguito viene tracciata una linea solo tra coppie di punti, legati a righe consecutive non vuote all'interno di \textbf{solution.dat}.\\\\
+Attraverso le istruzioni riportate nelle righe 10-12 di \textbf{style.txt}, viene invece salvato il grafico appena generato nell'immagine \textbf{solution.png}.\\\\
+Di seguito vengono riportate le varie fasi necessarie alla definizione di un pipe e al passaggio di questo al programma GNUplot:
+\begin{itemize}
+\item{\textbf{Definizione del pipe}
+\lstinputlisting[style=code, firstnumber=1, firstline=1, lastline=1, label=style_example language=C]{Source/gnuplotC.txt}
+dove \textbf{GNUPLOT\_EXE} è una stringa composta dal percorso completo dell'eseguibile di GNUplot, seguita dall'argomento \textbf{-persistent} (es. \textit{"D:/Programs/GNUplot/bin/gnuplot -persistent"}).
+}
+\item{\textbf{Passaggio delle istruzioni a GNUplot}
+\lstinputlisting[style=code, firstnumber=2, firstline=2, lastline=10, label=style_example, language=C]{Source/gnuplotC.txt}
+viene passata una riga alla volta, del file \textbf{style.txt}, a GNUplot mediante il pipe precedentemente creato.
+}
+\item{\textbf{Chiusura del pipe}
+\lstinputlisting[style=code, firstnumber=11, firstline=11, lastline=11, label=style_example, language=C]{Source/gnuplotC.txt}
+}
+\end{itemize}
+
+\section{perprof.py}
+Il programma utilizzato per la creazione del performance profile dei diversi algoritmo è perprof.py\cite{salvagnin_perf}. Di seuito vengono riportati i principali argomenti da linea di comando che possono essere utilizzati:
+
+\begin{table}[h]
+\begin{tabular}{|r|l|}
+\hline
+\textbf{-D delimiter} & {spefica che delimiter verrà usato come separatore tra le parole in una riga}\\
+\hline
+\textbf{-M value} & {imposta value come il massimo valore di ratio (asse x)}\\
+\hline
+\textbf{-S value} & {value rappresenta la quantità che viene sommata a ciascun tempo di esecuzione prima di confrontarli. Utile per non enfatizzare di troppo differenze di pochi ms.}\\
+\hline
+\textbf{-L} & {stampa in scala logaritmica}\\
+\hline
+\textbf{-T value} & {nel file passato al programma, il TIME LIMIT=value}\\
+\hline
+\textbf{-P "title"} & {title è il titolo del plot}\\
+\hline
+\textbf{-X value} & {nome dell'asse x (default='Time Ratio')}\\
+\hline
+\textbf{-B} & {plot in bianco e nero}\\
+\hline
+\end{tabular}
+\end{table}
+Di seguito viene riportato un esempio dell'esecuzione del programma, del suo input e del suo output:
+\begin{itemize}
+\item{\textbf{comando}
+\begin{center}
+\begin{tabular}{c}
+\begin{lstlisting}[linewidth=320pt, basicstyle=\footnotesize\sffamily,] 
+python perfprof.py -D , -T 3600 -S 2 -M 20 esempio.csv pp.pdf -P "all instances, shift 2 sec.s"
+\end{lstlisting}
+\end{tabular}
+\end{center}
+}
+\item{\textbf{file di input con i dati}\\
+Viene riportato parte del contenuto di esempio.csv .
+\begin{center}
+\begin{tabular}{c}
+\begin{lstlisting}[linewidth=320pt, basicstyle=\footnotesize\sffamily,] 
+3, Alg1, Alg2, Alg3
+model_1.lp, 2.696693, 3.272468, 2.434147
+model_2.lp, 0.407689, 1.631921, 1.198957
+model_3.lp, 0.333669, 0.432553, 0.966638
+\end{lstlisting}
+\end{tabular}
+\end{center}
+La prima riga deve necessariamente contenere in ordine il numero di algoritmi analizzati e i loro nomi. Nelle righe seguenti viene riportato invece il nome del file lp e i tempi di esecuzione elencati secondo la sequenza elencata nella prima riga.
+Ogni campo di ciascuna riga deve essere separato dal delimitatore specificato all'avvio del programma attraverso l'opzione -D.
+}
+\item{\textbf{immagine di output}
+\begin{figure}[h] 
+\begin{center} 
+  % Requires \usepackage{graphicx} 
+  \includegraphics[scale=0.5]{Images/profile_out}\\ 
+\end{center} 
+\end{figure}
+}
+\end{itemize}

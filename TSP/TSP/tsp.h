@@ -38,6 +38,9 @@ typedef struct
 	int node_lim;
 	int sol_lim;
 	double eps_gap;
+	int seed;
+	char dir[500];
+	
 
 	//Output
 	int* sol;
@@ -54,6 +57,8 @@ typedef struct
 	\param tsp_in reference to tsp instance structure
 */
 void solution(tsp_instance*);
+
+void set_params_and_solve(tsp_instance*);
 
 #endif
 

@@ -3,42 +3,53 @@
 #include "cplex_solver.h"
 #include "default_alg.h"
 #include <cplex.h>
+//#include <windows.h>
 
-int main(int argc,char** argv)
+int main(int argc, char** argv)
 {
 	tsp_instance tsp_in;
 	parse_cmd(argv, argc, &tsp_in);
-	/* if (tsp.dir=! null o strings vuota ) allora c'è una cartella
+
+	if (tsp_in.dir != NULL)
 	{
-		leggi(tsp.dir) dovrebbe restituire array di stringhe , nomi dei file delle istanze 
-		while
+		FILE* instances = fopen(tsp_in.dir, "r");
+		char* in_file = malloc(sizeof(char)*LINE_SIZE);
+		while (fgets(in_file, LINE_SIZE, instances) != NULL)
 		{
-			tsp_in.input=istanza letta array_istanze[i]
-			parse_file(&tsp_in);
-			solution(&tsp_in);
+			in_file[strlen(in_file) - 1] = 0;
+			strcpy(tsp_in.input, in_file);
+ 
+			if (tsp_in.model == 0)
+			{
+				int n = 0;
+				for (; n < NUM_MODELS; n++)
+				{
+					tsp_in.model = n + 1;
+					set_params_and_solve(&tsp_in);
+				}
+			}
+			else
+				set_params_and_solve(&tsp_in);
+
+			dealloc_inst(&tsp_in);
+
 		}
 	}
-	else 
+	else
 	{
-		parse_file(&tsp_in); c'era solo un file
-		solution(&tsp_in);
+		if (tsp_in.model == 0)
+		{
+			int n = 0;
+			for (; n < NUM_MODELS; n++)
+			{
+				tsp_in.model = n + 1;
+				set_params_and_solve(&tsp_in);
+			}
+		}
+		else
+			set_params_and_solve(&tsp_in);
 	}
-	*/
-
-
-
-
-
-	parse_file(&tsp_in);
 	
-	//lettura file da input (funzioni per qualsiasi sistema operativo), ripetere solution su ogni istanza
-	//array da inserire in cicli interni che provi tutte le combinazioni
-	//metterli dentro tsp_in
-	int node_lim[] = { 0, 1, 2, 3 };
-	int sol_lim[] = { 1, 2, 3 };
-	double gap[] = { 0.1, 0.01, 0.001, 0.0001 };
-	//aggiungere array seed
-	solution(&tsp_in);		
 
 	dealloc_inst(&tsp_in);
 	
@@ -61,4 +72,45 @@ void solution(tsp_instance* tsp_in)
 			break;
 	}
 	
+}
+
+void set_params_and_solve(tsp_instance* tsp_in)
+{
+	int node_lim[] = { 0, 1, 2, 3 };
+	int sol_lim[] = { 1, 2, 3 };
+	double gap[] = { 0.1, 0.01, 0.001, 0.0001 };
+	int seed[] = { 500, 1500, 2000, 2500 };
+
+	int h = 0;
+	for (; h < (sizeof(seed) / sizeof(int)); h++)
+	{
+		if (tsp_in->alg == 2 && tsp_in->model == 1)
+		{
+			int i = 0;
+			for (; i < (sizeof(node_lim) / sizeof(int)); i++)
+			{
+				int j = 0;
+				for (; j < (sizeof(sol_lim) / sizeof(int)); j++)
+				{
+					int k = 0;
+					for (; k < (sizeof(gap) / sizeof(double)); k++)
+					{
+						tsp_in->node_lim = node_lim[i];
+						tsp_in->sol_lim = sol_lim[j];
+						tsp_in->eps_gap = gap[k];
+						tsp_in->seed = seed[h];
+						parse_file(tsp_in);
+						solution(tsp_in);
+					}
+				}
+			}
+		}
+		else
+		{
+			tsp_in->seed = seed[h];
+			parse_file(tsp_in);
+			solution(tsp_in);
+		}
+
+	}
 }
