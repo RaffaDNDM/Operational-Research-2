@@ -4,9 +4,17 @@
 
 #include "utility.h"
 #include <cplex.h>
+#include <time.h>
 
 #define LAZY_CONSTRAINTS 1
 #define SOLUTION_CORRECTNESS 1
+
+#define METAHEURISTIC 1
+#define NODE_LIMIT 3
+#define EPS_GAP 0.1
+#define	ORDER_SOL 5 
+#define SEED 500
+#define TIME_SCALE 1000
 
 //Approximation value for the cplex result values
 #define EPS 1e-5
@@ -106,7 +114,7 @@ int compact_xpos(tsp_instance*, int, int);
 	\param succ
 	\param comp
 */
-void benders_solver(CPXENVptr, CPXLPptr, tsp_instance*, int*, int *);
+void loop_solver(CPXENVptr, CPXLPptr, tsp_instance*, int*, int *);
 
 /**
 	CPLEX definition of the model
@@ -117,4 +125,6 @@ void benders_solver(CPXENVptr, CPXLPptr, tsp_instance*, int*, int *);
 	\param comp
 */
 void add_sec_constraint(CPXENVptr, CPXLPptr, tsp_instance*, int*, int);
+
+void print_state(CPXENVptr, CPXLPptr, int, time_t, time_t);
 #endif

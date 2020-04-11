@@ -35,11 +35,15 @@ typedef struct
 	int plot;
 	int verbose;
 	int model;
+	int node_lim;
+	int sol_lim;
+	double eps_gap;
 
 	//Output
 	int* sol;
 	int bestCostI;
 	double bestCostD;
+	double execution_time;
 
 } tsp_instance;
 

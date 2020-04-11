@@ -13,21 +13,27 @@ void cplex_solver(tsp_instance* tsp_in)
 	{
 		case 1:
 		{
-			benders_solver(env, lp, tsp_in, succ, comp);
+			loop_solver(env, lp, tsp_in, succ, comp);
 			break;
 		}
 
 		case 2:
 		{
+			time_t start = clock();
 			mtz_build_model(tsp_in, env, lp);
 			CPXmipopt(env, lp);
+			time_t end = clock();
+			tsp_in->execution_time = ((double)(end - start) / (double)CLOCKS_PER_SEC) * TIME_SCALE;
 			break;
 		}
 
 		case 3:
 		{
+			time_t start = clock();
 			gg_build_model(tsp_in, env, lp);
 			CPXmipopt(env, lp);
+			time_t end = clock();
+			tsp_in->execution_time = ((double)(end - start) / (double)CLOCKS_PER_SEC) * TIME_SCALE;
 			break;
 
 		}
@@ -43,9 +49,10 @@ void cplex_solver(tsp_instance* tsp_in)
 		CPXgetbestobjval(env, lp, &tsp_in->bestCostD);
 
 	print_cost(tsp_in);
+	printf("Execution time: %lf\n", tsp_in->execution_time);
 
 	//Values of variables in the solution
-	double* x = calloc(sizeof(double), tsp_in->num_nodes);;
+	double* x = calloc(sizeof(double), tsp_in->num_nodes);
 	//switch su quante  variabili prendere per plottare
 	
 	switch (tsp_in->model)
@@ -725,30 +732,86 @@ void gg_define_tour(double* x, tsp_instance* tsp_in, int* succ, int* comp)
 	succ[i] = 0;
 }
 
-void benders_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ, int* comp)
+void loop_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ, int* comp)
 {
-	cplex_build_model(tsp_in, env, lp);
+	#ifdef METAHEURISTIC
+		CPXsetintparam(env, CPX_PARAM_NODELIM, NODE_LIMIT);
+		CPXsetintparam(env, CPX_PARAM_POPULATELIM, ORDER_SOL);
+		CPXsetdblparam(env, CPX_PARAM_EPGAP, EPS_GAP);
+		CPXsetintparam(env, CPX_PARAM_RANDOMSEED, SEED);
 
+		printf(LINE);
+		printf("Metaheuristic Procedure: \n");
+		printf("Node limit: %d    ", NODE_LIMIT );
+		printf("Pool solution: %d    ", ORDER_SOL);
+		printf("Cplex precision: %lf\n\n", EPS_GAP);
+
+	#endif
+
+	time_t start, start_iter, end_iter, end;
+	start = clock();
+	start_iter = start;
+	cplex_build_model(tsp_in, env, lp);
+	
 	int n_comps = 3;
 	
 	double* x = calloc(sizeof(double), CPXgetnumcols(env, lp));
 	CPXmipopt(env, lp);
+	end_iter = clock();
 	CPXgetbestobjval(env, lp, &tsp_in->bestCostD);
 	assert(CPXgetmipx(env, lp, x, 0, CPXgetnumcols(env, lp) - 1) == 0);
 	cplex_define_tour(x, tsp_in, succ, comp, &n_comps);
-	//print_cost(tsp_in);
 	//plot_cplex(tsp_in, succ, comp, &n_comps);
+
+	print_state(env, lp, n_comps, start_iter, end_iter);
 	
 	while (n_comps >= 2)
 	{
+		start_iter = clock();
 		add_sec_constraint(env, lp, tsp_in, comp, n_comps);
 
 		CPXmipopt(env, lp);
 		CPXgetbestobjval(env, lp, &tsp_in->bestCostD);
+		end_iter = clock();
 		assert(CPXgetmipx(env, lp, x, 0, CPXgetnumcols(env, lp) - 1) == 0);
 		cplex_define_tour(x, tsp_in, succ, comp, &n_comps);
 		//plot_cplex(tsp_in, succ, comp, &n_comps);
+		print_state(env, lp, n_comps, start_iter, end_iter);
+		
 	}
+	
+	#ifdef METAHEURISTIC
+		CPXsetintparam(env, CPX_PARAM_NODELIM, 9223372036800000000);
+		CPXsetintparam(env, CPX_PARAM_INTSOLLIM, 9223372036800000000);
+		CPXsetdblparam(env, CPX_PARAM_EPGAP, 1e-04);
+
+		start_iter = clock();
+		CPXmipopt(env, lp);
+		end_iter = clock();
+		CPXgetbestobjval(env, lp, &tsp_in->bestCostD);
+		assert(CPXgetmipx(env, lp, x, 0, CPXgetnumcols(env, lp) - 1) == 0);
+		cplex_define_tour(x, tsp_in, succ, comp, &n_comps);
+		print_state(env, lp, n_comps, start_iter, end_iter);
+		//plot_cplex(tsp_in, succ, comp, &n_comps);
+
+		while (n_comps >= 2)
+		{
+			start_iter = clock();
+			add_sec_constraint(env, lp, tsp_in, comp, n_comps);
+
+			CPXmipopt(env, lp);
+			end_iter = clock();
+			CPXgetbestobjval(env, lp, &tsp_in->bestCostD);
+			assert(CPXgetmipx(env, lp, x, 0, CPXgetnumcols(env, lp) - 1) == 0);
+			cplex_define_tour(x, tsp_in, succ, comp, &n_comps);
+			print_state(env, lp, n_comps, start_iter, end_iter);
+			//plot_cplex(tsp_in, succ, comp, &n_comps);
+		}
+	#endif
+	
+	end = clock();
+
+	tsp_in->execution_time = ((double)(end - start) / (double)CLOCKS_PER_SEC) * TIME_SCALE;
 
 	free(x);
 }
@@ -793,4 +856,16 @@ void add_sec_constraint(CPXENVptr env, CPXLPptr lp, tsp_instance *tsp_in, int *c
 	free(constraint[0]);
 	free(constraint);
 	free(const_terms);
+}
+
+void print_state(CPXENVptr env, CPXLPptr lp, int ncomps, time_t start, time_t end)
+{
+	double actual_bound, best_bound;
+	CPXgetbestobjval(env, lp, &best_bound);
+	CPXgetobjval(env, lp, &actual_bound);
+	printf("Best bound of all the remaining open nodes: %lf\n", best_bound);
+	printf("Object value of the solution in the solution pool: %lf\n", actual_bound);
+	printf("Number of components: %d\n", ncomps);
+	printf("Time: %lf\n\n",(((double)(end-start)/ (double) CLOCKS_PER_SEC)) * TIME_SCALE);
+
 }
