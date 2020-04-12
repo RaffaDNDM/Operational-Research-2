@@ -1,0 +1,14 @@
+tsp_instances/a280.tsp
+tsp_instances/att48.tsp
+tsp_instances/bayg29.tsp
+tsp_instances/berlin52.tsp
+tsp_instances/bier127.tsp
+tsp_instances/ch130.tsp
+tsp_instances/ch150.tsp
+tsp_instances/dantzig42.tsp
+tsp_instances/eil101.tsp
+tsp_instances/fri26.tsp
+tsp_instances/gr120.tsp
+tsp_instances/gr96.tsp
+tsp_instances/kroA100.tsp
+tsp_instances/pr76.tsp

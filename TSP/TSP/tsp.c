@@ -11,8 +11,12 @@ int main(int argc, char** argv)
 	parse_cmd(argv, argc, &tsp_in);
 
 	if (tsp_in.dir != NULL)
-	{
-		FILE* instances = fopen(tsp_in.dir, "r");
+	{	
+		FILE* pipe = _popen(DIR_LIST_PY, "w");
+		fprintf(pipe, "%s", tsp_in.dir);
+		_pclose(pipe);
+
+		FILE* instances = fopen("instances.txt", "r");
 		char* in_file = malloc(sizeof(char)*LINE_SIZE);
 		while (fgets(in_file, LINE_SIZE, instances) != NULL)
 		{
@@ -32,8 +36,9 @@ int main(int argc, char** argv)
 				set_params_and_solve(&tsp_in);
 
 			dealloc_inst(&tsp_in);
-
+		
 		}
+
 	}
 	else
 	{
@@ -52,7 +57,7 @@ int main(int argc, char** argv)
 	
 
 	dealloc_inst(&tsp_in);
-	
+
 	return 0;
 }
 

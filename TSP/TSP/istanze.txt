@@ -1,3 +1,0 @@
-att48.tsp
-att20.tsp
-att10.tsp

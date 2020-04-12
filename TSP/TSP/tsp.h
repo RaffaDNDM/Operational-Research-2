@@ -20,6 +20,8 @@
 //default value of verbose
 #define VERBOSE 150
 
+#define DIR_LIST_PY "python3 list_dir.py"
+
 typedef struct
 {
 	//Input (Graph structure) 
