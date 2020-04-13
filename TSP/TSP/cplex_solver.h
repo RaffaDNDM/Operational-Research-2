@@ -35,13 +35,13 @@ void cplex_build_model(tsp_instance*, CPXENVptr, CPXLPptr);
 
 /*
 	Define the tour fo the solution
-	\param x array of the point in the solution
 	\param tsp_in reference to tsp instance structure
+	\param x array of the point in the solution
 	\param succ array of the successor of each node
 	\param comp array with the component of each node
 	\param n_comps number of components
 */
-void cplex_define_tour(double*, tsp_instance*, int*, int*, int*);
+void cplex_define_tour(tsp_instance*, double*, int*, int*, int*);
 
 /*
 	Plot the CPLEX solution
@@ -50,7 +50,7 @@ void cplex_define_tour(double*, tsp_instance*, int*, int*, int*);
 	\param comp array with the component of each node
 	\param n_comps number of components
 */
-void plot_cplex(tsp_instance*, int*, int*, int*);
+void cplex_plot(tsp_instance*, int*, int*, int*);
 
 /*
 	Return the position of the element (i,j) in the matrix
@@ -59,43 +59,43 @@ void plot_cplex(tsp_instance*, int*, int*, int*);
 	\param i first index
 	\param j second index
 */
-int xpos_cplex(tsp_instance*, int, int);
+int cplex_xpos(tsp_instance*, int, int);
 
 /**
 	CPLEX definition of the model
-	\param tsp_in reference to tsp instance structure
 	\param env pointer to the ENV structure, used by CPLEX solver
 	\param lp pointer to the LP structure, used by CPLEX solver
+	\param tsp_in reference to tsp instance structure
 */
-void mtz_build_model(tsp_instance*, CPXENVptr, CPXLPptr);
+void mtz_build_model(CPXENVptr, CPXLPptr, tsp_instance*);
 
 /*
 	Define the tour fo the solution
+		\param tsp_in reference to tsp instance structure
 	\param x array of the point in the solution
-	\param tsp_in reference to tsp instance structure
 	\param succ array of the successor of each node
 	\param comp array with the component of each node
 	\param n_comps number of components
 */
-void mtz_define_tour(double*, tsp_instance*, int*, int*);
+void mtz_define_tour(tsp_instance*, double*, int*, int*);
 
 /**
 	CPLEX definition of the model
-	\param tsp_in reference to tsp instance structure
 	\param env pointer to the ENV structure, used by CPLEX solver
 	\param lp pointer to the LP structure, used by CPLEX solver
+	\param tsp_in reference to tsp instance structure
 */
-void gg_build_model(tsp_instance*, CPXENVptr, CPXLPptr);
+void gg_build_model(CPXENVptr, CPXLPptr, tsp_instance*);
 
 /*
 	Define the tour fo the solution
-	\param x array of the point in the solution
 	\param tsp_in reference to tsp instance structure
+	\param x array of the point in the solution
 	\param succ array of the successor of each node
 	\param comp array with the component of each node
 	\param n_comps number of components
 */
-void gg_define_tour(double*, tsp_instance*, int*, int*);
+void gg_define_tour(tsp_instance*, double*, int*, int*);
 
 /*
 	Return the position of the element (i,j) in the matrix

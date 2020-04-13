@@ -10,7 +10,7 @@ int main(int argc, char** argv)
 	tsp_instance tsp_in;
 	parse_cmd(argv, argc, &tsp_in);
 
-	if (tsp_in.dir != NULL)
+	if ( strncmp(tsp_in.dir, "NULL", 4) !=0 )
 	{	
 		FILE* pipe = _popen(DIR_LIST_PY, "w");
 		fprintf(pipe, "%s", tsp_in.dir);
@@ -31,6 +31,7 @@ int main(int argc, char** argv)
 					tsp_in.model = n + 1;
 					set_params_and_solve(&tsp_in);
 				}
+				tsp_in.model = 0;
 			}
 			else
 				set_params_and_solve(&tsp_in);

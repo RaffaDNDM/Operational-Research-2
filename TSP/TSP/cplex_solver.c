@@ -24,7 +24,7 @@ void cplex_solver(tsp_instance* tsp_in)
 			printf(LINE);
 			printf("MTZ model\n\n");
 			time_t start = clock();
-			mtz_build_model(tsp_in, env, lp);
+			mtz_build_model(env, lp, tsp_in);
 			CPXmipopt(env, lp);
 			time_t end = clock();
 			tsp_in->execution_time = ((double)(end - start) / (double)CLOCKS_PER_SEC) * TIME_SCALE;
@@ -36,7 +36,7 @@ void cplex_solver(tsp_instance* tsp_in)
 			printf(LINE);
 			printf("GG model\n\n");
 			time_t start = clock();
-			gg_build_model(tsp_in, env, lp);
+			gg_build_model(env, lp, tsp_in);
 			CPXmipopt(env, lp);
 			time_t end = clock();
 			tsp_in->execution_time = ((double)(end - start) / (double)CLOCKS_PER_SEC) * TIME_SCALE;
@@ -104,7 +104,7 @@ void cplex_solver(tsp_instance* tsp_in)
 			{
 				succ = calloc(tsp_in->num_nodes, sizeof(int));
 				comp = calloc(tsp_in->num_nodes, sizeof(int));
-				mtz_define_tour(x, tsp_in, succ, comp);
+				mtz_define_tour(tsp_in, x, succ, comp);
 				break;
 			}
 
@@ -112,12 +112,12 @@ void cplex_solver(tsp_instance* tsp_in)
 			{
 				succ = calloc(tsp_in->num_nodes, sizeof(int));
 				comp = calloc(tsp_in->num_nodes, sizeof(int));
-				gg_define_tour(x, tsp_in, succ, comp);
+				gg_define_tour(tsp_in, x, succ, comp);
 				break;
 			}
 		}
 
-		//plot_cplex(tsp_in, succ, comp, &n_comps);
+		//cplex_plot(tsp_in, succ, comp, &n_comps);
 
 		free(succ);
 		free(comp);
@@ -163,7 +163,7 @@ void cplex_build_model(tsp_instance* tsp_in, CPXENVptr env, CPXLPptr lp)
 			assert(CPXnewcols(env, lp, 1, &c, &lb, &ub, &bin, edge) == 0);
 			//Check if the index that we use to identify the edge 
 			//corresponds to the index that it should have
-			assert(CPXgetnumcols(env, lp) - 1 == xpos_cplex(tsp_in, i, j));
+			assert(CPXgetnumcols(env, lp) - 1 == cplex_xpos(tsp_in, i, j));
 		}
 	}
 
@@ -187,7 +187,7 @@ void cplex_build_model(tsp_instance* tsp_in, CPXENVptr env, CPXLPptr lp)
 			if (j == h)
 				continue;
 
-			assert(CPXchgcoef(env, lp, lastrow, xpos_cplex(tsp_in, j, h), 1.0) == 0);
+			assert(CPXchgcoef(env, lp, lastrow, cplex_xpos(tsp_in, j, h), 1.0) == 0);
 		}
 	}
 
@@ -200,17 +200,17 @@ void cplex_build_model(tsp_instance* tsp_in, CPXENVptr env, CPXLPptr lp)
 	free(constraint);
 }
 
-int xpos_cplex(tsp_instance* tsp_in, int i, int j)
+int cplex_xpos(tsp_instance* tsp_in, int i, int j)
 {
 	assert(i != j); //error if ring edge
 
 	if (i > j)
-		return xpos_cplex(tsp_in, j, i);
+		return cplex_xpos(tsp_in, j, i);
 
 	return (tsp_in->num_nodes * i + j) - ((i + 1) * (i + 2)) / 2;
 }
 
-void cplex_define_tour(double* x, tsp_instance* tsp_in, int* succ, int* comp, int* n_comps)
+void cplex_define_tour(tsp_instance* tsp_in, double* x, int* succ, int* comp, int* n_comps)
 {
 	int i = 0;
 
@@ -222,9 +222,9 @@ void cplex_define_tour(double* x, tsp_instance* tsp_in, int* succ, int* comp, in
 			int j;
 			for (j = i + 1; j < tsp_in->num_nodes; j++)
 			{
-				assert(x[xpos_cplex(tsp_in, i, j)] <= EPS || x[xpos_cplex(tsp_in, i, j)] >= (1.0 - EPS));
+				assert(x[cplex_xpos(tsp_in, i, j)] <= EPS || x[cplex_xpos(tsp_in, i, j)] >= (1.0 - EPS));
 
-				if (x[xpos_cplex(tsp_in, i, j)] > 0.5)
+				if (x[cplex_xpos(tsp_in, i, j)] > 0.5)
 				{
 					degree[i]++;
 					degree[j]++;
@@ -257,7 +257,7 @@ void cplex_define_tour(double* x, tsp_instance* tsp_in, int* succ, int* comp, in
 				if (i == j)
 					continue;
 
-				if (x[xpos_cplex(tsp_in, j, i)] > 0.5 && comp[i] == 0)
+				if (x[cplex_xpos(tsp_in, j, i)] > 0.5 && comp[i] == 0)
 				{
 					succ[j] = i;
 					comp[i] = *n_comps;
@@ -271,7 +271,7 @@ void cplex_define_tour(double* x, tsp_instance* tsp_in, int* succ, int* comp, in
 	}
 }
 
-void plot_cplex(tsp_instance* tsp_in, int* succ, int* comp, int* n_comps)
+void cplex_plot(tsp_instance* tsp_in, int* succ, int* comp, int* n_comps)
 {
 	FILE* f = fopen(CPLEX_DAT, "w");
 
@@ -329,7 +329,7 @@ void plot_cplex(tsp_instance* tsp_in, int* succ, int* comp, int* n_comps)
 	fclose(f);
 }
 
-void mtz_build_model(tsp_instance* tsp_in, CPXENVptr env, CPXLPptr lp)
+void mtz_build_model(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in)
 {
 	#ifdef METAHEURISTIC
 		CPXsetintparam(env, CPX_PARAM_RANDOMSEED, tsp_in->seed);
@@ -522,7 +522,7 @@ int compact_xpos(tsp_instance* tsp_in, int i, int j)
 	return i * (tsp_in->num_nodes) + j;
 }
 
-void gg_build_model(tsp_instance* tsp_in, CPXENVptr env, CPXLPptr lp)
+void gg_build_model(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in)
 {
 	#ifdef METAHEURISTIC
 		CPXsetintparam(env, CPX_PARAM_RANDOMSEED, tsp_in->seed);
@@ -695,7 +695,7 @@ void gg_build_model(tsp_instance* tsp_in, CPXENVptr env, CPXLPptr lp)
 	free(constraint);
 }
 
-void mtz_define_tour(double* x, tsp_instance* tsp_in, int* succ, int* comp)
+void mtz_define_tour(tsp_instance* tsp_in, double* x, int* succ, int* comp)
 {
 	int i = 1;
 	for (; i < tsp_in->num_nodes; i++)
@@ -722,7 +722,7 @@ void mtz_define_tour(double* x, tsp_instance* tsp_in, int* succ, int* comp)
 	succ[prev] = 0;
 }
 
-void gg_define_tour(double* x, tsp_instance* tsp_in, int* succ, int* comp)
+void gg_define_tour(tsp_instance* tsp_in, double* x, int* succ, int* comp)
 {
 	int i = 0;
 	for (; i < tsp_in->num_nodes; i++)
@@ -782,8 +782,8 @@ void loop_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ, in
 	end_iter = clock();
 	CPXgetbestobjval(env, lp, &tsp_in->bestCostD);
 	assert(CPXgetmipx(env, lp, x, 0, CPXgetnumcols(env, lp) - 1) == 0);
-	cplex_define_tour(x, tsp_in, succ, comp, &n_comps);
-	//plot_cplex(tsp_in, succ, comp, &n_comps);
+	cplex_define_tour(tsp_in, x, succ, comp, &n_comps);
+	//cplex_plot(tsp_in, succ, comp, &n_comps);
 
 	print_state(env, lp, n_comps, start_iter, end_iter);
 	
@@ -796,8 +796,8 @@ void loop_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ, in
 		CPXgetbestobjval(env, lp, &tsp_in->bestCostD);
 		end_iter = clock();
 		assert(CPXgetmipx(env, lp, x, 0, CPXgetnumcols(env, lp) - 1) == 0);
-		cplex_define_tour(x, tsp_in, succ, comp, &n_comps);
-		//plot_cplex(tsp_in, succ, comp, &n_comps);
+		cplex_define_tour(tsp_in, x, succ, comp, &n_comps);
+		//cplex_plot(tsp_in, succ, comp, &n_comps);
 		print_state(env, lp, n_comps, start_iter, end_iter);
 		
 	}
@@ -812,9 +812,9 @@ void loop_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ, in
 		end_iter = clock();
 		CPXgetbestobjval(env, lp, &tsp_in->bestCostD);
 		assert(CPXgetmipx(env, lp, x, 0, CPXgetnumcols(env, lp) - 1) == 0);
-		cplex_define_tour(x, tsp_in, succ, comp, &n_comps);
+		cplex_define_tour(tsp_in, x, succ, comp, &n_comps);
 		print_state(env, lp, n_comps, start_iter, end_iter);
-		//plot_cplex(tsp_in, succ, comp, &n_comps);
+		//cplex_plot(tsp_in, succ, comp, &n_comps);
 
 		while (n_comps >= 2)
 		{
@@ -825,9 +825,9 @@ void loop_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ, in
 			end_iter = clock();
 			CPXgetbestobjval(env, lp, &tsp_in->bestCostD);
 			assert(CPXgetmipx(env, lp, x, 0, CPXgetnumcols(env, lp) - 1) == 0);
-			cplex_define_tour(x, tsp_in, succ, comp, &n_comps);
+			cplex_define_tour(tsp_in, x, succ, comp, &n_comps);
 			print_state(env, lp, n_comps, start_iter, end_iter);
-			//plot_cplex(tsp_in, succ, comp, &n_comps);
+			//cplex_plot(tsp_in, succ, comp, &n_comps);
 		}
 	#endif
 	
@@ -867,7 +867,7 @@ void add_sec_constraint(CPXENVptr env, CPXLPptr lp, tsp_instance *tsp_in, int *c
 			for (j=i+1; j < tsp_in->num_nodes; j++)
 			{
 				if (comp[i] == k && comp[j] == k)
-					assert(!CPXchgcoef(env, lp, lastrow, xpos_cplex(tsp_in, i, j), 1.0));
+					assert(!CPXchgcoef(env, lp, lastrow, cplex_xpos(tsp_in, i, j), 1.0));
 			}
 		}
 	}
