@@ -91,48 +91,6 @@ viene invece sfruttata la seguente funzione:
 \end{tabular}
 \end{table}
 In modo analogo all'inserimento delle colonne, nel nostro programma viene aggiunta una riga alla volta nel modello. L'\textbf{i}-esima riga aggiunta corrisponderà al vincolo imposto sul nodo \textbf{i}-esimo, imponendo a 1 il coefficiente della variabile $x_{k,j}$ se $k=i$ $j=i$ per ogni variabile del modello.\\\\
-\subsubsection{Lazy constraints}
-Nel caso in cui si voglia sfruttare la possibilità di verificare se è stato rispettato un vincolo, solo al termine della computazione della soluzione, è necessario inserire un "lazy constraint". Per fare ciò viene utilizzata la seguente funzione:
-\begin{center}
-\begin{tabular}{c}
-\begin{lstlisting}[linewidth=380pt, basicstyle=\footnotesize\sffamily,]     
-CPXaddlazyconstraints(env, lp, num_vincoli, nnz, 
-					termine_costante, tipo_vincolo, posizione_iniziale,
-					indici, valori, nome_vincolo);
-\end{lstlisting}
-\end{tabular}
-\end{center}
-\begin{table}[h]
-\begin{tabular}{rl}
-\textbf{env:} & {puntatore di tipo CPXENVptr alla struttura ENV}\\
-& {precedentemente creata}\\
-\textbf{lp:} & {puntatore di tipo CPXLPptr alla struttura LP}\\
-& {precedentemente creata}\\
-\textbf{num\_vincoli:} & {numero di vincoli da inserire}\\
-\textbf{nnz:} & {vettore con il numeri di variabili per ogni vincolo}\\ 
-\textbf{termine\_costante:} & {vettore dei termini noti dei vincoli}\\
-\textbf{tipi\_vincoli:} & {vettore di caratteri che specifica il tipo di vincoli}\\
-&{da inserire. Ogni carattere può assumere:}\\
-&{\textit{'L'} per vincolo $\leq$}\\
-&{\textit{'E'} per vincolo $=$}\\
-&{\textit{'G'} per vincolo $\geq$}\\
-&{\textit{'R'} per vincolo definito in un intervallo}\\
-\textbf{posizione\_iniziale:} & {vettore con le posizione iniziali dei coefficienti nei vincoli}\\
-\textbf{indici:} & {vettore di vettori contenenti gli indici delle variabili }\\
-& {appartenenti al vincolo}\\
-\textbf{valori:} & {vettore di vettori con i coefficienti delle variabili del vincolo}\\
-\textbf{nome\_vincolo:} & {vettore con i nomi dei vincoli}\\
-\end{tabular}
-\end{table}
-In modo analogo alle due funzioni precedentemente descritte per l'aggiunta di righe e colonne, nel nostro modello viene inserito un vincolo per volta. Per impostare correttamente i coefficienti delle variabili presenti nel vincolo, vengono sfruttati i due array \textit{indici} e \textit{valori}. Come rappresentato in Figura \ref{lazy_constraints}, all'interno della posizione \textit{i}-esima del vettore di indici è presente la posizione dell'\textit{i}-esima variabile del vincolo da inserire (nell'esempio in figura $indici[i]=j$). Mentre l'\textit{i}-esima posizione del vettore di valori contiene il corrispondente  coefficiente (in questo caso $c_j$).
-\begin{figure}[h] 
-\begin{center} 
-  % Requires \usepackage{graphicx} 
-  \includegraphics[scale=0.5]{Images/lazy_constraints}\\ 
-  \caption{\footnotesize{Array lazy constraints}}
-  \label{lazy_constraints} 
-\end{center} 
-\end{figure}
 \subsubsection{Calcolo della soluzione}
 Per ottenere la soluzione ottima del problema di ottimizzazione del problema correlato al modello definito in cplex, vengono utilizzate due fasi:
 \begin{itemize}
@@ -192,6 +150,57 @@ il tour è composto al massimo da due archi che toccano lo stesso nodo}
 \end{itemize}
 }
 \end{itemize}
+\subsubsection{Lazy constraints}
+Nel caso in cui si voglia sfruttare la possibilità di verificare se è stato rispettato un vincolo, solo al termine della computazione della soluzione, è necessario inserire un "lazy constraint". Per fare ciò viene utilizzata la seguente funzione:
+\begin{center}
+\begin{tabular}{c}
+\begin{lstlisting}[linewidth=380pt, basicstyle=\footnotesize\sffamily,]     
+CPXaddlazyconstraints(env, lp, num_vincoli, nnz, 
+					termine_costante, tipo_vincolo, posizione_iniziale,
+					indici, valori, nome_vincolo);
+\end{lstlisting}
+\end{tabular}
+\end{center}
+\begin{table}[h]
+\centering
+\begin{tabular}{rl}
+\textbf{env:} & {puntatore di tipo CPXENVptr alla struttura ENV}\\
+& {precedentemente creata}\\
+\textbf{lp:} & {puntatore di tipo CPXLPptr alla struttura LP}\\
+& {precedentemente creata}\\
+\textbf{num\_vincoli:} & {numero di vincoli da inserire}\\
+\textbf{nnz:} & {vettore con il numeri di variabili per ogni vincolo}\\ 
+\end{tabular}
+\end{table}
+\begin{table}[h]
+\centering
+\begin{tabular}{rl}
+\textbf{termine\_costante:} & {vettore dei termini noti dei vincoli}\\
+\textbf{tipi\_vincoli:} & {vettore di caratteri che specifica il tipo di vincoli}\\
+&{da inserire. Ogni carattere può assumere:}\\
+&{\textit{'L'} per vincolo $\leq$}\\
+&{\textit{'E'} per vincolo $=$}\\
+&{\textit{'G'} per vincolo $\geq$}\\
+&{\textit{'R'} per vincolo definito in un intervallo}\\
+\textbf{posizione\_iniziale:} & {vettore con le posizione iniziali dei coefficienti nei}\\
+&{vincoli}\\
+\textbf{indici:} & {vettore di vettori contenenti gli indici delle}\\
+& {variabili appartenenti al vincolo}\\
+\textbf{valori:} & {vettore di vettori con i coefficienti delle variabili del vincolo}\\
+\textbf{nome\_vincolo:} & {vettore con i nomi}\\
+& {dei vincoli}\\
+\end{tabular}
+\end{table}
+In modo analogo alle due funzioni precedentemente descritte per l'aggiunta di righe e colonne, nel nostro modello viene inserito un vincolo per volta. Per impostare correttamente i coefficienti delle variabili presenti nel vincolo, vengono sfruttati i due array \textit{indici} e \textit{valori}. Come rappresentato in Figura \ref{lazy_constraints}, all'interno della posizione \textit{i}-esima del vettore di indici è presente la posizione dell'\textit{i}-esima variabile del vincolo da inserire (nell'esempio in figura $indici[i]=j$). Mentre l'\textit{i}-esima posizione del vettore di valori contiene il corrispondente  coefficiente (in questo caso $c_j$).
+\begin{figure}[h] 
+\begin{center} 
+  % Requires \usepackage{graphicx} 
+  \includegraphics[scale=0.5]{Images/lazy_constraints} 
+  \caption{\footnotesize{Array lazy constraints}}
+  \label{lazy_constraints} 
+\end{center} 
+\end{figure}
+\vspace{10cm}
 \subsection{Parametri}\label{param}
 Con le seguenti funzioni è possibile modificare i parametri di impostazione di CPLEX, altrimenti impostati ai valori di default.
 Nel caso in cui si tratti di parametri di tipo INT è necessario invocare:\\
@@ -210,31 +219,44 @@ CPXsetdblparam(env, numero_parametro, nuovo_valore);
 \end{lstlisting}
 \end{tabular}
 \end{center}
-In entrambe le funzioni
+In entrambe le funzioni:
 \begin{table}[h]
+\centering
 \begin{tabular}{rl}
 \textbf{env:} & {puntatore di tipo CPXENVptr alla struttura ENV}\\
 & {di cui si vogliono cambiare i parametri}\\
-\textbf{numero\_parametro:} & {intero corrispondente al parametro da modificare (vedi Tabella \ref{param_table})}\\
+\textbf{numero\_parametro:} & {intero corrispondente al parametro da modificare}\\
+& {(vedi Tabella \ref{param_table})}\\
 \textbf{nuovo\_valore:} & {nuovo valore (rispettivamente intero o double)}\\
 & {del parametro}\\
 \end{tabular}
 \end{table}
 
 \begin{table}[h]
-\centering
+\centering\footnotesize
 \begin{tabular}{|l|l|}
 \hline
-{\textbf{CPX\_PARAM\_EPGAP}} & {tolleranza dell'intervalo tra la migliore funzione obiettivo intera e la funzione obiettivo del miglior nodo rimanente.}\\
-{\textbf{CPX\_PARAM\_NODELIM}} & {massimo numero di nodi da risolvere prima che l'algoritmo termini senza aver aggiunto l'ottimalità (0 impone di fermarsi alla radice).}\\
-{\textbf{CPX\_PARAM\_POPULATELIM}} & {Limita il numero di soluzioni MIP generate per il pool di soluzioni durante ogni chiamata alla procedura populate.}\\
-{\textbf{CPX\_PARAM\_SCRIND}} & {visione o meno dei messaggi di log di CPLEX}\\
+\multirow{3}{*}{\textbf{CPX\_PARAM\_EPGAP}} & {tolleranza dell'intervalo tra la migliore funzione }\\
+& {obiettivo intera e la funzione obiettivo del}\\
+& {miglior nodo rimanente.}\\
+\hline
+\multirow{3}{*}{\textbf{CPX\_PARAM\_NODELIM}} & {massimo numero di nodi da risolvere prima}\\
+& {che l'algoritmo termini senza aver aggiunto l'ottimalità}\\
+& {(0 impone di fermarsi alla radice).}\\
+\hline
+\multirow{3}{*}{\textbf{CPX\_PARAM\_POPULATELIM}} & {Limita il numero di soluzioni MIP generate }\\
+& {per il pool di soluzioni durante ogni chiamata alla}\\
+&{procedura populate.}\\
+\hline
+\textbf{CPX\_PARAM\_SCRIND} & {visione o meno dei messaggi di log di CPLEX}\\
 \hline
 \end{tabular}
+\caption{Parametri.}\label{param_table}
 \end{table}
 \subsection{Costanti utili}
 Di seguito sono riportate alcune macro utili di CPLEX, insieme ai loro corrispondenti valori:
 \begin{table}[h]
+\footnotesize\centering
 \begin{tabular}{|r|l|}
 \hline
 \textbf{CPX\_ON} & {\textbf{1}}\\
@@ -262,9 +284,13 @@ In questa trattazione è stato scelto il secondo metodo. All'interno del file è
 
 Nell'esempio sopra riportato, nella prima parte viene definito lo stile, il colore delle linee e la tipologia di punti, che verrano in seguito visualizzati all'interno del grafico prodotto.\\In seguito viene effettuato il plot del grafo in una finestra, utilizzando il primo e secondo valore di ciascuna riga del file \textbf{solution.dat} come coordinate mentre il terzo valore viene utilizzato come etichetta.\\\\
 Il file \textbf{solution.dat} contiene le informazioni relative alla soluzione del grafico in cui ciascuna riga ha la seguente forma:
+\begin{center}
+\begin{tabular}{c}
 \begin{lstlisting}[linewidth=290pt,basicstyle=\footnotesize\sffamily,]     
 coordinata_x   coordinata_y   posizione_in_tour
 \end{lstlisting}
+\end{tabular}
+\end{center}
 \textbf{coordinata\_x} rappresenta la coordinata x del nodo;\\
 \textbf{posizione\_in\_tour} rappresenta la coordinata y del nodo;\\
 \textbf{posizione\_in\_tour} rappresenta l'ordine del nodo all'interno del tour, assunto come nodo di origine il nodo 1.\\\\
@@ -285,17 +311,21 @@ viene passata una riga alla volta, del file \textbf{style.txt}, a GNUplot median
 }
 \end{itemize}
 
-\section{perprof.py}
+\section{perprof.py}\label{perf_profile_py}
 Il programma utilizzato per la creazione del performance profile dei diversi algoritmo è perprof.py\cite{salvagnin_perf}. Di seuito vengono riportati i principali argomenti da linea di comando che possono essere utilizzati:
 
 \begin{table}[h]
 \begin{tabular}{|r|l|}
 \hline
-\textbf{-D delimiter} & {spefica che delimiter verrà usato come separatore tra le parole in una riga}\\
+\textbf{-D delimiter} & {spefica che delimiter verrà usato come separatore tra le}\\
+& {parole in una riga}\\
 \hline
 \textbf{-M value} & {imposta value come il massimo valore di ratio (asse x)}\\
 \hline
-\textbf{-S value} & {value rappresenta la quantità che viene sommata a ciascun tempo di esecuzione prima di confrontarli. Utile per non enfatizzare di troppo differenze di pochi ms.}\\
+\textbf{-S value} & {value rappresenta la quantità che viene sommata a}\\
+& {ciascun tempo di esecuzione prima del confronto.}\\
+& {Questo parametro è utile per non enfatizzare troppo}\\
+& {le differenze di pochi ms tra gli algoritmi.}\\
 \hline
 \textbf{-L} & {stampa in scala logaritmica}\\
 \hline
@@ -314,8 +344,9 @@ Di seguito viene riportato un esempio dell'esecuzione del programma, del suo inp
 \item{\textbf{comando}
 \begin{center}
 \begin{tabular}{c}
-\begin{lstlisting}[linewidth=320pt, basicstyle=\footnotesize\sffamily,] 
-python perfprof.py -D , -T 3600 -S 2 -M 20 esempio.csv pp.pdf -P "all instances, shift 2 sec.s"
+\begin{lstlisting}[linewidth=330pt, basicstyle=\footnotesize\sffamily,] 
+python perfprof.py -D , -T 3600 -S 2 -M 20 esempio.csv
+             out.pdf -P "all instances, shift 2 sec.s"
 \end{lstlisting}
 \end{tabular}
 \end{center}
@@ -324,7 +355,7 @@ python perfprof.py -D , -T 3600 -S 2 -M 20 esempio.csv pp.pdf -P "all instances,
 Viene riportato parte del contenuto di esempio.csv .
 \begin{center}
 \begin{tabular}{c}
-\begin{lstlisting}[linewidth=320pt, basicstyle=\footnotesize\sffamily,] 
+\begin{lstlisting}[linewidth=240pt, basicstyle=\footnotesize\sffamily,] 
 3, Alg1, Alg2, Alg3
 model_1.lp, 2.696693, 3.272468, 2.434147
 model_2.lp, 0.407689, 1.631921, 1.198957
@@ -332,14 +363,15 @@ model_3.lp, 0.333669, 0.432553, 0.966638
 \end{lstlisting}
 \end{tabular}
 \end{center}
-La prima riga deve necessariamente contenere in ordine il numero di algoritmi analizzati e i loro nomi. Nelle righe seguenti viene riportato invece il nome del file lp e i tempi di esecuzione elencati secondo la sequenza elencata nella prima riga.
+La prima riga deve necessariamente contenere in ordine il numero di algoritmi analizzati e i loro nomi. Nelle righe seguenti viene riportato invece il nome del file lp e i tempi di esecuzione elencati secondo la sequenza di algortimti specificata all'inizio.
 Ogni campo di ciascuna riga deve essere separato dal delimitatore specificato all'avvio del programma attraverso l'opzione -D.
 }
-\item{\textbf{immagine di output}
+\item{\textbf{immagine di output}\\
+Il grafico viene restituito nel file out.pdf specificato da line di comando chiamando il programma.
 \begin{figure}[h] 
 \begin{center} 
   % Requires \usepackage{graphicx} 
-  \includegraphics[scale=0.5]{Images/profile_out}\\ 
+  \includegraphics[scale=0.6]{Images/profile_out}\\ 
 \end{center} 
 \end{figure}
 }

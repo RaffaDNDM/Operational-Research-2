@@ -16,8 +16,8 @@
 \BOOKMARK [1][-]{section.5.1}{CPLEX}{chapter.5}% 16
 \BOOKMARK [2][-]{subsection.5.1.1}{Funzioni}{section.5.1}% 17
 \BOOKMARK [3][-]{subsubsection.5.1.1.1}{Costruzione modello}{subsection.5.1.1}% 18
-\BOOKMARK [3][-]{subsubsection.5.1.1.2}{Lazy constraints}{subsection.5.1.1}% 19
-\BOOKMARK [3][-]{subsubsection.5.1.1.3}{Calcolo della soluzione}{subsection.5.1.1}% 20
+\BOOKMARK [3][-]{subsubsection.5.1.1.2}{Calcolo della soluzione}{subsection.5.1.1}% 19
+\BOOKMARK [3][-]{subsubsection.5.1.1.3}{Lazy constraints}{subsection.5.1.1}% 20
 \BOOKMARK [2][-]{subsection.5.1.2}{Parametri}{section.5.1}% 21
 \BOOKMARK [2][-]{subsection.5.1.3}{Costanti utili}{section.5.1}% 22
 \BOOKMARK [1][-]{section.5.2}{Gnuplot}{chapter.5}% 23

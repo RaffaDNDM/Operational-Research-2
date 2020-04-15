@@ -73,20 +73,19 @@ $x_{i,j}+x_{j,i}\leq 1\;\;\;\; \forall i,j \in V$ con $i < j$
 \end{center}
 
 \section{Loop}
-Negli anni '60, Jacques F. Benders sviluppo un approccio generale, applicabile a qualsiasi problema di programmazione lineare, per ridurre il numero esponenziale di alcuni vincoli specifici inseriti nel modello.\\
-In questo metodo, il modello viene scritto senza quei vincoli e poi questi verranno aggiunti in seguito durante l'esecuzione del problema. Nel caso in cui la soluzione ottima, calcolata a partire da questo modello, non rispetti un vincolo di quelli rimossi, viene aggiuntoal modello. \\
-In seguito viene riportata l'appicazione specifica di Benders al TSP problem.
+Negli anni '60, Jacques F. Benders sviluppò un approccio generale, applicabile a qualsiasi problema di programmazione lineare, per ridurre il numero esponenziale di alcuni vincoli specifici inseriti nel modello.\\
+Utilizzando questo metodo, il modello viene scritto senza quei vincoli e poi questi verranno aggiunti in seguito durante la risoluzione del problema. Nel caso in cui la soluzione ottima, calcolata a partire da questo modello, non rispetti un vincolo di quelli rimossi, viene aggiunto al modello. \\
+Nella seguente parte, viene riportata l'appicazione specifica di loop al problema TSP.
 I vincoli di Subtour Elimination sono in numero esponenziale e sono:\\
 \begin{align}
-&\underset{e\in E(S)}\sum{x_{e}} \leq \mid S\mid - 1\;\forall\;S\underset{\neq}{\subset}V\; : \; \mid S\mid\geq 2\\
+&\underset{e\in E(S)}\sum{x_{e}} \leq \mid S\mid - 1\;\forall\;S\underset{\neq}{\subset}V\; : \; \mid S\mid\geq 2
 \end{align}
 o equivalentemente:
 \begin{align}
-&\underset{e\in \delta(S)}\sum{x_{e}}\geq 2\;\forall\;S\underset{\neq}{\subset}V\; : \; \mid S\mid\geq 2\\
+&\underset{e\in \delta(S)}\sum{x_{e}}\geq 2\;\forall\;S\underset{\neq}{\subset}V\; : \; \mid S\mid\geq 2
 \end{align}
-Viene definito un nuovo modello per il problema del commesso viaggiatore simmetrico, in cui vengono rimossi tali vincoli, contemplando così la possibilità di avere dei subtour nella soluzione finale.\\
-Viene risolto il problema e nel caso in cui ci sia più di una componente connessa, viene aggiunto al modello un vincolo di subtour elimination per ogni ciclo, basato sui nodi che lo costituiscono.\\
-
+Viene definito un nuovo modello per il problema del commesso viaggiatore simmetrico, in cui vengono rimossi tali vincoli, aggiungendo così la possibilità di avere dei subtour nella soluzione finale.\\
+Viene risolto il problema e nel caso in cui ci sia più di una componente connessa, viene aggiunto al modello un vincolo di subtour elimination per ogni ciclo generato.\\
 \begin{algorithm}
 \caption{Risoluzione del problema}
 \begin{algorithmic}
@@ -107,9 +106,12 @@ Viene risolto il problema e nel caso in cui ci sia più di una componente connes
 \ENDWHILE
 \end{algorithmic}
 \end{algorithm}
-Il numero di iterazioni che vengono effettuate dall'algoritmo non è conosciuto e potrebbe essere anche molto elevato. All'aumentare del numero di vincoli, la soluzione fornita da CPLEX peggiora o resta identica alla precedente.\\
-Questo problema problema potrebbe impiegare numerose iterazioni e nel caso peggiore anche l'inserimento di un numero esponenziale di vincoli, soprattutto con istanze clusterizzate.\\
-Inoltre il problema principale riscontrato in questo algoritmo riguarda la rigenerazione ad ogni iterazione di un albero completo di branching eliminando il precedente. Questo non accade invece per il Branch \& Bound in quanto vengono aggiunte nuove ramificazioni all'albero esistente.\\
-In passato, con le versioni del MIP solver di CPLEX degli anni '60, questa operazione era molto onerosa mentre attualmente questo metodo garantisce la risoluzione anche di istanze molto grandi, in tempi ragionevoli.\\
-L'introduzione di nuovi vincoli di Subtour Elimination, solo nel momento in cui si presenta una loro violazione, permette di ridurre la dimensione del modello ma riduce l'attività di pre-processamento svolta da CPLEX prima di cominciare la risoluzione del problema.\\
-L'algoritmo può essere modificato svolgendo prima un algoritmo loop con l'aggiunta di parametri differenti da quelli di default del risolutore CPLEX. In seguito viene effettuato nuovamente l'algoritmo loop ma questa volta nella sua versione esatta, in modo da migliorare la soluzione meta-euristica trovata nella prima parte. 
+\vspace{10cm}
+All'aumentare del numero di vincoli, il costo della soluzione ottenuta da CPLEX peggiora o resta identica a quella elaborata all'iterazione precedente del metodo loop.\\
+Il numero di iterazioni che vengono effettuate dall'algoritmo non è conosciuto e potrebbe essere anche molto elevato. Nel caso peggiore vengono inseriti tutti i vincoli di Subtour elimnation, ovvero un numero esponenziale di disequazioni, soprattutto con istanze clusterizzate.\\
+Inoltre il problema principale di questo algoritmo è la generazione, ad ogni iterazione, di un albero completo di branching, eliminando quello precedente sviluppato.\\
+In passato, con le versioni del MIP solver di CPLEX degli anni '60, questa operazione era molto onerosa mentre attualmente il metodo loop garantisce la risoluzione, anche di istanze molto grandi, in tempi ragionevoli.
+Questo non accade invece per il Branch \& Bound in quanto vengono aggiunte nuove ramificazioni all'albero già esistente.\\
+L'introduzione di nuovi vincoli di Subtour Elimination, solo nel momento in cui si presenta una loro violazione, permette di ridurre la dimensione del modello ma riduce l'attività di pre-processamento svolta da CPLEX prima di cominciare la risoluzione del problema. Nella fase di pre-processing infatti, vengono applicati algoritmi euristici e cambiamenti dei coefficenti nel modello, in base ai vincoli inseriti.\\
+L'algoritmo può essere modificato svolgendo prima il metodo loop con l'aggiunta di parametri differenti da quelli utilizzati di default del risolutore CPLEX. In seguito viene effettuato nuovamente l'algoritmo di Benders ma questa volta nella sua versione esatta, in modo da migliorare la soluzione meta-euristica trovata nella prima parte. \\
+Quest'ottimizzazione è basata sul fatto che CPLEX salvi alcune soluzioni, ottenute in precedenza dal risolutore sullo stesso modello, e le sfrutti come bound nel nuovo modello. Per questo motivo, alcune delle soluzioni metaeuristiche ottenute nella prima fase vengono sfruttate come bound nella seconda.

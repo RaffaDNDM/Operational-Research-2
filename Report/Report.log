@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2020.1.11)  11 APR 2020 16:09
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2020.1.11)  15 APR 2020 11:20
 entering extended mode
 **./Report.tex
 (Report.tex
@@ -1042,36 +1042,30 @@ Underfull \hbox (badness 10000) in paragraph at lines 76--80
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 86--89
-
- []
-
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 91.
-) (Chapters/Performance.tex [9] [10]
-Capitolo 4.
-[11
+put line 90.
+) (Chapters/Performance.tex
+Underfull \vbox (badness 4832) has occurred while \output is active []
+
+ [9]
+Underfull \vbox (badness 1383) has occurred while \output is active []
+
+ [10]
+[11] [12
 
 ]
+Capitolo 4.
+[13]
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[12]
-<Images/perf_profile.png, id=288, 871.255pt x 529.98pt>
+[14]
+<Images/perf_profile.png, id=294, 871.255pt x 529.98pt>
 File: Images/perf_profile.png Graphic file (type png)
 <use Images/perf_profile.png>
 Package pdftex.def Info: Images/perf_profile.png  used on input line 54.
 (pdftex.def)             Requested size: 348.49583pt x 211.98824pt.
-
-
-LaTeX Warning: Reference `perf_profile_py' on page 13 undefined on input line 6
-0.
-
-) (Chapters/Appendice.tex
-Underfull \vbox (badness 1297) has occurred while \output is active []
-
- [13 <./Images/perf_profile.png>] [14]
+ [15 <./Images/perf_profile.png>]) (Chapters/Appendice.tex [16]
 Capitolo 5.
 (D:\Programs\Miktex\tex/latex/listings\lstlang1.sty
 File: lstlang1.sty 2019/09/10 1.8c listings language file
@@ -1082,14 +1076,14 @@ File: lstmisc.sty 2019/09/10 1.8c (Carsten Heinz)
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[15
+[17
 
 ]
 Underfull \hbox (badness 10000) in paragraph at lines 58--60
 
  []
 
-[16]
+[18]
 Underfull \hbox (badness 10000) in paragraph at lines 93--94
 
  []
@@ -1098,142 +1092,100 @@ Underfull \hbox (badness 10000) in paragraph at lines 93--94
 Underfull \hbox (badness 10000) in paragraph at lines 93--94
 
  []
-
-[17]
-Overfull \hbox (49.38301pt too wide) in paragraph at lines 106--126
-[][] 
- []
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-<Images/lazy_constraints.png, id=328, 338.26375pt x 147.55125pt>
-File: Images/lazy_constraints.png Graphic file (type png)
-<use Images/lazy_constraints.png>
-Package pdftex.def Info: Images/lazy_constraints.png  used on input line 131.
-(pdftex.def)             Requested size: 169.13145pt x 73.77544pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 139--140
-
- []
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 157--158
-
- []
-
-[18 <./Images/lazy_constraints.png>]
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
 
 [19]
-Underfull \hbox (badness 10000) in paragraph at lines 196--198
+Underfull \hbox (badness 10000) in paragraph at lines 97--98
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 205--206
+Underfull \hbox (badness 10000) in paragraph at lines 115--116
 
- []
-
-
-LaTeX Warning: Reference `param_table' on page 20 undefined on input line 218.
-
-
-Overfull \hbox (97.92403pt too wide) in paragraph at lines 215--222
-[][] 
  []
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-
-Overfull \hbox (526.17632pt too wide) in paragraph at lines 226--234
+[20]
+Overfull \hbox (49.38301pt too wide) in paragraph at lines 177--193
  [][] 
  []
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
+<Images/lazy_constraints.png, id=348, 338.26375pt x 147.55125pt>
+File: Images/lazy_constraints.png Graphic file (type png)
+<use Images/lazy_constraints.png>
+Package pdftex.def Info: Images/lazy_constraints.png  used on input line 198.
+(pdftex.def)             Requested size: 169.13145pt x 73.77544pt.
+[21]
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-Overfull \hbox (36.61696pt too wide) in paragraph at lines 238--250
-[][] 
- []
-
-[20]
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 257--258
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 259--260
-
- []
-
-(Source/style_example.txt [21])
-Underfull \hbox (badness 10000) in paragraph at lines 263--265
+ [22 <./Images/lazy_constraints.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 205--207
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 268--275
+Underfull \hbox (badness 10000) in paragraph at lines 214--215
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 268--275
+Overfull \hbox (13.19891pt too wide) in paragraph at lines 225--233
+ [][] 
+ []
+
+
+Overfull \hbox (48.26578pt too wide) in paragraph at lines 237--254
+ [][] 
+ []
+
+[23]
+Underfull \hbox (badness 10000) in paragraph at lines 279--280
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 268--275
+Underfull \hbox (badness 10000) in paragraph at lines 281--282
 
  []
 
-[22] (Source/gnuplotC.txt
+(Source/style_example.txt) [24]
+Underfull \hbox (badness 10000) in paragraph at lines 285--287
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 294--301
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 294--301
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 294--301
+
+ []
+
+(Source/gnuplotC.txt
 LaTeX Font Info:    Trying to load font information for TS1+cmss on input line 
 1.
  (D:\Programs\Miktex\tex/latex/base\ts1cmss.fd
 File: ts1cmss.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 ))
-(Source/gnuplotC.txt) (Source/gnuplotC.txt)
-Overfull \hbox (535.12834pt too wide) in paragraph at lines 292--311
-[][] 
- []
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[23]
-Overfull \hbox (249.86519pt too wide) in paragraph at lines 318--319
-[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
-][][][][][][][][][][][][][][] 
- []
-
-
-Overfull \hbox (221.23988pt too wide) in paragraph at lines 316--321
- [] 
- []
-
-<Images/profile_out.png, id=413, 500.46976pt x 401.70074pt>
+(Source/gnuplotC.txt [25]) (Source/gnuplotC.txt) [26]
+<Images/profile_out.png, id=429, 500.46976pt x 401.70074pt>
 File: Images/profile_out.png Graphic file (type png)
 <use Images/profile_out.png>
-Package pdftex.def Info: Images/profile_out.png  used on input line 342.
-(pdftex.def)             Requested size: 250.23425pt x 200.84987pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-) (Chapters/Bibliografia.tex [24] [25 <./Images/profile_out.png>] [26
+Package pdftex.def Info: Images/profile_out.png  used on input line 374.
+(pdftex.def)             Requested size: 300.28416pt x 241.0223pt.
+)
+(Chapters/Bibliografia.tex [27 <./Images/profile_out.png>] [28
 
 ]
 LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 7
@@ -1243,66 +1195,59 @@ LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 7
 File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 ))
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 179.
- [27]
+ [29]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 179.
  (Report.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 179.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 179.
-
-
-Package rerunfilecheck Warning: File `Report.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `Report.out':
-(rerunfilecheck)             Before: 0B3730D0BB44B69877D4A59A34C3B8C7;1523
-(rerunfilecheck)             After:  FB7A36B7ACDEA7C675D07F55CC2DDA4A;1532.
-
-LaTeX Warning: There were undefined references.
+Package rerunfilecheck Info: File `Report.out' has not changed.
+(rerunfilecheck)             Checksum: 26B31A7C3FCCFA71286D418913E9A7F8;1532.
 
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 25657 strings out of 492452
- 459074 string characters out of 3134016
- 727211 words of memory out of 3000000
- 29519 multiletter control sequences out of 15000+200000
- 557316 words of font info for 80 fonts, out of 3000000 for 9000
+ 25661 strings out of 492452
+ 459111 string characters out of 3134016
+ 725236 words of memory out of 3000000
+ 29520 multiletter control sequences out of 15000+200000
+ 558092 words of font info for 81 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 50i,15n,67p,797b,2405s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 50i,15n,67p,797b,2559s stack positions out of 5000i,500n,10000p,200000b,50000s
  <C:\Users\raffa\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\
 ecit1095.pk> <C:\Users\raffa\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/
 ec/dpi600\tcss1000.pk> <C:\Users\raffa\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour
 /jknappen/ec/dpi600\ecrm0700.pk> <C:\Users\raffa\AppData\Local\MiKTeX\2.9\fonts
 /pk/ljfour/jknappen/ec/dpi600\ecrm0800.pk> <C:\Users\raffa\AppData\Local\MiKTeX
-\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1440.pk> <C:\Users\raffa\AppData\Lo
-cal\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1000.pk> <C:\Users\raffa\
-AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecss1000.pk> <C:\Us
-ers\raffa\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm0600.
+\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1000.pk> <C:\Users\raffa\AppData\Lo
+cal\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1440.pk> <C:\Users\raffa\
+AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1000.pk> <C:\Us
+ers\raffa\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecss1000.
 pk> <C:\Users\raffa\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600
-\ecbx1728.pk> <C:\Users\raffa\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen
-/ec/dpi600\tcrm1200.pk> <C:\Users\raffa\AppData\Local\MiKTeX\2.9\fonts/pk/ljfou
-r/jknappen/ec/dpi600\ecsl1200.pk> <C:\Users\raffa\AppData\Local\MiKTeX\2.9\font
-s/pk/ljfour/jknappen/ec/dpi600\ecbx1200.pk> <C:\Users\raffa\AppData\Local\MiKTe
-X\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx2488.pk> <C:\Users\raffa\AppData\L
-ocal\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\eccc1200.pk> <C:\Users\raffa
-\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1200.pk> <C:\U
-sers\raffa\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecti1200
+\ecrm0600.pk> <C:\Users\raffa\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen
+/ec/dpi600\ecbx1728.pk> <C:\Users\raffa\AppData\Local\MiKTeX\2.9\fonts/pk/ljfou
+r/jknappen/ec/dpi600\tcrm1200.pk> <C:\Users\raffa\AppData\Local\MiKTeX\2.9\font
+s/pk/ljfour/jknappen/ec/dpi600\ecsl1200.pk> <C:\Users\raffa\AppData\Local\MiKTe
+X\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1200.pk> <C:\Users\raffa\AppData\L
+ocal\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx2488.pk> <C:\Users\raffa
+\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\eccc1200.pk> <C:\U
+sers\raffa\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1200
 .pk> <C:\Users\raffa\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi60
-0\ecti1728.pk> <C:\Users\raffa\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappe
-n/ec/dpi600\eccc1728.pk> <C:\Users\raffa\AppData\Local\MiKTeX\2.9\fonts/pk/ljfo
-ur/jknappen/ec/dpi600\ecxc1728.pk><D:/Programs/Miktex/fonts/type1/public/amsfon
-ts/cm/cmex10.pfb><D:/Programs/Miktex/fonts/type1/public/amsfonts/cm/cmmi12.pfb>
-<D:/Programs/Miktex/fonts/type1/public/amsfonts/cm/cmmi6.pfb><D:/Programs/Mikte
-x/fonts/type1/public/amsfonts/cm/cmmi8.pfb><D:/Programs/Miktex/fonts/type1/publ
-ic/amsfonts/cm/cmr12.pfb><D:/Programs/Miktex/fonts/type1/public/amsfonts/cm/cmr
-8.pfb><D:/Programs/Miktex/fonts/type1/public/amsfonts/cm/cmsy10.pfb><D:/Program
-s/Miktex/fonts/type1/public/amsfonts/cm/cmsy8.pfb>
-Output written on Report.pdf (31 pages, 485108 bytes).
+0\ecti1200.pk> <C:\Users\raffa\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappe
+n/ec/dpi600\ecti1728.pk> <C:\Users\raffa\AppData\Local\MiKTeX\2.9\fonts/pk/ljfo
+ur/jknappen/ec/dpi600\eccc1728.pk> <C:\Users\raffa\AppData\Local\MiKTeX\2.9\fon
+ts/pk/ljfour/jknappen/ec/dpi600\ecxc1728.pk><D:/Programs/Miktex/fonts/type1/pub
+lic/amsfonts/cm/cmex10.pfb><D:/Programs/Miktex/fonts/type1/public/amsfonts/cm/c
+mmi12.pfb><D:/Programs/Miktex/fonts/type1/public/amsfonts/cm/cmmi6.pfb><D:/Prog
+rams/Miktex/fonts/type1/public/amsfonts/cm/cmmi8.pfb><D:/Programs/Miktex/fonts/
+type1/public/amsfonts/cm/cmr10.pfb><D:/Programs/Miktex/fonts/type1/public/amsfo
+nts/cm/cmr12.pfb><D:/Programs/Miktex/fonts/type1/public/amsfonts/cm/cmr8.pfb><D
+:/Programs/Miktex/fonts/type1/public/amsfonts/cm/cmsy10.pfb><D:/Programs/Miktex
+/fonts/type1/public/amsfonts/cm/cmsy8.pfb>
+Output written on Report.pdf (33 pages, 504640 bytes).
 PDF statistics:
- 1102 PDF objects out of 1200 (max. 8388607)
- 189 named destinations out of 1000 (max. 500000)
+ 1146 PDF objects out of 1200 (max. 8388607)
+ 191 named destinations out of 1000 (max. 500000)
  223 words of extra memory for PDF output out of 10000 (max. 10000000)
 

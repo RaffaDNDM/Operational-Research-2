@@ -9,18 +9,18 @@
 \contentsline {subsection}{\numberline {3.1.1}Formulazione sequenziale}{7}{subsection.3.1.1}% 
 \contentsline {subsection}{\numberline {3.1.2}Formulazione basata sul flusso}{8}{subsection.3.1.2}% 
 \contentsline {section}{\numberline {3.2}Loop}{9}{section.3.2}% 
-\contentsline {chapter}{\numberline {4}Performance}{11}{chapter.4}% 
-\contentsline {section}{\numberline {4.1}Performance variabilty}{11}{section.4.1}% 
-\contentsline {section}{\numberline {4.2}Analisi tabulare}{12}{section.4.2}% 
-\contentsline {section}{\numberline {4.3}Performance profiling}{12}{section.4.3}% 
-\contentsline {section}{\numberline {4.4}Analisi degli algoritmi sviluppati}{14}{section.4.4}% 
-\contentsline {chapter}{\numberline {5}Appendice}{15}{chapter.5}% 
-\contentsline {section}{\numberline {5.1}CPLEX}{15}{section.5.1}% 
-\contentsline {subsection}{\numberline {5.1.1}Funzioni}{15}{subsection.5.1.1}% 
-\contentsline {subsubsection}{\numberline {5.1.1.1}Costruzione modello}{15}{subsubsection.5.1.1.1}% 
-\contentsline {subsubsection}{\numberline {5.1.1.2}Lazy constraints}{18}{subsubsection.5.1.1.2}% 
-\contentsline {subsubsection}{\numberline {5.1.1.3}Calcolo della soluzione}{18}{subsubsection.5.1.1.3}% 
-\contentsline {subsection}{\numberline {5.1.2}Parametri}{20}{subsection.5.1.2}% 
-\contentsline {subsection}{\numberline {5.1.3}Costanti utili}{21}{subsection.5.1.3}% 
-\contentsline {section}{\numberline {5.2}Gnuplot}{21}{section.5.2}% 
-\contentsline {section}{\numberline {5.3}perprof.py}{23}{section.5.3}% 
+\contentsline {chapter}{\numberline {4}Performance}{13}{chapter.4}% 
+\contentsline {section}{\numberline {4.1}Performance variabilty}{13}{section.4.1}% 
+\contentsline {section}{\numberline {4.2}Analisi tabulare}{14}{section.4.2}% 
+\contentsline {section}{\numberline {4.3}Performance profiling}{15}{section.4.3}% 
+\contentsline {section}{\numberline {4.4}Analisi degli algoritmi sviluppati}{16}{section.4.4}% 
+\contentsline {chapter}{\numberline {5}Appendice}{17}{chapter.5}% 
+\contentsline {section}{\numberline {5.1}CPLEX}{17}{section.5.1}% 
+\contentsline {subsection}{\numberline {5.1.1}Funzioni}{17}{subsection.5.1.1}% 
+\contentsline {subsubsection}{\numberline {5.1.1.1}Costruzione modello}{17}{subsubsection.5.1.1.1}% 
+\contentsline {subsubsection}{\numberline {5.1.1.2}Calcolo della soluzione}{20}{subsubsection.5.1.1.2}% 
+\contentsline {subsubsection}{\numberline {5.1.1.3}Lazy constraints}{21}{subsubsection.5.1.1.3}% 
+\contentsline {subsection}{\numberline {5.1.2}Parametri}{23}{subsection.5.1.2}% 
+\contentsline {subsection}{\numberline {5.1.3}Costanti utili}{24}{subsection.5.1.3}% 
+\contentsline {section}{\numberline {5.2}Gnuplot}{24}{section.5.2}% 
+\contentsline {section}{\numberline {5.3}perprof.py}{26}{section.5.3}% 
