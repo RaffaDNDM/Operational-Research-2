@@ -28,8 +28,9 @@ int main(int argc, char** argv)
 				int n = 0;
 				for (; n < NUM_MODELS; n++)
 				{
-					tsp_in.model = n + 1;
-					set_params_and_solve(&tsp_in);
+				
+						tsp_in.model = n + 1;
+						set_params_and_solve(&tsp_in);
 				}
 				tsp_in.model = 0;
 			}
@@ -48,8 +49,11 @@ int main(int argc, char** argv)
 			int n = 0;
 			for (; n < NUM_MODELS; n++)
 			{
-				tsp_in.model = n + 1;
-				set_params_and_solve(&tsp_in);
+				if (n != 2)
+				{
+					tsp_in.model = n + 1;
+					set_params_and_solve(&tsp_in);
+				}
 			}
 		}
 		else
@@ -82,41 +86,55 @@ void solution(tsp_instance* tsp_in)
 
 void set_params_and_solve(tsp_instance* tsp_in)
 {
-	int node_lim[] = { 0, 1, 2, 3 };
-	int sol_lim[] = { 1, 2, 3 };
-	double gap[] = { 0.1, 0.01, 0.001, 0.0001 };
-	int seed[] = { 500, 1500, 2000, 2500 };
+	#ifndef METAHEURISTIC
+		parse_file(tsp_in);
+		solution(tsp_in);
+	#else
+		int node_lim[] = { 0, 1, 2, 3 };
+		int sol_lim[] = { 1, 2, 3 };
+		double gap[] = { 0.1, 0.01, 0.001, 0.0001 };
+		int seed[] = { 500, 1500, 2000, 2500 };
 
-	int h = 0;
-	for (; h < (sizeof(seed) / sizeof(int)); h++)
-	{
-		if (tsp_in->alg == 2 && tsp_in->model == 1)
-		{
-			int i = 0;
-			for (; i < (sizeof(node_lim) / sizeof(int)); i++)
+		#ifdef ALL_PARAM_COMBINATIONS
+			
+			int h = 0;
+			for (; h < (sizeof(seed) / sizeof(int)); h++)
 			{
-				int j = 0;
-				for (; j < (sizeof(sol_lim) / sizeof(int)); j++)
+				if (tsp_in->alg == 2 && tsp_in->model == 1)
 				{
-					int k = 0;
-					for (; k < (sizeof(gap) / sizeof(double)); k++)
+					int i = 0;
+					for (; i < (sizeof(node_lim) / sizeof(int)); i++)
 					{
-						tsp_in->node_lim = node_lim[i];
-						tsp_in->sol_lim = sol_lim[j];
-						tsp_in->eps_gap = gap[k];
-						tsp_in->seed = seed[h];
-						parse_file(tsp_in);
-						solution(tsp_in);
+						int j = 0;
+						for (; j < (sizeof(sol_lim) / sizeof(int)); j++)
+						{
+							int k = 0;
+							for (; k < (sizeof(gap) / sizeof(double)); k++)
+							{
+								tsp_in->node_lim = node_lim[i];
+								tsp_in->sol_lim = sol_lim[j];
+								tsp_in->eps_gap = gap[k];
+								tsp_in->seed = seed[h];
+								parse_file(tsp_in);
+								solution(tsp_in);
+							}
+						}
 					}
 				}
+				else
+				{
+					tsp_in->seed = seed[h];
+					parse_file(tsp_in);
+					solution(tsp_in);
+				}
 			}
-		}
-		else
-		{
-			tsp_in->seed = seed[h];
+		#else
+			tsp_in->node_lim = node_lim[0];
+			tsp_in->sol_lim = sol_lim[0];
+			tsp_in->eps_gap = gap[0];
+			tsp_in->seed = seed[0];
 			parse_file(tsp_in);
 			solution(tsp_in);
-		}
-
-	}
+		#endif
+	#endif
 }

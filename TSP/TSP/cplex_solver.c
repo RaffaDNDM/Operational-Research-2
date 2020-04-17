@@ -7,7 +7,7 @@ void cplex_solver(tsp_instance* tsp_in)
 	CPXLPptr lp = CPXcreateprob(env, &error, "TSP");
 
 	int* succ = calloc(tsp_in->num_nodes, sizeof(int));
-	int* comp = calloc(tsp_in->num_nodes, sizeof(int));;
+	int* comp = calloc(tsp_in->num_nodes, sizeof(int));
 
 	switch (tsp_in->model)
 	{
@@ -22,6 +22,17 @@ void cplex_solver(tsp_instance* tsp_in)
 		case 2:
 		{
 			printf(LINE);
+			time_t start = clock();
+			printf("Branch&Cut solver\n\n");
+			bc_solver(env, lp, tsp_in, succ, comp);
+			time_t end = clock();
+			tsp_in->execution_time = ((double)(end - start) / (double)CLOCKS_PER_SEC) * TIME_SCALE;
+			break;
+		}
+
+		case 3:
+		{
+			printf(LINE);
 			printf("MTZ model\n\n");
 			time_t start = clock();
 			mtz_build_model(env, lp, tsp_in);
@@ -31,7 +42,7 @@ void cplex_solver(tsp_instance* tsp_in)
 			break;
 		}
 
-		case 3:
+		case 4:
 		{
 			printf(LINE);
 			printf("GG model\n\n");
@@ -66,12 +77,20 @@ void cplex_solver(tsp_instance* tsp_in)
 	{
 		case 1:
 		{
+			x = (double*)realloc(x, sizeof(double) * CPXgetnumcols(env, lp));
+			assert(CPXgetmipx(env, lp, x, 0, CPXgetnumcols(env, lp) - 1) == 0);
+			break;
+		}
+		
+		case 2:
+		{
 			x = (double*) realloc(x, sizeof(double) * CPXgetnumcols(env, lp));
+			int s = CPXgetnumcols(env, lp);
 			assert(CPXgetmipx(env, lp, x, 0, CPXgetnumcols(env, lp) - 1) == 0);
 			break;
 		}
 
-		case 2:
+		case 3:
 		{
 			int num_edges = (tsp_in->num_nodes) * (tsp_in->num_nodes);
 
@@ -82,7 +101,7 @@ void cplex_solver(tsp_instance* tsp_in)
 			break;
 		}
 
-		case 3:
+		case 4:
 		{
 			int num_edges = (tsp_in->num_nodes) * (tsp_in->num_nodes);
 			x = calloc(sizeof(double), num_edges);
@@ -104,11 +123,19 @@ void cplex_solver(tsp_instance* tsp_in)
 			{
 				succ = calloc(tsp_in->num_nodes, sizeof(int));
 				comp = calloc(tsp_in->num_nodes, sizeof(int));
+				cplex_define_tour(tsp_in, x, succ, comp, &n_comps);
+				break;
+			}
+		
+			case 3:
+			{
+				succ = calloc(tsp_in->num_nodes, sizeof(int));
+				comp = calloc(tsp_in->num_nodes, sizeof(int));
 				mtz_define_tour(tsp_in, x, succ, comp);
 				break;
 			}
 
-			case 3:
+			case 4:
 			{
 				succ = calloc(tsp_in->num_nodes, sizeof(int));
 				comp = calloc(tsp_in->num_nodes, sizeof(int));
@@ -117,7 +144,7 @@ void cplex_solver(tsp_instance* tsp_in)
 			}
 		}
 
-		//cplex_plot(tsp_in, succ, comp, &n_comps);
+		cplex_plot(tsp_in, succ, comp, &n_comps);
 
 		free(succ);
 		free(comp);
@@ -198,6 +225,112 @@ void cplex_build_model(tsp_instance* tsp_in, CPXENVptr env, CPXLPptr lp)
 	free(constraint[0]);
 	free(edge);
 	free(constraint);
+}
+
+void bc_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ, int* comp)
+{
+	cplex_build_model(tsp_in, env, lp);
+	CPXsetintparam(env, CPX_PARAM_MIPCBREDLP, CPX_OFF);
+	CPXsetlazyconstraintcallbackfunc(env, sec_callback, tsp_in);
+	int ncores = 1;
+	CPXgetnumcores(env, &ncores);
+	CPXsetintparam(env, CPX_PARAM_THREADS, ncores);
+
+	tsp_in->num_cols = CPXgetnumcols(env, lp);
+	CPXmipopt(env, lp);
+}
+
+static int CPXPUBLIC sec_callback(CPXCENVptr env, void* cbdata, int wherefrom, void* cbhandle, int* useraction_p)
+{
+	*useraction_p = CPX_CALLBACK_DEFAULT;
+	tsp_instance* tsp_in = (tsp_instance*) cbhandle;
+	
+	double* x_star = (double*)malloc(tsp_in->num_cols * sizeof(double));
+
+	if (CPXgetcallbacknodex(env, cbdata, wherefrom, x_star, 0, tsp_in->num_cols - 1))
+	{
+		free(x_star);
+		return 1;
+	}
+
+	int ncuts = sec_bc_constraint(env, tsp_in, x_star, cbdata, wherefrom);
+	
+	if (ncuts >= 1)
+		*useraction_p = CPX_CALLBACK_SET;
+	
+	free(x_star);
+
+	return 0;
+}
+
+int sec_bc_constraint(CPXENVptr env, tsp_instance* tsp_in, double* x_star, void* cbdata, int wherefrom)
+{
+	int n_comps = 3;
+	int* succ = calloc(tsp_in->num_nodes, sizeof(int));
+	int* comp = calloc(tsp_in->num_nodes, sizeof(int));
+	cplex_define_tour(tsp_in, x_star, succ, comp, &n_comps);
+
+	if (n_comps == 1)
+		return 0;
+
+	int* const_terms = calloc(sizeof(int), n_comps);
+	char type_constraint = 'L';
+
+	int k = 0;
+	for (;k < tsp_in->num_nodes; k++)
+		const_terms[comp[k] - 1]++;
+
+	for (k = 1; k <= n_comps; k++)
+	{
+		double const_term = const_terms[k - 1] - 1.0;
+		//CPXnewrows(env, lp, numero righe, vettore di termini noti, vettore di tipo di vincoli, NULL, cname)
+		//assert(CPXnewrows(env, lp, 1, &(const_term), &type_constraint, NULL, constraint) == 0); //one row for each node
+
+		int nnz = 0;
+		int size = (tsp_in->num_nodes) / 4;
+		int* indices = (int*)calloc(sizeof(int), size);
+		double* values = (double*)calloc(sizeof(double), size);
+		int first = 0;
+
+		int i = 0;
+		for (;i < tsp_in->num_nodes; i++)
+		{
+			int j;
+			for (j = i + 1; j < tsp_in->num_nodes; j++)
+			{
+				if (comp[i] == k && comp[j] == k)
+				{
+					if (nnz == size)
+					{
+						size *= 2;
+						assert((indices = (int*)realloc(indices, size * sizeof(int))) != NULL);
+						assert((values = (double*)realloc(values, size * sizeof(double))) != NULL);
+					}
+
+					indices[nnz] = cplex_xpos(tsp_in, i, j);
+					values[nnz] = 1.0;
+					nnz++;
+				}
+			}
+		}
+
+		if (nnz < size)
+		{
+			assert((indices = (int*)realloc(indices, nnz * sizeof(int))) != NULL);
+			assert((values = (double*)realloc(values, nnz * sizeof(double))) != NULL);
+		}
+
+		assert(CPXcutcallbackadd(env, cbdata, wherefrom, nnz, const_term, type_constraint, indices, values, 0)==0);
+	
+		free(indices);
+		free(values);
+	}
+
+	free(const_terms);
+	free(succ);
+	free(comp);
+
+	return n_comps;
 }
 
 int cplex_xpos(tsp_instance* tsp_in, int i, int j)
@@ -767,7 +900,6 @@ void loop_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ, in
 		printf("Pool solution: %d    ", tsp_in->sol_lim);
 		printf("Cplex precision: %lf   ", tsp_in->eps_gap);
 		printf("Seed: %d\n\n", tsp_in->seed);
-
 	#endif
 
 	time_t start, start_iter, end_iter, end;
@@ -855,21 +987,45 @@ void add_sec_constraint(CPXENVptr env, CPXLPptr lp, tsp_instance *tsp_in, int *c
 	for (k=1; k <= n_comps; k++)
 	{
 		double const_term = const_terms[k-1]-1.0;
-		int lastrow = CPXgetnumrows(env, lp);
 		sprintf(constraint[0], "SEC-constraint (%d, %d)", k, iteration);
 		//CPXnewrows(env, lp, numero righe, vettore di termini noti, vettore di tipo di vincoli, NULL, cname)
-		assert(CPXnewrows(env, lp, 1, &(const_term), &type_constraint, NULL, constraint) == 0); //one row for each node
+		//assert(CPXnewrows(env, lp, 1, &(const_term), &type_constraint, NULL, constraint) == 0); //one row for each node
+
+		int nnz = 0;
+		int size = (tsp_in->num_nodes) / 4;
+		int *indices = (int*) calloc(sizeof(int), size);
+		double *values = (double*) calloc(sizeof(double), size);
+		int first = 0;
 
 		int i = 0;
 		for (;i < tsp_in->num_nodes; i++)
 		{
 			int j;
-			for (j=i+1; j < tsp_in->num_nodes; j++)
+			for (j = i + 1; j < tsp_in->num_nodes; j++)
 			{
 				if (comp[i] == k && comp[j] == k)
-					assert(!CPXchgcoef(env, lp, lastrow, cplex_xpos(tsp_in, i, j), 1.0));
+				{
+					if (nnz == size)
+					{
+						size *= 2;
+						assert((indices = (int*) realloc(indices, size * sizeof(int))) != NULL);
+						assert((values = (double*) realloc(values, size * sizeof(double))) != NULL);
+					}
+					
+					indices[nnz] = cplex_xpos(tsp_in, i, j);
+					values[nnz] = 1.0;
+					nnz++;
+				}
 			}
 		}
+
+		if (nnz < size)
+		{
+			assert((indices = (int*) realloc(indices, nnz * sizeof(int))) != NULL);
+			assert((values = (double*) realloc(values, nnz * sizeof(double))) != NULL);
+		}
+
+		assert(CPXaddrows(env, lp, 0, 1, nnz, &const_term, &type_constraint, &first, indices, values, NULL, constraint) == 0); //one row for each node
 	}
 
 	if (tsp_in->verbose >= 100)

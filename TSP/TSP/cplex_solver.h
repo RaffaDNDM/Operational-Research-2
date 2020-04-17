@@ -10,6 +10,7 @@
 #define SOLUTION_CORRECTNESS 1
 
 #define METAHEURISTIC 1
+//#define ALL_PARAM_COMBINATIONS 1
 #define NODE_LIMIT 3
 #define EPS_GAP 0.1
 #define	ORDER_SOL 5 
@@ -126,5 +127,11 @@ void loop_solver(CPXENVptr, CPXLPptr, tsp_instance*, int*, int *);
 */
 void add_sec_constraint(CPXENVptr, CPXLPptr, tsp_instance*, int*, int);
 
+void bc_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ, int* comp);
+
 void print_state(CPXENVptr, CPXLPptr, int, time_t, time_t);
+
+static int CPXPUBLIC sec_callback(CPXCENVptr env, void* cbdata, int wherefrom, void* cbhandle, int* useraction_p);
+
+int sec_bc_constraint(CPXENVptr env, tsp_instance* tsp_in, double* x_star, void* cbdata, int wherefrom);
 #endif

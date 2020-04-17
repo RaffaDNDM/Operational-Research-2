@@ -45,7 +45,7 @@ void parse_cmd(char** argv, int argc, tsp_instance* tsp_in)
 				}
 				else
 				{
-					double modelF = atof(argv[++i]);
+					double modelF = atof(argv[i]);
 					int model = (int)modelF;
 
 					//the value inserted by the user must be an integer (model!=0 && modelF==model) 

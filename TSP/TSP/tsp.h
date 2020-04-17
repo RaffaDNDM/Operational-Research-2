@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define NUM_MODELS 3
+#define NUM_MODELS 4
 
 //Maximum time for the computation of the solution
 #define DEADLINE_MAX 1000000
@@ -18,7 +18,7 @@
 //#define NUM_COMMANDS 8
 
 //default value of verbose
-#define VERBOSE 150
+#define VERBOSE 40
 
 #define DIR_LIST_PY "python3 list_dir.py"
 
@@ -28,6 +28,7 @@ typedef struct
 	int num_nodes;
 	double* x_coords;
 	double* y_coords;
+	int num_cols;
 
 	//Parameters
 	char input[500];
