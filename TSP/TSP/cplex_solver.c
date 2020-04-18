@@ -9,7 +9,7 @@ void cplex_solver(tsp_instance* tsp_in)
 	int* succ = calloc(tsp_in->num_nodes, sizeof(int));
 	int* comp = calloc(tsp_in->num_nodes, sizeof(int));
 
-	switch (tsp_in->model)
+	switch (tsp_in->alg)
 	{
 		case 1:
 		{
@@ -33,7 +33,7 @@ void cplex_solver(tsp_instance* tsp_in)
 		case 3:
 		{
 			printf(LINE);
-			printf("MTZ model\n\n");
+			printf("MTZ solver\n\n");
 			time_t start = clock();
 			mtz_build_model(env, lp, tsp_in);
 			CPXmipopt(env, lp);
@@ -45,7 +45,7 @@ void cplex_solver(tsp_instance* tsp_in)
 		case 4:
 		{
 			printf(LINE);
-			printf("GG model\n\n");
+			printf("GG solver\n\n");
 			time_t start = clock();
 			gg_build_model(env, lp, tsp_in);
 			CPXmipopt(env, lp);
@@ -73,7 +73,7 @@ void cplex_solver(tsp_instance* tsp_in)
 	
 	//switch su quante  variabili prendere per plottare
 	
-	switch (tsp_in->model)
+	switch (tsp_in->alg)
 	{
 		case 1:
 		{
@@ -117,7 +117,7 @@ void cplex_solver(tsp_instance* tsp_in)
 	int n_comps = 1;
 	if (tsp_in->plot)
 	{
-		switch (tsp_in->model)
+		switch (tsp_in->alg)
 		{			
 			case 2:
 			{
@@ -234,7 +234,7 @@ void bc_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ, int*
 	CPXsetlazyconstraintcallbackfunc(env, sec_callback, tsp_in);
 	int ncores = 1;
 	CPXgetnumcores(env, &ncores);
-	CPXsetintparam(env, CPX_PARAM_THREADS, ncores);
+	CPXsetintparam(env, CPX_PARAM_THREADS, ncores-4);
 
 	tsp_in->num_cols = CPXgetnumcols(env, lp);
 	CPXmipopt(env, lp);

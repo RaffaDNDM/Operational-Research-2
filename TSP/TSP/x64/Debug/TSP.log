@@ -1,13 +1,3 @@
-﻿  cplex_solver.c
-D:\github\OperationalResearch2\TSP\TSP\cplex_solver.c(256,35): warning C4090: 'function': different 'const' qualifiers
-D:\github\OperationalResearch2\TSP\TSP\cplex_solver.c(453,8): warning C4013: 'gets' undefined; assuming extern returning int
-D:\github\OperationalResearch2\TSP\TSP\cplex_solver.c(595,7): warning C4101: 'indices2': unreferenced local variable
-D:\github\OperationalResearch2\TSP\TSP\cplex_solver.c(596,10): warning C4101: 'values2': unreferenced local variable
-D:\github\OperationalResearch2\TSP\TSP\cplex_solver.c(938,61): warning C4305: 'function': truncation from '__int64' to 'CPXINT'
-D:\github\OperationalResearch2\TSP\TSP\cplex_solver.c(939,63): warning C4305: 'function': truncation from '__int64' to 'CPXINT'
-  default_alg.c
-  input.c
-  tsp.c
-  utility.c
-  Generating Code...
+﻿  tsp.c
+D:\github\OperationalResearch2\TSP\TSP\tsp.c(93,9): warning C4101: 'title': unreferenced local variable
   TSP.vcxproj -> D:\github\OperationalResearch2\TSP\x64\Debug\TSP.exe

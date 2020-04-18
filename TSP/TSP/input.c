@@ -8,56 +8,59 @@ void parse_cmd(char** argv, int argc, tsp_instance* tsp_in)
 
 	tsp_in->num_nodes = -1;
 	tsp_in->deadline = DEADLINE_MAX;
-	tsp_in->alg = 1;
+	tsp_in->alg = -1;
 	tsp_in->integerDist = 0; 
 	tsp_in->plot = 1;
 	tsp_in->verbose = VERBOSE;
-	tsp_in->model = 1;
 	
 	int def_deadline = 0;
 
 	strcpy(tsp_in->input, "NULL");
 	strcpy(tsp_in->dir, "NULL");
+	
+	int i = 0;
+	for (; i < NUM_ALGS; i++)
+		tsp_in->which_alg[i] = 0;
 
-	int i = 1;
+	i = 1;
 	for (; i < argc; i++)
 	{
 		if (strncmp(argv[i], "-alg", 4) == 0)
 		{
-			double algF = atof(argv[++i]);
-			int alg = (int) algF;
-			
-			//the value inserted by the user must be an integer (alg!=0 && algF==alg) 
-			//but also the value must be greater than zero
-			assert(alg>0 && alg<=NUM_ALGS && algF==alg); 
-			tsp_in->alg = alg;
-
-			continue;
-		}
-
-		if (strncmp(argv[i], "-model", 6) == 0)
-		{
-			if (tsp_in->alg == 2)
+			if (strncmp(argv[++i], "all", 3) == 0)
 			{
-				if (strncmp(argv[++i], "all", 3) == 0)
-				{
-					tsp_in->model = 0;
-				}
-				else
-				{
-					double modelF = atof(argv[i]);
-					int model = (int)modelF;
-
-					//the value inserted by the user must be an integer (model!=0 && modelF==model) 
-					//but also the value must be greater than zero
-					assert(model > 0 && model <= NUM_MODELS && modelF == model);
-					tsp_in->model = model;
-				}
+				tsp_in->alg = 0;
 			}
 			else
 			{
-				fprintf(stderr, "You need to specify first the algorithm you want to use\n");
-				fprintf(stderr, "or this algorithm approach doesn't support model option\n");
+				double algF = atof(argv[i]);
+				int alg = (int)algF;
+
+				//the value inserted by the user must be an integer (alg!=0 && algF==alg) 
+				//but also the value must be greater than zero
+				assert(alg > 0 && algF == alg);
+				
+				if (alg <= NUM_ALGS)
+					tsp_in->alg = alg;
+				else
+				{
+					tsp_in->alg = 0;
+					int length = strlen(argv[i]);
+					
+					int j = 0;
+					for (; j < length; j++)
+					{
+						int index = (argv[i][j]-'0') - 1;
+						
+						if (index >= 0 && index < NUM_ALGS)
+							tsp_in->which_alg[index] = 1;
+						else
+						{
+							perror("Undefined algorithm\n");
+							exit(1);
+						}
+					}
+				}
 			}
 
 			continue;
@@ -258,37 +261,6 @@ void parse_file(tsp_instance* tsp_in)
 
 		printf(LINE);
 	}
-}
-
-void plot_solution(tsp_instance* tsp_in)
-{
-	int count = 0;
-
-	//Print of solution on output file
-	FILE* f = fopen(DEFAULT_DAT, "w");
-	
-	int i = 0;
-	for (; i < tsp_in->num_nodes+1; i++)
-	{
-		fprintf(f, "%f ", tsp_in->x_coords[tsp_in->sol[i]]);
-		fprintf(f, "%f ", tsp_in->y_coords[tsp_in->sol[i]]);
-		int x = (i == tsp_in->num_nodes) ? 1 : i+1;
-		fprintf(f, "%d \n", x);
-	}
-	
-	fclose(f);
-
-	FILE* pipe = _popen(GNUPLOT_EXE, "w");
-	f = fopen(GP_DEFAULT_STYLE, "r");
-
-	char line[LINE_SIZE];
-	while(fgets(line, LINE_SIZE, f)!=NULL)
-	{
-		fprintf(pipe, "%s ", line);
-	}
-
-	fclose(f);
-	_pclose(pipe);
 }
 
 void dealloc_inst(tsp_instance* tsp_in)

@@ -146,14 +146,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="cplex_solver.c" />
-    <ClCompile Include="default_alg.c" />
     <ClCompile Include="input.c" />
     <ClCompile Include="tsp.c" />
     <ClCompile Include="utility.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cplex_solver.h" />
-    <ClInclude Include="default_alg.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="tsp.h" />
     <ClInclude Include="utility.h" />

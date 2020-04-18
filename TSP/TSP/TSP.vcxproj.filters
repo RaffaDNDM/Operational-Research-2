@@ -21,9 +21,6 @@
     <ClCompile Include="input.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="default_alg.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="cplex_solver.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -39,9 +36,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="cplex_solver.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="default_alg.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="utility.h">
