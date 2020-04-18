@@ -30,6 +30,12 @@ void parse_cmd(char** argv, int argc, tsp_instance* tsp_in)
 			if (strncmp(argv[++i], "all", 3) == 0)
 			{
 				tsp_in->alg = 0;
+
+				int j = 0;
+				for (; j < NUM_ALGS; j++)
+				{
+					tsp_in->which_alg[j] = 1;
+				}
 			}
 			else
 			{
