@@ -71,6 +71,7 @@ viene invece sfruttata la seguente funzione:
 \end{tabular}
 \end{center}
 \begin{table}[h]
+\centering
 \begin{tabular}{rl}
 \textbf{env:} & {puntatore di tipo CPXENVptr alla struttura ENV}\\
 & {precedentemente creata}\\
@@ -90,7 +91,67 @@ viene invece sfruttata la seguente funzione:
                   & delle variabili da inserire
 \end{tabular}
 \end{table}
-In modo analogo all'inserimento delle colonne, nel nostro programma viene aggiunta una riga alla volta nel modello. L'\textbf{i}-esima riga aggiunta corrisponderà al vincolo imposto sul nodo \textbf{i}-esimo, imponendo a 1 il coefficiente della variabile $x_{k,j}$ se $k=i$ $j=i$ per ogni variabile del modello.\\\\
+In modo analogo all'inserimento delle colonne, nel nostro programma viene aggiunta una riga alla volta nel modello. L'\textbf{i}-esima riga aggiunta corrisponderà al vincolo imposto sul nodo \textbf{i}-esimo, imponendo a 1 il coefficiente della variabile $x_{k,j}$ se $k=i$ $j=i$ per ogni variabile del modello. In questo modo però viene aggiunto un vincolo in cui è necessario cambiare i coefficienti delle variabili che ne prendono parte. Per fare ciò è necessaria la funzione:
+\begin{center}
+\begin{tabular}{c}
+\begin{lstlisting}[linewidth=230pt, basicstyle=\footnotesize\sffamily,]     
+CPXchgcoef(env, lp, i, j, new_value);
+\end{lstlisting}
+\end{tabular}
+\end{center}
+\begin{table}[h]
+\centering
+\begin{tabular}{rl}
+\textbf{env:} & {puntatore di tipo CPXENVptr alla struttura ENV}\\
+& {precedentemente creata}\\
+\textbf{lp:} & {puntatore di tipo CPXLPptr alla struttura LP}\\
+& {precedentemente creata}\\
+\textbf{i:} & {intero che specifica l'indice della riga in cui modificare il }\\
+&{coefficiente}\\
+\textbf{j:} & {intero che specifica la colonna in cui si trova la variabile}\\
+&{di cui modificare il coefficiente}\\
+\textbf{new\_value:} & {nuovo valore del coefficiente}\\
+\end{tabular}
+\end{table}
+L'utilizzo di questa metodo per inserire nuovi vincoli è però considerato inefficiente. Al suo posto è consigliato l'utilizzo di una funzione che inserisca il vincolo con già i coefficienti delle variabili impostati al valore corretto:
+\begin{center}
+\begin{tabular}{c}
+\begin{lstlisting}[linewidth=385pt, basicstyle=\footnotesize\sffamily,]     
+CPXaddrows(env, lp, num_nc, num_nr, nnz, const_term, type_costr,
+           rmatbeg, rmatind, rmatval, col_name, row_name);
+\end{lstlisting}
+\end{tabular}
+\end{center}
+\begin{table}[h]
+\centering
+\begin{tabular}{rl}
+\textbf{env:} & {puntatore di tipo CPXENVptr alla struttura ENV}\\
+& {precedentemente creata}\\
+\textbf{lp:} & {puntatore di tipo CPXLPptr alla struttura LP}\\
+& {precedentemente creata}\\
+\textbf{num\_nc:} & {numero di nuove colonne che devono essere aggiunte}\\
+\textbf{num\_nr:} & {numero di nuove righe che devono essere aggiunte}\\
+\end{tabular}
+\end{table}
+\begin{table}[h]
+\centering
+\begin{tabular}{rl}
+\textbf{nnz:} & {numero di coefficienti non nulli nel vincolo aggiunto}\\
+\textbf{const\_term:} & {vettore con i termini noti per ogni vincolo da aggiungere}\\
+\textbf{type\_costr:} & {vettore con il tipo di vincoli da aggiungere,}\\
+&{scelto tra:}\\
+&{\textit{'L'} per vincolo $\leq$}\\
+&{\textit{'E'} per vincolo $=$}\\
+&{\textit{'G'} per vincolo $\geq$}\\
+&{\textit{'R'} per vincolo definito in un intervallo}\\
+\textbf{rmatbeg:} & {vettore per definire le righe da aggiungere}\\
+\textbf{rmatind:} & {vettore per definire le righe da aggiungere}\\
+\textbf{rmatval:} & {vettore per definire le righe da aggiungere}\\
+\textbf{col\_name:} & {vettore contenente i nomi delle nuove colonne}\\
+\textbf{row\_name:} & {vettore contenente i nomi dei nuovi vincoli}\\
+\end{tabular}
+\end{table}
+ 
 \subsubsection{Calcolo della soluzione}
 Per ottenere la soluzione ottima del problema di ottimizzazione del problema correlato al modello definito in cplex, vengono utilizzate due fasi:
 \begin{itemize}
@@ -201,6 +262,203 @@ In modo analogo alle due funzioni precedentemente descritte per l'aggiunta di ri
 \end{center} 
 \end{figure}
 \vspace{10cm}
+\subsubsection{Lazy Constraint Callback}
+Per poter utilizzare una lazy constraint callback, precedentemente implementata, all'interno del programma, prima di tutto è necessario installarla. Questo viene fatto attraverso la seguente funzione:
+\begin{center}
+\begin{tabular}{c}
+\begin{lstlisting}[linewidth=380pt, basicstyle=\footnotesize\sffamily,]     
+CPXsetlazyconstraintcallbackfunc(env, mylazycallback, tsp_in);
+\end{lstlisting}
+\end{tabular}
+\end{center}
+\begin{table}[h]
+\centering
+\begin{tabular}{rl}
+\textbf{env:} & {puntatore di tipo CPXENVptr alla struttura ENV}\\
+\textbf{mylazycallback:} & {puntatore di tipo CPXPUBLIC * alla callback chiamata}\\
+\textbf{tsp\_in:} & {puntatore di tipo void* ad una struttura dati }\\
+& {contenente le informazioni da passare alla callback}\\
+\end{tabular}
+\end{table}
+Una volta installata la callback è necessario cambiare l'impostazione del numero di thread utilizzati dal programma. Infatti CPLEX, non sapendo se la funzione implementata dall'utente è thread safe, impedisce lo svolgimento di elaborazioni in parallelo con le callback. A meno che questo non venga esplicitamente dichiarato dall'utente con l'impostazione del corrispondente parametro.
+Per questo può tornare utile la seguente funzione, che restituisce il numero di core presenti nel computer:\\
+\begin{center}
+\begin{tabular}{c}
+\begin{lstlisting}[linewidth=170pt, basicstyle=\footnotesize\sffamily,]
+CPXgetnumcores(env, ncores); 
+\end{lstlisting}
+\end{tabular}
+\end{center}
+\begin{table}[h]
+\centering
+\begin{tabular}{rl}
+\textbf{env:} & {puntatore di tipo CPXENVptr ad una struttura ENV}\\
+\textbf{ncores:} & {puntatore alla variabile in cui viene scritto il numero di core}\\            
+\end{tabular}
+\end{table} 
+Come descritto nella sezione dedicata, le callback sono funzioni lasciate appositamente vuote da CPLEX, affinché l'utente possa implementarle in maniera personalizzata. Hanno però una dichiarazione standard, qui riportata: 
+\begin{center}
+\begin{lstlisting}[linewidth=380pt, basicstyle=\footnotesize\sffamily,]     
+static int CPXPUBLIC name_function(CPXCENVptr env, void* cbdata, 
+								   								int wherefrom, void* cbhandle, 	
+								   								int* useraction_p)
+\end{lstlisting}
+\end{center}
+\vspace{2cm}
+\begin{table}[h]
+\centering
+\begin{tabular}{rl}
+\textbf{env:} & {puntatore di tipo CPXENVptr ad una struttura ENV}\\
+\textbf{cbdata:} & {puntatore che contiene specifiche informazioni per la}\\
+&{callback}\\
+\textbf{wherefrom:} & {contiene dove è stata invocata la callback durante} \\ 
+&{l'ottimizzazione}\\
+\textbf{cbhandle:} & {puntatore a dati privati dell'utente} \\
+\textbf{useraction\_p:} & {specifica le azioni da eseguire al termine della callback:}\\
+& {CPX\_CALLBACK\_DEFAULT: usa il nodo di CPLEX}\\
+&{selezionato}\\
+& {CPX\_CALLBACK\_FAIL: esci dell'ottimizzazione}\\
+& {CPX\_CALLBACK\_SET: usa il nodo selezionato come}\\  
+& {definito nel valore di ritorno}\\            
+\end{tabular}
+\end{table} 
+Nell'implementarla bisogna fare particolare attenzione a renderla thread safe, se si vuole utilizzarla su più processi in parallelo. Infatti, nel caso in cui il programma lavorasse contemporaneamente con più processori, non si devono verificare interferenze di accesso agli stessi dati da parte di invocazioni diverse della callback. Quest'aspetto è lasciato a completa gestione dell'utente.\\
+%CONTROLLARE COSA VUOL DIRE CPXPUBLIC
+Per avere accesso alle variabili utilizzate dal nodo che invoca la callback è possibile chiamare la seguente funzione:
+\begin{center}
+\begin{tabular}{c}
+\begin{lstlisting}[linewidth=380pt, basicstyle=\footnotesize\sffamily,]     
+CPXgetcallbacknodex(env, cbdata, wherefrom, x_star, start, end);
+\end{lstlisting}
+\end{tabular}
+\end{center}
+\begin{table}[h]
+\centering
+\begin{tabular}{rl}
+\textbf{env:} & {puntatore di tipo CPXENVptr ad una struttura ENV}\\
+\textbf{cbdata:} & {puntatore che contiene specifiche informazioni per la callback}\\
+\textbf{wherefrom:} & {contiene in che punto dell'ottimizzazione è stata invocata la} \\ 
+&{callback}\\
+\textbf{x\_star:} & {vettore in cui memorizzare le variabili} \\
+\textbf{begin} & {indice della prima variabile che si vuole venga restituita}\\
+\textbf{end} & {indice dell'ultima variabile che si vuole venga restituita}\\           
+\end{tabular}
+\end{table}
+Invece, per ottenere informazioni riguardanti il problema di ottimizzazione che si sta risolvendo all'interno di una callback implementata dall'utente, è possibile utilizzare:
+\begin{center}
+\begin{tabular}{c}
+\begin{lstlisting}[linewidth=380pt, basicstyle=\footnotesize\sffamily,]  
+CPXgetcallbackinfo(env, cbdata, wherefrom, which_info, result);
+\end{lstlisting}
+\end{tabular}
+\end{center}
+\begin{table}[h]
+\centering
+\begin{tabular}{rl}
+\textbf{env:} & {puntatore di tipo CPXENVptr ad una struttura ENV}\\
+\textbf{cbdata:} & {puntatore che contiene specifiche informazioni per la callback}\\
+\textbf{wherefrom:} & {contiene in che punto dell'ottimizzazione è stata invocata la}\\ 
+&{callback}\\
+\textbf{which\_info:} & {macro che specifica l'informazione che si desidera conoscere} \\
+\textbf{result:} & {puntatore di tipo void in cui verrà memorizzata}\\          
+&{l'informazione richiesta}\\
+\end{tabular}
+\end{table}
+Macro utili da utilizzare come parametro \textit{which\_info} possono essere:
+\begin{table}[h]
+\centering \footnotesize
+\begin{tabular}{|r|l|}
+\hline
+\textbf{CPX\_CALLBACK\_INFO\_MY\_THREAD\_NUM:} & {identifica il thread che }\\
+&{ha eseguito la chiamata}\\
+\hline
+\textbf{CPX\_CALLBACK\_INFO\_BEST\_INTEGER:} & {valore della miglior}\\
+&{soluzione intera}\\
+\hline
+\end{tabular}
+\end{table}
+\\Per conoscere il valore della funzione obiettivo del problema legato al nodo corrente che invoca la callback:
+\begin{center}
+\begin{tabular}{c}
+\begin{lstlisting}[linewidth=340pt, basicstyle=\footnotesize\sffamily,]  
+CPXgetcallbacknodeobjval(env, cbdata, wherefrom, objval);
+\end{lstlisting}
+\end{tabular}
+\end{center}
+\begin{table}[h]
+\centering
+\begin{tabular}{rl}
+\textbf{env:} & {puntatore di tipo CPXENVptr ad una struttura ENV}\\
+\textbf{cbdata:} & {puntatore che contiene specifiche informazioni per la callback}\\
+\textbf{wherefrom:} & {contiene in che punto dell'ottimizzazione è stata invocata la} \\ 
+&{callback}\\
+\textbf{objval:} & {puntatore ad una variabile \textit{double} in cui memorizzare il costo} \\
+\end{tabular}
+\end{table}
+All'interno della lazy callback è necessario aggiungere il taglio voluto al nodo corrente che la invoca, per questo viene chiamata la funzione, che ne aggiunge uno alla volta:
+\begin{center}
+\begin{tabular}{c}
+\begin{lstlisting}[linewidth=350pt, basicstyle=\footnotesize\sffamily,]  
+CPXcutcallbackadd(env, cbdata, wherefrom, nnz, const_term, 
+                   type_constraint, indices, values, 
+                   purgeable);
+\end{lstlisting}
+\end{tabular}
+\end{center}
+\begin{table}[h]
+\centering
+\begin{tabular}{rl}
+\textbf{env:} & {puntatore di tipo CPXENVptr ad una struttura ENV}\\
+\textbf{cbdata:} & {puntatore che contiene specifiche informazioni per la}\\
+&{callback}\\
+\textbf{wherefrom:} & {contiene in che punto dell'ottimizzazione è stata} \\ 
+&{invocata la callback}\\
+\textbf{nnz:} & {numero di coefficienti non nulli} \\
+\textbf{const\_term:} & {valore del termine noto} \\
+\textbf{type\_constraint:} & {tipologia del taglio da aggiungere, a scelta tra} \\
+&{\textit{'L'} per vincolo $\leq$}\\
+&{\textit{'E'} per vincolo $=$}\\
+&{\textit{'G'} per vincolo $\geq$}\\
+\textbf{indices:} & {vettore contente gli indici dei coefficienti del taglio} \\
+\textbf{values:} & {vettore contenente i coefficienti delle variabili nel} \\
+&{taglio}\\
+\textbf{purgeable:} & {intero che specifica in che modo CPLEX deve } \\
+&{trattare il taglio, consigliato 0}\\
+\end{tabular}
+\end{table}
+In questo modo il taglio aggiunto risulta essere globale, se si vuole aggiungere un taglio visibile solo localmente, cioè solo per i nodi discendenti a quello che invoca la callback, è necessaria òa chiamata:
+\begin{center}
+\begin{tabular}{c}
+\begin{lstlisting}[linewidth=380pt, basicstyle=\footnotesize\sffamily,]  
+CPXcutcallbackaddlocal(env, cbdata, wherefrom, nnz, const_term,
+                       type_constraint, indices, values);
+\end{lstlisting}
+\end{tabular}
+\end{center}
+\begin{table}[h]
+\centering
+\begin{tabular}{rl}
+\textbf{env:} & {puntatore di tipo CPXENVptr ad una struttura ENV}\\
+\textbf{cbdata:} & {puntatore che contiene specifiche informazioni per la callback}\\
+\textbf{wherefrom:} & {contiene in che punto dell'ottimizzazione è stata invocata la} \\ 
+\end{tabular}
+\end{table}
+\begin{table}[h]
+\centering
+\begin{tabular}{rl}
+&{callback}\\
+\textbf{nnz:} & {numero di coefficienti non nulli} \\
+\textbf{const\_term:} & {valore del termine noto} \\
+\textbf{type\_constraint:} & {tipologia del taglio da aggiungere, a scelta tra} \\
+&{\textit{'L'} per vincolo $\leq$}\\
+&{\textit{'E'} per vincolo $=$}\\
+&{\textit{'G'} per vincolo $\geq$}\\
+\textbf{indices:} & {vettore contente gli indici dei coefficienti del taglio} \\
+\textbf{values:} & {vettore contenente i coefficienti delle variabili nel} \\
+&{taglio}\\
+\end{tabular}
+\end{table}
+
 \subsection{Parametri}\label{param}
 Con le seguenti funzioni è possibile modificare i parametri di impostazione di CPLEX, altrimenti impostati ai valori di default.
 Nel caso in cui si tratti di parametri di tipo INT è necessario invocare:\\
@@ -244,11 +502,16 @@ In entrambe le funzioni:
 & {che l'algoritmo termini senza aver aggiunto l'ottimalità}\\
 & {(0 impone di fermarsi alla radice).}\\
 \hline
-\multirow{3}{*}{\textbf{CPX\_PARAM\_POPULATELIM}} & {Limita il numero di soluzioni MIP generate }\\
+\multirow{3}{*}{\textbf{CPX\_PARAM\_POPULATELIM}} & {limita il numero di soluzioni MIP generate }\\
 & {per il pool di soluzioni durante ogni chiamata alla}\\
 &{procedura populate.}\\
 \hline
 \textbf{CPX\_PARAM\_SCRIND} & {visione o meno dei messaggi di log di CPLEX}\\
+\hline
+\textbf{CPX\_PARAM\_MIPCBREDLP} & {permette, dalla callback chiamata, di accedere  }\\
+&{al modello originale del problema e non a quello ridotto .}\\
+\hline
+\textbf{CPX\_PARAM\_THREADS} & {imposta il numero massimo di thread utilizzabili. }\\
 \hline
 \end{tabular}
 \caption{Parametri.}\label{param_table}

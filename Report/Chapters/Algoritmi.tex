@@ -73,9 +73,10 @@ $x_{i,j}+x_{j,i}\leq 1\;\;\;\; \forall i,j \in V$ con $i < j$
 \end{center}
 
 \section{Loop}
+\subsection{Formulazione di Benders}
 Negli anni '60, Jacques F. Benders sviluppò un approccio generale, applicabile a qualsiasi problema di programmazione lineare, per ridurre il numero esponenziale di alcuni vincoli specifici inseriti nel modello.\\
-Utilizzando questo metodo, il modello viene scritto senza quei vincoli e poi questi verranno aggiunti in seguito durante la risoluzione del problema. Nel caso in cui la soluzione ottima, calcolata a partire da questo modello, non rispetti un vincolo di quelli rimossi, viene aggiunto al modello. \\
-Nella seguente parte, viene riportata l'appicazione specifica di loop al problema TSP.
+Utilizzando questo metodo, il modello viene scritto senza quei vincoli e poi questi verranno aggiunti in seguito durante la risoluzione del problema. Nel caso in cui la soluzione ottima, calcolata a partire da questo modello, non rispetti un vincolo di quelli rimossi, questo viene aggiunto al modello. \\
+Nella seguente parte, viene riportata l'applicazione specifica di loop al problema TSP.
 I vincoli di Subtour Elimination sono in numero esponenziale e sono:\\
 \begin{align}
 &\underset{e\in E(S)}\sum{x_{e}} \leq \mid S\mid - 1\;\forall\;S\underset{\neq}{\subset}V\; : \; \mid S\mid\geq 2
@@ -108,10 +109,31 @@ Viene risolto il problema e nel caso in cui ci sia più di una componente connes
 \end{algorithm}
 \vspace{10cm}
 All'aumentare del numero di vincoli, il costo della soluzione ottenuta da CPLEX peggiora o resta identica a quella elaborata all'iterazione precedente del metodo loop.\\
-Il numero di iterazioni che vengono effettuate dall'algoritmo non è conosciuto e potrebbe essere anche molto elevato. Nel caso peggiore vengono inseriti tutti i vincoli di Subtour elimnation, ovvero un numero esponenziale di disequazioni, soprattutto con istanze clusterizzate.\\
-Inoltre il problema principale di questo algoritmo è la generazione, ad ogni iterazione, di un albero completo di branching, eliminando quello precedente sviluppato.\\
+Il numero di iterazioni che vengono effettuate dall'algoritmo non è conosciuto e potrebbe essere anche molto elevato. Nel caso peggiore vengono inseriti tutti i vincoli di Subtour elimination, ovvero un numero esponenziale di disequazioni, soprattutto con istanze clusterizzate.\\
+Inoltre il problema principale di questo algoritmo è la generazione, ad ogni iterazione, di un albero completo di branching, eliminando quello precedentemente sviluppato.\\
 In passato, con le versioni del MIP solver di CPLEX degli anni '60, questa operazione era molto onerosa mentre attualmente il metodo loop garantisce la risoluzione, anche di istanze molto grandi, in tempi ragionevoli.
 Questo non accade invece per il Branch \& Bound in quanto vengono aggiunte nuove ramificazioni all'albero già esistente.\\
-L'introduzione di nuovi vincoli di Subtour Elimination, solo nel momento in cui si presenta una loro violazione, permette di ridurre la dimensione del modello ma riduce l'attività di pre-processamento svolta da CPLEX prima di cominciare la risoluzione del problema. Nella fase di pre-processing infatti, vengono applicati algoritmi euristici e cambiamenti dei coefficenti nel modello, in base ai vincoli inseriti.\\
+L'introduzione di nuovi vincoli di Subtour Elimination, solo nel momento in cui si presenta una loro violazione, permette di ridurre la dimensione del modello ma riduce l'attività di pre-processamento svolta da CPLEX prima di cominciare la risoluzione del problema. Nella fase di pre-processing infatti, vengono applicati algoritmi euristici e cambiamenti dei coefficienti nel modello, in base ai vincoli inseriti.\\
 L'algoritmo può essere modificato svolgendo prima il metodo loop con l'aggiunta di parametri differenti da quelli utilizzati di default del risolutore CPLEX. In seguito viene effettuato nuovamente l'algoritmo di Benders ma questa volta nella sua versione esatta, in modo da migliorare la soluzione meta-euristica trovata nella prima parte. \\
 Quest'ottimizzazione è basata sul fatto che CPLEX salvi alcune soluzioni, ottenute in precedenza dal risolutore sullo stesso modello, e le sfrutti come bound nel nuovo modello. Per questo motivo, alcune delle soluzioni metaeuristiche ottenute nella prima fase vengono sfruttate come bound nella seconda.
+
+\subsection{Formulazione con callback}
+Come precedentemente descritto, come prima cosa CPLEX effettua un preprocessamento in cui semplifica il modello, riducendo il termine noto e accorpando tra loro diverse variabili. Terminata questa operazione inizia ad eseguire la fase di Branch\&Cut. Ogni volta che calcola una nuova soluzione $x^*$, prima di dichiarare se è l'ottimo o di scartarla e proseguire a sviluppare i successivi rami dell'albero decisionale, applica dei tagli e degli algoritmi euristici per aggiornarla(vedi Figura \ref{Albero_decisionale}).
+\begin{figure}[h] 
+\begin{center} 
+  % Requires \usepackage{graphicx} 
+  \includegraphics[width=10cm]{Images/albero_decisionale}\\ 
+  \caption{\footnotesize{Albero decisionale B\&C}}
+  \label{Albero_decisionale} 
+\end{center} 
+\end{figure}
+\\Nello sviluppo di ogni ramo l'upper bound sarà dato dagli algoritmi euristici utilizzati, mentre il lower bound dal rilassamento del problema.\\ 
+Per poter velocizzare l'approccio proposto da Benders, è possibile personalizzare questa fase e scegliere quali tagli far applicare a CPLEX. Nel nostro caso, questi vengono utilizzati per eliminare l'eventuale presenza di subtour nella soluzione calcolata. Per fare ciò vengono sfruttate particolari funzioni fornite da CPLEX, dette \textit{callback}. Queste sono state lasciate volutamente vuote dai creatori della libreria, affinché l'utente possa implementarne all'interno il suo specifico codice. Nello specifico, le funzioni utilizzato sono un particolare tipo di callback necessarie ad aggiungere lazy constraints al modello e per questo dette \textit{lazy constraints callback}. La callback implementata viene chiamata solo al momento di aggiornare l'incumbent e se necessario aggiunge al modello i vincoli violati. A differenza dei \textit{lazy constraints}, in questo modo i vincoli non sono costantemente presenti in un pool, ma vengono generati "al volo" al momento necessario.  Quest'operazione velocizza notevolmente il calcolo della soluzione ottima, in quanto permette a CPLEX di non dover calcolare nuovamente l'albero decisionale dalla radice, ma di proseguirne lo sviluppo aggiungendo nuovi rami.
+
+%\boldmath
+%$x_h \geq \lceil x^*_h \rceil$
+%\unboldmath
+
+%\boldmath
+%$x_h \leq \lfloor x^*_h \rfloor$
+%\unboldmath

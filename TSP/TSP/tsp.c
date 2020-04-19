@@ -85,7 +85,7 @@ void set_params_and_solve(tsp_instance* tsp_in)
 
 void manage_input(tsp_instance* tsp_in)
 {
-	char* name_algs[] = { ALG1, ALG2, ALG3, ALG3 };
+	char* name_algs[] = { ALG1, ALG2, ALG3, ALG4 };
 	FILE* perf_data = NULL;
 
 	if (strncmp(tsp_in->dir, "NULL", 4) != 0)

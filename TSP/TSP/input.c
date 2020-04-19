@@ -258,12 +258,14 @@ void parse_file(tsp_instance* tsp_in)
 		if (tsp_in->deadline < DEADLINE_MAX)
 			printf("Deadline time : %f\n",tsp_in->deadline);
 
+		/*
 		printf("\nInput nodes coordinates:\n");
 
 		for (int i = 0; i < tsp_in->num_nodes; i++)
 		{
 			printf("node %3d : x = %10.2f  y=%10.2f\n", i + 1, tsp_in->x_coords[i], tsp_in->y_coords[i]);
 		}
+		*/
 
 		printf(LINE);
 	}
