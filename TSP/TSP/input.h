@@ -23,7 +23,7 @@ void parse_cmd(char**, int, tsp_instance*);
 void parse_file(tsp_instance*);
 
 /**
-	Deallocation of a tsp instance 
+	Deallocaion of a tsp instance 
 	\param tsp_in reference to tsp instance structure
 */
 void dealloc_inst(tsp_instance*);

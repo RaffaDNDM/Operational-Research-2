@@ -1,13 +1,4 @@
-﻿  cplex_solver.c
-C:\Users\User\github\Operational-Research-2\TSP\TSP\cplex_solver.c(256,35): warning C4090: 'funzione': qualificatori 'const' differenti
-C:\Users\User\github\Operational-Research-2\TSP\TSP\cplex_solver.c(453,8): warning C4013: 'gets' non definita. Verrà considerata come esterna che restituisce un int.
-C:\Users\User\github\Operational-Research-2\TSP\TSP\cplex_solver.c(595,7): warning C4101: 'indices2': variabile locale senza riferimenti
-C:\Users\User\github\Operational-Research-2\TSP\TSP\cplex_solver.c(596,10): warning C4101: 'values2': variabile locale senza riferimenti
-  input.c
-C:\Users\User\github\Operational-Research-2\TSP\TSP\input.c(54,1): warning C4267: 'inizializzazione': conversione da 'size_t' a 'int'. Possibile perdita di dati.
-  tsp.c
-C:\Users\User\github\Operational-Research-2\TSP\TSP\tsp.c(11,14): warning C4013: 'manage_input' non definita. Verrà considerata come esterna che restituisce un int.
-C:\Users\User\github\Operational-Research-2\TSP\TSP\tsp.c(100,9): warning C4101: 'title': variabile locale senza riferimenti
-  utility.c
-  Generazione del codice in corso...
-  TSP.vcxproj -> C:\Users\User\github\Operational-Research-2\TSP\x64\Debug\TSP.exe
+﻿  tsp.c
+D:\github\OperationalResearch2\TSP\TSP\tsp.c(11,14): warning C4013: 'manage_input' undefined; assuming extern returning int
+D:\github\OperationalResearch2\TSP\TSP\tsp.c(102,9): warning C4101: 'title': unreferenced local variable
+  TSP.vcxproj -> D:\github\OperationalResearch2\TSP\x64\Debug\TSP.exe

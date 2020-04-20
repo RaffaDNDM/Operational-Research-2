@@ -12,7 +12,8 @@ void parse_cmd(char** argv, int argc, tsp_instance* tsp_in)
 	tsp_in->integerDist = 0; 
 	tsp_in->plot = 1;
 	tsp_in->verbose = VERBOSE;
-	
+	tsp_in->size = -1;
+
 	int def_deadline = 0;
 
 	strcpy(tsp_in->input, "NULL");
@@ -72,6 +73,20 @@ void parse_cmd(char** argv, int argc, tsp_instance* tsp_in)
 			continue;
 		}
 
+		if (strncmp(argv[i], "-size", 5) == 0)
+		{
+			double sizeF = atof(argv[++i]);
+			int size = (int)sizeF;
+
+			//the value inserted by the user must be an integer (alg!=0 && algF==alg) 
+			//but also the value must be greater than zero
+			assert(size > 0 && sizeF == size);
+
+			tsp_in->size = size;
+
+			continue;
+		}
+
 		if (strncmp(argv[i], "-int", 4) == 0 || strncmp(argv[i], "-i", 2) == 0)
 		{
 			tsp_in->integerDist = 1;
@@ -109,6 +124,9 @@ void parse_cmd(char** argv, int argc, tsp_instance* tsp_in)
 			if (strncmp(tsp_in->input, "NULL", 4) == 0)
 			{
 				strcpy(tsp_in->input, argv[++i]);
+				printf("%s\n", tsp_in->input);
+				char c = getchar();
+				
 				continue;
 			}
 			

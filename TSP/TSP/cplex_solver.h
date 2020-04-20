@@ -127,11 +127,14 @@ void loop_solver(CPXENVptr, CPXLPptr, tsp_instance*, int*, int *);
 */
 void add_sec_constraint(CPXENVptr, CPXLPptr, tsp_instance*, int*, int);
 
-void bc_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ, int* comp);
+
+void bc_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ, int* comp, int general);
 
 void print_state(CPXENVptr, CPXLPptr, int, time_t, time_t);
 
 static int CPXPUBLIC sec_callback(CPXCENVptr env, void* cbdata, int wherefrom, void* cbhandle, int* useraction_p);
+static int CPXPUBLIC sec_general_callback(CPXCALLBACKCONTEXTptr context, CPXLONG contextid, void* cbhandle);
 
 int sec_bc_constraint(CPXENVptr env, tsp_instance* tsp_in, double* x_star, void* cbdata, int wherefrom);
+int sec_bc_constraint_general(CPXCALLBACKCONTEXTptr context, tsp_instance* tsp_in, double* x_star);
 #endif

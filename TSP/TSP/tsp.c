@@ -91,9 +91,11 @@ void manage_input(tsp_instance* tsp_in)
 	if (strncmp(tsp_in->dir, "NULL", 4) != 0)
 	{
 		FILE* pipe = _popen(DIR_LIST_PY, "w");
-		fprintf(pipe, "%s", tsp_in->dir);
+		fprintf(pipe, "%s\n%d\n", tsp_in->dir, tsp_in->size);
 		_pclose(pipe);
-
+		
+		//printf("Read File \n");
+		//char c=getchar();
 		FILE* instances = fopen("instances.txt", "r");
 
 		#ifdef PERF_PROF_ON

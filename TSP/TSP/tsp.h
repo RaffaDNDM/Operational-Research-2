@@ -12,7 +12,7 @@
 #define DEADLINE_MAX 900 
 
 //Number of algoritms implemented
-#define NUM_ALGS 4
+#define NUM_ALGS 5
 
 //#define NUM_COMMANDS 8
 
@@ -22,9 +22,10 @@
 #define DIR_LIST_PY "python3 list_dir.py"
 
 #define ALG1 "Loop"
-#define ALG2 "Branch&Bound"
-#define ALG3 "MTZ"
-#define ALG4 "GG"
+#define ALG2 "Branch&Cut"
+#define ALG3 "Branch&CutGeneral"
+#define ALG4 "MTZ"
+#define ALG5 "GG"
 
 #define PERF_PROF_ON 1
 #define PERF_PROF_PY "python perfprof.py -D , -T 3600 -S 2 -M 20 perf_data.csv pp.pdf -P \"all instances, shift 2 sec.s\""
@@ -40,6 +41,7 @@ typedef struct
 	//Parameters
 	char input[500];
 	double deadline;
+	int size;
 	int alg;
 	int which_alg[NUM_ALGS];
 	int integerDist;
