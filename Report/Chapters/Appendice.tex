@@ -16,6 +16,7 @@ void cplex_build_model(istanza_problema, env , lv);
 \end{lstlisting}
 \end{tabular}
 \end{center}
+\vspace{1cm}
 \begin{table}[h]
 \centering
 \begin{tabular}{rl}
@@ -88,7 +89,12 @@ viene invece sfruttata la seguente funzione:
 \textbf{range\_valori:} & {vettore di range per i valori di ogni vincolo}\\
 & {(nel nostro caso è NULL)} \\
 \textbf{nomi\_vincoli} & vettore di stringhe contenenti i nomi  \\
-                  & delle variabili da inserire
+\end{tabular}
+\end{table}
+\begin{table}[h]
+\centering
+\begin{tabular}{rl}
+& delle variabili da inserire
 \end{tabular}
 \end{table}
 In modo analogo all'inserimento delle colonne, nel nostro programma viene aggiunta una riga alla volta nel modello. L'\textbf{i}-esima riga aggiunta corrisponderà al vincolo imposto sul nodo \textbf{i}-esimo, imponendo a 1 il coefficiente della variabile $x_{k,j}$ se $k=i$ $j=i$ per ogni variabile del modello. In questo modo però viene aggiunto un vincolo in cui è necessario cambiare i coefficienti delle variabili che ne prendono parte. Per fare ciò è necessaria la funzione:
@@ -129,6 +135,11 @@ CPXaddrows(env, lp, num_nc, num_nr, nnz, const_term, type_costr,
 & {precedentemente creata}\\
 \textbf{lp:} & {puntatore di tipo CPXLPptr alla struttura LP}\\
 & {precedentemente creata}\\
+\end{tabular}
+\end{table}
+\begin{table}[h]
+\centering
+\begin{tabular}{rl}
 \textbf{num\_nc:} & {numero di nuove colonne che devono essere aggiunte}\\
 \textbf{num\_nr:} & {numero di nuove righe che devono essere aggiunte}\\
 \end{tabular}
@@ -189,11 +200,6 @@ CPXgetx(env, lp, x, inizio, fine);
 \textbf{lp:} & {puntatore di tipo CPXLPptr alla struttura LP}\\
 & {precedentemente creata}\\
 \textbf{x:} & {puntatore a un vettore di double in cui verranno salvati}\\
-\end{tabular}
-\end{table}
-\begin{table}[h]
-\centering
-\begin{tabular}{rl}
 & {i valori delle variabili ottenuti dalla soluzione ottima}\\
 \textbf{inizio:} & {primo indice della variabile di cui si vuole memorizzare}\\
 & {ed analizzare il valore}\\
@@ -231,11 +237,6 @@ CPXaddlazyconstraints(env, lp, num_vincoli, nnz,
 & {precedentemente creata}\\
 \textbf{num\_vincoli:} & {numero di vincoli da inserire}\\
 \textbf{nnz:} & {vettore con il numeri di variabili per ogni vincolo}\\ 
-\end{tabular}
-\end{table}
-\begin{table}[h]
-\centering
-\begin{tabular}{rl}
 \textbf{termine\_costante:} & {vettore dei termini noti dei vincoli}\\
 \textbf{tipi\_vincoli:} & {vettore di caratteri che specifica il tipo di vincoli}\\
 &{da inserire. Ogni carattere può assumere:}\\
@@ -247,9 +248,9 @@ CPXaddlazyconstraints(env, lp, num_vincoli, nnz,
 &{vincoli}\\
 \textbf{indici:} & {vettore di vettori contenenti gli indici delle}\\
 & {variabili appartenenti al vincolo}\\
-\textbf{valori:} & {vettore di vettori con i coefficienti delle variabili del vincolo}\\
-\textbf{nome\_vincolo:} & {vettore con i nomi}\\
-& {dei vincoli}\\
+\textbf{valori:} & {vettore di vettori con i coefficienti delle variabili }\\
+&{del vincolo}\\
+\textbf{nome\_vincolo:} & {vettore con i nomi dei vincoli}\\
 \end{tabular}
 \end{table}
 In modo analogo alle due funzioni precedentemente descritte per l'aggiunta di righe e colonne, nel nostro modello viene inserito un vincolo per volta. Per impostare correttamente i coefficienti delle variabili presenti nel vincolo, vengono sfruttati i due array \textit{indici} e \textit{valori}. Come rappresentato in Figura \ref{lazy_constraints}, all'interno della posizione \textit{i}-esima del vettore di indici è presente la posizione dell'\textit{i}-esima variabile del vincolo da inserire (nell'esempio in figura $indici[i]=j$). Mentre l'\textit{i}-esima posizione del vettore di valori contiene il corrispondente  coefficiente (in questo caso $c_j$).
@@ -261,7 +262,6 @@ In modo analogo alle due funzioni precedentemente descritte per l'aggiunta di ri
   \label{lazy_constraints} 
 \end{center} 
 \end{figure}
-\vspace{10cm}
 \subsubsection{Lazy Constraint Callback}
 Per poter utilizzare una lazy constraint callback, precedentemente implementata, all'interno del programma, prima di tutto è necessario installarla. Questo viene fatto attraverso la seguente funzione:
 \begin{center}
@@ -289,6 +289,7 @@ CPXgetnumcores(env, ncores);
 \end{lstlisting}
 \end{tabular}
 \end{center}
+\vspace{2cm}
 \begin{table}[h]
 \centering
 \begin{tabular}{rl}
@@ -304,7 +305,6 @@ static int CPXPUBLIC name_function(CPXCENVptr env, void* cbdata,
 								   								int* useraction_p)
 \end{lstlisting}
 \end{center}
-\vspace{2cm}
 \begin{table}[h]
 \centering
 \begin{tabular}{rl}
@@ -395,7 +395,8 @@ CPXgetcallbacknodeobjval(env, cbdata, wherefrom, objval);
 \textbf{objval:} & {puntatore ad una variabile \textit{double} in cui memorizzare il costo} \\
 \end{tabular}
 \end{table}
-All'interno della lazy callback è necessario aggiungere il taglio voluto al nodo corrente che la invoca, per questo viene chiamata la funzione, che ne aggiunge uno alla volta:
+All'interno della lazy callback è necessario aggiungere il taglio voluto al nodo corrente che la invoca. Questo può essere fatto in due diverse modalità: globale o locale.\\
+Nel primo caso il vincolo aggiunto sarà visibile da tutti i nodi. Inoltre, in caso non lo ritenga più necessario, CPLEX potrà eliminarlo dal modello. Quest'operazione viene detta \textit{purge} e si verifica, ad esempio, quando un taglio non viene applicato per molte iterazioni consecutive. Per un vincolo globale viene chiamata la seguente funzione, che ne aggiunge uno alla volta:
 \begin{center}
 \begin{tabular}{c}
 \begin{lstlisting}[linewidth=350pt, basicstyle=\footnotesize\sffamily,]  
@@ -421,12 +422,17 @@ CPXcutcallbackadd(env, cbdata, wherefrom, nnz, const_term,
 &{\textit{'G'} per vincolo $\geq$}\\
 \textbf{indices:} & {vettore contente gli indici dei coefficienti del taglio} \\
 \textbf{values:} & {vettore contenente i coefficienti delle variabili nel} \\
+\end{tabular}
+\end{table} 
+\begin{table}[h]
+\centering
+\begin{tabular}{rl}
 &{taglio}\\
 \textbf{purgeable:} & {intero che specifica in che modo CPLEX deve } \\
 &{trattare il taglio, consigliato 0}\\
 \end{tabular}
 \end{table}
-In questo modo il taglio aggiunto risulta essere globale, se si vuole aggiungere un taglio visibile solo localmente, cioè solo per i nodi discendenti a quello che invoca la callback, è necessaria òa chiamata:
+Nella seconda modalità, locale, il taglio aggiunto sarà visibile solo ai nodi discendenti di quello che invoca la callback. Viene implementata con la seguente chiamata:
 \begin{center}
 \begin{tabular}{c}
 \begin{lstlisting}[linewidth=380pt, basicstyle=\footnotesize\sffamily,]  
@@ -439,14 +445,10 @@ CPXcutcallbackaddlocal(env, cbdata, wherefrom, nnz, const_term,
 \centering
 \begin{tabular}{rl}
 \textbf{env:} & {puntatore di tipo CPXENVptr ad una struttura ENV}\\
-\textbf{cbdata:} & {puntatore che contiene specifiche informazioni per la callback}\\
-\textbf{wherefrom:} & {contiene in che punto dell'ottimizzazione è stata invocata la} \\ 
-\end{tabular}
-\end{table}
-\begin{table}[h]
-\centering
-\begin{tabular}{rl}
+\textbf{cbdata:} & {puntatore che contiene specifiche informazioni per la}\\
 &{callback}\\
+\textbf{wherefrom:} & {contiene in che punto dell'ottimizzazione è stata} \\ 
+&{invocata la callback}\\
 \textbf{nnz:} & {numero di coefficienti non nulli} \\
 \textbf{const\_term:} & {valore del termine noto} \\
 \textbf{type\_constraint:} & {tipologia del taglio da aggiungere, a scelta tra} \\
@@ -458,7 +460,95 @@ CPXcutcallbackaddlocal(env, cbdata, wherefrom, nnz, const_term,
 &{taglio}\\
 \end{tabular}
 \end{table}
-
+\subsubsection{Lazy Constraint Callback General}
+Per evitare che alcune procedure interne a CPLEX vengano disattivate non momento dell'istallazione di una callback, è possibile utilizzarla con una diversa modalità rispetto a quella descritta nella sezione precedente, detta \textit{general}. Per quest'operazione viene invocata la seguente funzione, che si occupa anche di specificare il contesto in cui invocare la callback:
+\begin{center}
+\begin{tabular}{c}
+\begin{lstlisting}[linewidth=382pt, basicstyle=\footnotesize\sffamily,]    
+CPXcallbacksetfunc (env, lp, contextmask, callback, userhandle);
+\end{lstlisting}
+\end{tabular}
+\end{center}
+\begin{table}[h]
+\centering
+\begin{tabular}{rl}
+\textbf{env:} & {puntatore di tipo CPXENVptr ad una struttura ENV}\\
+\textbf{lp:} & {puntatore di tipo CPXLPptr alla struttura LP}\\
+\textbf{contextmask:} & {specifica in quali contesti deve essere invocata la callback,}\\
+&{è possibile metterne in or anche più di uno e gestire poi}\\
+&{i singoli casi dall'interno della funzione}\\
+\textbf{callback:} & {puntatore alla callback scritta dall'utente} \\
+\textbf{userhandle:} & {puntatore ad una struttura che contiene i dati da passare} \\
+&{alla callback}\\
+\end{tabular}
+\end{table}
+In questo caso come \textbf{contextmask} è necessario passare la macro\\ 
+\textbf{CPX\_CALLBACKCONTEXT\_CANDIDATE}, che specifica di invocare la callback nel momento in cui viene trovata una nuova soluzione intera possibile.\\
+La callback deve avere questa dichiarazione:
+\begin{center}
+\begin{tabular}{c}
+\begin{lstlisting}[linewidth=382pt, basicstyle=\footnotesize\sffamily,]    
+static int CPXPUBLIC name_general_callback(CPXCALLBACKCONTEXTptr
+                     context, CPXLONG contextid, void* cbhandle)
+\end{lstlisting}
+\end{tabular}
+\end{center}
+in cui
+\begin{table}[h]
+\centering
+\begin{tabular}{rl}
+\textbf{contex:} & {puntatore ad una struttura di contesto della callback}\\
+%opaque callback context structure, verificare traduzione
+\textbf{contextid:} & {intero che specifica il contesto in cui invocare la callback}\\
+\textbf{cbhandle:} & {argomento passato alla callback nell'istallazione}\\
+\end{tabular}
+\end{table}
+\\Al suo interno, per poter accedere alla soluzione candidata e al suo costo, deve essere presente la seguente chiamata, che è specifica per questo contesto:
+\begin{center}
+\begin{tabular}{c}
+\begin{lstlisting}[linewidth=385pt, basicstyle=\footnotesize\sffamily,]    
+CPXcallbackgetcandidatepoint(context, x_star, begin, end, obj_p);
+\end{lstlisting}
+\end{tabular}
+\end{center}
+\vspace{2cm}
+\begin{table}[h]
+\centering
+\begin{tabular}{rl}
+\textbf{contex:} & {contesto, come passato alla callback scritta dall'utente}\\
+\textbf{x\_star:} & {vettore dove memorizzare i valori richiesti}\\
+\textbf{begin:} & {indice prima colonna richiesta}\\
+\textbf{end:} & {indice dell'ultima colonna richiesta}\\
+\textbf{obi\_p:} & {buffer in cui memorizzare il costo della soluzione candidata,}\\
+&{può essere NULL}\\
+\end{tabular}
+\end{table}
+Per poter scartare una soluzione, nel caso in cui violi alcuni tagli specificati nella chiamata stessa, viene utilizzata la seguente funzione. Anche questa è specifica per il contesto \textbf{CPX\_CALLBACKCONTEXT\_CANDIDATE}.
+\begin{center}
+\begin{tabular}{c}
+\begin{lstlisting}[linewidth=365pt, basicstyle=\footnotesize\sffamily,]    
+CPXcallbackrejectcandidate(context, rcnt, nnz, const_term, 
+                           type_constraint, rmatbeg, rmatind,
+                           rmatval);
+\end{lstlisting}
+\end{tabular}
+\end{center}
+\begin{table}[h]
+\centering
+\begin{tabular}{rl}
+\textbf{contex:} & {contesto, come passato alla callback scritta}\\
+&{dall'utente}\\
+\textbf{rcnt:} & {numero di vincoli che tagliano la soluzione}\\
+\textbf{nnz:} & {numero di coefficienti non nulli nel vincolo}\\
+\textbf{const\_term:} & {vettore di termini noti}\\
+\textbf{type\_constraint:} & {vettore con la tipologia dei vincoli specificati}\\
+\textbf{rmatbeg:} & {vettore di indici che specifica dove inizia ogni}\\
+&{vincolo}\\
+\textbf{rmatind:} & {vettore di indici delle colonne con coefficienti non}\\
+&{nulli}\\
+\textbf{rmatval:} & {coefficienti non nulli delle colonne specificate}\\
+\end{tabular}
+\end{table}
 \subsection{Parametri}\label{param}
 Con le seguenti funzioni è possibile modificare i parametri di impostazione di CPLEX, altrimenti impostati ai valori di default.
 Nel caso in cui si tratti di parametri di tipo INT è necessario invocare:\\
