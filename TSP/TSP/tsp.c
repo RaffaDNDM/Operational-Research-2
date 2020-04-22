@@ -8,6 +8,24 @@ int main(int argc, char** argv)
 	tsp_instance tsp_in;
 	parse_cmd(argv, argc, &tsp_in);
 
+	while (tsp_in.alg < 0)
+	{
+		printf(STAR_LINE);
+		printf("Select the algorithm you want to use\n");
+		printf("1) %s \n", ALG1);
+		printf("2) %s \n", ALG2);
+		printf("3) %s \n", ALG3);
+		printf("4) %s \n", ALG4);
+		printf("5) %s \n", ALG5);
+		printf(STAR_LINE);
+
+		char s[LINE_SIZE];
+		fgets(s, LINE_SIZE, stdin);
+		int length = strlen(s);
+		s[length - 1] = 0;
+		select_alg(&tsp_in, s, 1);
+	}
+
 	manage_input(&tsp_in);
 	
 	return 0;
@@ -16,6 +34,11 @@ int main(int argc, char** argv)
 void solution(tsp_instance* tsp_in)
 {
 	tsp_in->sol = (int*)calloc(((size_t)tsp_in->num_nodes) +1, sizeof(int));
+
+	/*
+	printf("Constuction of model and solution: \n");
+	char c=getchar();
+	*/
 
 	cplex_solver(tsp_in);
 	dealloc_inst(tsp_in);
@@ -74,10 +97,10 @@ void set_params_and_solve(tsp_instance* tsp_in)
 
 			tsp_in->execution_time = best_time;
 		#else
-			tsp_in->node_lim = node_lim[0];
-			tsp_in->sol_lim = sol_lim[0];
-			tsp_in->eps_gap = gap[0];
-			tsp_in->seed = seed[0];
+			tsp_in->node_lim = NODE_LIMIT;
+			tsp_in->sol_lim = SOL_LIMIT;
+			tsp_in->eps_gap = EPS_GAP;
+			tsp_in->seed = SEED;
 			solution(tsp_in);
 		#endif
 	#endif
@@ -85,7 +108,7 @@ void set_params_and_solve(tsp_instance* tsp_in)
 
 void manage_input(tsp_instance* tsp_in)
 {
-	char* name_algs[] = { ALG1, ALG2, ALG3, ALG4 };
+	char* name_algs[] = { ALG1, ALG2, ALG3, ALG4, ALG5};
 	FILE* perf_data = NULL;
 
 	if (strncmp(tsp_in->dir, "NULL", 4) != 0)
@@ -94,8 +117,11 @@ void manage_input(tsp_instance* tsp_in)
 		fprintf(pipe, "%s\n%d\n", tsp_in->dir, tsp_in->size);
 		_pclose(pipe);
 		
-		//printf("Read File \n");
-		//char c=getchar();
+		/*
+		printf("Read Input Directory: \n");
+		char c=getchar();
+		*/
+
 		FILE* instances = fopen("instances.txt", "r");
 
 		#ifdef PERF_PROF_ON
@@ -123,6 +149,11 @@ void manage_input(tsp_instance* tsp_in)
 			}
 			fprintf(perf_data, "\n");
 		#endif
+
+		/*
+		printf("Read Input File: \n");
+		char c=getchar();
+		*/
 
 		char in_file[LINE_SIZE];
 		while (fgets(in_file, LINE_SIZE, instances) != NULL)

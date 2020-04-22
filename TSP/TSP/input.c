@@ -3,7 +3,10 @@
 void parse_cmd(char** argv, int argc, tsp_instance* tsp_in)
 {
 	//at leat one param + program name
-	assert(argc >1 );
+	if (argc == 1)
+	{
+		help();
+	}
 	//char** commands = malloc(sizeof(char*)*NUM_COMMANDS);
 
 	tsp_in->num_nodes = -1;
@@ -28,48 +31,7 @@ void parse_cmd(char** argv, int argc, tsp_instance* tsp_in)
 	{
 		if (strncmp(argv[i], "-alg", 4) == 0)
 		{
-			if (strncmp(argv[++i], "all", 3) == 0)
-			{
-				tsp_in->alg = 0;
-
-				int j = 0;
-				for (; j < NUM_ALGS; j++)
-				{
-					tsp_in->which_alg[j] = 1;
-				}
-			}
-			else
-			{
-				double algF = atof(argv[i]);
-				int alg = (int)algF;
-
-				//the value inserted by the user must be an integer (alg!=0 && algF==alg) 
-				//but also the value must be greater than zero
-				assert(alg > 0 && algF == alg);
-				
-				if (alg <= NUM_ALGS)
-					tsp_in->alg = alg;
-				else
-				{
-					tsp_in->alg = 0;
-					int length = strlen(argv[i]);
-					
-					int j = 0;
-					for (; j < length; j++)
-					{
-						int index = (argv[i][j]-'0') - 1;
-						
-						if (index >= 0 && index < NUM_ALGS)
-							tsp_in->which_alg[index] = 1;
-						else
-						{
-							perror("Undefined algorithm\n");
-							exit(1);
-						}
-					}
-				}
-			}
-
+			select_alg(tsp_in, argv[++i], 0);
 			continue;
 		}
 
@@ -101,7 +63,6 @@ void parse_cmd(char** argv, int argc, tsp_instance* tsp_in)
 
 		if (strncmp(argv[i], "-noplot", 7) == 0 || strncmp(argv[i], "-np", 3) == 0)
 		{
-			tsp_in->verbose = 100; //more print because no plotting of solution
 			tsp_in->plot = 0;
 			continue;
 		}
@@ -142,33 +103,34 @@ void parse_cmd(char** argv, int argc, tsp_instance* tsp_in)
 
 		}
 
-		if ((strncmp(argv[i], "-help", 5) == 0 || strncmp(argv[i], "-h", 2) == 0) && (argc ==2))
+		if ((strncmp(argv[i], "-help", 5) == 0 || strncmp(argv[i], "-h", 2) == 0))
 		{
+			//print set of commands and exit from the program
 			help();
-			continue;
+			exit(0);
 		}
 	}
 
-	if (tsp_in->verbose > 80)
+	if (tsp_in->verbose > 30)
 	{
 		printf(LINE);
 		printf("List of parameters specified on command line: \n");
 		int i;
-		for (i=1; i<argc; i=i+2)
+		for (i=1; i<argc; i++)
 		{
+			int i_check = strncmp(argv[i], "-i", 2) == 0 || strncmp(argv[i], "-int", 4) == 0;
+			int np_check = strncmp(argv[i], "-noplot", 7) == 0 || strncmp(argv[i], "-np", 3) == 0;
 			int v_check = strncmp(argv[i], "-v", 2) == 0 || strncmp(argv[i], "-verbose", 8) == 0;
-			int h_check = strncmp(argv[i], "-help", 5) == 0 || strncmp(argv[i], "-h", 2) == 0;
-			
-			if ( v_check|| h_check )
+
+			if (i_check || np_check || v_check)
 			{
 				printf("%s\n", argv[i]);
-				i = i - 1;
 			}
 			else
 			{
-				printf("%s : %s\n", argv[i], argv[i + 1]);
-			}
-			
+				printf("%s : %s\n", argv[i], argv[i+1]);
+				i++;
+			}			
 		}
 		printf(LINE);
 	}
@@ -179,22 +141,45 @@ void help()
 	printf(LINE);
 	printf("                                       Help\n");
 	printf(LINE);
+	printf("Insert the algs you want to test\n");
+	printf("-alg alg_num                where alg_num=string of numbers of algoritms (E.g. \"1235\")\n");
+	printf("                                          (or \"all\" to use all the algorithms)\n\n");
+	printf("Possible algorithms\n");
+	printf("1) %s \n", ALG1);
+	printf("2) %s \n", ALG2);
+	printf("3) %s \n", ALG3);
+	printf("4) %s \n", ALG4);
+	printf("5) %s \n", ALG5);
+	printf(STAR_LINE);
+	printf("Insert the max time of the execution\n");
+	printf("-d dead_time\n");
+	printf("-dead dead_time             where dead_time = max execution time in seconds (float)\n");
+	printf("-deadline dead_time\n");
+	printf(STAR_LINE);
+	printf("Insert the directory where there are input files\n");
+	printf("-dir path_name              where path_name = existing path\n");
+	printf(STAR_LINE);
 	printf("Insert the file in input\n");
 	printf("-f file_name.tsp\n");
 	printf("-file file_name.tsp         where file_name = name of tsp file (input instance)\n");
 	printf("-input file_name.tsp\n");
 	printf(STAR_LINE);
-	printf("Insert the max time of the execution\n");
-	printf("-d dead_time\n");
-	printf("-deadline dead_time         where dead_time = max execution time in seconds (float)\n");
-	printf("-dead dead_time\n");
+	printf("Use integer costs\n");
+	printf("-i\n");
+	printf("-int\n");
 	printf(STAR_LINE);
-	printf("Write -v or -verbose if you want information during the execution\n");
-	printf(LINE);
-	printf("Write -np or -noplot if you want only verbose info and no plot \n");
+	printf("Set no plotting of solution \n");
+	printf("-noplot\n");
+	printf("-np\n");
+	printf(STAR_LINE);
+	printf("Insert the max number of nodes in instances in specified dir (with -dir)\n");
+	printf("-size max_size              where max_size = max number of nodes for an instance\n");
+	printf(STAR_LINE);
+	printf("Set verbose information during the execution\n");
+	printf("-v\n");
+	printf("-verbose\n");
 	printf(LINE);
 	exit(0);
-
 }
 
 
@@ -268,24 +253,82 @@ void parse_file(tsp_instance* tsp_in)
 
 	fclose(f);
 
+	printf(LINE);
+	printf("Name of the input instance : %s\n", tsp_in->input);
+	printf("Number of input nodes : %d\n", tsp_in->num_nodes);
+
 	if (tsp_in->verbose > 80)
-	{
-		printf(LINE);
-		printf("Name of the input instance : %s\n", tsp_in->input);
-		printf("Number of input nodes : %d\n",tsp_in->num_nodes);
+	{		
 		if (tsp_in->deadline < DEADLINE_MAX)
 			printf("Deadline time : %f\n",tsp_in->deadline);
 
-		/*
 		printf("\nInput nodes coordinates:\n");
 
 		for (int i = 0; i < tsp_in->num_nodes; i++)
 		{
 			printf("node %3d : x = %10.2f  y=%10.2f\n", i + 1, tsp_in->x_coords[i], tsp_in->y_coords[i]);
 		}
-		*/
+	}
 
-		printf(LINE);
+	printf(LINE);
+}
+
+void select_alg(tsp_instance* tsp_in, char* alg_string, int in_main)
+{
+	if (strncmp(alg_string, "all", 3) == 0)
+	{
+		tsp_in->alg = 0;
+
+		int j = 0;
+		for (; j < NUM_ALGS; j++)
+		{
+			tsp_in->which_alg[j] = 1;
+		}
+	}
+	else
+	{
+		double algF = atof(alg_string);
+		int alg = (int)algF;
+
+		//the value inserted by the user must be an integer (alg!=0 && algF==alg) 
+		//but also the value must be greater than zero
+		if (in_main)
+			if (!(alg > 0 && algF == alg))
+			{
+				printf("Undefined algorithm\n");
+				return;
+			}
+		else
+			assert(alg > 0 && algF == alg);
+
+		if (alg <= NUM_ALGS)
+			tsp_in->alg = alg;
+		else
+		{
+			tsp_in->alg = 0;
+			int length = strlen(alg_string);
+
+			int j = 0;
+			for (; j < length; j++)
+			{
+				int index = (alg_string[j] - '0') - 1;
+
+				if (index >= 0 && index < NUM_ALGS)
+					tsp_in->which_alg[index] = 1;
+				else
+				{
+					printf("Undefined algorithm\n");
+
+					if (in_main)
+					{
+						tsp_in->alg = -1;
+						return;
+					}
+					else
+						exit(1);
+				}
+			}
+		}
 	}
 }
 

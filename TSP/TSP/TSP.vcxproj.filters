@@ -27,6 +27,21 @@
     <ClCompile Include="utility.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="bc_solver.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="loop_solver.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gg_solver.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mtz_solver.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mtz_solver.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="tsp.h">
@@ -39,6 +54,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="utility.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="bc_solver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="loop_solver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gg_solver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

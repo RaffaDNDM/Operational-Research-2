@@ -19,16 +19,27 @@
 //default value of verbose
 #define VERBOSE 40
 
+/*
+Call to python program that generates the file instances.txt
+with all the name of the instances in the directory specified
+as argument in the command line
+*/
 #define DIR_LIST_PY "python3 list_dir.py"
 
+//Names of the algorithms
 #define ALG1 "Loop"
 #define ALG2 "Branch&Cut"
 #define ALG3 "Branch&CutGeneral"
 #define ALG4 "MTZ"
 #define ALG5 "GG"
 
+//Creation or not of the performance profile
 #define PERF_PROF_ON 1
+//Call to python program that creates the performance profile
 #define PERF_PROF_PY "python perfprof.py -D , -T 3600 -S 2 -M 20 perf_data.csv pp.pdf -P \"all instances, shift 2 sec.s\""
+
+//Length of the dir string, specified in command line
+#define DIR_SIZE 500 
 
 typedef struct
 {
@@ -51,7 +62,7 @@ typedef struct
 	int sol_lim;
 	double eps_gap;
 	int seed;
-	char dir[500];
+	char dir[DIR_SIZE];
 	
 
 	//Output
@@ -68,8 +79,18 @@ typedef struct
 	1 no permutation (default algorithm)
 	\param tsp_in reference to tsp instance structure
 */
-void solution(tsp_instance*);
+void solution(tsp_instance* tsp_in);
 
-void set_params_and_solve(tsp_instance*);
+/**
+	Change parameters of CPLEX solver and calls resolution of model
+	\param tsp_in reference to tsp instance structure
+*/
+void set_params_and_solve(tsp_instance* tsp_in);
+
+/**
+	Manage file in input and directory and create performance profile
+	\param tsp_in reference to tsp instance structure
+*/
+void manage_input(tsp_instance* tsp_in);
 #endif
 

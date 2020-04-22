@@ -81,9 +81,9 @@ void cplex_solver(tsp_instance* tsp_in)
 
 	//Values of variables in the solution
 	double* x = calloc(sizeof(double), tsp_in->num_nodes);
-	
+
 	//switch su quante  variabili prendere per plottare
-	
+
 	switch (tsp_in->alg)
 	{
 		case 1:
@@ -129,7 +129,7 @@ void cplex_solver(tsp_instance* tsp_in)
 	if (tsp_in->plot)
 	{
 		switch (tsp_in->alg)
-		{			
+		{
 			case 2:; case 3:
 			{
 				succ = calloc(tsp_in->num_nodes, sizeof(int));
@@ -137,7 +137,7 @@ void cplex_solver(tsp_instance* tsp_in)
 				cplex_define_tour(tsp_in, x, succ, comp, &n_comps);
 				break;
 			}
-		
+
 			case 4:
 			{
 				succ = calloc(tsp_in->num_nodes, sizeof(int));
@@ -160,7 +160,7 @@ void cplex_solver(tsp_instance* tsp_in)
 		free(succ);
 		free(comp);
 	}
-	
+
 	free(x);
 	CPXfreeprob(env, &lp);
 	CPXcloseCPLEX(&env);
@@ -199,7 +199,7 @@ void cplex_build_model(tsp_instance* tsp_in, CPXENVptr env, CPXLPptr lp)
 
 			//Check if the column has been added correctly
 			assert(CPXnewcols(env, lp, 1, &c, &lb, &ub, &bin, edge) == 0);
-			//Check if the index that we use to identify the edge 
+			//Check if the index that we use to identify the edge
 			//corresponds to the index that it should have
 			assert(CPXgetnumcols(env, lp) - 1 == cplex_xpos(tsp_in, i, j));
 		}
@@ -248,7 +248,7 @@ void bc_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ, int*
 		CPXcallbacksetfunc(env, lp, CPX_CALLBACKCONTEXT_CANDIDATE, sec_general_callback, tsp_in);
 	else
 		CPXsetlazyconstraintcallbackfunc(env, sec_callback, tsp_in);
-	
+
 	int ncores = 1;
 	CPXgetnumcores(env, &ncores);
 	CPXsetintparam(env, CPX_PARAM_THREADS, ncores);
@@ -278,7 +278,7 @@ static int CPXPUBLIC sec_callback(CPXCENVptr env, void* cbdata, int wherefrom, v
 {
 	*useraction_p = CPX_CALLBACK_DEFAULT;
 	tsp_instance* tsp_in = (tsp_instance*) cbhandle;
-	
+
 	double* x_star = (double*)malloc(tsp_in->num_cols * sizeof(double));
 
 	if (CPXgetcallbacknodex(env, cbdata, wherefrom, x_star, 0, tsp_in->num_cols - 1))
@@ -288,10 +288,10 @@ static int CPXPUBLIC sec_callback(CPXCENVptr env, void* cbdata, int wherefrom, v
 	}
 
 	int ncuts = sec_bc_constraint(env, tsp_in, x_star, cbdata, wherefrom);
-	
+
 	if (ncuts >= 1)
 		*useraction_p = CPX_CALLBACK_SET;
-	
+
 	free(x_star);
 
 	return 0;
@@ -425,7 +425,7 @@ int sec_bc_constraint(CPXENVptr env, tsp_instance* tsp_in, double* x_star, void*
 		}
 
 		assert(CPXcutcallbackadd(env, cbdata, wherefrom, nnz, const_term, type_constraint, indices, values, 0)==0);
-	
+
 		free(indices);
 		free(values);
 	}
@@ -452,7 +452,7 @@ void cplex_define_tour(tsp_instance* tsp_in, double* x, int* succ, int* comp, in
 	int i = 0;
 
 	#ifdef SOLUTION_CORRECTNESS
-	
+
 		int* degree = calloc(tsp_in->num_nodes, sizeof(int));
 		for (; i < tsp_in->num_nodes; i++)
 		{
@@ -608,7 +608,7 @@ void mtz_build_model(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in)
 
 			//Check if the column has been added correctly
 			assert(CPXnewcols(env, lp, 1, &c, &lb, &ub, &type, edge) == 0);
-			//Check if the index that we use to identify the edge 
+			//Check if the index that we use to identify the edge
 			//corresponds to the index that it should have
 			assert(CPXgetnumcols(env, lp) - 1 == compact_xpos(tsp_in, i, j));
 		}
@@ -681,7 +681,7 @@ void mtz_build_model(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in)
 			int j = 1;
 			for (; j < tsp_in->num_nodes; j++)
 			{
-				//u_i - u_j + n*x_ij <= n-1 
+				//u_i - u_j + n*x_ij <= n-1
 				count++;
 				sprintf(constraint[0], "Big-M constraint_lazy(%d)", count);
 				indices[0] = compact_xpos(tsp_in, i, j);
@@ -694,7 +694,7 @@ void mtz_build_model(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in)
 				assert(CPXaddlazyconstraints(env, lp, 1, nnz, &const_term, &type_constraint, &first, indices, values, constraint) == 0); //one row for each node
 			}
 		}
-	
+
 		nnz = 2;
 		int indices2[2];
 		double values2[2];
@@ -708,7 +708,7 @@ void mtz_build_model(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in)
 			int j = 1;
 			for (; j < tsp_in->num_nodes; j++)
 			{
-				//x_ij + x_ji <= 1 
+				//x_ij + x_ji <= 1
 				count++;
 				sprintf(constraint[0], "SEC 2nodes_constraint(%d)", count);
 				indices[0] = compact_xpos(tsp_in, i, j);
@@ -726,7 +726,7 @@ void mtz_build_model(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in)
 			int j = 1;
 			for (; j < tsp_in->num_nodes; j++)
 			{
-				//u_i - u_j + n*x_ij <= n-1 
+				//u_i - u_j + n*x_ij <= n-1
 				count++;
 				int lastrow = CPXgetnumrows(env, lp);
 
@@ -801,15 +801,15 @@ void gg_build_model(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in)
 
 			//Check if the column has been added correctly
 			assert(CPXnewcols(env, lp, 1, &c, &lb, &ub, &type, edge) == 0);
-			//Check if the index that we use to identify the edge 
+			//Check if the index that we use to identify the edge
 			//corresponds to the index that it should have
 			assert(CPXgetnumcols(env, lp) - 1 == compact_xpos(tsp_in, i, j));
 		}
 	}
-	
-	
-	
-	//for yij => n*n variabili in più
+
+
+
+	//for yij => n*n variabili in piï¿½
 	type = 'I';
 	i = 0;
 
@@ -872,7 +872,7 @@ void gg_build_model(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in)
 	int num_edges = (tsp_in->num_nodes) * (tsp_in->num_nodes);
 	const_term = tsp_in->num_nodes - 1;
 	type_constraint = 'E';
-	
+
 	int lastrow = CPXgetnumrows(env, lp);
 	sprintf(constraint[0], "Flow-out source constraint");
 	//CPXnewrows(env, lp, numero righe, vettore di termini noti, vettore di tipo di vincoli, NULL, cname)
@@ -899,7 +899,7 @@ void gg_build_model(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in)
 		for (; j < tsp_in->num_nodes; j++)
 		{
 			assert(CPXchgcoef(env, lp, lastrow, num_edges + compact_xpos(tsp_in, j, h), 1.0) == 0);
-			assert(CPXchgcoef(env, lp, lastrow, num_edges + compact_xpos(tsp_in, h, j), -1.0) == 0);			
+			assert(CPXchgcoef(env, lp, lastrow, num_edges + compact_xpos(tsp_in, h, j), -1.0) == 0);
 		}
 	}
 
@@ -949,7 +949,7 @@ void mtz_define_tour(tsp_instance* tsp_in, double* x, int* succ, int* comp)
 		for (i = 1; i < tsp_in->num_nodes; i++)
 		{
 			if (x[i] <= k + EPS && x[i] >= k - EPS)
-			{	
+			{
 				succ[prev] = i;
 				prev = i;
 				k += 1.0;
@@ -1010,9 +1010,9 @@ void loop_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ, in
 	start = clock();
 	start_iter = start;
 	cplex_build_model(tsp_in, env, lp);
-	
+
 	int n_comps = 3;
-	
+
 	double* x = calloc(sizeof(double), CPXgetnumcols(env, lp));
 	CPXmipopt(env, lp);
 	end_iter = clock();
@@ -1022,7 +1022,7 @@ void loop_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ, in
 	//cplex_plot(tsp_in, succ, comp, &n_comps);
 
 	print_state(env, lp, n_comps, start_iter, end_iter);
-	
+
 	while (n_comps >= 2)
 	{
 		start_iter = clock();
@@ -1035,9 +1035,9 @@ void loop_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ, in
 		cplex_define_tour(tsp_in, x, succ, comp, &n_comps);
 		//cplex_plot(tsp_in, succ, comp, &n_comps);
 		print_state(env, lp, n_comps, start_iter, end_iter);
-		
+
 	}
-	
+
 	#ifdef METAHEURISTIC
 		CPXsetintparam(env, CPX_PARAM_NODELIM, 9223372036800000000);
 		CPXsetintparam(env, CPX_PARAM_INTSOLLIM, 9223372036800000000);
@@ -1066,7 +1066,7 @@ void loop_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ, in
 			//cplex_plot(tsp_in, succ, comp, &n_comps);
 		}
 	#endif
-	
+
 	end = clock();
 
 	tsp_in->execution_time = ((double)(end - start) / (double)CLOCKS_PER_SEC) * TIME_SCALE;
@@ -1083,7 +1083,7 @@ void add_sec_constraint(CPXENVptr env, CPXLPptr lp, tsp_instance *tsp_in, int *c
 	char type_constraint = 'L';
 	char** constraint = calloc(sizeof(char*), 1);
 	constraint[0] = calloc(sizeof(char), NAME_SIZE);
-	
+
 	int k = 0;
 	for (;k < tsp_in->num_nodes; k++)
 		const_terms[comp[k]-1]++;
@@ -1115,7 +1115,7 @@ void add_sec_constraint(CPXENVptr env, CPXLPptr lp, tsp_instance *tsp_in, int *c
 						assert((indices = (int*) realloc(indices, size * sizeof(int))) != NULL);
 						assert((values = (double*) realloc(values, size * sizeof(double))) != NULL);
 					}
-					
+
 					indices[nnz] = cplex_xpos(tsp_in, i, j);
 					values[nnz] = 1.0;
 					nnz++;
@@ -1149,5 +1149,4 @@ void print_state(CPXENVptr env, CPXLPptr lp, int ncomps, time_t start, time_t en
 	printf("Object value of the solution in the solution pool: %lf\n", actual_bound);
 	printf("Number of components: %d\n", ncomps);
 	printf("Time: %lf\n\n",(((double)(end-start)/ (double) CLOCKS_PER_SEC)) * TIME_SCALE);
-
 }
