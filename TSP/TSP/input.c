@@ -86,7 +86,6 @@ void parse_cmd(char** argv, int argc, tsp_instance* tsp_in)
 			{
 				strcpy(tsp_in->input, argv[++i]);
 				printf("%s\n", tsp_in->input);
-				char c = getchar();
 				
 				continue;
 			}

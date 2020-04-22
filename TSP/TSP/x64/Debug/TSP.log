@@ -1,15 +1,15 @@
 ﻿  bc_solver.c
-D:\github\OperationalResearch2\TSP\TSP\bc_solver.c(1,1): error C2183: syntax error: translation unit is empty
+C:\Users\User\github\Operational-Research-2\TSP\TSP\bc_solver.c(35,35): warning C4090: 'funzione': qualificatori 'const' differenti
+  cplex_solver.c
+C:\Users\User\github\Operational-Research-2\TSP\TSP\cplex_solver.c(362,8): warning C4013: 'gets' non definita. Verrà considerata come esterna che restituisce un int.
   gg_solver.c
-D:\github\OperationalResearch2\TSP\TSP\gg_solver.c(1,1): error C2183: syntax error: translation unit is empty
   loop_solver.c
-D:\github\OperationalResearch2\TSP\TSP\loop_solver.c(1,1): error C2183: syntax error: translation unit is empty
-  mtz_solver.c
-D:\github\OperationalResearch2\TSP\TSP\mtz_solver.c(1,1): error C2183: syntax error: translation unit is empty
   mtz_solver.h
-D:\github\OperationalResearch2\TSP\TSP\mtz_solver.h(5,1): error C2183: syntax error: translation unit is empty
   tsp.c
-D:\github\OperationalResearch2\TSP\TSP\tsp.c(24,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-D:\github\OperationalResearch2\TSP\TSP\tsp.c(128,9): warning C4101: 'title': unreferenced local variable
-  utility.c
-  Generating Code...
+C:\Users\User\github\Operational-Research-2\TSP\TSP\tsp.c(24,1): warning C4267: 'inizializzazione': conversione da 'size_t' a 'int'. Possibile perdita di dati.
+C:\Users\User\github\Operational-Research-2\TSP\TSP\tsp.c(128,9): warning C4101: 'title': variabile locale senza riferimenti
+  Generazione del codice in corso...
+x64\Debug\mtz_solver.obj : warning LNK4042: oggetto specificato più di una volta; occorrenze supplementari ignorate
+cplex_solver.obj : error LNK2019: riferimento al simbolo esterno mtz_build_model non risolto nella funzione cplex_solver
+cplex_solver.obj : error LNK2019: riferimento al simbolo esterno mtz_define_tour non risolto nella funzione cplex_solver
+C:\Users\User\github\Operational-Research-2\TSP\x64\Debug\TSP.exe : fatal error LNK1120: 2 esterni non risolti
