@@ -1,8 +1,8 @@
 #include "cplex_solver.h"
-#include "mtz_solver.h"
 #include "bc_solver.h"
 #include "gg_solver.h"
 #include "loop_solver.h"
+#include "mtz_solver.h"
 
 void cplex_solver(tsp_instance* tsp_in)
 {

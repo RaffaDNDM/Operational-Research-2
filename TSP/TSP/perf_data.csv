@@ -1,0 +1,4 @@
+5, Loop, Branch&Cut, Branch&CutGeneral, MTZ, GG
+tsp_my_short_inst/att10.tsp, 62.000000, 11.000000, 13.000000, 35.000000, 65.000000
+tsp_my_short_inst/att20.tsp, 58.000000, 13.000000, 21.000000, 148.000000, 408.000000
+tsp_my_short_inst/att30.tsp, 102.000000, 16.000000, 26.000000, 26162.000000, 1359.000000

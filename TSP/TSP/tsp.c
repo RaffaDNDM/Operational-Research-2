@@ -6,6 +6,10 @@
 int main(int argc, char** argv)
 {
 	tsp_instance tsp_in;
+	/*
+	FILE* pipe = _popen(PERF_PROF_PY, "w");
+	_pclose(pipe);
+	*/
 	parse_cmd(argv, argc, &tsp_in);
 
 	while (tsp_in.alg < 0)
@@ -28,6 +32,7 @@ int main(int argc, char** argv)
 
 	manage_input(&tsp_in);
 	
+
 	return 0;
 }
 
@@ -41,7 +46,6 @@ void solution(tsp_instance* tsp_in)
 	*/
 
 	cplex_solver(tsp_in);
-	dealloc_inst(tsp_in);
 }
 
 void set_params_and_solve(tsp_instance* tsp_in)
@@ -104,6 +108,7 @@ void set_params_and_solve(tsp_instance* tsp_in)
 			solution(tsp_in);
 		#endif
 	#endif
+	dealloc_inst(tsp_in);
 }
 
 void manage_input(tsp_instance* tsp_in)
@@ -171,6 +176,7 @@ void manage_input(tsp_instance* tsp_in)
 					{
 						tsp_in->alg = n + 1;
 						set_params_and_solve(tsp_in);
+						//dealloc_inst(tsp_in);
 
 						#ifdef PERF_PROF_ON
 						/*
@@ -179,20 +185,23 @@ void manage_input(tsp_instance* tsp_in)
 						else
 							fprintf(perf_data, ", %lf", tsp_in->bestCostI);
 						*/
-					fprintf(perf_data, ", %lf", tsp_in->execution_time);
-					#endif
+						fprintf(perf_data, ", %lf", tsp_in->execution_time);
+						#endif
+					}
 				}
-			}
 
-			#ifdef PERF_PROF_ON
-				fprintf(perf_data, "\n");
-			#endif
+				#ifdef PERF_PROF_ON
+					fprintf(perf_data, "\n");
+				#endif
 
-			tsp_in->alg = 0;
+				tsp_in->alg = 0;
 			
 			}
 			else
+			{
 				set_params_and_solve(tsp_in);
+				//dealloc_inst(tsp_in);
+			}
 		}
 
 		#ifdef PERF_PROF_ON
@@ -210,11 +219,15 @@ void manage_input(tsp_instance* tsp_in)
 				{
 					tsp_in->alg = n + 1;
 					set_params_and_solve(tsp_in);
+					//dealloc_inst(tsp_in);
 				}
 			}
 		}
 		else
+		{
 			set_params_and_solve(tsp_in);
+			//dealloc_inst(tsp_in);
+		}
 	}
 	/*
 	FILE* pipe = _popen(PERF_PROF_PY, "w");

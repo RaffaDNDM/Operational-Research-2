@@ -36,7 +36,7 @@ as argument in the command line
 //Creation or not of the performance profile
 #define PERF_PROF_ON 1
 //Call to python program that creates the performance profile
-#define PERF_PROF_PY "python perfprof.py -D , -T 3600 -S 2 -M 20 perf_data.csv pp.pdf -P \"all instances, shift 2 sec.s\""
+#define PERF_PROF_PY "python perfprof.py -D , -T 33034 -S 2 -M 20 perf_data.csv pp.pdf -P \"all instances, shift 2 sec.s\""
 
 //Length of the dir string, specified in command line
 #define DIR_SIZE 500 

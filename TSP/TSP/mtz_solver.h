@@ -21,6 +21,4 @@ void mtz_build_model(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in);
 */
 void mtz_define_tour(tsp_instance* tsp_in, double* x, int* succ, int* comp);
 
-
-
 #endif
