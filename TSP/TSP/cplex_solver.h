@@ -16,12 +16,12 @@
 #define SOLUTION_CORRECTNESS 1
 
 //Use metaheuristic pre-solution in LOOP
-#define METAHEURISTIC 1
+//#define METAHEURISTIC 1
 //Approximation value for the cplex result values in pre-solution
 #define EPS 1e-5
 
 //Do all the combinations of CPLEX parameters
-#define ALL_PARAM_COMBINATIONS 1
+//#define ALL_PARAM_COMBINATIONS 1
 #define NODE_LIMIT 3
 #define EPS_GAP 0.1
 #define	SOL_LIMIT 5 
@@ -80,4 +80,5 @@ int cplex_xpos(tsp_instance* tsp_in, int i, int j);
 */
 int compact_xpos(tsp_instance* tsp_in, int i, int j);
 
+void cplex_change_coeff(tsp_instance* tsp_in, CPXENVptr env, CPXLPptr lp, double* x_best, int percentage);
 #endif

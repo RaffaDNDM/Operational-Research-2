@@ -9,6 +9,7 @@ void cplex_solver(tsp_instance* tsp_in)
 	int error;
 	CPXENVptr env = CPXopenCPLEX(&error);
 	CPXLPptr lp = CPXcreateprob(env, &error, "TSP");
+	CPXsetintparam(env, CPX_PARAM_SCRIND, CPX_ON);
 
 	int* succ = calloc(tsp_in->num_nodes, sizeof(int));
 	int* comp = calloc(tsp_in->num_nodes, sizeof(int));
@@ -172,6 +173,13 @@ void cplex_solver(tsp_instance* tsp_in)
 
 void cplex_build_model(tsp_instance* tsp_in, CPXENVptr env, CPXLPptr lp)
 {
+	if (tsp_in->heuristic)
+		CPXsetdblparam(env, CPXPARAM_TimeLimit, (tsp_in->deadline+0.0)/6.0);
+	
+	double dbl = 0.0;
+	CPXgetdblparam(env, CPXPARAM_TimeLimit, &dbl);
+	
+	printf(" %lf \n", dbl);
 	//Properties of each edge
 	char bin = 'B';
 	char** edge = calloc(sizeof(char*), 1);
@@ -198,7 +206,7 @@ void cplex_build_model(tsp_instance* tsp_in, CPXENVptr env, CPXLPptr lp)
 			else
 				dist(i, j, tsp_in, &c);
 
-			double lb = 0.0;
+			double lb= 0.0;			
 			double ub = 1.0;
 
 			//Check if the column has been added correctly
@@ -376,3 +384,27 @@ int compact_xpos(tsp_instance* tsp_in, int i, int j)
 	return i * (tsp_in->num_nodes) + j;
 }
 
+void cplex_change_coeff(tsp_instance* tsp_in, CPXENVptr env, CPXLPptr lp, double* x_best, int percentage)
+{
+	int i = 0;
+	char which_bound = 'L';
+	srand(time(NULL));
+	double lb = 0.0;
+
+	for (; i < (tsp_in->num_nodes - 1); i++)
+	{
+		int j;
+		for (j = i + 1; j < tsp_in->num_nodes; j++)
+		{
+			int pos = cplex_xpos(tsp_in, i, j);
+
+			if (x_best[pos] > 0.5)
+			{
+				int choice = rand() % 100;
+				lb = (choice < percentage) ? 1.0 : 0.0;
+			}
+
+			assert(CPXchgbds(env, lp, 1, &pos, &which_bound, &lb) == 0);
+		}
+	}
+}

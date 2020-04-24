@@ -9,7 +9,7 @@
 #include <limits.h>
 
 //Maximum time for the computation of the solution (15 min)
-#define DEADLINE_MAX 900 
+#define DEADLINE_MAX 7200000
 
 //Number of algoritms implemented
 #define NUM_ALGS 5
@@ -58,6 +58,7 @@ typedef struct
 	int integerDist;
 	int plot;
 	int verbose;
+	int heuristic;
 	int node_lim;
 	int sol_lim;
 	double eps_gap;

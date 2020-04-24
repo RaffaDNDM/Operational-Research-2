@@ -16,6 +16,7 @@ void parse_cmd(char** argv, int argc, tsp_instance* tsp_in)
 	tsp_in->plot = 1;
 	tsp_in->verbose = VERBOSE;
 	tsp_in->size = -1;
+	tsp_in->heuristic = 0;
 
 	int def_deadline = 0;
 
@@ -102,6 +103,12 @@ void parse_cmd(char** argv, int argc, tsp_instance* tsp_in)
 
 		}
 
+		if (strncmp(argv[i], "-heu", 4) == 0)
+		{
+			tsp_in->heuristic = 1;
+			continue;
+		}
+
 		if ((strncmp(argv[i], "-help", 5) == 0 || strncmp(argv[i], "-h", 2) == 0))
 		{
 			//print set of commands and exit from the program
@@ -120,8 +127,9 @@ void parse_cmd(char** argv, int argc, tsp_instance* tsp_in)
 			int i_check = strncmp(argv[i], "-i", 2) == 0 || strncmp(argv[i], "-int", 4) == 0;
 			int np_check = strncmp(argv[i], "-noplot", 7) == 0 || strncmp(argv[i], "-np", 3) == 0;
 			int v_check = strncmp(argv[i], "-v", 2) == 0 || strncmp(argv[i], "-verbose", 8) == 0;
+			int h_check = strncmp(argv[i], "-heu", 4) == 0;
 
-			if (i_check || np_check || v_check)
+			if (i_check || np_check || v_check || h_check)
 			{
 				printf("%s\n", argv[i]);
 			}

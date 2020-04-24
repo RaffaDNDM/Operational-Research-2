@@ -1,11 +1,10 @@
 #include "bc_solver.h"
 
-
 void bc_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ, int* comp, int general)
 {
 	cplex_build_model(tsp_in, env, lp);
+
 	CPXsetintparam(env, CPX_PARAM_MIPCBREDLP, CPX_OFF);
-	tsp_in->num_cols = CPXgetnumcols(env, lp);
 
 	if (general)
 		CPXcallbacksetfunc(env, lp, CPX_CALLBACKCONTEXT_CANDIDATE, sec_general_callback, tsp_in);
@@ -15,8 +14,28 @@ void bc_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ, int*
 	int ncores = 1;
 	CPXgetnumcores(env, &ncores);
 	CPXsetintparam(env, CPX_PARAM_THREADS, ncores);
+	
+	int i = 0;
+	int percentage[] = {90, 75, 50, 25, 10, 0};
 
-	CPXmipopt(env, lp);
+	double* x_best = malloc(sizeof(double) * tsp_in->num_cols);
+	
+	for (; i < 6 && tsp_in->heuristic; i++)
+	{
+		tsp_in->num_cols = CPXgetnumcols(env, lp);
+		int n = CPXmipopt(env, lp);
+	
+		assert(CPXgetmipx(env, lp, x_best, 0, tsp_in->num_cols - 1) == 0);
+		cplex_change_coeff(tsp_in, env, lp, x_best, percentage[i]);
+
+	}
+	free(x_best);
+
+	if (!tsp_in->heuristic)
+	{
+		tsp_in->num_cols = CPXgetnumcols(env, lp);
+		CPXmipopt(env, lp);
+	}
 }
 
 static int CPXPUBLIC sec_callback(CPXCENVptr env, void* cbdata, int wherefrom, void* cbhandle, int* useraction_p)
