@@ -151,7 +151,6 @@
     <ClCompile Include="input.c" />
     <ClCompile Include="loop_solver.c" />
     <ClCompile Include="mtz_solver.c" />
-    <ClCompile Include="mtz_solver.h" />
     <ClCompile Include="tsp.c" />
     <ClCompile Include="utility.c" />
   </ItemGroup>
@@ -161,6 +160,7 @@
     <ClInclude Include="gg_solver.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="loop_solver.h" />
+    <ClInclude Include="mtz_solver.h" />
     <ClInclude Include="tsp.h" />
     <ClInclude Include="utility.h" />
   </ItemGroup>

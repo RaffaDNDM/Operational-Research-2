@@ -12,7 +12,7 @@
 //Set the use of lazy constraint
 #define LAZY_CONSTRAINTS 1
 
-//Check if the solution is an integer vector and respect constraaints
+//Check if the solution is an integer vector and respect constraints
 #define SOLUTION_CORRECTNESS 1
 
 //Use metaheuristic pre-solution in LOOP

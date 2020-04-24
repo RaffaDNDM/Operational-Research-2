@@ -1,4 +1,16 @@
-﻿  tsp.c
-D:\github\OperationalResearch2\TSP\TSP\tsp.c(28,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-D:\github\OperationalResearch2\TSP\TSP\tsp.c(133,9): warning C4101: 'title': unreferenced local variable
-  TSP.vcxproj -> D:\github\OperationalResearch2\TSP\x64\Debug\TSP.exe
+﻿  bc_solver.c
+C:\Users\User\github\Operational-Research-2\TSP\TSP\bc_solver.c(35,35): warning C4090: 'funzione': qualificatori 'const' differenti
+  cplex_solver.c
+C:\Users\User\github\Operational-Research-2\TSP\TSP\cplex_solver.c(362,8): warning C4013: 'gets' non definita. Verrà considerata come esterna che restituisce un int.
+  gg_solver.c
+  loop_solver.c
+C:\Users\User\github\Operational-Research-2\TSP\TSP\loop_solver.c(52,60): warning C4305: 'funzione': troncamento da '__int64' a 'CPXINT'
+C:\Users\User\github\Operational-Research-2\TSP\TSP\loop_solver.c(53,62): warning C4305: 'funzione': troncamento da '__int64' a 'CPXINT'
+  mtz_solver.c
+C:\Users\User\github\Operational-Research-2\TSP\TSP\mtz_solver.c(133,6): warning C4101: 'indices2': variabile locale senza riferimenti
+C:\Users\User\github\Operational-Research-2\TSP\TSP\mtz_solver.c(134,9): warning C4101: 'values2': variabile locale senza riferimenti
+  tsp.c
+C:\Users\User\github\Operational-Research-2\TSP\TSP\tsp.c(28,1): warning C4267: 'inizializzazione': conversione da 'size_t' a 'int'. Possibile perdita di dati.
+C:\Users\User\github\Operational-Research-2\TSP\TSP\tsp.c(133,9): warning C4101: 'title': variabile locale senza riferimenti
+  Generazione del codice in corso...
+  TSP.vcxproj -> C:\Users\User\github\Operational-Research-2\TSP\x64\Debug\TSP.exe
