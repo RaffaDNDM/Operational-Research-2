@@ -549,6 +549,31 @@ CPXcallbackrejectcandidate(context, rcnt, nnz, const_term,
 \textbf{rmatval:} & {coefficienti non nulli delle colonne specificate}\\
 \end{tabular}
 \end{table}
+\subsubsection{Algoritmi Euristici}
+Per poter impostare una variabile $x_{i,j}$ ad una valore fissato è necessario rendere i suoi lower e upper bound alla quantità voluta. Per cambiare questi parametri viene utilizzata la seguente funzione: 
+\begin{center}
+\begin{tabular}{c}
+\begin{lstlisting}[linewidth=365pt, basicstyle=\footnotesize\sffamily,]    
+CPXchgbds(env, lp, num_bouds, indices, which_bound, values);
+\end{lstlisting}
+\end{tabular}
+\end{center}
+\begin{table}[h]
+\centering
+\begin{tabular}{rl}
+\textbf{env:} & {puntatore di tipo CPXENVptr alla struttura ENV}\\
+\textbf{lp:} & {puntatore di tipo CPXLPptr alla struttura LP}\\
+\textbf{num\_bounds:} & {numero totale di bound da cambiare}\\
+\textbf{indices:} & {vettore con gli indice delle colonne corrispondenti alle}\\
+&{variabili di cui cambiare il bound}\\
+\textbf{which\_bound:} & {array di caratteri che specificano il bound da modificare,}\\
+&{a scelta tra:}\\
+&{\textit{'U'} per upper bound}\\
+&{\textit{'L'} per lower bound}\\
+&{\textit{'B'} per entrambi}\\
+\textbf{values:} & {vettore con i nuovi valori}\\
+\end{tabular}
+\end{table}
 \subsection{Parametri}\label{param}
 Con le seguenti funzioni è possibile modificare i parametri di impostazione di CPLEX, altrimenti impostati ai valori di default.
 Nel caso in cui si tratti di parametri di tipo INT è necessario invocare:\\
@@ -602,6 +627,12 @@ In entrambe le funzioni:
 &{al modello originale del problema e non a quello ridotto .}\\
 \hline
 \textbf{CPX\_PARAM\_THREADS} & {imposta il numero massimo di thread utilizzabili. }\\
+\hline
+\textbf{CPX\_PARAM\_RINSHEUR} & {imposta la frequenza (ogni quanti nodi) con cui deve}\\
+&{essere invocato da CPLEX l'algoritmo euristico Rins.}\\
+\hline
+\textbf{CPX\_PARAM\_POLISHTIME} & {imposta quanto tempo in secondi deve dedicare CPLEX}\\
+&{a fare il polish della soluzione.}\\
 \hline
 \end{tabular}
 \caption{Parametri.}\label{param_table}
@@ -716,7 +747,7 @@ model_3.lp, 0.333669, 0.432553, 0.966638
 \end{lstlisting}
 \end{tabular}
 \end{center}
-La prima riga deve necessariamente contenere in ordine il numero di algoritmi analizzati e i loro nomi. Nelle righe seguenti viene riportato invece il nome del file lp e i tempi di esecuzione elencati secondo la sequenza di algortimti specificata all'inizio.
+La prima riga deve necessariamente contenere in ordine il numero di algoritmi analizzati e i loro nomi. Nelle righe seguenti viene riportato invece il nome del file lp e i tempi di esecuzione elencati secondo la sequenza di algoritmi specificata all'inizio.
 Ogni campo di ciascuna riga deve essere separato dal delimitatore specificato all'avvio del programma attraverso l'opzione -D.
 }
 \item{\textbf{immagine di output}\\

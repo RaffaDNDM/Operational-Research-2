@@ -118,6 +118,7 @@ L'algoritmo può essere modificato svolgendo prima il metodo loop con l'aggiunta
 Quest'ottimizzazione è basata sul fatto che CPLEX salvi alcune soluzioni, ottenute in precedenza dal risolutore sullo stesso modello, e le sfrutti come bound nel nuovo modello. Per questo motivo, alcune delle soluzioni metaeuristiche ottenute nella prima fase vengono sfruttate come bound nella seconda.
 
 \subsection{Formulazione con callback}
+Un possibile miglioramento dell'algoritmo proposto da Benders, in termini di velocità della computazione, è il seguente.\\
 Come precedentemente descritto, come prima cosa CPLEX effettua un preprocessamento in cui semplifica il modello, riducendo il termine noto e accorpando tra loro diverse variabili. Terminata questa operazione inizia ad eseguire la fase di Branch\&Cut. Ogni volta che calcola una nuova soluzione $x^*$, prima di dichiarare se è l'ottimo o di scartarla e proseguire a sviluppare i successivi rami dell'albero decisionale, applica dei tagli e degli algoritmi euristici per aggiornarla(vedi Figura \ref{Albero_decisionale}).
 \begin{figure}[h] 
 \begin{center} 
@@ -130,11 +131,50 @@ Come precedentemente descritto, come prima cosa CPLEX effettua un preprocessamen
 \\Nello sviluppo di ogni ramo l'upper bound sarà dato dagli algoritmi euristici utilizzati, mentre il lower bound dal rilassamento del problema.\\ 
 Per poter velocizzare l'approccio proposto da Benders, è possibile personalizzare questa fase e scegliere quali tagli far applicare a CPLEX. Nel nostro caso, questi vengono utilizzati per eliminare l'eventuale presenza di subtour nella soluzione calcolata. Per fare ciò vengono sfruttate particolari funzioni fornite da CPLEX, dette \textit{callback}. Queste sono state lasciate volutamente vuote dai creatori della libreria, affinché l'utente possa implementarne all'interno il suo specifico codice. In particolare, le funzioni utilizzate sono callback necessarie ad aggiungere lazy constraints al modello e per questo dette \textit{lazy constraints callback}. La callback implementata viene chiamata solo al momento di aggiornare l'incumbent e se necessario aggiunge al modello i vincoli violati. Verrà quindi invocata più frequentemente all'inizio del calcolo della soluzione del problema, e meno nelle iterazioni successive. Questo poichè essendoci in partenza meno vincoli, sarà più facile per la soluzione soddisfarli tutti. A differenza dei \textit{lazy constraints}, con l'utilizzo delle \textit{lazy callback} i vincoli non sono costantemente presenti in un pool, ma vengono generati "al volo" al momento necessario.  Quest'operazione velocizza notevolmente il calcolo della soluzione ottima, in quanto permette a CPLEX di non dover calcolare nuovamente l'albero decisionale dalla radice, ma di proseguirne lo sviluppo aggiungendo nuovi rami. In particolari casi, però, CPLEX può ritenere più conveniente distruggere tutto l'albero decisionale fin'ora calcolato e ricominciare dalla radice. Questo può avvenire in qualunque punto dell'elaborazione della soluzione ottima.\\
 Attraverso l'utilizzo delle callbacks è possibile accedere a molti dati interni all'elaborazione di CPLEX. Particolari procedure vengono quindi automaticamente disattivate, affinché l'utente non possa venirne a conoscenza. Per evitare questo è possibile installare le callbacks con una modalità leggermente diversa, attraverso funzioni dette \textit{general}.
-
-%\boldmath
-%$x_h \geq \lceil x^*_h \rceil$
-%\unboldmath
-
-%\boldmath
-%$x_h \leq \lfloor x^*_h \rfloor$
-%\unboldmath
+\section{Algoritmi Euristici}
+Gli algoritmi euristici sono progettati per risolvere istanze del problema in tempi significativamente più brevi rispetto agli algoritmi esatti. Di conseguenza, però, al termine della computazione non garantiscono di ottenere una soluzione ottima, ma solo una sua buona approssimazione ammissibile.\\
+Durante la computazione della soluzione CPLEX utilizza diversi algoritmi euristici, grazie alla variazione di alcuni parametri a loro associati è possibile variare la frequenza o il tempo a loro dedicato. 
+\subsection{Metodo Hard Fixing}
+Un primo algoritmo euristico di semplice implementazione si basa sull'impostazione di una deadline da parte dell'utente ed è composto dalle seguenti fasi:
+\begin{enumerate}
+\item{Impostazione di un time limit per la computazione della soluzione;}
+\item{Calcolo della soluzione;}
+\item{Selezione, in maniera randomica, di un sottoinsieme di rami della soluzione ottima. Il numero di questi sarà dato da una percentuale fissata del totale. I rami appartenenti alla selezione vengono fissati di modo tale che, in una successiva computazione del problema, appartengano alla soluzione restituita;}
+\end{enumerate} 
+Questi passaggi vengono eseguiti in maniera ciclica per un numero fissato di iterazioni. In questo modo, ad ogni computazione della soluzione, CPLEX dovrà risolvere un problema più semplice di quello originale, essendo molte variabile del modello già selezionate nella \textbf{fase 3} dell'iterazione precedente.\\
+Il time limit nominato nella \textbf{fase 1} è dato da una frazione della deadline complessiva e dipende dal numero di iterazioni totali che si desidera compiere. Ad ogni computazione la soluzione potrà essere solo migliore o uguale alla precedente (nel caso peggiore).\\
+La percentuale scelta del numero di rami da fissare può variare ad ogni iterazione. Generalmente si cerca di avere una percentuale alta nelle prime iterazione, in cui la soluzione non è ancora stata raffinata, e di abbassarla man mano che si procede con l'algoritmo. In questo modo nelle ultime computazione CPLEX avrà un maggior numero di gradi di libertà per trovare la soluzione che più si avvicina all'ottimo. Poichè i rami selezionati nella \textbf{fase 3} sono scelti in maniera casuale, non si corre il rischio di entrare in un ciclo infinito, in cui viene risolto ogni volta la stessa istanza con le stesse variabili fissate. Particolare attenzione deve essere posta al fatto di lasciare nell'insieme dei rami scelti randomicamente solo quelli selezionate all'iterazione immediatamente precedente.\\
+Nella nostra implementazione abbiamo scelto di iterare l'algoritmo per 6 volte, ognuna con una deadline di 10 minuti, e di utilizzare rispettivamente come percentuale i seguenti valori $\lbrace$ 90, 75, 50, 25, 10, 0 $\rbrace$.\\
+In Figura \ref{selezione_rami} è presente una rappresentazione della \textbf{fase 3}.
+\begin{figure}[h] 
+\begin{center} 
+  % Requires \usepackage{graphicx} 
+  \includegraphics[width=8cm]{Images/x_best}\\ 
+  \caption{\footnotesize{Selezione rami}}
+  \label{selezione_rami} 
+\end{center} 
+\end{figure}
+\vspace{12cm}
+\\Di seguito è riportato lo pseudocodice dell'algoritmo appena descritto.\\
+\begin{algorithm}
+\caption{Hard Fixing}
+\begin{algorithmic}
+\REQUIRE{$ modello,\;\;deadline,\;\;percentuale$}
+\STATE{$n=0$}
+\WHILE{$(n < num\_iterazioni)$}
+\STATE{$set\_time\_limit(deadline/num\_iterazioni)$}
+\STATE{$solve(modello)$}
+\STATE {$x\_best \leftarrow {soluzione\;\;calcolata}$}
+\FOR{$j \leftarrow \;0,...,num\_nodi-1$}
+\STATE{$ k = random(0,1)$ }
+\IF{$(100k \leq percentuale)$}
+\STATE{$Add\;\;x\_best[j]\;\;to\;\;S$}
+\ENDIF
+\ENDFOR
+\FORALL{$x_{i,j} \in S$}
+\STATE{$x_{i,j}=1$}
+\ENDFOR
+\STATE{$n++$}
+\ENDWHILE
+\end{algorithmic}
+\end{algorithm}
