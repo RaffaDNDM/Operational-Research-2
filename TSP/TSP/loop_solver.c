@@ -21,67 +21,145 @@ void loop_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ, in
 	start_iter = start;
 	cplex_build_model(tsp_in, env, lp);
 
+	int i = 0;
+	int percentage[] = { 90, 75, 50, 25, 10, 0 };
+	tsp_in->num_cols = CPXgetnumcols(env, lp);
+	double* x_best = malloc(sizeof(double) * tsp_in->num_cols);
+	double* x = calloc(sizeof(double), tsp_in->num_cols);
 	int n_comps = 3;
 
-	double* x = calloc(sizeof(double), CPXgetnumcols(env, lp));
-	CPXmipopt(env, lp);
-	end_iter = clock();
-	CPXgetbestobjval(env, lp, &tsp_in->bestCostD);
-	assert(CPXgetmipx(env, lp, x, 0, CPXgetnumcols(env, lp) - 1) == 0);
-	cplex_define_tour(tsp_in, x, succ, comp, &n_comps);
-	//cplex_plot(tsp_in, succ, comp, &n_comps);
-
-	print_state(env, lp, n_comps, start_iter, end_iter);
-
-	while (n_comps >= 2)
+	for (; i < 6 && tsp_in->heuristic; i++)
 	{
-		start_iter = clock();
-		add_sec_constraint(env, lp, tsp_in, comp, n_comps);
-
-		CPXmipopt(env, lp);
-		CPXgetbestobjval(env, lp, &tsp_in->bestCostD);
-		end_iter = clock();
-		assert(CPXgetmipx(env, lp, x, 0, CPXgetnumcols(env, lp) - 1) == 0);
-		cplex_define_tour(tsp_in, x, succ, comp, &n_comps);
-		//cplex_plot(tsp_in, succ, comp, &n_comps);
-		print_state(env, lp, n_comps, start_iter, end_iter);
-
-	}
-
-#ifdef METAHEURISTIC
-	CPXsetintparam(env, CPX_PARAM_NODELIM, 9223372036800000000);
-	CPXsetintparam(env, CPX_PARAM_INTSOLLIM, 9223372036800000000);
-	CPXsetdblparam(env, CPX_PARAM_EPGAP, 1e-04);
-
-	start_iter = clock();
-	CPXmipopt(env, lp);
-	end_iter = clock();
-	CPXgetbestobjval(env, lp, &tsp_in->bestCostD);
-	assert(CPXgetmipx(env, lp, x, 0, CPXgetnumcols(env, lp) - 1) == 0);
-	cplex_define_tour(tsp_in, x, succ, comp, &n_comps);
-	print_state(env, lp, n_comps, start_iter, end_iter);
-	//cplex_plot(tsp_in, succ, comp, &n_comps);
-
-	while (n_comps >= 2)
-	{
-		start_iter = clock();
-		add_sec_constraint(env, lp, tsp_in, comp, n_comps);
+		n_comps = 3;
 
 		CPXmipopt(env, lp);
 		end_iter = clock();
 		CPXgetbestobjval(env, lp, &tsp_in->bestCostD);
 		assert(CPXgetmipx(env, lp, x, 0, CPXgetnumcols(env, lp) - 1) == 0);
 		cplex_define_tour(tsp_in, x, succ, comp, &n_comps);
-		print_state(env, lp, n_comps, start_iter, end_iter);
 		//cplex_plot(tsp_in, succ, comp, &n_comps);
+		print_state(env, lp, n_comps, start_iter, end_iter);
+
+		while (n_comps >= 2)
+		{
+			start_iter = clock();
+			add_sec_constraint(env, lp, tsp_in, comp, n_comps);
+
+			CPXmipopt(env, lp);
+			CPXgetbestobjval(env, lp, &tsp_in->bestCostD);
+			end_iter = clock();
+			assert(CPXgetmipx(env, lp, x, 0, CPXgetnumcols(env, lp) - 1) == 0);
+			cplex_define_tour(tsp_in, x, succ, comp, &n_comps);
+			//cplex_plot(tsp_in, succ, comp, &n_comps);
+			print_state(env, lp, n_comps, start_iter, end_iter);
+
+		}
+
+		#ifdef METAHEURISTIC
+			CPXsetintparam(env, CPX_PARAM_NODELIM, 9223372036800000000);
+			CPXsetintparam(env, CPX_PARAM_INTSOLLIM, 9223372036800000000);
+			CPXsetdblparam(env, CPX_PARAM_EPGAP, 1e-04);
+
+			start_iter = clock();
+			CPXmipopt(env, lp);
+			end_iter = clock();
+			CPXgetbestobjval(env, lp, &tsp_in->bestCostD);
+			assert(CPXgetmipx(env, lp, x, 0, CPXgetnumcols(env, lp) - 1) == 0);
+			cplex_define_tour(tsp_in, x, succ, comp, &n_comps);
+			print_state(env, lp, n_comps, start_iter, end_iter);
+			//cplex_plot(tsp_in, succ, comp, &n_comps);
+
+			while (n_comps >= 2)
+			{
+				start_iter = clock();
+				add_sec_constraint(env, lp, tsp_in, comp, n_comps);
+
+				CPXmipopt(env, lp);
+				end_iter = clock();
+				CPXgetbestobjval(env, lp, &tsp_in->bestCostD);
+				assert(CPXgetmipx(env, lp, x, 0, CPXgetnumcols(env, lp) - 1) == 0);
+				cplex_define_tour(tsp_in, x, succ, comp, &n_comps);
+				print_state(env, lp, n_comps, start_iter, end_iter);
+				//cplex_plot(tsp_in, succ, comp, &n_comps);
+			}
+		#endif
+		
+		double cost;
+		CPXgetbestobjval(env, lp, &cost);
+		printf("percentage %d cost %lf\n", percentage[i], cost);
+
+		assert(CPXgetmipx(env, lp, x_best, 0, tsp_in->num_cols - 1) == 0);
+		cplex_change_coeff(tsp_in, env, lp, x_best, percentage[i]);
+
 	}
-#endif
+
+
+	//if (!tsp_in->heuristic)
+	//{
+		n_comps = 3;
+
+		//double* x = calloc(sizeof(double), tsp_in->num_cols);
+		CPXmipopt(env, lp);
+		end_iter = clock();
+		CPXgetbestobjval(env, lp, &tsp_in->bestCostD);
+		assert(CPXgetmipx(env, lp, x, 0, CPXgetnumcols(env, lp) - 1) == 0);
+		cplex_define_tour(tsp_in, x, succ, comp, &n_comps);
+		//cplex_plot(tsp_in, succ, comp, &n_comps);
+
+		print_state(env, lp, n_comps, start_iter, end_iter);
+
+		while (n_comps >= 2)
+		{
+			start_iter = clock();
+			add_sec_constraint(env, lp, tsp_in, comp, n_comps);
+
+			CPXmipopt(env, lp);
+			CPXgetbestobjval(env, lp, &tsp_in->bestCostD);
+			end_iter = clock();
+			assert(CPXgetmipx(env, lp, x, 0, CPXgetnumcols(env, lp) - 1) == 0);
+			cplex_define_tour(tsp_in, x, succ, comp, &n_comps);
+			//cplex_plot(tsp_in, succ, comp, &n_comps);
+			print_state(env, lp, n_comps, start_iter, end_iter);
+
+		}
+
+		#ifdef METAHEURISTIC
+			CPXsetintparam(env, CPX_PARAM_NODELIM, 9223372036800000000);
+			CPXsetintparam(env, CPX_PARAM_INTSOLLIM, 9223372036800000000);
+			CPXsetdblparam(env, CPX_PARAM_EPGAP, 1e-04);
+
+			start_iter = clock();
+			CPXmipopt(env, lp);
+			end_iter = clock();
+			CPXgetbestobjval(env, lp, &tsp_in->bestCostD);
+			assert(CPXgetmipx(env, lp, x, 0, CPXgetnumcols(env, lp) - 1) == 0);
+			cplex_define_tour(tsp_in, x, succ, comp, &n_comps);
+			print_state(env, lp, n_comps, start_iter, end_iter);
+			//cplex_plot(tsp_in, succ, comp, &n_comps);
+
+			while (n_comps >= 2)
+			{
+				start_iter = clock();
+				add_sec_constraint(env, lp, tsp_in, comp, n_comps);
+
+				CPXmipopt(env, lp);
+				end_iter = clock();
+				CPXgetbestobjval(env, lp, &tsp_in->bestCostD);
+				assert(CPXgetmipx(env, lp, x, 0, CPXgetnumcols(env, lp) - 1) == 0);
+				cplex_define_tour(tsp_in, x, succ, comp, &n_comps);
+				print_state(env, lp, n_comps, start_iter, end_iter);
+				//cplex_plot(tsp_in, succ, comp, &n_comps);
+			}
+		#endif
+	//}
+
+	free(x);
 
 	end = clock();
 
 	tsp_in->execution_time = ((double)(end - start) / (double)CLOCKS_PER_SEC) * TIME_SCALE;
 
-	free(x);
+	
 }
 
 

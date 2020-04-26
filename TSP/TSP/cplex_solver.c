@@ -80,7 +80,7 @@ void cplex_solver(tsp_instance* tsp_in)
 	}
 	else
 		CPXgetbestobjval(env, lp, &tsp_in->bestCostD);
-
+	
 	print_cost(tsp_in);
 	printf("Execution time: %lf\n", tsp_in->execution_time);
 
@@ -100,9 +100,10 @@ void cplex_solver(tsp_instance* tsp_in)
 
 		case 2:; case 3:
 		{
-			x = (double*) realloc(x, sizeof(double) * CPXgetnumcols(env, lp));
-			int s = CPXgetnumcols(env, lp);
-			assert(CPXgetmipx(env, lp, x, 0, CPXgetnumcols(env, lp) - 1) == 0);
+			//x = (double*) realloc(x, sizeof(double) * CPXgetnumcols(env, lp));
+			x = (double*)realloc(x, sizeof(double) * tsp_in->num_cols);
+			//int s = CPXgetnumcols(env, lp);
+			assert(CPXgetmipx(env, lp, x, 0, tsp_in->num_cols - 1) == 0);
 			break;
 		}
 
@@ -176,10 +177,6 @@ void cplex_build_model(tsp_instance* tsp_in, CPXENVptr env, CPXLPptr lp)
 	if (tsp_in->heuristic)
 		CPXsetdblparam(env, CPXPARAM_TimeLimit, (tsp_in->deadline+0.0)/6.0);
 	
-	double dbl = 0.0;
-	CPXgetdblparam(env, CPXPARAM_TimeLimit, &dbl);
-	
-	printf(" %lf \n", dbl);
 	//Properties of each edge
 	char bin = 'B';
 	char** edge = calloc(sizeof(char*), 1);
@@ -389,7 +386,7 @@ void cplex_change_coeff(tsp_instance* tsp_in, CPXENVptr env, CPXLPptr lp, double
 	int i = 0;
 	char which_bound = 'L';
 	srand(time(NULL));
-	double lb = 0.0;
+	double lb;
 
 	for (; i < (tsp_in->num_nodes - 1); i++)
 	{
@@ -397,14 +394,16 @@ void cplex_change_coeff(tsp_instance* tsp_in, CPXENVptr env, CPXLPptr lp, double
 		for (j = i + 1; j < tsp_in->num_nodes; j++)
 		{
 			int pos = cplex_xpos(tsp_in, i, j);
+			lb = 0.0;
 
 			if (x_best[pos] > 0.5)
 			{
 				int choice = rand() % 100;
 				lb = (choice < percentage) ? 1.0 : 0.0;
 			}
-
+			//printf("x (%d,%d) lb=%lf\n", i + 1, j + 1, lb);
 			assert(CPXchgbds(env, lp, 1, &pos, &which_bound, &lb) == 0);
 		}
 	}
+	CPXwriteprob(env, lp, LP_FILENAME, NULL);
 }

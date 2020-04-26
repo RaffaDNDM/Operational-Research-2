@@ -1,3 +1,4 @@
-﻿  bc_solver.c
-D:\github\OperationalResearch2\TSP\TSP\bc_solver.c(53,35): warning C4090: 'function': different 'const' qualifiers
-  TSP.vcxproj -> D:\github\OperationalResearch2\TSP\x64\Debug\TSP.exe
+﻿  cplex_solver.c
+C:\Users\User\github\Operational-Research-2\TSP\TSP\cplex_solver.c(367,8): warning C4013: 'gets' non definita. Verrà considerata come esterna che restituisce un int.
+C:\Users\User\github\Operational-Research-2\TSP\TSP\cplex_solver.c(388,18): warning C4244: 'funzione': conversione da 'time_t' a 'unsigned int'. Possibile perdita di dati.
+  TSP.vcxproj -> C:\Users\User\github\Operational-Research-2\TSP\x64\Debug\TSP.exe

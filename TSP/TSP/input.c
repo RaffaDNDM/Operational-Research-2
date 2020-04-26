@@ -141,6 +141,19 @@ void parse_cmd(char** argv, int argc, tsp_instance* tsp_in)
 		}
 		printf(LINE);
 	}
+
+	if (tsp_in->heuristic)
+	{
+		if (tsp_in->alg == 4 || tsp_in->alg == 5)
+		{
+			printf("Not valid algorithm for heuristic option\n");
+			exit(1);
+		}
+		else if (tsp_in->which_alg[3] == 1 || tsp_in->which_alg[4] == 1)
+		{
+			printf("The heuristic option will be ignored for algorithms 4 and 5\n");
+		}
+	}
 }
 
 void help()
