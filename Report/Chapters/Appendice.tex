@@ -3,7 +3,7 @@ In questa sezione verranno approfondite alcune funzioni di CPLEX necessarie ad i
 
 \section{CPLEX}
 \subsection{Funzioni}
-\subsubsection{Costruzione modello}
+\subsubsection{Costruzione e modifica del modello}
 Per poter costruire il modello da analizzare, come prima cosa, è necessario creare un puntatore alle due strutture dati utilizzate da CPLEX.
 \lstinputlisting[caption={\footnotesize{modelTSP.txt}}, style=code, firstnumber=1, firstline=27, lastline=29, label=tsp_model, language=c]{Source/modelTSP.txt}
 La funzione alla riga 2 alloca la memoria necessaria e riempie la struttura con valori di default. Nel caso in cui non termini con successo memorizza un codice d'errore in \textit{\&error}.\\
@@ -119,7 +119,7 @@ CPXchgcoef(env, lp, i, j, new_value);
 \textbf{new\_value:} & {nuovo valore del coefficiente}\\
 \end{tabular}
 \end{table}
-L'utilizzo di questa metodo per inserire nuovi vincoli è però considerato inefficiente. Al suo posto è consigliato l'utilizzo di una funzione che inserisca il vincolo con già i coefficienti delle variabili impostati al valore corretto:
+L'utilizzo di questa metodo per inserire nuovi vincoli è però considerato inefficiente. Al suo posto è consigliato l'utilizzo di una funzione che inserisca il vincolo con già i coefficienti delle variabili impostati al valore corretto:\\
 \begin{center}
 \begin{tabular}{c}
 \begin{lstlisting}[linewidth=385pt, basicstyle=\footnotesize\sffamily,]     
@@ -133,20 +133,15 @@ CPXaddrows(env, lp, num_nc, num_nr, nnz, const_term, type_costr,
 \begin{tabular}{rl}
 \textbf{env:} & {puntatore di tipo CPXENVptr alla struttura ENV}\\
 & {precedentemente creata}\\
+\end{tabular}
+\end{table}
+\begin{table}[h]
+\centering
+\begin{tabular}{rl}
 \textbf{lp:} & {puntatore di tipo CPXLPptr alla struttura LP}\\
 & {precedentemente creata}\\
-\end{tabular}
-\end{table}
-\begin{table}[h]
-\centering
-\begin{tabular}{rl}
 \textbf{num\_nc:} & {numero di nuove colonne che devono essere aggiunte}\\
 \textbf{num\_nr:} & {numero di nuove righe che devono essere aggiunte}\\
-\end{tabular}
-\end{table}
-\begin{table}[h]
-\centering
-\begin{tabular}{rl}
 \textbf{nnz:} & {numero di coefficienti non nulli nel vincolo aggiunto}\\
 \textbf{const\_term:} & {vettore con i termini noti per ogni vincolo da aggiungere}\\
 \textbf{type\_costr:} & {vettore con il tipo di vincoli da aggiungere,}\\
@@ -162,7 +157,34 @@ CPXaddrows(env, lp, num_nc, num_nr, nnz, const_term, type_costr,
 \textbf{row\_name:} & {vettore contenente i nomi dei nuovi vincoli}\\
 \end{tabular}
 \end{table}
- 
+\vspace{4cm}
+Per rimuovere invece delle righe, viene utilizzata la seguente funzione:
+\begin{center}
+\begin{tabular}{c}
+\begin{lstlisting}[linewidth=385pt, basicstyle=\footnotesize\sffamily,]     
+CPXdelrows( CPXCENVptr env, CPXLPptr lp, int begin, int end );
+\end{lstlisting}
+\end{tabular}
+\end{center}
+\begin{table}[h]
+\centering
+\begin{tabular}{rl}
+\textbf{env:} & {puntatore di tipo CPXENVptr alla struttura ENV}\\
+& {precedentemente creata}\\
+\textbf{lp:} & {puntatore di tipo CPXLPptr alla struttura LP}\\
+& {precedentemente creata}\\
+\end{tabular}
+\end{table}
+\begin{table}[h]
+\centering
+\begin{tabular}{rl}
+\textbf{begin:} & {indice numerico della prima riga}\\
+& {da cancellare}\\
+\textbf{end:} & {indice numerico dell'ultima riga}\\
+& {da cancellare}\\
+\end{tabular}
+\end{table}
+\vspace{6cm} 
 \subsubsection{Calcolo della soluzione}
 Per ottenere la soluzione ottima del problema di ottimizzazione del problema correlato al modello definito in cplex, vengono utilizzate due fasi:
 \begin{itemize}
@@ -188,7 +210,7 @@ CPXmipopt(env, lp);
 \begin{center}
 \begin{tabular}{c}
 \begin{lstlisting}[linewidth=230pt, basicstyle=\footnotesize\sffamily,]
-CPXgetx(env, lp, x, inizio, fine);
+CPXgetmipx(env, lp, x, inizio, fine);
 \end{lstlisting}
 \end{tabular}
 \end{center}
@@ -199,6 +221,11 @@ CPXgetx(env, lp, x, inizio, fine);
 & {precedentemente creata}\\
 \textbf{lp:} & {puntatore di tipo CPXLPptr alla struttura LP}\\
 & {precedentemente creata}\\
+\end{tabular}
+\end{table}
+\begin{table}[h]
+\centering
+\begin{tabular}{rl}
 \textbf{x:} & {puntatore a un vettore di double in cui verranno salvati}\\
 & {i valori delle variabili ottenuti dalla soluzione ottima}\\
 \textbf{inizio:} & {primo indice della variabile di cui si vuole memorizzare}\\
@@ -207,6 +234,7 @@ CPXgetx(env, lp, x, inizio, fine);
 & {ed analizzare il valore}\\
 \end{tabular}
 \end{table}
+\vspace{6cm}
 Questa funzione salva in x tutte le variabili che hanno indice $i\in [inizio, fine]$ e quindi x deve essere un vettore di almeno $fine-inizio+1$ valori. Nel nostro programma, vengono analizzati i valori di tutte le variabili in gioco.\\
 Per questo motivo \textbf{inizio=0} e \textbf{fine=num\_colonne - 1}\footnote{numero di variabili=CPXgetnumcols(env,lp);}\footnote{numero di vincoli=CPXgetnumrows(env,lp);}. In seguito il nostro programma analizza la correttezza della soluzione svolgendo la verifica su:
 \begin{itemize}
@@ -216,7 +244,37 @@ ciascun $x_{i,j}$ assume valore $0$ o $1$ con una tolleranza di $\epsilon=10^{-5
 il tour è composto al massimo da due archi che toccano lo stesso nodo}
 \end{itemize}
 }
+\item{\textbf{Gap relativo}\\
+La seguente funzione permette di ottenere il gap relativo della funzione obiettivo per un'ottimizzazione MIP.\\
+\begin{center}
+\begin{tabular}{c}
+\begin{lstlisting}[linewidth=230pt, basicstyle=\footnotesize\sffamily,]
+CPXgetmiprelgap( CPXCENVptr env, CPXCLPptr lp, double * gap_p);
+\end{lstlisting}
+\end{tabular}
+\end{center}
+\begin{table}[h]
+\centering
+\begin{tabular}{rl}
+\textbf{env:} & {puntatore di tipo CPXENVptr alla struttura ENV}\\
+& {precedentemente creata}\\
+\textbf{lp:} & {puntatore di tipo CPXLPptr alla struttura LP}\\
+& {precedentemente creata}\\
+\end{tabular}
+\end{table}
+\begin{table}[h]
+\centering
+\begin{tabular}{rl}
+\textbf{gap\_p:} & {puntatore a un double in cui verrà salvato il gap}
+\end{tabular}
+\end{table}
+Per un problema di minimizzazione il gap relativo viene calcolato come:
+$$\frac{bestinteger - bestobjective}{10^{-10}+|bestinteger|}$$
+dove \textbf{bestinteger} è il valore restituito dalla funzione \textbf{CPXgetobjval()} mentre \textbf{bestobjective} da \textbf{CPXgetbestobjval()}.
+}
 \end{itemize}
+
+
 \subsubsection{Lazy constraints}
 Nel caso in cui si voglia sfruttare la possibilità di verificare se è stato rispettato un vincolo, solo al termine della computazione della soluzione, è necessario inserire un "lazy constraint". Per fare ciò viene utilizzata la seguente funzione:
 \begin{center}

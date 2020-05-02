@@ -31,7 +31,7 @@ int main(int argc, char** argv)
 	}
 
 	manage_input(&tsp_in);
-	
+
 
 	return 0;
 }
@@ -59,9 +59,9 @@ void set_params_and_solve(tsp_instance* tsp_in)
 		int sol_lim[] = { 1, 2, 3 };
 		double gap[] = { 0.1, 0.01, 0.001, 0.0001 };
 		int seed[] = { 500, 1500, 2000, 2500 };
-		
+
 		#ifdef ALL_PARAM_COMBINATIONS
-		
+
 			double best_time = CPX_INFBOUND;
 			int h = 0;
 			for (; h < (sizeof(seed) / sizeof(int)); h++)
@@ -121,7 +121,7 @@ void manage_input(tsp_instance* tsp_in)
 		FILE* pipe = _popen(DIR_LIST_PY, "w");
 		fprintf(pipe, "%s\n%d\n", tsp_in->dir, tsp_in->size);
 		_pclose(pipe);
-		
+
 		/*
 		printf("Read Input Directory: \n");
 		char c=getchar();
@@ -195,7 +195,7 @@ void manage_input(tsp_instance* tsp_in)
 				#endif
 
 				tsp_in->alg = 0;
-			
+
 			}
 			else
 			{
