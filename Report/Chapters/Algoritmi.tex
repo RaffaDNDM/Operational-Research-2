@@ -17,7 +17,7 @@ Le strutture utilizzate da CPLEX sono due (vedi Figura \ref{strutture_cplex}):
 \begin{figure}[h] 
 \begin{center} 
   % Requires \usepackage{graphicx} 
-  \includegraphics[scale=0.7]{Images/cplex_structs}\\ 
+  \includegraphics[scale=0.5]{Images/cplex_structs}\\ 
   \caption{\footnotesize{Strutture CPLEX}}
   \label{strutture_cplex} 
 \end{center} 
@@ -25,16 +25,14 @@ Le strutture utilizzate da CPLEX sono due (vedi Figura \ref{strutture_cplex}):
 
 Ad ogni ENV è possibile associare più LP, in modo da poter risolvere in parallelo più problemi di ottimizzazione, ma nel nostro caso ne sarà sufficiente solo uno.\\
 Per convenzione è stato deciso di etichettare i rami $(i,j)$ dell'istanza rispettando la proprietà $i<j$. In Figura \ref{Indici_matrice} è riportato lo schema degli indici che vengono utilizzati per etichettare le variabili.\\
-In questa figura le celle $(i,j)$ bianche, sono quelle effettivamente utilizzate per indicare un arco secondo la convenzione. Il numero all'interno di queste caselle rappresenta invece l'ordine in cui queste variabili vengono inserite nel modello e quindi gli indici associati da CPLEX per accedere alla soluzione.
+In questa figura le celle $(i,j)$ bianche, sono quelle effettivamente utilizzate per indicare un arco secondo la convenzione. Il numero all'interno di queste caselle rappresenta invece l'ordine in cui queste variabili vengono inserite nel modello e quindi gli indici associati da CPLEX per accedere alla soluzione.\\Il modello così strutturato richiede però l'inserimento di un esponenziale numero di vincoli per l'eliminazione dei sub-tour, vengono quindi ora descritti altri modelli che ovvino a questo problema.
 \begin{figure}[h] 
 \begin{center} 
-  % Requires \usepackage{graphicx} 
-  \includegraphics[width=5cm]{Images/indices_matrix}\\ 
+  \includegraphics[scale=0.5]{Images/indices_matrix}\\ 
   \caption{\footnotesize{Indici della matrice}}
   \label{Indici_matrice} 
 \end{center} 
-\end{figure}
-Il modello così strutturato richiede però l'inserimento di un esponenziale numero di vincoli per l'eliminazione dei sub-tour, vengono quindi ora descritti altri modelli che ovvino a questo problema.\\  
+\end{figure}  
 
 \section{Modelli compatti}
 I modelli compatti del Travelling Salesman Problem, sono formulazioni il cui numero di variabili e di vincoli è polinomiale nella taglia dell'istanza. In particolare, in quelle analizzate in seguito, sono entrambi $O(n^2)$, con \textit{n = numero di nodi}.\\
@@ -119,12 +117,11 @@ Quest'ottimizzazione è basata sul fatto che CPLEX salvi alcune soluzioni, otten
 
 \subsection{Formulazione con callback}
 Un possibile miglioramento dell'algoritmo proposto da Benders, in termini di velocità della computazione, è il seguente.\\
-Come precedentemente descritto, come prima cosa CPLEX effettua un preprocessamento in cui semplifica il modello, riducendo il termine noto e accorpando tra loro diverse variabili. Terminata questa operazione inizia ad eseguire la fase di Branch\&Cut. Ogni volta che calcola una nuova soluzione $x^*$, prima di dichiarare se è l'ottimo o di scartarla e proseguire a sviluppare i successivi rami dell'albero decisionale, applica dei tagli e degli algoritmi euristici per aggiornarla(vedi Figura \ref{Albero_decisionale}).
+Come precedentemente descritto, come prima cosa CPLEX effettua un preprocessamento in cui semplifica il modello, riducendo il termine noto e accorpando tra loro diverse variabili. Terminata questa operazione inizia ad eseguire la fase di Branch \& Cut. Ogni volta che calcola una nuova soluzione $x^*$, prima di dichiarare se è l'ottimo o di scartarla e proseguire a sviluppare i successivi rami dell'albero decisionale, applica dei tagli e degli algoritmi euristici per aggiornarla(vedi Figura \ref{Albero_decisionale}).
 \begin{figure}[h] 
 \begin{center} 
-  % Requires \usepackage{graphicx} 
-  \includegraphics[width=10cm]{Images/albero_decisionale}\\ 
-  \caption{\footnotesize{Albero decisionale B\&C}}
+  \includegraphics[scale=0.7]{Images/albero_decisionale}\\ 
+  \caption{\footnotesize{Albero decisionale del Branch and Cut}}
   \label{Albero_decisionale} 
 \end{center} 
 \end{figure}
@@ -134,29 +131,27 @@ Attraverso l'utilizzo delle callbacks è possibile accedere a molti dati interni
 \section{Algoritmi Euristici}
 Gli algoritmi euristici sono progettati per risolvere istanze del problema in tempi significativamente più brevi rispetto agli algoritmi esatti. Di conseguenza, però, al termine della computazione non garantiscono di ottenere una soluzione ottima, ma solo una sua buona approssimazione ammissibile.\\
 Durante la computazione della soluzione CPLEX utilizza diversi algoritmi euristici, grazie alla variazione di alcuni parametri a loro associati è possibile variare la frequenza o il tempo a loro dedicato. 
-\subsection{Metodo Hard Fixing}
+\subsection{Hard Fixing}
 Un primo algoritmo euristico di semplice implementazione si basa sull'impostazione di una deadline da parte dell'utente ed è composto dalle seguenti fasi:
 \begin{enumerate}
 \item{Impostazione di un time limit per la computazione della soluzione;}
 \item{Calcolo della soluzione;}
-\item{Selezione, in maniera randomica, di un sottoinsieme di rami della soluzione ottima. Il numero di questi sarà dato da una percentuale fissata del totale. I rami appartenenti alla selezione vengono fissati di modo tale che, in una successiva computazione del problema, appartengano alla soluzione restituita;}
+\item{Selezione, in maniera randomica, di un sottoinsieme di rami appartenenti alla soluzione ottima (Figura \ref{selezione_rami}). 
+Il numero di questi sarà dato da una percentuale fissata del totale. I rami appartenenti alla selezione vengono fissati di modo tale che, in una successiva computazione del problema, appartengano alla soluzione restituita;}
 \end{enumerate} 
 Questi passaggi vengono eseguiti in maniera ciclica per un numero fissato di iterazioni. In questo modo, ad ogni computazione della soluzione, CPLEX dovrà risolvere un problema più semplice di quello originale, essendo molte variabile del modello già selezionate nella \textbf{fase 3} dell'iterazione precedente.\\
 Il time limit nominato nella \textbf{fase 1} è dato da una frazione della deadline complessiva e dipende dal numero di iterazioni totali che si desidera compiere. Ad ogni computazione la soluzione potrà essere solo migliore o uguale alla precedente (nel caso peggiore).\\
 La percentuale scelta del numero di rami da fissare può variare ad ogni iterazione. Generalmente si cerca di avere una percentuale alta nelle prime iterazione, in cui la soluzione non è ancora stata raffinata, e di abbassarla man mano che si procede con l'algoritmo. In questo modo nelle ultime computazione CPLEX avrà un maggior numero di gradi di libertà per trovare la soluzione che più si avvicina all'ottimo. Poichè i rami selezionati nella \textbf{fase 3} sono scelti in maniera casuale, non si corre il rischio di entrare in un ciclo infinito, in cui viene risolto ogni volta la stessa istanza con le stesse variabili fissate. Particolare attenzione deve essere posta al fatto di lasciare nell'insieme dei rami scelti randomicamente solo quelli selezionate all'iterazione immediatamente precedente.\\
 Nella nostra implementazione abbiamo scelto di iterare l'algoritmo per 6 volte, ognuna con una deadline di 10 minuti, e di utilizzare rispettivamente come percentuale i seguenti valori $\lbrace$ 90, 75, 50, 25, 10, 0 $\rbrace$.\\
-In Figura \ref{selezione_rami} è presente una rappresentazione della \textbf{fase 3}.
+Di seguito viene inoltre riportato lo pseudocodice dell'algoritmo appena descritto.
 \begin{figure}[h] 
 \begin{center} 
-  % Requires \usepackage{graphicx} 
-  \includegraphics[width=8cm]{Images/x_best}\\ 
+  \includegraphics[scale=0.38]{Images/x_best} 
   \caption{\footnotesize{Selezione rami}}
   \label{selezione_rami} 
 \end{center} 
 \end{figure}
-\vspace{12cm}
-\\Di seguito è riportato lo pseudocodice dell'algoritmo appena descritto.\\
-\begin{algorithm}
+\begin{algorithm}[h]
 \caption{Hard Fixing}
 \begin{algorithmic}
 \REQUIRE{$ modello,\;\;deadline,\;\;percentuale$}
@@ -178,3 +173,38 @@ In Figura \ref{selezione_rami} è presente una rappresentazione della \textbf{fa
 \ENDWHILE
 \end{algorithmic}
 \end{algorithm}
+\clearpage
+\subsection{Soft Fixing}
+Il metodo seguente fa utilizzo di vincoli aggiuntivi, detti \textbf{Local Branching} e che ha dato il via alla sviluppo della \textbf{Math-Heuristic}, approccio di programmazione matematica (es. tramite CPLEX) unita all'algoritmica euristica\cite{local_branching}.\\
+L'approccio utilizzato è simile a quello dell'Hard Fixing, ma la scelta delle variabili da imporre a 1 non viene fatta in maniera randomica ma viene lasciata a CPLEX.\\
+Partendo da una soluzione intera ammissibile del TSP $x^H$, viene aggiunto un vincolo sui lati con valore 1 in $x^H$:\\
+$$\underset{e\in E\; : \; {x_e}^{H}=1}\sum{x_e}\;\geq\; 0.9\;n$$
+dove la sommatoria indica il numero di variabili che vengono preservate a 1 rispetto alla soluzione $x^H$ e \textbf{n} indica il numero di archi selezionati, pari al numero di nodi + 1.\\
+In questo caso, il vincolo permetterà a CPLEX di fissare il 90\% dei rami scelti in $x^H$ e avere il 10\% di libertà. Per questo motivo, CPLEX riduce il numero di archi su cui lavorare, in quanto molti nodi hanno già un numero di archi selezionati pari a 2.\\
+Un modo alternativo di scrivere lo stesso vincolo è il seguente:
+$$\underset{e\in E\; : \; {x_e}^{H}=1}\sum{x_e}\;\geq\; n-k$$
+dove k=2,...,20 e rappresenta i gradi di libertà di CPLEX nel raggiungere la nuova soluzione.\\
+Ad ogni iterazione viene aggiunto un nuovo local branching, basato sull'attuale soluzione restituita da CPLEX, e rimosso il vincolo aggiunto nell'iterazione precedente.\\
+L'unico aspetto negativo di questo metodo riguarda un mancato miglioramento della soluzione da parte di CPLEX in seguito alla sua esecuzione con l'aggiunta del vincolo. Non scegliendo in maniera randomico i lati da selezionare della soluzione precedente, se non dovesse esserci alcun miglioramento del costo e quindi cambiamento della soluzione, i lati selezionati da CPLEX  con il nuovo \textbf{local branching}, sarebbero gli stessi di prima. Per superare tale problema, k viene inizializzata a 2 e, nel caso in cui non dovesse migliorare la soluzione, viene incrementata.\\
+Da dati sperimentali, si è appurato come questo metodo aiuti CPLEX a convergere più velocemente alla soluzione ottima e che valori di k superiori a 20 non aiutino a raggiungere risultati migliori.\\
+L'aggiunta di un local-branching permette di analizzare in maniera più semplice e veloce lo spazio delle soluzioni. Normalmente per farlo, vengono enumerati gli elementi di questo spazio, generando un numero molto elevatp di possibli soluzioni, considerando che TSP è un problema NP-hard.\\
+Definita una soluzione intera ammissibile $x^H$ e utilizzando la distanza di Hamming, vengono definite soluzioni $k-opt$ rispetto ad $x^H$, quelle che hanno distanza k da $x^H$ (vedi Figura \ref{opt}).\\
+\begin{figure}[h] 
+\begin{center} 
+  \includegraphics[scale=0.38]{Images/opt}
+  \caption{\footnotesize{Spazio delle soluzioni e distanza di Hamming.}} \label{opt} 
+\end{center} 
+\end{figure}
+Se, invece del local branching, venisse utilizzata l'enumerazione delle soluzioni, si dovrebbero generare per \textbf{k} generico circa $n^k$ soluzioni a distanza k da $x^H$ ed in seguito analizzarle tutte per trovare quella con costo minore e migliore di $x^H$.\\
+L'utilizzo del local branching può essere adottato con anche problemi generici e non solo con TSP. Di seguito viene riportato l'aprroccio da adottare per generare tutte le soluzioni a distanza minore o uguale di R dalla soluzione euristica di partenza $x_H$:
+\begin{align}
+& min \{ c^T x:\;\;Ax=b,\;x\in\{0,1\}^n\} \\ \notag \\
+& \underset{j\in E:{x_j}^H=0}\sum{x_j}\;+ \underset{j\in E:{x_j}^H=1}\sum{1-x_j}=\; \leq R
+\end{align}
+dove \textbf{(3.15)} rappresenta la distanza di Hamming dalla nuova soluzione computata $x$ da $x_H$. L'obiettivo del Soft-fixing è cercare di migliorare il costo della soluzione, guardando quelle più vicine possibili a quella attuale. Nella \textbf{Figura \ref{local_exe}} seguito viene riportato un esmpio di una possibile evoluzione dell'algoritmo nella ricerca dell'ottimo, evindenziandone le soluzioni trovate di volta in volta.
+\begin{figure}[h] 
+\begin{center} 
+  \includegraphics[scale=0.38]{Images/local_exe}
+  \caption{\footnotesize{Esempio di esecuzione dell'algoritmo nello spazio delle soluzioni.}} \label{local_exe} 
+\end{center} 
+\end{figure}

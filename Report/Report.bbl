@@ -1,0 +1,22 @@
+\begin{thebibliography}{1}
+
+\bibitem{concorde}
+\url{http://www.math.uwaterloo.ca/tsp/concorde/index.html}.
+
+\bibitem{cook}
+\url{http://www.math.uwaterloo.ca/tsp/}.
+
+\bibitem{monnalisa}
+\url{http://www.math.uwaterloo.ca/tsp/data/ml/monalisa.html}.
+
+\bibitem{salvagnin_perf}
+E.~D. Dolan and J.J. Mor{\'e}.
+\newblock Benchmarking optimization software with performance profiles.
+\newblock {\em Mathematical Programming}, 91(2):201--213, 2002.
+
+\bibitem{local_branching}
+Lodi Fischetti, M.
+\newblock A. local branching. math. program.
+\newblock {\em Ser. B}, 98:23–47, 2003.
+
+\end{thebibliography}
