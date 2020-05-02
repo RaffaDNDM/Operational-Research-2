@@ -9,7 +9,9 @@ void cplex_solver(tsp_instance* tsp_in)
 	int error;
 	CPXENVptr env = CPXopenCPLEX(&error);
 	CPXLPptr lp = CPXcreateprob(env, &error, "TSP");
-	CPXsetintparam(env, CPX_PARAM_SCRIND, CPX_ON);
+
+	if (tsp_in->verbose > 60)
+		CPXsetintparam(env, CPX_PARAM_SCRIND, CPX_ON);
 
 	int* succ = calloc(tsp_in->num_nodes, sizeof(int));
 	int* comp = calloc(tsp_in->num_nodes, sizeof(int));
@@ -31,7 +33,7 @@ void cplex_solver(tsp_instance* tsp_in)
 			printf("Branch&Cut solver\n\n");
 			bc_solver(env, lp, tsp_in, succ, comp, 0);
 			time_t end = clock();
-			tsp_in->execution_time = ((double)(end - start) / (double)CLOCKS_PER_SEC) * TIME_SCALE;
+			tsp_in->execution_time = ((double)(end - start) / (double)CLOCKS_PER_SEC);
 			break;
 		}
 
@@ -42,7 +44,7 @@ void cplex_solver(tsp_instance* tsp_in)
 			printf("Branch&Cut solver with general callbacks\n\n");
 			bc_solver(env, lp, tsp_in, succ, comp, 1);
 			time_t end = clock();
-			tsp_in->execution_time = ((double)(end - start) / (double)CLOCKS_PER_SEC) * TIME_SCALE;
+			tsp_in->execution_time = ((double)(end - start) / (double)CLOCKS_PER_SEC);
 			break;
 		}
 
@@ -54,7 +56,7 @@ void cplex_solver(tsp_instance* tsp_in)
 			mtz_build_model(env, lp, tsp_in);
 			CPXmipopt(env, lp);
 			time_t end = clock();
-			tsp_in->execution_time = ((double)(end - start) / (double)CLOCKS_PER_SEC) * TIME_SCALE;
+			tsp_in->execution_time = ((double)(end - start) / (double)CLOCKS_PER_SEC);
 			break;
 		}
 
@@ -66,7 +68,7 @@ void cplex_solver(tsp_instance* tsp_in)
 			gg_build_model(env, lp, tsp_in);
 			CPXmipopt(env, lp);
 			time_t end = clock();
-			tsp_in->execution_time = ((double)(end - start) / (double)CLOCKS_PER_SEC) * TIME_SCALE;
+			tsp_in->execution_time = ((double)(end - start) / (double)CLOCKS_PER_SEC);
 			break;
 
 		}
@@ -174,9 +176,6 @@ void cplex_solver(tsp_instance* tsp_in)
 
 void cplex_build_model(tsp_instance* tsp_in, CPXENVptr env, CPXLPptr lp)
 {
-	if (tsp_in->heuristic)
-		CPXsetdblparam(env, CPXPARAM_TimeLimit, (tsp_in->deadline+0.0)/6.0);
-	
 	//Properties of each edge
 	char bin = 'B';
 	char** edge = calloc(sizeof(char*), 1);
@@ -282,6 +281,8 @@ void cplex_define_tour(tsp_instance* tsp_in, double* x, int* succ, int* comp, in
 		for (i = 0; i < tsp_in->num_nodes && degree[i] == 2; i++);
 		assert(i == tsp_in->num_nodes);
 
+		free(degree);
+
 	#endif
 
 	for (i = 0; i < tsp_in->num_nodes; succ[i++] = -1)
@@ -379,31 +380,4 @@ void cplex_plot(tsp_instance* tsp_in, int* succ, int* comp, int* n_comps)
 int compact_xpos(tsp_instance* tsp_in, int i, int j)
 {
 	return i * (tsp_in->num_nodes) + j;
-}
-
-void cplex_change_coeff(tsp_instance* tsp_in, CPXENVptr env, CPXLPptr lp, double* x_best, int percentage)
-{
-	int i = 0;
-	char which_bound = 'L';
-	srand(time(NULL));
-	double lb;
-
-	for (; i < (tsp_in->num_nodes - 1); i++)
-	{
-		int j;
-		for (j = i + 1; j < tsp_in->num_nodes; j++)
-		{
-			int pos = cplex_xpos(tsp_in, i, j);
-			lb = 0.0;
-
-			if (x_best[pos] > 0.5)
-			{
-				int choice = rand() % 100;
-				lb = (choice < percentage) ? 1.0 : 0.0;
-			}
-			//printf("x (%d,%d) lb=%lf\n", i + 1, j + 1, lb);
-			assert(CPXchgbds(env, lp, 1, &pos, &which_bound, &lb) == 0);
-		}
-	}
-	CPXwriteprob(env, lp, LP_FILENAME, NULL);
 }

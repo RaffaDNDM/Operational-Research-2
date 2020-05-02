@@ -73,12 +73,12 @@ int cplex_xpos(tsp_instance* tsp_in, int i, int j);
 
 /*
 	Return the position of the element (i,j) in the matrix
-	of corresponding edges, created from the nodes in the graph
+	of corresponding edges, created from the nodes in the graph,
+	in a compact model
 	\param tsp_in reference to tsp instance structure
 	\param i first index
 	\param j second index
 */
 int compact_xpos(tsp_instance* tsp_in, int i, int j);
 
-void cplex_change_coeff(tsp_instance* tsp_in, CPXENVptr env, CPXLPptr lp, double* x_best, int percentage);
 #endif

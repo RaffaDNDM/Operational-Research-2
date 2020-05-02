@@ -23,7 +23,7 @@ void parse_cmd(char** argv, int argc, tsp_instance* tsp_in);
 void parse_file(tsp_instance* tsp_in);
 
 /**
-	Parser of tsp file
+	Select the algorithms 
 	\param tsp_in reference to tsp instance structure
 	\param alg_string string that defines types of algorithms
 	\param in_main 1 if in cycle, 0 in parser  of command line

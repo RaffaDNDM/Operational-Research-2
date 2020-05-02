@@ -91,9 +91,6 @@ void gg_build_model(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in)
 		}
 	}
 
-
-
-
 	for (h = 0; h < tsp_in->num_nodes; h++)
 	{
 		int lastrow = CPXgetnumrows(env, lp);
@@ -107,8 +104,6 @@ void gg_build_model(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in)
 			assert(CPXchgcoef(env, lp, lastrow, compact_xpos(tsp_in, h, j), 1.0) == 0);
 		}
 	}
-
-
 
 	int num_edges = (tsp_in->num_nodes) * (tsp_in->num_nodes);
 	const_term = tsp_in->num_nodes - 1;

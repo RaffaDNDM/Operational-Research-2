@@ -58,7 +58,18 @@ void parse_cmd(char** argv, int argc, tsp_instance* tsp_in)
 
 		if (strncmp(argv[i], "-v", 2) == 0 || strncmp(argv[i], "-verbose", 8) == 0)
 		{
-			tsp_in->verbose = 100;
+			double verbF = atof(argv[++i]);
+			int verb = (int)verbF;
+
+			//the value inserted by the user must be an integer (n_heu!=0 && heuF==n_heu) 
+			//but also the value must be greater than zero
+			if (!(verb > 0 && verbF == verb))
+			{
+				printf("Not valid verbose value\n");
+				return;
+			}
+			
+			tsp_in->verbose = verb;
 			continue;
 		}
 
@@ -105,7 +116,19 @@ void parse_cmd(char** argv, int argc, tsp_instance* tsp_in)
 
 		if (strncmp(argv[i], "-heu", 4) == 0)
 		{
-			tsp_in->heuristic = 1;
+			double heuF = atof(argv[++i]);
+			int n_heu = (int)heuF;
+
+			//the value inserted by the user must be an integer (n_heu!=0 && heuF==n_heu) 
+			//but also the value must be greater than zero
+			if (!(n_heu > 0 && heuF == n_heu))
+			{
+				printf("Undefined heuristic algorithm\n");
+				return;
+			}
+			assert(n_heu> 0 && n_heu <= 2 );
+
+			tsp_in->heuristic = n_heu;
 			continue;
 		}
 
@@ -126,10 +149,8 @@ void parse_cmd(char** argv, int argc, tsp_instance* tsp_in)
 		{
 			int i_check = strncmp(argv[i], "-i", 2) == 0 || strncmp(argv[i], "-int", 4) == 0;
 			int np_check = strncmp(argv[i], "-noplot", 7) == 0 || strncmp(argv[i], "-np", 3) == 0;
-			int v_check = strncmp(argv[i], "-v", 2) == 0 || strncmp(argv[i], "-verbose", 8) == 0;
-			int h_check = strncmp(argv[i], "-heu", 4) == 0;
 
-			if (i_check || np_check || v_check || h_check)
+			if (i_check || np_check )
 			{
 				printf("%s\n", argv[i]);
 			}
@@ -142,16 +163,16 @@ void parse_cmd(char** argv, int argc, tsp_instance* tsp_in)
 		printf(LINE);
 	}
 
-	if (tsp_in->heuristic)
+	if (tsp_in->heuristic != 0)
 	{
-		if (tsp_in->alg == 4 || tsp_in->alg == 5)
+		if (tsp_in->alg ==1 || tsp_in->alg == 4 || tsp_in->alg == 5)
 		{
 			printf("Not valid algorithm for heuristic option\n");
 			exit(1);
 		}
-		else if (tsp_in->which_alg[3] == 1 || tsp_in->which_alg[4] == 1)
+		else if (tsp_in->which_alg[0] == 1 || tsp_in->which_alg[3] == 1 || tsp_in->which_alg[4] == 1)
 		{
-			printf("The heuristic option will be ignored for algorithms 4 and 5\n");
+			printf("The heuristic option will be ignored for algorithms 1, 4 and 5\n");
 		}
 	}
 }

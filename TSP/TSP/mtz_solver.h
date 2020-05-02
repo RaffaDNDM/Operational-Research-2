@@ -17,7 +17,6 @@ void mtz_build_model(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in);
 	\param x array of the point in the solution
 	\param succ array of the successor of each node
 	\param comp array with the component of each node
-	\param n_comps number of components
 */
 void mtz_define_tour(tsp_instance* tsp_in, double* x, int* succ, int* comp);
 
