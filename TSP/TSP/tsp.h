@@ -67,7 +67,7 @@ typedef struct
 	
 
 	//Output
-	int* sol;
+	double* sol;
 	int bestCostI;
 	double bestCostD;
 	double execution_time;

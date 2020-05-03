@@ -24,12 +24,16 @@ void bc_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ, int*
 
 	tsp_in->num_cols = CPXgetnumcols(env, lp);
 	double* x_best = malloc(sizeof(double) * tsp_in->num_cols);
+	tsp_in->sol = (double*)calloc((size_t)tsp_in->num_cols, sizeof(double));
 	
 	int k = 2;
+	int size_freedom = 10;
 	int freedom[10];
 	for (; k < 11; k++)
 		freedom[k - 2] = k;
 	freedom[k-2] = 20;
+
+	int stop = 0;
 
 	switch (tsp_in->heuristic)
 	{
@@ -40,7 +44,7 @@ void bc_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ, int*
 					CPXsetintparam(env, CPX_PARAM_INTSOLLIM, 1);
 				else if (i == 1)
 				{
-					CPXsetintparam(env, CPX_PARAM_INTSOLLIM, 10000000);
+					CPXsetintparam(env, CPX_PARAM_INTSOLLIM, DEFAULT_SOLLIM_VALUE);
 					CPXsetdblparam(env, CPXPARAM_TimeLimit, (tsp_in->deadline + 0.0) / 6.0);
 				}
 
@@ -58,40 +62,103 @@ void bc_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ, int*
 			double cost;
 			double cost2;
 			double gap;
+			time_t start = 0;
+			time_t end = 0;
+			int max_iterations = 10;
+			int num_iterations = max_iterations;
+			i = 0;
+			
 			k = 0;
-			for (; i < 6 && tsp_in->heuristic; i++)
+			
+			for (;tsp_in->heuristic ; i++)
 			{
 				if (i == 0)
-					CPXsetintparam(env, CPX_PARAM_INTSOLLIM, 1);
-				else if (i == 1)
 				{
-					CPXsetintparam(env, CPX_PARAM_INTSOLLIM, 10000000);
-					CPXsetdblparam(env, CPXPARAM_TimeLimit, (tsp_in->deadline + 0.0) / 6.0);
+					start = clock();
+					CPXsetintparam(env, CPX_PARAM_INTSOLLIM, 1);
+					CPXsetdblparam(env, CPXPARAM_TimeLimit, tsp_in->deadline);
+				}
+				else if (i >= 1)
+				{
+					 if (i == 1)
+						CPXsetintparam(env, CPX_PARAM_INTSOLLIM, DEFAULT_SOLLIM_VALUE);
+
+					double elapsed_time = (double)(end - start) / (double) CLOCKS_PER_SEC;
+					double remainig_time = tsp_in->deadline - elapsed_time;
+					
+					if (remainig_time <= 0)
+					{
+						stop = 1;
+						printf("Finished remaining time\n");
+						//printf("best cost at the moment %lf\n", tsp_in->bestCostD);
+						break;
+					}
+
+					CPXsetdblparam(env, CPXPARAM_TimeLimit, remainig_time );
 				}
 
 				CPXmipopt(env, lp);
-				assert(CPXgetmipx(env, lp, x_best, 0, tsp_in->num_cols - 1) == 0);
+
+				end = clock();
+
+				if (CPXgetmipx(env, lp, x_best, 0, tsp_in->num_cols - 1) == 1)
+				{
+					stop = 1;
+					printf("Error with getmipx\n");
+					break;
+				}
+
 				assert(CPXgetobjval(env, lp, &cost) == 0);
 				assert(CPXgetmiprelgap(env, lp, &gap) == 0);
 				assert(CPXgetbestobjval(env, lp, &cost2) == 0);
 				
-				if (best_cost > cost)
+				if (best_cost - cost > 1e-6)
 				{
 					k = 0;
 					best_cost = cost;
+
+					if (tsp_in->integerDist)
+					{
+						double now_cost;
+						CPXgetbestobjval(env, lp, &now_cost);
+						tsp_in->bestCostI = (int)(now_cost + CAST_PRECISION);
+					}
+					else
+						CPXgetbestobjval(env, lp, &tsp_in->bestCostD);
+
+					//printf("%s New best cost %lf\n%s", LINE, tsp_in->bestCostD, LINE);
+
+					int j = 0;
+					for (; j < tsp_in->num_cols; j++)
+						tsp_in->sol[j] = x_best[j];
+
 					local_branching(tsp_in, env, lp, x_best, freedom[k]);
 				}
 				else
-					local_branching(tsp_in, env, lp, x_best, freedom[++k]);
+				{
+					k++;
 
-				printf("\n\n\n\ncost: %lf best cost2: %lf gap: %lf\n\n\n\n", cost,cost2, gap);
+					if (k == size_freedom)
+					{
+						stop = 1;
+						printf("Finished possibility of freedom\n");
+						break;
+					}
+
+					local_branching(tsp_in, env, lp, x_best, freedom[k]);
+				}
+
+				//printf("\n\n\n\ncost: %lf best cost2: %lf gap: %lf\n\n\n\n", cost,cost2, gap);
 			}
 		}
 		break;
 	}
 	
-	CPXmipopt(env, lp);
-
+	if (!stop)
+	{
+		CPXmipopt(env, lp);
+		assert(CPXgetmipx(env, lp, tsp_in->sol, 0, tsp_in->num_cols - 1) == 0);
+	}
 	free(x_best);
 }
 

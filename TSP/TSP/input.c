@@ -17,7 +17,7 @@ void parse_cmd(char** argv, int argc, tsp_instance* tsp_in)
 	tsp_in->verbose = VERBOSE;
 	tsp_in->size = -1;
 	tsp_in->heuristic = 0;
-
+	
 	int def_deadline = 0;
 
 	strcpy(tsp_in->input, "NULL");

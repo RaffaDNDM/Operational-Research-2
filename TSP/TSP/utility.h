@@ -19,6 +19,8 @@
 
 #define CAST_PRECISION 0.4999999999 //quantity to add to correctly approximate double into int
 
+#define DEFAULT_SOLLIM_VALUE 2147483647 
+
 /**
 	Compute the distance between two nodes
 	(looking to the specified way of computing distances in *tsp_in)
