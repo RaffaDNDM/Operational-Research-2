@@ -13,8 +13,6 @@ void cplex_solver(tsp_instance* tsp_in)
 	tsp_in->bestCostI = -1;
 	tsp_in->bestCostD = -1.0;
 	tsp_in->sol = NULL;
-	//tsp_in->sol = (int*)calloc((size_t)tsp_in->num_cols, sizeof(double));
-
 
 	if (tsp_in->verbose > 60)
 		CPXsetintparam(env, CPX_PARAM_SCRIND, CPX_ON);
@@ -58,11 +56,10 @@ void cplex_solver(tsp_instance* tsp_in)
 		{
 			printf(LINE);
 			printf("MTZ solver\n\n");
-			time_t start = clock();
-			mtz_build_model(env, lp, tsp_in);
-			CPXmipopt(env, lp);
-			time_t end = clock();
-			tsp_in->execution_time = ((double)(end - start) / (double)CLOCKS_PER_SEC);
+			time_t start_time = clock();
+			mtz_solver(env, lp, tsp_in);
+			time_t end_time = clock();
+			tsp_in->execution_time = ((double)(end_time - start_time) / (double)CLOCKS_PER_SEC);
 			break;
 		}
 
@@ -70,82 +67,17 @@ void cplex_solver(tsp_instance* tsp_in)
 		{
 			printf(LINE);
 			printf("GG solver\n\n");
-			time_t start = clock();
-			gg_build_model(env, lp, tsp_in);
-			CPXmipopt(env, lp);
-			time_t end = clock();
-			tsp_in->execution_time = ((double)(end - start) / (double)CLOCKS_PER_SEC);
+			time_t start_time = clock();
+			gg_solver(env, lp, tsp_in);
+			time_t end_time = clock();
+			tsp_in->execution_time = ((double)(end_time - start_time) / (double)CLOCKS_PER_SEC);
 			break;
 
 		}
 	}
-
-	if (tsp_in->integerDist && tsp_in->bestCostI == -1)
-	{
-		double cost;
-		CPXgetbestobjval(env, lp, &cost);
-		tsp_in->bestCostI = (int)(cost + CAST_PRECISION);
-	}
-	else if (!tsp_in->integerDist && tsp_in->bestCostD == -1.0)
-		CPXgetbestobjval(env, lp, &tsp_in->bestCostD);
 	
 	print_cost(tsp_in);
 	printf("Execution time: %lf\n", tsp_in->execution_time);
-
-	//Values of variables in the solution
-	//double* x = calloc(sizeof(double), tsp_in->num_nodes);
-
-	tsp_in->num_cols = CPXgetnumcols(env, lp);
-	if (tsp_in->sol == NULL)
-		tsp_in->sol = (double*)calloc((size_t)tsp_in->num_cols, sizeof(double));
-
-	//switch su quante  variabili prendere per plottare
-
-	switch (tsp_in->alg)
-	{
-		case 1:
-		{
-			//x = (double*)realloc(x, sizeof(double) * tsp_in->num_cols);
-			assert(CPXgetmipx(env, lp, tsp_in->sol, 0, CPXgetnumcols(env, lp) - 1) == 0);
-			break;
-		}
-
-		case 2:; case 3:
-		{
-			//x = (double*) realloc(x, sizeof(double) * CPXgetnumcols(env, lp));
-			//x = (double*)realloc(x, sizeof(double) * tsp_in->num_cols);
-			//int s = CPXgetnumcols(env, lp);
-			//assert(CPXgetmipx(env, lp, x, 0, tsp_in->num_cols - 1) == 0);
-			//x = tsp_in->sol;
-			break;
-		}
-
-		case 4:
-		{
-			int num_edges = (tsp_in->num_nodes) * (tsp_in->num_nodes);
-
-			int start = num_edges;
-			int end = tsp_in->num_cols - 1;
-
-			tsp_in->sol = (double*)realloc(tsp_in->sol, sizeof(double) * tsp_in->num_nodes);
-
-			assert(CPXgetmipx(env, lp, tsp_in->sol, start, end ) == 0);
-			break;
-		}
-
-		case 5:
-		{
-			int num_edges = (tsp_in->num_nodes) * (tsp_in->num_nodes);
-			//x = calloc(sizeof(double), num_edges);
-			tsp_in->sol = (double*)realloc(tsp_in->sol, sizeof(double) * num_edges);
-
-			int start = num_edges;
-			int end = tsp_in->num_cols - 1;
-
-			assert(CPXgetmipx(env, lp, tsp_in->sol, start, end) == 0);
-			break;
-		}
-	}
 
 	int n_comps = 1;
 	if (tsp_in->plot)
@@ -162,17 +94,33 @@ void cplex_solver(tsp_instance* tsp_in)
 
 			case 4:
 			{
+				tsp_in->num_cols = CPXgetnumcols(env, lp);
+				int num_edges = (tsp_in->num_nodes) * (tsp_in->num_nodes);
+				int start_pos = num_edges;
+				int end_pos = tsp_in->num_cols - 1;
+
+				double* x = (double*)malloc(sizeof(double) * tsp_in->num_nodes);
+				assert(CPXgetmipx(env, lp, x, start_pos, end_pos) == 0);
+			
 				succ = calloc(tsp_in->num_nodes, sizeof(int));
 				comp = calloc(tsp_in->num_nodes, sizeof(int));
-				mtz_define_tour(tsp_in, tsp_in->sol, succ, comp);
+				mtz_define_tour(tsp_in, x, succ, comp);
 				break;
 			}
 
 			case 5:
 			{
+				int num_edges = (tsp_in->num_nodes) * (tsp_in->num_nodes);
+				tsp_in->num_cols = CPXgetnumcols(env, lp);
+				double* x = (double*)malloc(sizeof(double) * num_edges);
+
+				int start_pos = num_edges;
+				int end_pos = tsp_in->num_cols - 1;
+				assert(CPXgetmipx(env, lp, x, start_pos, end_pos) == 0);
+
 				succ = calloc(tsp_in->num_nodes, sizeof(int));
 				comp = calloc(tsp_in->num_nodes, sizeof(int));
-				gg_define_tour(tsp_in, tsp_in->sol, succ, comp);
+				gg_define_tour(tsp_in, x, succ, comp);
 				break;
 			}
 		}
@@ -183,7 +131,6 @@ void cplex_solver(tsp_instance* tsp_in)
 		free(comp);
 	}
 
-	//free(x);
 	CPXfreeprob(env, &lp);
 	CPXcloseCPLEX(&env);
 }

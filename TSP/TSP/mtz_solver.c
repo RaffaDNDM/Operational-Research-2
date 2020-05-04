@@ -1,5 +1,25 @@
 #include "mtz_solver.h"
 
+void mtz_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in)
+{
+	mtz_build_model(env, lp, tsp_in);
+	CPXmipopt(env, lp);
+
+	int num_edges = (tsp_in->num_nodes) * (tsp_in->num_nodes);
+	tsp_in->sol = (double*)malloc(sizeof(double) * num_edges);
+
+	assert(CPXgetmipx(env, lp, tsp_in->sol, 0, num_edges - 1) == 0);
+	
+	if (tsp_in->integerDist)
+	{
+		double cost;
+		CPXgetbestobjval(env, lp, &cost);
+		tsp_in->bestCostI = (int)(cost + CAST_PRECISION);
+	}
+	else 
+		CPXgetbestobjval(env, lp, &tsp_in->bestCostD);
+}
+
 void mtz_build_model(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in)
 {
 #ifdef METAHEURISTIC

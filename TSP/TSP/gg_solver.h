@@ -3,6 +3,8 @@
 
 #include "cplex_solver.h"
 
+void gg_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in);
+
 /**
 	CPLEX definition of the model
 	\param env pointer to the ENV structure, used by CPLEX solver

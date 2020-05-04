@@ -23,14 +23,15 @@ void loop_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ, in
 
 	int i = 0;
 	tsp_in->num_cols = CPXgetnumcols(env, lp);
-	double* x = calloc(sizeof(double), tsp_in->num_cols);
+	tsp_in->sol = calloc(sizeof(double), tsp_in->num_cols);
+	//double* x = calloc(sizeof(double), tsp_in->num_cols);
 	int n_comps = 3;
 
 	CPXmipopt(env, lp);
 	end_iter = clock();
 	CPXgetbestobjval(env, lp, &tsp_in->bestCostD);
-	assert(CPXgetmipx(env, lp, x, 0, CPXgetnumcols(env, lp) - 1) == 0);
-	cplex_define_tour(tsp_in, x, succ, comp, &n_comps);
+	assert(CPXgetmipx(env, lp, tsp_in->sol, 0, CPXgetnumcols(env, lp) - 1) == 0);
+	cplex_define_tour(tsp_in, tsp_in->sol, succ, comp, &n_comps);
 	//cplex_plot(tsp_in, succ, comp, &n_comps);
 
 	print_state(env, lp, n_comps, start_iter, end_iter);
@@ -43,8 +44,8 @@ void loop_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ, in
 		CPXmipopt(env, lp);
 		CPXgetbestobjval(env, lp, &tsp_in->bestCostD);
 		end_iter = clock();
-		assert(CPXgetmipx(env, lp, x, 0, CPXgetnumcols(env, lp) - 1) == 0);
-		cplex_define_tour(tsp_in, x, succ, comp, &n_comps);
+		assert(CPXgetmipx(env, lp, tsp_in->sol, 0, CPXgetnumcols(env, lp) - 1) == 0);
+		cplex_define_tour(tsp_in, tsp_in->sol, succ, comp, &n_comps);
 		//cplex_plot(tsp_in, succ, comp, &n_comps);
 		print_state(env, lp, n_comps, start_iter, end_iter);
 
@@ -59,8 +60,8 @@ void loop_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ, in
 		CPXmipopt(env, lp);
 		end_iter = clock();
 		CPXgetbestobjval(env, lp, &tsp_in->bestCostD);
-		assert(CPXgetmipx(env, lp, x, 0, CPXgetnumcols(env, lp) - 1) == 0);
-		cplex_define_tour(tsp_in, x, succ, comp, &n_comps);
+		assert(CPXgetmipx(env, lp, tsp_in->sol, 0, CPXgetnumcols(env, lp) - 1) == 0);
+		cplex_define_tour(tsp_in, tsp_in->sol, succ, comp, &n_comps);
 		print_state(env, lp, n_comps, start_iter, end_iter);
 		//cplex_plot(tsp_in, succ, comp, &n_comps);
 
@@ -72,16 +73,19 @@ void loop_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ, in
 			CPXmipopt(env, lp);
 			end_iter = clock();
 			CPXgetbestobjval(env, lp, &tsp_in->bestCostD);
-			assert(CPXgetmipx(env, lp, x, 0, CPXgetnumcols(env, lp) - 1) == 0);
-			cplex_define_tour(tsp_in, x, succ, comp, &n_comps);
+			assert(CPXgetmipx(env, lp, tsp_in->sol, 0, CPXgetnumcols(env, lp) - 1) == 0);
+			cplex_define_tour(tsp_in, tsp_in->sol, succ, comp, &n_comps);
 			print_state(env, lp, n_comps, start_iter, end_iter);
 			//cplex_plot(tsp_in, succ, comp, &n_comps);
 		}
 	#endif
 
-	free(x);
+	//free(x);
 
 	end = clock();
+
+	if (tsp_in->integerDist)
+		tsp_in->bestCostI = (int)(tsp_in->bestCostD + CAST_PRECISION);
 
 	tsp_in->execution_time = ((double)(end - start) / (double)CLOCKS_PER_SEC) * TIME_SCALE;
 	

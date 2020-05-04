@@ -1,5 +1,25 @@
 ﻿#include "gg_solver.h"
 
+void gg_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in)
+{
+	gg_build_model(env, lp, tsp_in);
+	CPXmipopt(env, lp);
+
+	int num_edges = (tsp_in->num_nodes) * (tsp_in->num_nodes);
+	tsp_in->sol = (double*)malloc(sizeof(double) * num_edges);
+
+	assert(CPXgetmipx(env, lp, tsp_in->sol, 0, num_edges - 1) == 0);
+
+	if (tsp_in->integerDist)
+	{
+		double cost;
+		CPXgetbestobjval(env, lp, &cost);
+		tsp_in->bestCostI = (int)(cost + CAST_PRECISION);
+	}
+	else
+		CPXgetbestobjval(env, lp, &tsp_in->bestCostD);
+}
+
 void gg_build_model(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in)
 {
 #ifdef METAHEURISTIC
