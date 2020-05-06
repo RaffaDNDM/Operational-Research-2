@@ -1,6 +1,7 @@
 #include "tsp.h"
 #include "input.h"
 #include "cplex_solver.h"
+#include "heuristic.h"
 #include <cplex.h>
 
 int main(int argc, char** argv)
@@ -21,6 +22,8 @@ int main(int argc, char** argv)
 		printf("3) %s \n", ALG3);
 		printf("4) %s \n", ALG4);
 		printf("5) %s \n", ALG5);
+		printf("6) %s \n", ALG6);
+		printf("7) %s \n", ALG7);
 		printf(STAR_LINE);
 
 		char s[LINE_SIZE];
@@ -39,18 +42,23 @@ int main(int argc, char** argv)
 void solution(tsp_instance* tsp_in)
 {
 	//tsp_in->sol = (int*)calloc(((size_t)tsp_in->num_nodes) +1, sizeof(int));
-
-	/*
-	printf("Constuction of model and solution: \n");
-	char c=getchar();
-	*/
-
-	cplex_solver(tsp_in);
+	if (tsp_in->alg < 5)
+		cplex_solver(tsp_in);
+	else
+		heuristic_solver(tsp_in);
 }
 
 void set_params_and_solve(tsp_instance* tsp_in)
 {
 	parse_file(tsp_in);
+
+	if (tsp_in->alg > 5)
+	{
+		solution(tsp_in);
+		dealloc_inst(tsp_in);
+
+		return;
+	}
 
 	#ifndef METAHEURISTIC
 		solution(tsp_in);
@@ -113,7 +121,7 @@ void set_params_and_solve(tsp_instance* tsp_in)
 
 void manage_input(tsp_instance* tsp_in)
 {
-	char* name_algs[] = { ALG1, ALG2, ALG3, ALG4, ALG5};
+	char* name_algs[] = { ALG1, ALG2, ALG3, ALG4, ALG5, ALG6, ALG7};
 	FILE* perf_data = NULL;
 
 	if (strncmp(tsp_in->dir, "NULL", 4) != 0)

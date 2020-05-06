@@ -12,7 +12,7 @@
 #define DEADLINE_MAX 7200000
 
 //Number of algoritms implemented
-#define NUM_ALGS 5
+#define NUM_ALGS 7
 
 //#define NUM_COMMANDS 8
 
@@ -32,6 +32,8 @@ as argument in the command line
 #define ALG3 "Branch&CutGeneral"
 #define ALG4 "MTZ"
 #define ALG5 "GG"
+#define ALG6 "Nearest Neighborhood"
+#define ALG7 "Insertion"
 
 //Creation or not of the performance profile
 #define PERF_PROF_ON 1

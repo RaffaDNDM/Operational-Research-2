@@ -24,8 +24,10 @@ void bc_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ, int*
 	int k = 2;
 	int size_freedom = 10;
 	int freedom[10];
+
 	for (; k < 11; k++)
 		freedom[k - 2] = k;
+	
 	freedom[k-2] = 20;
 
 	int stop = 0;
@@ -131,7 +133,10 @@ void bc_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ, int*
 	}
 
 	if (tsp_in->integerDist)
+	{
 		tsp_in->bestCostI = (int)(tsp_in->bestCostD + CAST_PRECISION);
+		tsp_in->bestCostD = 0.0;
+	}
 }
 
 static int CPXPUBLIC sec_callback(CPXCENVptr env, void* cbdata, int wherefrom, void* cbhandle, int* useraction_p)
@@ -180,7 +185,7 @@ int sec_bc_constraint(CPXENVptr env, tsp_instance* tsp_in, double* x_star, void*
 	int n_comps = 3;
 	int* succ = calloc(tsp_in->num_nodes, sizeof(int));
 	int* comp = calloc(tsp_in->num_nodes, sizeof(int));
-	cplex_define_tour(tsp_in, x_star, succ, comp, &n_comps);
+	define_tour(tsp_in, x_star, succ, comp, &n_comps);
 
 	if (n_comps == 1)
 		return 0;
@@ -218,7 +223,7 @@ int sec_bc_constraint(CPXENVptr env, tsp_instance* tsp_in, double* x_star, void*
 						assert((values = (double*)realloc(values, size * sizeof(double))) != NULL);
 					}
 
-					indices[nnz] = cplex_xpos(tsp_in, i, j);
+					indices[nnz] = xpos(tsp_in, i, j);
 					values[nnz] = 1.0;
 					nnz++;
 				}
@@ -249,7 +254,7 @@ int sec_bc_constraint_general(CPXCALLBACKCONTEXTptr context, tsp_instance* tsp_i
 	int n_comps = 3;
 	int* succ = calloc(tsp_in->num_nodes, sizeof(int));
 	int* comp = calloc(tsp_in->num_nodes, sizeof(int));
-	cplex_define_tour(tsp_in, x_star, succ, comp, &n_comps);
+	define_tour(tsp_in, x_star, succ, comp, &n_comps);
 
 	if (n_comps == 1)
 		return 0;
@@ -288,7 +293,7 @@ int sec_bc_constraint_general(CPXCALLBACKCONTEXTptr context, tsp_instance* tsp_i
 						assert((values = (double*)realloc(values, size * sizeof(double))) != NULL);
 					}
 
-					indices[nnz] = cplex_xpos(tsp_in, i, j);
+					indices[nnz] = xpos(tsp_in, i, j);
 					values[nnz] = 1.0;
 					nnz++;
 				}
@@ -340,7 +345,7 @@ void local_branching(tsp_instance* tsp_in, CPXENVptr env, CPXLPptr lp, double* x
 		int j;
 		for (j = i + 1; j < tsp_in->num_nodes && nnz <= tsp_in->num_nodes; j++)
 		{
-			int pos = cplex_xpos(tsp_in, i, j);
+			int pos = xpos(tsp_in, i, j);
 
 			assert(x_best[pos] <= EPS || x_best[pos] >= (1.0 - EPS));
 
@@ -376,7 +381,7 @@ void cplex_change_coeff(tsp_instance* tsp_in, CPXENVptr env, CPXLPptr lp, double
 		int j;
 		for (j = i + 1; j < tsp_in->num_nodes; j++)
 		{
-			int pos = cplex_xpos(tsp_in, i, j);
+			int pos = xpos(tsp_in, i, j);
 			lb = 0.0;
 
 			if (x_best[pos] > 0.5)

@@ -88,7 +88,7 @@ void cplex_solver(tsp_instance* tsp_in)
 			{
 				succ = calloc(tsp_in->num_nodes, sizeof(int));
 				comp = calloc(tsp_in->num_nodes, sizeof(int));
-				cplex_define_tour(tsp_in, tsp_in->sol, succ, comp, &n_comps);
+				define_tour(tsp_in, tsp_in->sol, succ, comp, &n_comps);
 				break;
 			}
 
@@ -125,10 +125,11 @@ void cplex_solver(tsp_instance* tsp_in)
 			}
 		}
 
-		cplex_plot(tsp_in, succ, comp, &n_comps);
+		plot(tsp_in, succ, comp, &n_comps);
 
 		free(succ);
 		free(comp);
+		free(tsp_in->sol);
 	}
 
 	CPXfreeprob(env, &lp);
@@ -170,7 +171,7 @@ void cplex_build_model(tsp_instance* tsp_in, CPXENVptr env, CPXLPptr lp)
 			assert(CPXnewcols(env, lp, 1, &c, &lb, &ub, &bin, edge) == 0);
 			//Check if the index that we use to identify the edge
 			//corresponds to the index that it should have
-			assert(CPXgetnumcols(env, lp) - 1 == cplex_xpos(tsp_in, i, j));
+			assert(CPXgetnumcols(env, lp) - 1 == xpos(tsp_in, i, j));
 		}
 	}
 
@@ -194,7 +195,7 @@ void cplex_build_model(tsp_instance* tsp_in, CPXENVptr env, CPXLPptr lp)
 			if (j == h)
 				continue;
 
-			assert(CPXchgcoef(env, lp, lastrow, cplex_xpos(tsp_in, j, h), 1.0) == 0);
+			assert(CPXchgcoef(env, lp, lastrow, xpos(tsp_in, j, h), 1.0) == 0);
 		}
 	}
 
@@ -229,9 +230,9 @@ void cplex_define_tour(tsp_instance* tsp_in, double* x, int* succ, int* comp, in
 			int j;
 			for (j = i + 1; j < tsp_in->num_nodes; j++)
 			{
-				assert(x[cplex_xpos(tsp_in, i, j)] <= EPS || x[cplex_xpos(tsp_in, i, j)] >= (1.0 - EPS));
+				assert(x[xpos(tsp_in, i, j)] <= EPS || x[xpos(tsp_in, i, j)] >= (1.0 - EPS));
 
-				if (x[cplex_xpos(tsp_in, i, j)] > 0.5)
+				if (x[xpos(tsp_in, i, j)] > 0.5)
 				{
 					degree[i]++;
 					degree[j]++;
@@ -266,7 +267,7 @@ void cplex_define_tour(tsp_instance* tsp_in, double* x, int* succ, int* comp, in
 				if (i == j)
 					continue;
 
-				if (x[cplex_xpos(tsp_in, j, i)] > 0.5 && comp[i] == 0)
+				if (x[xpos(tsp_in, j, i)] > 0.5 && comp[i] == 0)
 				{
 					succ[j] = i;
 					comp[i] = *n_comps;

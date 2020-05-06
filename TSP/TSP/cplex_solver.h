@@ -30,7 +30,7 @@
 
 
 /**
-	CPLEX solver
+	CPLEX solver, call the select algorithm 
 	\param tsp_in reference to tsp instance structure
 */
 void cplex_solver(tsp_instance* tsp_in);
@@ -42,34 +42,6 @@ void cplex_solver(tsp_instance* tsp_in);
 	\param lp pointer to the LP structure, used by CPLEX solver
 */
 void cplex_build_model(tsp_instance* tsp_in, CPXENVptr env, CPXLPptr lp);
-
-/*
-	Define the tour of the non-compact solution
-	\param tsp_in reference to tsp instance structure
-	\param x array of the point in the solution
-	\param succ array of the successor of each node
-	\param comp array with the component of each node
-	\param n_comps number of components
-*/
-void cplex_define_tour(tsp_instance* tsp_in, double* x, int* succ, int* comp, int* n_comps);
-
-/*
-	Plot the CPLEX solution
-	\param tsp_in reference to tsp instance structure
-	\param succ array of the successor of each node
-	\param comp array with the component of each node
-	\param n_comps number of components
-*/
-void cplex_plot(tsp_instance* tsp_in, int* succ, int* comp, int* n_comps);
-
-/*
-	Return the position of the element (i,j) in the matrix
-	of corresponding edges, created from the nodes in the graph
-	\param tsp_in reference to tsp instance structure
-	\param i first index
-	\param j second index
-*/
-int cplex_xpos(tsp_instance* tsp_in, int i, int j);
 
 /*
 	Return the position of the element (i,j) in the matrix

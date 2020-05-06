@@ -191,6 +191,8 @@ void help()
 	printf("3) %s \n", ALG3);
 	printf("4) %s \n", ALG4);
 	printf("5) %s \n", ALG5);
+	printf("6) %s \n", ALG6);
+	printf("7) %s \n", ALG7);
 	printf(STAR_LINE);
 	printf("Insert the max time of the execution\n");
 	printf("-d dead_time\n");
@@ -377,7 +379,7 @@ void dealloc_inst(tsp_instance* tsp_in)
 {
 	free(tsp_in->x_coords);
 	free(tsp_in->y_coords);
-	free(tsp_in->sol);
+	//free(tsp_in->sol);
 	tsp_in->x_coords = NULL;
 	tsp_in->y_coords = NULL;
 	tsp_in->sol = NULL;

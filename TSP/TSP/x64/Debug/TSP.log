@@ -1,3 +1,21 @@
-﻿  cplex_solver.c
-C:\Users\User\github\Operational-Research-2\TSP\TSP\cplex_solver.c(329,8): warning C4013: 'gets' non definita. Verrà considerata come esterna che restituisce un int.
+﻿  bc_solver.c
+C:\Users\User\github\Operational-Research-2\TSP\TSP\bc_solver.c(152,35): warning C4090: 'funzione': qualificatori 'const' differenti
+C:\Users\User\github\Operational-Research-2\TSP\TSP\bc_solver.c(373,18): warning C4244: 'funzione': conversione da 'time_t' a 'unsigned int'. Possibile perdita di dati.
+  cplex_solver.c
+C:\Users\User\github\Operational-Research-2\TSP\TSP\cplex_solver.c(330,8): warning C4013: 'gets' non definita. Verrà considerata come esterna che restituisce un int.
+  gg_solver.c
+  heuristic.c
+  input.c
+C:\Users\User\github\Operational-Research-2\TSP\TSP\input.c(352,1): warning C4267: 'inizializzazione': conversione da 'size_t' a 'int'. Possibile perdita di dati.
+  loop_solver.c
+  mtz_solver.c
+C:\Users\User\github\Operational-Research-2\TSP\TSP\mtz_solver.c(153,6): warning C4101: 'indices2': variabile locale senza riferimenti
+C:\Users\User\github\Operational-Research-2\TSP\TSP\mtz_solver.c(154,9): warning C4101: 'values2': variabile locale senza riferimenti
+  tsp.c
+C:\Users\User\github\Operational-Research-2\TSP\TSP\tsp.c(31,1): warning C4267: 'inizializzazione': conversione da 'size_t' a 'int'. Possibile perdita di dati.
+C:\Users\User\github\Operational-Research-2\TSP\TSP\tsp.c(141,9): warning C4101: 'title': variabile locale senza riferimenti
+  utility.c
+C:\Users\User\github\Operational-Research-2\TSP\TSP\utility.c(154,8): warning C4013: 'gets' non definita. Verrà considerata come esterna che restituisce un int.
+  Generazione del codice in corso...
+  LINK : C:\Users\User\github\Operational-Research-2\TSP\x64\Debug\TSP.exe non trovato o non compilato dall'ultimo collegamento incrementale; verrÓ eseguito il collegamento completo
   TSP.vcxproj -> C:\Users\User\github\Operational-Research-2\TSP\x64\Debug\TSP.exe

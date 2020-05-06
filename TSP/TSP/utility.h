@@ -37,4 +37,32 @@ void dist(int, int, tsp_instance*, void*);
 */
 void print_cost(tsp_instance* tsp_in);
 
+/*
+	Return the position of the element (i,j) in the matrix
+	of corresponding edges, created from the nodes in the graph
+	\param tsp_in reference to tsp instance structure
+	\param i first index
+	\param j second index
+*/
+int xpos(tsp_instance* tsp_in, int i, int j);
+
+/*
+	Define the tour of the non-compact solution
+	\param tsp_in reference to tsp instance structure
+	\param x array of the point in the solution
+	\param succ array of the successor of each node
+	\param comp array with the component of each node
+	\param n_comps number of components
+*/
+void define_tour(tsp_instance* tsp_in, double* x, int* succ, int* comp, int* n_comps);
+
+/*
+	Plot the solution
+	\param tsp_in reference to tsp instance structure
+	\param succ array of the successor of each node
+	\param comp array with the component of each node
+	\param n_comps number of components
+*/
+void plot(tsp_instance* tsp_in, int* succ, int* comp, int* n_comps);
+
 #endif

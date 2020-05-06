@@ -39,6 +39,9 @@
     <ClCompile Include="mtz_solver.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="heuristic.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="tsp.h">
@@ -63,6 +66,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="mtz_solver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="heuristic.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
