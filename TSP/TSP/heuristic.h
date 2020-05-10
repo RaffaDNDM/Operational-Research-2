@@ -6,6 +6,8 @@
 #include <time.h>
 #include <float.h>
 
+#define GRASP 1
+
 /**
 	Heuristic solver, call the select algorithm
 	\param tsp_in reference to tsp instance structure
@@ -24,5 +26,7 @@ void insertion(tsp_instance* tsp_in);
 */
 void nearest_neighborhood(tsp_instance* tsp_in);
 
+void min_cost(tsp_instance* tsp_in, int* nodes, int i, double* min_dist, int* best);
 
+void min_extra_mileage(tsp_instance* tsp_in, int count, int* visited_nodes, int* node1, int* node2, double* costs, int* i_best, int* k_best, double* best_cost_h, double* best_cost);
 #endif
