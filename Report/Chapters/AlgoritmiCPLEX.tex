@@ -128,10 +128,10 @@ Come precedentemente descritto, come prima cosa CPLEX effettua un preprocessamen
 \\Nello sviluppo di ogni ramo l'upper bound sarà dato dagli algoritmi euristici utilizzati, mentre il lower bound dal rilassamento del problema.\\ 
 Per poter velocizzare l'approccio proposto da Benders, è possibile personalizzare questa fase e scegliere quali tagli far applicare a CPLEX. Nel nostro caso, questi vengono utilizzati per eliminare l'eventuale presenza di subtour nella soluzione calcolata. Per fare ciò vengono sfruttate particolari funzioni fornite da CPLEX, dette \textit{callback}. Queste sono state lasciate volutamente vuote dai creatori della libreria, affinché l'utente possa implementarne all'interno il suo specifico codice. In particolare, le funzioni utilizzate sono callback necessarie ad aggiungere lazy constraints al modello e per questo dette \textit{lazy constraints callback}. La callback implementata viene chiamata solo al momento di aggiornare l'incumbent e se necessario aggiunge al modello i vincoli violati. Verrà quindi invocata più frequentemente all'inizio del calcolo della soluzione del problema, e meno nelle iterazioni successive. Questo poichè essendoci in partenza meno vincoli, sarà più facile per la soluzione soddisfarli tutti. A differenza dei \textit{lazy constraints}, con l'utilizzo delle \textit{lazy callback} i vincoli non sono costantemente presenti in un pool, ma vengono generati "al volo" al momento necessario.  Quest'operazione velocizza notevolmente il calcolo della soluzione ottima, in quanto permette a CPLEX di non dover calcolare nuovamente l'albero decisionale dalla radice, ma di proseguirne lo sviluppo aggiungendo nuovi rami. In particolari casi, però, CPLEX può ritenere più conveniente distruggere tutto l'albero decisionale fin'ora calcolato e ricominciare dalla radice. Questo può avvenire in qualunque punto dell'elaborazione della soluzione ottima.\\
 Attraverso l'utilizzo delle callbacks è possibile accedere a molti dati interni all'elaborazione di CPLEX. Particolari procedure vengono quindi automaticamente disattivate, affinché l'utente non possa venirne a conoscenza. Per evitare questo è possibile installare le callbacks con una modalità leggermente diversa, attraverso funzioni dette \textit{general}.
-\section{Algoritmi Euristici}
-Gli algoritmi euristici sono progettati per risolvere istanze del problema in tempi significativamente più brevi rispetto agli algoritmi esatti. Di conseguenza, però, al termine della computazione non garantiscono di ottenere una soluzione ottima, ma solo una sua buona approssimazione ammissibile.\\
+\section{Algoritmi Math-Heuristic}
+Gli algoritmi euristici sono progettati per risolvere istanze del problema in tempi significativamente più brevi rispetto agli algoritmi esatti. Di conseguenza, però, al termine della computazione non garantiscono di ottenere una soluzione ottima, ma solo una sua buona approssimazione ammissibile. Gli algoritmi Math-Heuristic sfruttano l'approccio degli euristici, assieme all'utilizzo di un maggior numero di vincoli nel modello, vincoli basati su procedimenti matematici. L'algoritmo che maggiormente rappresenta questo metodo è il Soft Fixing (vedi sottosezione \ref{soft fixing}). \\
 Durante la computazione della soluzione CPLEX utilizza diversi algoritmi euristici, grazie alla variazione di alcuni parametri a loro associati è possibile variare la frequenza o il tempo a loro dedicato. 
-\subsection{Hard Fixing}
+\subsection{Hard Fixing}\label{hard fixing}
 Un primo algoritmo euristico di semplice implementazione si basa sull'impostazione di una deadline da parte dell'utente ed è composto dalle seguenti fasi:
 \begin{enumerate}
 \item{Impostazione di un time limit per la computazione della soluzione;}
@@ -174,7 +174,7 @@ Di seguito viene inoltre riportato lo pseudocodice dell'algoritmo appena descrit
 \end{algorithmic}
 \end{algorithm}
 \clearpage
-\subsection{Soft Fixing}
+\subsection{Soft Fixing}\label{soft fixing}
 Il metodo seguente fa utilizzo di vincoli aggiuntivi, detti \textbf{Local Branching} e che ha dato il via alla sviluppo della \textbf{Math-Heuristic}, approccio di programmazione matematica (es. tramite CPLEX) unita all'algoritmica euristica\cite{local_branching}.\\
 L'approccio utilizzato è simile a quello dell'Hard Fixing, ma la scelta delle variabili da imporre a 1 non viene fatta in maniera randomica ma viene lasciata a CPLEX.\\
 Partendo da una soluzione intera ammissibile del TSP $x^H$, viene aggiunto un vincolo sui lati con valore 1 in $x^H$:\\
@@ -208,3 +208,20 @@ dove \textbf{(3.15)} rappresenta la distanza di Hamming dalla nuova soluzione co
   \caption{\footnotesize{Esempio di esecuzione dell'algoritmo nello spazio delle soluzioni.}} \label{local_exe} 
 \end{center} 
 \end{figure}
+\subsection{Patching algorithm}
+Negli algoritmi analizzati nei precedenti capitoli può succedere che CPLEX, prima di restituire la soluzione ottima, computi soluzioni con più componenti connesse. Per evitare che vengano scartate senza essere sfruttate   è possibile utilizzare questo semplice algoritmo euristico che si pone l'obbiettivo di convertirle in una soluzione ammissibile.\\
+Date due componenti connesse all'interno della soluzione calcolata, queste vengono unite in una sola grazie all'eliminazione di un ramo ciascuna $\{a, a'\}$ e  $\{b, b'\}$ e alla selezione di altri due rami che fungano da collegamento tra i quattro vertici selezionati ($\{a, b\}$ e $\{a', b'\}$ o $\{a, b'\}$ e $\{a', b\}$) (vedi figura \ref{patching}). 
+\begin{figure}[h] 
+\begin{center} 
+  \includegraphics[scale=0.38]{Images/patching}
+  \caption{\footnotesize{Esempio di patching}} \label{patching} 
+\end{center} 
+\end{figure}
+Per scegliere quale ramo per ogni componente connessa sia più conveniente eliminare e con quale sia più conveniente sostituirlo, è necessario minimizzare la variazione di costo che quest'operazione comporterebbe, cioè scegliere il minimo tra: \\\\
+$min \begin{cases}
+\Delta \;(a,b)\;=c_{ab'} + c_{ba'} - c_{aa'} - c_{bb'}\\ 
+\Delta' \;(a,b)\;=c_{ab} + c_{b'a'} - c_{aa'} - c_{bb'}\\ 
+\end{cases}
+\forall \; a,b \in V : comp(a)\neq comp(b)$
+\\\\L'operazione di fusione di due componenti connesse può essere ripetuta finché la soluzione non diventa ammissibile, approssimativamente dimezzando ad ogni iterazione il numero di componenti presenti. In questo modo, al termine, è possibile restituire una soluzione accettabile ma senza garanzie di essere ottima.\\
+Complessivamente il costo di quest'algoritmo è $O(n^2)$, dove $n$ è il numero di nodi.
