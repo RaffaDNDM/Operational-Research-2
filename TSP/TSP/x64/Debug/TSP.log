@@ -1,4 +1,1 @@
-﻿  heuristic.c
-C:\Users\User\github\Operational-Research-2\TSP\TSP\heuristic.c(202,18): warning C4244: 'funzione': conversione da 'time_t' a 'unsigned int'. Possibile perdita di dati.
-C:\Users\User\github\Operational-Research-2\TSP\TSP\heuristic.c(306,18): warning C4244: 'funzione': conversione da 'time_t' a 'unsigned int'. Possibile perdita di dati.
-  TSP.vcxproj -> C:\Users\User\github\Operational-Research-2\TSP\x64\Debug\TSP.exe
+﻿  TSP.vcxproj -> D:\github\OperationalResearch2\TSP\x64\Debug\TSP.exe
