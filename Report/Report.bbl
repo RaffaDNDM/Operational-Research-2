@@ -19,4 +19,15 @@ Lodi Fischetti, M.
 \newblock A. local branching. math. program.
 \newblock {\em Ser. B}, 98:23–47, 2003.
 
+\bibitem{VNS}
+P.~Hansen, N.~Mladenovic, J.~Brimberg, J.~A.~Moreno Pèrez, M.~Gendreau, and
+  J.~Potvin.
+\newblock Variable neighborhood search.
+\newblock In {\em Handbook of Metaheuristics}, pages 61--86, Londra, 2010.
+  Springer.
+
+\bibitem{Tabu}
+E.~Taillard, A.~Hertz, and D.~de~Werra.
+\newblock A tutorial on tabu search.
+
 \end{thebibliography}

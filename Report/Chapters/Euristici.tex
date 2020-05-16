@@ -1,7 +1,17 @@
 \chapter{Algoritmi euristici}
 In questo capitolo verranno trattati algoritmi euristici che non fanno uso di CPLEX. La necessità di non utilizzare CPLEX si ha per istanze con un numero elevato di nodi (10000-20000 nodi).\\
-Per queste istanze la risoluzione del tableau attraverso CPLEX diventerebbe molto un'operazione molto onerosa per via dell'alto numero di variabili che verrano create e su cui verrà svolro il calcolo.\\
-Attraverso gli algoritmi euristici, viene computata un'approssimazione della soluzione ottima e spesso però può essere sfruttata inizialmente dal risolutore CPLEX. Ad esempio questo può essere aggiunta prima della computazione, utilizzando la funzione \textit{CPXaddmipstarts()}, o ,se già definita, può essere modificata tramite \textit{CPXchgmipstarts()}.
+Per queste istanze la risoluzione del tableau attraverso CPLEX diventerebbe molto un'operazione molto onerosa per via dell'alto numero di variabili che verrano create e su cui verrà svolto il calcolo.\\
+Attraverso gli algoritmi euristici, viene computata un'approssimazione della soluzione ottima e spesso però può essere sfruttata inizialmente dal risolutore CPLEX. Ad esempio questo può essere aggiunta prima della computazione, utilizzando la funzione \textit{CPXaddmipstarts()}, o ,se già definita, può essere modificata tramite \textit{CPXchgmipstarts()}.\\
+Un algoritmo euristico, affinchè funzioni al meglio, deve essere composto da due fasi che si alternino:
+\begin{itemize}
+\item{\textbf{Intensificazione o raffinamento}\\
+In questa fase la soluzione corrente viene migliorata fino al raggiungimento di un ottimo (locale o globale) nello spazio delle soluzioni.
+}
+\item{\textbf{Diversificazione}\\
+Fase in cui la soluzioni viene perturbata con una politica predefinita affinchè si allontani da un ottimo locale nello spazio delle soluzioni.
+}
+\end{itemize}
+
 
 \section{Euristici di costruzione}
 Questa prima tipologia di algoritmi euristici è necessaria per la computazione di una prima soluzione ammissibile del problema.
@@ -50,7 +60,7 @@ Un modo per aggiungere aleatorietà a questo algoritmo può essere quello di sfr
 \begin{center} 
   \includegraphics[scale=0.4]{Images/insertion}\\ 
   \caption{\footnotesize{Esempio dell'applicatione di Heuristic insertion.}}
-  \label{partial_cycle}
+  \label{insertion}
 \end{center}
 \end{figure}
 \section{Algoritmi di raffinamento}
@@ -96,8 +106,11 @@ L'algoritmo di 3 ottimalità è analogo a quello analizzato nella sezione preced
 \end{center}
 \end{figure}
 Rimanendo comunque in quantità costante, l'algoritmo impiega in tutto $O(n^3)$ (con $n$ numero di nodi) per trovare un ottimo locale, essendo $O(n^3)$ il numero di terne di rami esistenti. Su istante con un alto numero di nodi, questo tempo computazione può essere troppo elevato per il calcolo di una soluzione. 
+\section{Meta-euristici}
+Gli algoritmi di raffinamento appena visti si occupano di migliorare il più possibile una soluzione già calcolata attraverso meccanismi di local serch. In questo modo, dopo un determinato numero di iterazioni, viene raggiunto un ottimo locale. Le metodologie che vengono descritte in questa sezione cercano di aggiornare questa soluzione allontanandola dall'ottimo locale e convogliandola in un ottimo globale, se possibile. Possono quindi essere descritti come algoritmi euristici per progettare altri euristici, per definizione non sono quindi in grado di garantire il raggiungimento dell'ottimo globale.\\
+Questi procedimenti sono più generali di quelli descritti fin'ora, applicabili anche ad istanze di problemi diversi e non solo del commesso viaggiatore. 
 \subsection{Multi-starting}
-Un ulteriore miglioramento ad una soluzione trovata con uno degli algoritmi di raffinamento sopra descritti può essere trovato utilizzando la politica multi-starting. Viene applicato l'algoritmo scelto a diverse soluzioni iniziale. In questo modo si raggiungono diverse soluzioni in ottimi locali diversi (come mostrato in Figura \ref{multi_starting})e viene restituita la migliore tra queste. 
+Un primo e intuitivo approccio per allontanarsi da un ottimo locale è quello descritto  dalla politica multi-starting: applicare l'algoritmo di raffinamento scelto a diverse soluzioni iniziali. In questo modo si raggiungono ottimi locali diversi (come mostrato in Figura \ref{multi_starting})e viene restituita la soluzione corrispondente al costo minore. 
 \begin{figure}[h] 
 \begin{center} 
   \includegraphics[scale=0.5]{Images/multistarting}\\ 
@@ -105,3 +118,40 @@ Un ulteriore miglioramento ad una soluzione trovata con uno degli algoritmi di r
   \label{multi_starting}
 \end{center}
 \end{figure}
+Un aspetto negativo di questo approccio, però, è il fatto che ogni volta che viene selezionata una soluzione di partenza diversa si perdono le informazioni ottenute dalla computazione precedente che ha già raggiunto un ottimo locale.
+\subsection{Variable Neighborhood Search \cite{VNS}}
+Una volta ottenuta una soluzione corrispondente ad un ottimo locale nella funzione di costo si può cercare di migliorarla analizzando i suoi intorni di ottimalità di raggio crescente. Questo però non garantisce un effettivo cambiamento della soluzione. Il Variable Neighborhood Search (VNS) è un algoritmo che sfrutta questa ricerca. Nel caso non si verifichi un aggiornamento della soluzione prevede che vengano scelti un certi numero di rami randomici da sostituire con altri non appartenenti alla soluzione, in maniera casuale. In questo modo si impone un aggiornamento con una crescita del costo, nella speranza che nel nuovo intorno selezionato sia possibile trovare una soluzione che si allontani dall'iniziale ottimo locale (Figura \ref{VNS}).\\
+ \begin{figure}[H] 
+\begin{center} 
+  \includegraphics[scale=0.5]{Images/VNS_bianco}\\ 
+  \caption{\footnotesize{Aggiornamento di una soluzione in un minimo locale.}}
+  \label{VNS}
+\end{center}
+\end{figure}
+L'algoritmo termina allo scadere del tempo a disposizione o dopo un determinato numero di iterazione, restituendo la miglior soluzione trovata fino a quel momento.\\
+Utilizzando questo approccio gran parte della soluzione di partenza viene conservata evitando di perdere le informazioni elaborate precedentemente all'utilizzo di VNS.
+\subsection{Tabu search \cite{Tabu}}%inserire nostra implementazione delle mosse vietate
+L'approccio Tabu search fu ideato da Fred W. Glover. Data una soluzione in un ottimo locale dello spazio delle soluzioni, l'idea di Glover permette di aggiornarla anche con una di costo più elevato (generalmente si cerca di minimizzare questo peggioramento). Per evitare che all'iterazione successiva si ritorni nella soluzione di partenza, viene creata una lista di "mosse vietate" , detta Tabu list, che impedisca di raggiungere nuovamente l'ottimo locale. In questo modo la soluzione aumenta di costo per un certo numero di iterazioni, finchè non ricomincia a diminuire per raggiungere un nuovo minimo locale o globale. Nel caso in cui si incontri una soluzione che migliori l'incumbent senza rispettare tutti i vincoli presenti nella Tabu list, l'algoritmo aggiorna ugualmente la soluzione corrente. Questo meccanismo viene detto \textit{Aspiration criterion}.\\ 
+Aumentando costantemente di dimensione la lista Tabu si rischia, ad un certo punto, che non sia più possibile aggiornare la soluzione. Per evitare ciò generalmente viene scelta una capienza massima (detta \textit{tenure}) della lista, una volta raggiunta la lista viene aggiornata rispettando la politica FIFO (first in first out). Per far si che l'algoritmo oscilli tra la fase di diversificazione e quella di intensificazione, la tenure viene fatta variare durante le diverse iterazioni tra due valori (massimo e minimo) (vedi Figura \ref{tenure}). Nelle iterazioni in cui è massima si verifica la diversificazione, in quelle in cui è minima l'intensificazione. Se viene applicata questa scelta implementativa l'algoritmo è chiamato \textit{Reactive Tabu Search}.
+ \begin{figure}[H] 
+\begin{center} 
+  \includegraphics[scale=0.35]{Images/tenure}\\ 
+  \caption{\footnotesize{Variazione della tenure.}}
+  \label{tenure}
+\end{center}
+\end{figure}
+Come per l'algoritmo precedente, il criterio di terminazione è dato dallo scadere del tempo a disposizione o dal raggiungimento del numero massimo di iterazioni scelto, restituendo la miglior soluzione trovata fino a quel momento.\\
+\subsection{Simulated annealing}%citazione? trovare articolo?
+L'algoritmo simulated annealign, come dice il nome, è ispirato dal processo di temperamento dei metalli, in cui il materiale viene raffreddato molto lentamente e in maniera controllata, affinchè raggiunga la configurazione di minima energia. Analogamente, in questo algoritmo viene scelta una funzione (generalmente esponenziale) che descriva la variazione della "temperatura" $T$. Ad ogni iterazione la soluzione corrente può essere aggiornata con una qualsiasi altra interna all'intorno di 2 ottimalità, di costo minore o maggiore, con una probabilità funzione della variazioni di costo e della temperatura attuale, $f(\Delta costo, T)$. Questo implica che non sia necessario scandire tutto l'intorno, ma che sia sufficiente scegliere in maniera randomica 2 rami da sostituire nella soluzione (Figura \ref{simulated_annealing}).
+ \begin{figure}[H] 
+\begin{center} 
+  \includegraphics[scale=0.6]{Images/simulated_anneling_bianco}\\ 
+  \caption{\footnotesize{Esempio di esecuzione dell'algoritmo Simulated Annealing.}}
+  \label{simulated_annealing}
+\end{center}
+\end{figure}
+ Con il procedere delle iterazioni, l'aggiornamento ad un costo peggiore avviene sempre meno frequentemente, fino ad ottenere solo aggiornamenti con soluzioni più vantaggiose. Esiste un teorema secondo il quale se la temperatura varia in maniera estremamente lenta ed è consentito effettuare un numero di iterazioni estremamente elevato, questo algoritmo garantisce di trovare l'ottimo globale. Concretamente queste ipotesi sono molto difficili da realizzare, ma è statisticamente comunque possibile dichiarare che l'approccio del simulated annealing restituisce una buona soluzione.
+\section{Funzione di costo a scalini}
+La funzione obiettivo di un problema può avere, in particolari circostanze, un grafico a scalini, in cui cioè esistano diverse soluzioni dell'istanza con lo stesso costo. In questo caso è consigliabile applicare una politica che utilizzi delle penalità per perturbare la funzione affinché non siano più presenti le zone costanti, che potrebbero causare problemi nell'aggiornamento della soluzione da restituire. Generalmente questa situazione non si verifica con istanze del problema del commesso viaggiatore in cui i costi dipendono dalla distanza euclidea. Nel caso fosse necessario, però, è possibile ammettere che l'algoritmo utilizzato per la risoluzione del problema, restituisca anche soluzioni con più componenti connesse. In questo modo sarebbe possibile scegliere una penalità dipendente dal numero di vincoli violati (ovvero dal numero di subtour presenti) che influenzi il costo della soluzione nel seguente modo:
+$$costo\_totale = costo\_archi + M (num\_subtour -1)$$
+con M variabile molto grande.
