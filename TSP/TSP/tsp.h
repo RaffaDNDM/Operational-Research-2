@@ -66,7 +66,6 @@ typedef struct
 	double eps_gap;
 	int seed;
 	char dir[DIR_SIZE];
-	
 
 	//Output
 	double* sol;

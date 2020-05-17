@@ -5,7 +5,7 @@
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LocalDebuggerCommandArguments>-f tsp_instances/a280.tsp -alg 7 -v 70 </LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>-f tsp_instances/att48.tsp -alg 7 -v 70 </LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
 </Project>

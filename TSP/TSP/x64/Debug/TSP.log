@@ -1,1 +1,8 @@
-﻿  TSP.vcxproj -> D:\github\OperationalResearch2\TSP\x64\Debug\TSP.exe
+﻿  heuristic.c
+D:\github\OperationalResearch2\TSP\TSP\heuristic.c(220,18): warning C4244: 'function': conversion from 'time_t' to 'unsigned int', possible loss of data
+D:\github\OperationalResearch2\TSP\TSP\heuristic.c(323,18): warning C4244: 'function': conversion from 'time_t' to 'unsigned int', possible loss of data
+D:\github\OperationalResearch2\TSP\TSP\heuristic.c(587,33): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
+  utility.c
+D:\github\OperationalResearch2\TSP\TSP\utility.c(154,8): warning C4013: 'gets' undefined; assuming extern returning int
+  Generating Code...
+  TSP.vcxproj -> D:\github\OperationalResearch2\TSP\x64\Debug\TSP.exe

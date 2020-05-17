@@ -17,7 +17,6 @@ void heuristic_solver(tsp_instance* tsp_in)
 		}
 		case 7:
 		{
-
 			printf(LINE);
 			printf("Heuristic insertion solver\n");
 			time_t start = clock();
@@ -33,8 +32,32 @@ void heuristic_solver(tsp_instance* tsp_in)
 
 	int* succ = calloc(tsp_in->num_nodes, sizeof(int));
 	int* comp = calloc(tsp_in->num_nodes, sizeof(int));
-
 	int n_comps = 1;
+	if (tsp_in->plot)
+	{
+		switch (tsp_in->alg)
+		{
+		case 6: case 7:
+		{
+			define_tour(tsp_in, tsp_in->sol, succ, comp, &n_comps);
+			break;
+		}
+		}
+
+		plot(tsp_in, succ, comp, &n_comps);
+
+		free(succ);
+		free(comp);
+	}
+
+	greedy_refinement(tsp_in, 2);
+
+	print_cost(tsp_in);
+	printf("Execution time: %lf\n", tsp_in->execution_time);
+
+	succ = calloc(tsp_in->num_nodes, sizeof(int));
+	comp = calloc(tsp_in->num_nodes, sizeof(int));
+	n_comps = 1;
 	if (tsp_in->plot)
 	{
 		switch (tsp_in->alg)
@@ -59,8 +82,7 @@ void nearest_neighborhood(tsp_instance* tsp_in)
 {
 	int i = 0;
 
-	int* nodes =(int *) calloc(tsp_in->num_nodes, sizeof(int));
-
+	int* visited_nodes =(int *) calloc(tsp_in->num_nodes, sizeof(int));
 	int num_edges = tsp_in->num_nodes * (tsp_in->num_nodes - 1) / 2;
 	tsp_in->sol = (double*)calloc(((size_t)num_edges), sizeof(double));
 
@@ -69,14 +91,14 @@ void nearest_neighborhood(tsp_instance* tsp_in)
 	else
 		tsp_in->bestCostD = 0.0;
 
-	nodes[0] = 1;
+	visited_nodes[0] = 1;
 
 	for (; i < (tsp_in->num_nodes); i++)
 	{
 		double min_dist = DBL_MAX;
 		int best = tsp_in->num_nodes;
 
-		min_cost(tsp_in, nodes, i, &min_dist, &best);
+		min_cost(tsp_in, visited_nodes, i, &min_dist, &best);
 		
 		if (best == tsp_in->num_nodes)
 		{
@@ -84,7 +106,7 @@ void nearest_neighborhood(tsp_instance* tsp_in)
 			{
 				int x;
 				dist(i, 0, tsp_in, &x);
-				min_dist = (double)x;
+				min_dist = (double) x;
 			}
 			else
 				dist(i, 0, tsp_in, &min_dist);
@@ -92,7 +114,9 @@ void nearest_neighborhood(tsp_instance* tsp_in)
 			(tsp_in->sol)[xpos(tsp_in, i, 0)] = 1.0;
 		}
 		else
+		{
 			(tsp_in->sol)[xpos(tsp_in, i, best)] = 1.0;
+		}
 
 		if (tsp_in->integerDist)
 			tsp_in->bestCostI += (int) min_dist;
@@ -157,16 +181,14 @@ void insertion(tsp_instance* tsp_in)
 
 	double best_cost = max_dist * 2;
 	int i_best;
-	int k_best;
 	
-
-	for (; count < tsp_in->num_nodes - 1; count ++)
+	for (; count < tsp_in->num_nodes ; count++)
 	{
 		double best_cost_h = DBL_MAX;
+		int k_best;
 
 		min_extra_mileage(tsp_in, count, visited_nodes, node1, node2, costs, &i_best, &k_best ,&best_cost_h, &best_cost);
 		
-
 		if (tsp_in->integerDist)
 		{
 			int x1, x2;
@@ -182,7 +204,7 @@ void insertion(tsp_instance* tsp_in)
 		}
 	}
 	
-	for (i = 0; i < tsp_in->num_nodes-1; i++)
+	for (i = 0; i < tsp_in->num_nodes; i++)
 		(tsp_in->sol)[xpos(tsp_in, node1[i], node2[i])] = 1.0;
 
 	if (tsp_in->integerDist)
@@ -201,6 +223,7 @@ void min_cost(tsp_instance* tsp_in, int* nodes, int i, double* min_dist, int* be
 	min_pos[0] = tsp_in->num_nodes;
 	min_pos[1] = tsp_in->num_nodes;
 	min_pos[2] = tsp_in->num_nodes;
+
 	int j = 0;
 	for (; j < tsp_in->num_nodes; j++)
 	{
@@ -297,12 +320,11 @@ void min_extra_mileage(tsp_instance* tsp_in, int count, int* visited_nodes, int*
 {
 #ifdef GRASP
 
-	printf("count %d\n", count);
-
 	srand(time(NULL));
 	double min[] = { DBL_MAX , DBL_MAX, DBL_MAX };
 	int min_nodes[3];
 	int min_edges[3];
+
 	int h = 0;
 	for (; h < tsp_in->num_nodes; h++)
 	{
@@ -320,7 +342,7 @@ void min_extra_mileage(tsp_instance* tsp_in, int count, int* visited_nodes, int*
 		double min_h = DBL_MAX;
 		int k_h;
 
-		for (k = 0; k < count && jump == 0; k++)
+		for (k = 0; k < count && !jump; k++)
 		{
 			double c;
 
@@ -382,7 +404,7 @@ void min_extra_mileage(tsp_instance* tsp_in, int count, int* visited_nodes, int*
 	}
 	
 	
-	if (count < tsp_in->num_nodes - 3)
+	if (count < tsp_in->num_nodes - 2)
 	{
 		int n = rand() % 9;
 		if (n < 3)
@@ -430,7 +452,7 @@ void min_extra_mileage(tsp_instance* tsp_in, int count, int* visited_nodes, int*
 		double min_h = DBL_MAX;
 		int k_h;
 
-		for (k = 0; k < count && jump == 0; k++)
+		for (k = 0; k < count && !jump; k++)
 		{
 			double c;
 
@@ -473,4 +495,163 @@ void min_extra_mileage(tsp_instance* tsp_in, int count, int* visited_nodes, int*
 	node2[(*k_best)] = (*i_best);
 	node1[count] = (*i_best);
 	node2[count] = temp;
+}
+
+void greedy_refinement(tsp_instance* tsp_in, int opt_num)
+{
+	int* succ = calloc(tsp_in->num_nodes, sizeof(int));
+	int* comp = calloc(tsp_in->num_nodes, sizeof(int));
+
+	int n_comps = 1;
+	define_tour(tsp_in, tsp_in->sol, succ, comp, &n_comps);
+
+	int i = 0;
+
+	for (; i < tsp_in->num_nodes; i++)
+	{
+		double cost_i_k; //cost [i, succ[i]]
+		if (tsp_in->integerDist)
+		{
+			int x;
+			dist(i, succ[i], tsp_in, &x);
+			cost_i_k = (double)(x);
+		}
+		else
+		{
+			dist(i, succ[i], tsp_in, &cost_i_k);
+		}
+
+		int j = 0;
+		for (; j < tsp_in->num_nodes; j++)
+		{
+			if (j!=i && j!=succ[i] && succ[j]!=i && succ[j]!=succ[i])
+			{
+				double cost_j_h; //cost[i, succ[i]]
+				double cost_i_j;
+				double cost_k_h;
+
+				if (tsp_in->integerDist)
+				{
+					int x1, x2, x3;
+					dist(j, succ[j], tsp_in, &x1);
+					dist(i, j, tsp_in, &x2);
+					dist(succ[i], succ[j], tsp_in, &x3);
+					cost_j_h = (double) x1;
+					cost_i_j = (double) x2;
+					cost_k_h = (double) x3;
+				}
+				else
+				{
+					dist(j, succ[j], tsp_in, &cost_j_h);
+					dist(i, j, tsp_in, &cost_i_j);
+					dist(succ[i], succ[j], tsp_in, &cost_k_h);
+				}
+
+				double delta = cost_i_j + cost_k_h - cost_i_k - cost_j_h;
+				int problem = 0;
+
+				if (delta < 0.0)
+				{
+					if (i == 106 || succ[i] == 106 || j == 106 || succ[j] == 106)
+					{
+						problem = 1;
+						int* succ1 = calloc(tsp_in->num_nodes, sizeof(int));
+						int* comp1 = calloc(tsp_in->num_nodes, sizeof(int));
+
+						int n_comps = 1;
+						if (tsp_in->plot)
+						{
+							switch (tsp_in->alg)
+							{
+								case 6: case 7:
+								{
+									define_tour(tsp_in, tsp_in->sol, succ1, comp1, &n_comps);
+									break;
+								}
+							}
+
+							plot(tsp_in, succ1, comp1, &n_comps);
+
+							free(succ1);
+							free(comp1);
+						}
+						printf("old:[%d, %d][%d,%d]  ========> new:[%d,%d] [%d,%d]\n", i, succ[i], j, succ[j], i, j, succ[i], succ[j]);
+					}
+
+					tsp_in->sol[xpos(tsp_in, i, j)] = 1.0;
+					tsp_in->sol[xpos(tsp_in, succ[i], succ[j])] = 1.0;
+					tsp_in->sol[xpos(tsp_in, i, succ[i])] = 0.0;
+					tsp_in->sol[xpos(tsp_in, j, succ[j])] = 0.0;
+					
+					if (tsp_in->integerDist)
+						tsp_in->bestCostI += delta;
+					else
+						tsp_in->bestCostD += delta;
+
+
+					int k = succ[i];
+					int next = succ[i];
+
+					int count = 0;
+					int* orientation = (int*) calloc((size_t) tsp_in->num_nodes, sizeof(int));
+
+					while (next != j)
+					{
+						orientation[count++] = next;
+						next = succ[next];
+					}
+
+					next = succ[k];
+					int next_count=0;
+
+					while (next != j)
+					{
+						int temp = succ[next];
+						succ[next] = orientation[next_count++];
+						next = temp;
+					}
+
+					succ[i] = j;
+					succ[k] = succ[j];
+					succ[j] = orientation[count - 1];
+				
+					if(problem)
+					{
+						int* succ1 = calloc(tsp_in->num_nodes, sizeof(int));
+						int* comp1 = calloc(tsp_in->num_nodes, sizeof(int));
+
+						int n_comps = 1;
+						if (tsp_in->plot)
+						{
+							switch (tsp_in->alg)
+							{
+							case 6: case 7:
+							{
+								define_tour(tsp_in, tsp_in->sol, succ1, comp1, &n_comps);
+								break;
+							}
+							}
+
+							plot(tsp_in, succ1, comp1, &n_comps);
+
+							free(succ1);
+							free(comp1);
+						}
+
+						problem = 0;
+					}
+					
+					break;
+				}
+			}
+		}
+	}
+
+	/*
+	i = 0;
+	for (; i < tsp_in->num_nodes; i++)
+	{
+		printf("[%d,%d]\n", i, succ[i]);
+	}
+	*/
 }

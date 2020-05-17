@@ -155,7 +155,7 @@ void plot(tsp_instance* tsp_in, int* succ, int* comp, int* n_comps)
 			pipe = _popen(GNUPLOT_EXE, "w");
 			continue;
 		}
-
+		
 		fprintf(pipe, "%s ", line);
 	}
 
