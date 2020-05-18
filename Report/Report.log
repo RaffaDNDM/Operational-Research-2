@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7250 64-bit) (preloaded format=pdflatex 2020.1.8)  16 MAY 2020 10:22
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7250 64-bit) (preloaded format=pdflatex 2020.1.8)  18 MAY 2020 08:51
 entering extended mode
 **./Report.tex
 (Report.tex
@@ -1181,11 +1181,11 @@ File: Images/local_exe.png Graphic file (type png)
 Package pdftex.def Info: Images/local_exe.png  used on input line 207.
 (pdftex.def)             Requested size: 368.07895pt x 244.11453pt.
  [17 <./Images/opt.png>]
-<Images/patching.png, id=459, 616.3025pt x 425.59pt>
+<Images/patching.png, id=459, 761.84625pt x 496.85625pt>
 File: Images/patching.png Graphic file (type png)
 <use Images/patching.png>
 Package pdftex.def Info: Images/patching.png  used on input line 216.
-(pdftex.def)             Requested size: 234.19737pt x 161.72588pt.
+(pdftex.def)             Requested size: 289.50458pt x 188.80733pt.
 ) (Chapters/Euristici.tex
 Underfull \hbox (badness 10000) in paragraph at lines 212--1
 
@@ -1231,16 +1231,16 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 [23]
-<Images/triangle_property.png, id=504, 763.85374pt x 148.555pt>
+<Images/triangle_property.png, id=504, 730.73pt x 328.22626pt>
 File: Images/triangle_property.png Graphic file (type png)
 <use Images/triangle_property.png>
 Package pdftex.def Info: Images/triangle_property.png  used on input line 72.
-(pdftex.def)             Requested size: 305.53607pt x 59.42093pt.
+(pdftex.def)             Requested size: 292.28682pt x 131.28816pt.
 <Images/switch.png, id=505, 625.33624pt x 455.7025pt>
 File: Images/switch.png Graphic file (type png)
 <use Images/switch.png>
 Package pdftex.def Info: Images/switch.png  used on input line 81.
-(pdftex.def)             Requested size: 187.60231pt x 136.71179pt.
+(pdftex.def)             Requested size: 312.66736pt x 227.85068pt.
 
 Underfull \hbox (badness 10000) in paragraph at lines 69--87
 
@@ -1270,19 +1270,21 @@ Package pdftex.def Info: Images/three_exchange.png  used on input line 103.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[25 <./Images/insertion.png> <./Images/triangle_property.png>] [26 <./Images/sw
-itch.png> <./Images/two_optimality.png>]
-<Images/multistarting.png, id=535, 546.04pt x 331.2375pt>
+[25 <./Images/insertion.png>]
+<Images/multistarting.png, id=528, 546.04pt x 331.2375pt>
 File: Images/multistarting.png Graphic file (type png)
 <use Images/multistarting.png>
 Package pdftex.def Info: Images/multistarting.png  used on input line 116.
 (pdftex.def)             Requested size: 273.01933pt x 165.61833pt.
 
 
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 (hyperref)                removing `\@ifnextchar' on input line 122.
 
-<Images/VNS_bianco.png, id=538, 526.96875pt x 292.09125pt>
+<Images/VNS_bianco.png, id=531, 526.96875pt x 292.09125pt>
 File: Images/VNS_bianco.png Graphic file (type png)
 <use Images/VNS_bianco.png>
 Package pdftex.def Info: Images/VNS_bianco.png  used on input line 126.
@@ -1292,29 +1294,33 @@ Underfull \hbox (badness 10000) in paragraph at lines 123--130
 
  []
 
-[27 <./Images/three_exchange.png> <./Images/multistarting.png>]
+[26 <./Images/triangle_property.png>] [27 <./Images/switch.png> <./Images/VNS_b
+ianco.png>]
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 (hyperref)                removing `\@ifnextchar' on input line 133.
 
-<Images/tenure.png, id=549, 774.895pt x 200.75pt>
+<Images/tenure.png, id=548, 774.895pt x 200.75pt>
 File: Images/tenure.png Graphic file (type png)
 <use Images/tenure.png>
 Package pdftex.def Info: Images/tenure.png  used on input line 138.
 (pdftex.def)             Requested size: 271.21732pt x 70.26353pt.
-[28 <./Images/VNS_bianco.png>]
+[28 <./Images/two_optimality.png> <./Images/three_exchange.png>]
 Underfull \hbox (badness 10000) in paragraph at lines 143--144
 
  []
 
-<Images/simulated_anneling_bianco.png, id=557, 545.78906pt x 268.00125pt>
+<Images/simulated_anneling_bianco.png, id=556, 545.78906pt x 268.00125pt>
 File: Images/simulated_anneling_bianco.png Graphic file (type png)
 <use Images/simulated_anneling_bianco.png>
 Package pdftex.def Info: Images/simulated_anneling_bianco.png  used on input li
 ne 148.
 (pdftex.def)             Requested size: 327.47595pt x 160.80197pt.
-[29 <./Images/tenure.png>] [30 <./Images/simulated_anneling_bianco.png>])
-(Chapters/Performance.tex [31] [32
+[29 <./Images/multistarting.png> <./Images/tenure.png>]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [30 <./Images/simulated_anneling_bianco.png>]) (Chapters/Performance.tex [31] 
+[32
 
 ]
 Capitolo 5.
@@ -1685,8 +1691,8 @@ LaTeX Warning: There were multiply-defined labels.
  ) 
 Here is how much of TeX's memory you used:
  26108 strings out of 492484
- 475606 string characters out of 3122055
- 733863 words of memory out of 3000000
+ 475122 string characters out of 3122055
+ 733866 words of memory out of 3000000
  29723 multiletter control sequences out of 15000+200000
  558170 words of font info for 81 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1725,7 +1731,7 @@ c/amsfonts/cm/cmr8.pfb><C:/Users/User/AppData/Local/Programs/MiKTeX 2.9/fonts/t
 ype1/public/amsfonts/cm/cmsy10.pfb><C:/Users/User/AppData/Local/Programs/MiKTeX
  2.9/fonts/type1/public/amsfonts/cm/cmsy6.pfb><C:/Users/User/AppData/Local/Prog
 rams/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.pfb>
-Output written on Report.pdf (63 pages, 1054491 bytes).
+Output written on Report.pdf (63 pages, 1084684 bytes).
 PDF statistics:
  1660 PDF objects out of 1728 (max. 8388607)
  349 named destinations out of 1000 (max. 500000)

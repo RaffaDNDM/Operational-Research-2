@@ -22,12 +22,12 @@
 \contentsline {section}{\numberline {4.2}Algoritmi di raffinamento}{23}{section.4.2}%
 \contentsline {subsection}{\numberline {4.2.1}Algoritmo di 2 ottimalità}{24}{subsection.4.2.1}%
 \contentsline {subsection}{\numberline {4.2.2}Algoritmo di 3 ottimalità}{25}{subsection.4.2.2}%
-\contentsline {section}{\numberline {4.3}Meta-euristici}{26}{section.4.3}%
-\contentsline {subsection}{\numberline {4.3.1}Multi-starting}{27}{subsection.4.3.1}%
-\contentsline {subsection}{\numberline {4.3.2}Variable Neighborhood Search \cite {VNS}}{28}{subsection.4.3.2}%
+\contentsline {section}{\numberline {4.3}Meta-euristici}{25}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Multi-starting}{26}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Variable Neighborhood Search \cite {VNS}}{26}{subsection.4.3.2}%
 \contentsline {subsection}{\numberline {4.3.3}Tabu search \cite {Tabu}}{28}{subsection.4.3.3}%
-\contentsline {subsection}{\numberline {4.3.4}Simulated annealing}{29}{subsection.4.3.4}%
-\contentsline {section}{\numberline {4.4}Funzione di costo a scalini}{30}{section.4.4}%
+\contentsline {subsection}{\numberline {4.3.4}Simulated annealing}{30}{subsection.4.3.4}%
+\contentsline {section}{\numberline {4.4}Funzione di costo a scalini}{31}{section.4.4}%
 \contentsline {chapter}{\numberline {5}Performance}{33}{chapter.5}%
 \contentsline {section}{\numberline {5.1}Performance variabilty}{33}{section.5.1}%
 \contentsline {section}{\numberline {5.2}Analisi tabulare}{34}{section.5.2}%
