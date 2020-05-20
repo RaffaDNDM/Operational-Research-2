@@ -498,7 +498,11 @@ void min_extra_mileage(tsp_instance* tsp_in, int count, int* visited_nodes, int*
 	node2[count] = temp;
 }
 
-void greedy_refinement(tsp_instance* tsp_in, int* visited_nodes)
+//visited_nodes controllare che non venga sovrascritto in maniera sbagliata
+void greedy_refinement(tsp_instance* tsp_in, int* visited_nodes) //, double &cost) aggiungere costo soluzione attuale (ottimo locale)
+//e se il costo computato dal refinement per la
+//nuova soluzione è diverso rispetto a cost e maggiore rispetto a tsp_in->cost, allore param cost = questo costo
+//altrimenti (se diverso rispetto a cost e miore rispetto a tsp_in->cost) allora param cost = tsp_in-> cost = questo costo
 {
 	int* succ = calloc(tsp_in->num_nodes, sizeof(int));
 	int* comp = calloc(tsp_in->num_nodes, sizeof(int));
@@ -648,6 +652,8 @@ void greedy_refinement(tsp_instance* tsp_in, int* visited_nodes)
 		printf("count: %d\n", visited_nodes[count - 1]);
 	} 
 	while (node != begin);
+
+	//se la soluzione è migliorata, rispetto a quella in input, modificala
 }
 
 void vns(tsp_instance* tsp_in, int* visited_nodes)
