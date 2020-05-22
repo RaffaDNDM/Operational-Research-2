@@ -1,6 +1,6 @@
 ﻿  heuristic.c
-D:\github\OperationalResearch2\TSP\TSP\heuristic.c(221,18): warning C4244: 'function': conversion from 'time_t' to 'unsigned int', possible loss of data
-D:\github\OperationalResearch2\TSP\TSP\heuristic.c(324,18): warning C4244: 'function': conversion from 'time_t' to 'unsigned int', possible loss of data
-D:\github\OperationalResearch2\TSP\TSP\heuristic.c(588,33): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
-D:\github\OperationalResearch2\TSP\TSP\heuristic.c(677,18): warning C4244: 'function': conversion from 'time_t' to 'unsigned int', possible loss of data
-  TSP.vcxproj -> D:\github\OperationalResearch2\TSP\x64\Debug\TSP.exe
+C:\Users\User\github\Operational-Research-2\TSP\TSP\heuristic.c(228,18): warning C4244: 'funzione': conversione da 'time_t' a 'unsigned int'. Possibile perdita di dati.
+C:\Users\User\github\Operational-Research-2\TSP\TSP\heuristic.c(336,18): warning C4244: 'funzione': conversione da 'time_t' a 'unsigned int'. Possibile perdita di dati.
+C:\Users\User\github\Operational-Research-2\TSP\TSP\heuristic.c(580,33): warning C4244: '+=': conversione da 'double' a 'int'. Possibile perdita di dati.
+C:\Users\User\github\Operational-Research-2\TSP\TSP\heuristic.c(674,18): warning C4244: 'funzione': conversione da 'time_t' a 'unsigned int'. Possibile perdita di dati.
+  TSP.vcxproj -> C:\Users\User\github\Operational-Research-2\TSP\x64\Debug\TSP.exe

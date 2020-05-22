@@ -33,4 +33,6 @@ void min_extra_mileage(tsp_instance* tsp_in, int count, int* visited_nodes, int*
 void greedy_refinement(tsp_instance* tsp_in, int* visited_nodes);
 
 void vns(tsp_instance* tsp_in, int* visited_nodes);
+
+void update_solution(tsp_instance* tsp_in, int* visited_nodes);
 #endif
