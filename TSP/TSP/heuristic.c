@@ -590,7 +590,7 @@ void greedy_refinement(tsp_instance* tsp_in, int* visited_nodes, double* cost) /
 	int* succ = calloc(tsp_in->num_nodes, sizeof(int));
 	succ_construction(visited_nodes, succ, tsp_in->num_nodes);
 
-	double check_cost=0.0;
+	double check_cost;
 
 	do
 	{
@@ -598,7 +598,7 @@ void greedy_refinement(tsp_instance* tsp_in, int* visited_nodes, double* cost) /
 		int i = 0;
 		for (; i < tsp_in->num_nodes; i++)
 		{
-			double cost_i_k = 0.0; //cost [i, succ[i]]
+			double cost_i_k; //cost [i, succ[i]]
 			if (tsp_in->integerDist)
 			{
 				int x;
@@ -615,9 +615,9 @@ void greedy_refinement(tsp_instance* tsp_in, int* visited_nodes, double* cost) /
 			{
 				if (j != i && j != succ[i] && succ[j] != i && succ[j] != succ[i])
 				{
-					double cost_j_h = 0.0; //cost[i, succ[i]]
-					double cost_i_j = 0.0;
-					double cost_k_h = 0.0;
+					double cost_j_h; //cost[i, succ[i]]
+					double cost_i_j;
+					double cost_k_h;
 
 					if (tsp_in->integerDist)
 					{
