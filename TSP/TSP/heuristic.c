@@ -31,12 +31,12 @@ void heuristic_solver(tsp_instance* tsp_in)
 		}
 	}
 	
-	update_solution(tsp_in, visited_nodes);
+	update_solution(visited_nodes, tsp_in->sol, tsp_in->num_nodes);
 	print_cost(tsp_in);
 	printf("Execution time: %lf\n", tsp_in->execution_time);
 
-	int* succ = calloc(tsp_in->num_nodes, sizeof(int));
-	int* comp = calloc(tsp_in->num_nodes, sizeof(int));
+	int* succ =(int *) calloc(tsp_in->num_nodes, sizeof(int));
+	int* comp =(int *) calloc(tsp_in->num_nodes, sizeof(int));
 	int n_comps = 1;
 	if (tsp_in->plot)
 	{
@@ -44,7 +44,11 @@ void heuristic_solver(tsp_instance* tsp_in)
 		{
 		case 6: case 7:
 		{
-			define_tour(tsp_in, tsp_in->sol, succ, comp, &n_comps);
+			//define_tour(tsp_in, tsp_in->sol, succ, comp, &n_comps);
+			succ_construction(visited_nodes, succ, tsp_in->num_nodes);
+			int k;
+			for (k = 0; k < tsp_in->num_nodes; k++)
+				comp[k] = 1;
 			break;
 		}
 		}
@@ -56,8 +60,9 @@ void heuristic_solver(tsp_instance* tsp_in)
 	}
 
 	//define_tour(tsp_in, tsp_in->sol, succ, comp, &n_comps);
-	greedy_refinement(tsp_in, visited_nodes);//passare succ
-	update_solution(tsp_in, visited_nodes);
+	double cost;
+	greedy_refinement(tsp_in, visited_nodes, &cost);
+	update_solution(visited_nodes, tsp_in->sol, tsp_in->num_nodes);//solo se soluzione migliorata
 
 	print_cost(tsp_in);
 	printf("Execution time: %lf\n", tsp_in->execution_time);
@@ -98,7 +103,7 @@ void nearest_neighborhood(tsp_instance* tsp_in, int* visited_nodes)
 	else
 		tsp_in->bestCostD = 0.0;
 
-	//visited_nodes[0] = 1;
+	visited_nodes[0] = 0;
 	nodes[0] = 1;
 	int count = 1;
 
@@ -119,6 +124,8 @@ void nearest_neighborhood(tsp_instance* tsp_in, int* visited_nodes)
 			}
 			else
 				dist(i, 0, tsp_in, &min_dist);
+
+			printf("count = %d\n", count);
 			
 		}
 		else
@@ -188,6 +195,12 @@ void insertion(tsp_instance* tsp_in, int* visited_nodes)
 	costs[0] = costs[1] = max_dist;
 
 	double best_cost = max_dist * 2;
+
+	if (tsp_in->integerDist)
+		tsp_in->bestCostI = (int)(best_cost + CAST_PRECISION);
+	else
+		tsp_in->bestCostD = best_cost;
+
 	int i_best;
 	
 	for (; count < tsp_in->num_nodes ; count++)
@@ -278,13 +291,23 @@ void min_cost(tsp_instance* tsp_in, int* nodes, int i, double* min_dist, int* be
 
 	}
 
-	int n = rand() % 8;
-	if (n < 3)
+	
+	int max = 0;
+	if (min[1] == DBL_MAX)
+		max = 3;
+	else if (min[2] == DBL_MAX)
+		max = 6;
+	else
+		max = 9;
+
+	int n = rand() % max;
+
+	if (n < 3 )
 	{
 		*min_dist = min[0];
 		*best = min_pos[0];
 	}
-	else if (n < 6)
+	else if (n < 6 )
 	{
 		*min_dist = min[1];
 		*best = min_pos[1];
@@ -325,7 +348,8 @@ void min_cost(tsp_instance* tsp_in, int* nodes, int i, double* min_dist, int* be
 	}
 	#endif
 
-	nodes[*best] = 1;
+	if(*best != tsp_in->num_nodes)
+		nodes[*best] = 1;
 
 }
 
@@ -511,16 +535,22 @@ void min_extra_mileage(tsp_instance* tsp_in, int count, int* visited_nodes, int*
 }
 
 //visited_nodes controllare che non venga sovrascritto in maniera sbagliata
-void greedy_refinement(tsp_instance* tsp_in, int* visited_nodes) //, double &cost) aggiungere costo soluzione attuale (ottimo locale)
+void greedy_refinement(tsp_instance* tsp_in, int* visited_nodes, double* cost) //aggiungere costo soluzione attuale (ottimo locale)
 //e se il costo computato dal refinement per la
 //nuova soluzione è diverso rispetto a cost e maggiore rispetto a tsp_in->cost, allore param cost = questo costo
-//altrimenti (se diverso rispetto a cost e miore rispetto a tsp_in->cost) allora param cost = tsp_in-> cost = questo costo
+//altrimenti (se diverso rispetto a cost e minore rispetto a tsp_in->cost) allora param cost = tsp_in-> cost = questo costo
 {
 	int* succ = calloc(tsp_in->num_nodes, sizeof(int));
-	int* comp = calloc(tsp_in->num_nodes, sizeof(int));
 
-	int n_comps = 1;
-	define_tour(tsp_in, tsp_in->sol, succ, comp, &n_comps);
+	//int n_comps = 1;
+
+	//define_tour(tsp_in, tsp_in->sol, succ, comp, &n_comps);//sistemare, da visited_nodes a succ
+	/*int h = 0;
+	for (; h < tsp_in->num_nodes; h++)
+		printf("visited_nodes[%d] = %d\n", h, visited_nodes[h]);
+	printf("%s", LINE);
+	*/
+	succ_construction(visited_nodes, succ, tsp_in->num_nodes);
 
 	int i = 0;
 
@@ -575,6 +605,7 @@ void greedy_refinement(tsp_instance* tsp_in, int* visited_nodes) //, double &cos
 					tsp_in->sol[xpos(tsp_in, i, succ[i])] = 0.0;
 					tsp_in->sol[xpos(tsp_in, j, succ[j])] = 0.0;
 					*/
+
 
 					if (tsp_in->integerDist)
 						tsp_in->bestCostI += delta;
@@ -660,8 +691,8 @@ void greedy_refinement(tsp_instance* tsp_in, int* visited_nodes) //, double &cos
 	{
 		node = succ[i];
 		i = node;
-		visited_nodes[++count] = node;
-		printf("count: %d\n", visited_nodes[count - 1]);
+		visited_nodes[++count] = node;  //inserirlo nell'algoritmo
+		printf("count: %d\n", visited_nodes[count - 1]);  
 	} 
 	while (node != begin);
 
@@ -729,14 +760,23 @@ void vns(tsp_instance* tsp_in, int* visited_nodes)
 	//scandire visited nodes e aggiornare tsp_in->sol
 }
 
-void update_solution(tsp_instance* tsp_in, int* visited_nodes)//necessario aver già allocato tsp_in->sol
+void update_solution(int* visited_nodes, double* sol, int num_nodes)//necessario aver già allocato sol , un vettore di double generico
+{
+	int num_edges = num_nodes * (num_nodes - 1) / 2;
+
+	int i;
+	for (i = 0; i < num_edges; i++)
+		sol[i] = 0.0;
+
+	for (i = 0; i < num_nodes; i++)
+		sol[generic_xpos(visited_nodes[i], visited_nodes[(i + 1) % num_nodes], num_nodes)] = 1.0;
+	
+}
+
+void succ_construction(int* visited_nodes, int* succ, int num_nodes)//succ deve essere già allocato
 {
 	int i;
-	for (i = 0; i < tsp_in->num_nodes; i++)
-		tsp_in->sol[i] = 0.0;
+	for (i = 0; i < num_nodes; i++)
+		succ[visited_nodes[i]] = visited_nodes[(i+1) % num_nodes];
 
-	for (i = 1; i < tsp_in->num_nodes; i++)
-		tsp_in->sol[xpos(tsp_in, visited_nodes[i - 1], visited_nodes[i])] = 1.0;
-
-	tsp_in->sol[xpos(tsp_in, visited_nodes[0], visited_nodes[tsp_in->num_nodes - 1])] = 1.0;
 }

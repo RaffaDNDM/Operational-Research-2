@@ -105,6 +105,16 @@ int xpos(tsp_instance* tsp_in, int i, int j)
 	return (tsp_in->num_nodes * i + j) - ((i + 1) * (i + 2)) / 2;
 }
 
+int generic_xpos(int i, int j, int num_nodes)
+{
+	assert(i != j); //error if ring edge
+
+	if (i > j)
+		return generic_xpos(j, i, num_nodes);
+
+	return (num_nodes * i + j) - ((i + 1) * (i + 2)) / 2;
+}
+
 void plot(tsp_instance* tsp_in, int* succ, int* comp, int* n_comps)
 {
 	FILE* f = fopen(CPLEX_DAT, "w");

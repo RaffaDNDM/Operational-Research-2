@@ -46,6 +46,8 @@ void print_cost(tsp_instance* tsp_in);
 */
 int xpos(tsp_instance* tsp_in, int i, int j);
 
+int generic_xpos(int i, int j, int num_nodes);
+
 /*
 	Define the tour of the non-compact solution
 	\param tsp_in reference to tsp instance structure
@@ -64,5 +66,7 @@ void define_tour(tsp_instance* tsp_in, double* x, int* succ, int* comp, int* n_c
 	\param n_comps number of components
 */
 void plot(tsp_instance* tsp_in, int* succ, int* comp, int* n_comps);
+
+
 
 #endif
