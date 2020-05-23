@@ -150,7 +150,7 @@ void plot(tsp_instance* tsp_in, int* succ, int* comp, int* n_comps)
 	}
 
 	fclose(f);
-
+	
 	FILE* pipe = _popen(GNUPLOT_EXE, "w");
 	f = fopen(GP_CPLEX_STYLE, "r");
 
@@ -159,10 +159,12 @@ void plot(tsp_instance* tsp_in, int* succ, int* comp, int* n_comps)
 	{
 		if (strcmp(line, "LINE\n") == 0)
 		{
+			/*
 			_pclose(pipe);
 			printf("Type something to continue and create the image");
 			gets(line, LINE_SIZE);
 			pipe = _popen(GNUPLOT_EXE, "w");
+			*/
 			continue;
 		}
 		
