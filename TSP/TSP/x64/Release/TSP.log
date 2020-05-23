@@ -1,8 +1,8 @@
 ﻿  heuristic.c
-D:\github\OperationalResearch2\TSP\TSP\heuristic.c(728,33): warning C4244: 'function': conversion from 'double' to 'int', possible loss of data
-D:\github\OperationalResearch2\TSP\TSP\heuristic.c(759,18): warning C4244: 'function': conversion from 'time_t' to 'unsigned int', possible loss of data
+D:\github\OperationalResearch2\TSP\TSP\heuristic.c(726,33): warning C4244: 'function': conversion from 'double' to 'int', possible loss of data
+D:\github\OperationalResearch2\TSP\TSP\heuristic.c(757,18): warning C4244: 'function': conversion from 'time_t' to 'unsigned int', possible loss of data
   Generating code
-  1 of 50 functions ( 2.0%) were compiled, the rest were copied from previous compilation.
+  2 of 50 functions ( 4.0%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
     2 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
