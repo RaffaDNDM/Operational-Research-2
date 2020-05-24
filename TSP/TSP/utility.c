@@ -6,6 +6,9 @@ void dist(int node1, int node2, tsp_instance* tsp_in, void* dist)
 	double x_dist = tsp_in->x_coords[node1] - tsp_in->x_coords[node2];
 	double y_dist = tsp_in->y_coords[node1] - tsp_in->y_coords[node2];
 
+	x_dist = (x_dist > 0.0) ? x_dist : (-x_dist);
+	y_dist = (y_dist > 0.0) ? y_dist : (-y_dist);
+
 	if (tsp_in->integerDist)
 	{
 		int x_distI = (int)(x_dist + CAST_PRECISION);

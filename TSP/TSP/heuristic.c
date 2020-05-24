@@ -591,10 +591,13 @@ void greedy_refinement(tsp_instance* tsp_in, int* visited_nodes, double* cost) /
 	succ_construction(visited_nodes, succ, tsp_in->num_nodes);
 
 	double check_cost;
+	printf("*cost %lf", *cost);
 
 	do
 	{
 		check_cost = (*cost);
+		printf("*cost %lf", check_cost);
+
 		int i = 0;
 		for (; i < tsp_in->num_nodes; i++)
 		{
@@ -646,16 +649,8 @@ void greedy_refinement(tsp_instance* tsp_in, int* visited_nodes, double* cost) /
 						tsp_in->sol[xpos(tsp_in, i, succ[i])] = 0.0;
 						tsp_in->sol[xpos(tsp_in, j, succ[j])] = 0.0;
 						*/
-
-
-						//if(i==244 || i==245 || i == 238 || i == 239 || j == 244 || j == 245 || j == 238 || j == 239)
-						printf("delta(%lf) [%d, %d] [%d,%d] -->> [%d,%d] [%d,%d]\n ", delta, i, succ[i], j, succ[j], i, j, succ[i], succ[j]);
-
-						if (tsp_in->integerDist)
-							(*cost) += (double) delta;
-						else
-							(*cost) += delta;
-
+						
+						(*cost) += delta;
 
 						int k = succ[i];
 						int next = succ[i];
@@ -723,7 +718,7 @@ void greedy_refinement(tsp_instance* tsp_in, int* visited_nodes, double* cost) /
 			}
 		}
 	}
-	while (abs(check_cost - (*cost))>0.0001);
+	while (abs(check_cost - (*cost))>1e-10);
 
 	/*
 	i = 0;
