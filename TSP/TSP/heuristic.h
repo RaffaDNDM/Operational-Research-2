@@ -7,6 +7,8 @@
 #include <float.h>
 
 //#define GRASP 1
+#define MAX_LOCAL_MINS 40
+#define MAX_NUM_ITERATIONS 10000
 
 /**
 	Heuristic solver, call the select algorithm
@@ -32,7 +34,7 @@ void min_extra_mileage(tsp_instance* tsp_in, int count, int* visited_nodes, int*
 
 void greedy_refinement(tsp_instance* tsp_in, int* visited_nodes, double * cost);
 
-void vns(tsp_instance* tsp_in, int* visited_nodes);
+void vns(tsp_instance* tsp_instance, int* visited_nodes, double* best_cost);
 
 void update_solution(int* visited_nodes, double* sol, int num_nodes);
 

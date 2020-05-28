@@ -1,5 +1,7 @@
 #include "heuristic.h"
 #include "utility.h"
+#define HAVE_STRUCT_TIMESPEC
+#include <pthread.h>
 
 void heuristic_solver(tsp_instance* tsp_in)
 {
@@ -31,7 +33,6 @@ void heuristic_solver(tsp_instance* tsp_in)
 	}
 	}
 
-	update_solution(visited_nodes, tsp_in->sol, tsp_in->num_nodes);
 	print_cost(tsp_in);
 	printf("Execution time: %lf\n", tsp_in->execution_time);
 
@@ -65,14 +66,16 @@ void heuristic_solver(tsp_instance* tsp_in)
 	{	
 		cost = (double)tsp_in->bestCostI;
 		greedy_refinement(tsp_in, visited_nodes, &cost);
+		vns(tsp_in, visited_nodes, &cost);
 		tsp_in->bestCostI = (int)cost;
 	}
 	else
+	{
 		greedy_refinement(tsp_in, visited_nodes, &(tsp_in->bestCostD));
-	
+		vns(tsp_in, visited_nodes, &cost);
+	}
 
 	update_solution(visited_nodes, tsp_in->sol, tsp_in->num_nodes);//solo se soluzione migliorata
-
 	print_cost(tsp_in);
 	printf("Execution time: %lf\n", tsp_in->execution_time);
 
@@ -134,7 +137,7 @@ void nearest_neighborhood(tsp_instance* tsp_in, int* visited_nodes)
 			else
 				dist(i, 0, tsp_in, &min_dist);
 
-			printf("count = %d\n", count);
+			//printf("count = %d\n", count);
 			
 		}
 		else
@@ -591,12 +594,12 @@ void greedy_refinement(tsp_instance* tsp_in, int* visited_nodes, double* cost) /
 	succ_construction(visited_nodes, succ, tsp_in->num_nodes);
 
 	double check_cost;
-	printf("*cost %lf", *cost);
+	//printf("*cost %lf", *cost);
 
 	do
 	{
 		check_cost = (*cost);
-		printf("*cost %lf", check_cost);
+		//printf("*cost %lf", check_cost);
 
 		int i = 0;
 		for (; i < tsp_in->num_nodes; i++)
@@ -746,64 +749,121 @@ void greedy_refinement(tsp_instance* tsp_in, int* visited_nodes, double* cost) /
 	//se la soluzione è migliorata, rispetto a quella in input, modificala
 }
 
-void vns(tsp_instance* tsp_in, int* visited_nodes)
+void vns(tsp_instance* tsp_in, int* visited_nodes, double *best_cost)
 {
 	//se la soluzione migliora, questa va inserita dentro visited nodes
 	srand(time(NULL));
 	
-	int* kopt_visited_nodes = (int*) calloc((size_t)tsp_in->num_nodes, sizeof(int));
+	int* local_min_visited_nodes = (int*)calloc((size_t)tsp_in->num_nodes, sizeof(int));
 
 	int i = 0;
 	for (; i < tsp_in->num_nodes; i++)
-	{
-		kopt_visited_nodes[i] = visited_nodes[i];
-	}
+		local_min_visited_nodes[i] = visited_nodes[i];
 
-	int num_iterations=0;
+	int num_local_mins = 0;
+	int num_iterations = 0;
+	double local_min_cost = *best_cost;
 
-	for(;num_iterations<10; num_iterations++)
+
+	while(num_local_mins < MAX_LOCAL_MINS || num_iterations < MAX_NUM_ITERATIONS)
 	{
+		int* kopt_visited_nodes = (int*)calloc((size_t)tsp_in->num_nodes, sizeof(int));
+		
+		for (; i < tsp_in->num_nodes; i++)
+		{
+			kopt_visited_nodes[i] = local_min_visited_nodes[i];
+		}
+		
 		int t = rand() % tsp_in->num_nodes;
 		int k = 1;
 		int max_k = tsp_in->num_nodes / 2;
-	
-		for (; k < max_k; k++)
+		int found_min = 0;
+		double kopt_cost = local_min_cost;
+
+		for (; k < max_k && !found_min; k++)
 		{
-			int next_index = (t+k) % tsp_in->num_nodes;
+			num_iterations++;
+			int next_index = (t + k) % tsp_in->num_nodes;
 			int temp = kopt_visited_nodes[next_index];
 			kopt_visited_nodes[next_index] = kopt_visited_nodes[t];
 			kopt_visited_nodes[t] = temp;
 
-			double cost=0.0;
-			i = 0;
-			for (; i < tsp_in->num_nodes; i++)
+			if (tsp_in->integerDist)
 			{
-				if (tsp_in->integerDist)
+				int c_old[4], c_new[4];
+
+				dist(kopt_visited_nodes[(t - 1 + tsp_in->num_nodes) % tsp_in->num_nodes], kopt_visited_nodes[next_index], tsp_in, &c_old[0]);
+				dist(kopt_visited_nodes[next_index], kopt_visited_nodes[(t + 1) % tsp_in->num_nodes], tsp_in, &c_old[1]);
+				dist(kopt_visited_nodes[t], kopt_visited_nodes[(next_index + 1) % tsp_in->num_nodes], tsp_in, &c_old[2]);
+				dist(kopt_visited_nodes[t], kopt_visited_nodes[(next_index - 1 + tsp_in->num_nodes) % tsp_in->num_nodes], tsp_in, &c_old[3]);
+				dist(kopt_visited_nodes[(t - 1 + tsp_in->num_nodes) % tsp_in->num_nodes], kopt_visited_nodes[t], tsp_in, &c_new[0]);
+				dist(kopt_visited_nodes[t], kopt_visited_nodes[(t + 1) % tsp_in->num_nodes], tsp_in, &c_new[1]);
+				dist(kopt_visited_nodes[next_index], kopt_visited_nodes[(next_index + 1) % tsp_in->num_nodes], tsp_in, &c_new[2]);
+				dist(kopt_visited_nodes[next_index], kopt_visited_nodes[(next_index - 1 + tsp_in->num_nodes) % tsp_in->num_nodes], tsp_in, &c_new[3]);
+
+				for (i = 0; i < 4; i++)
+					kopt_cost += (double) (c_new[i]-c_old[i]);
+			}
+			else
+			{
+				double c_old[4], c_new[4];
+
+				dist(kopt_visited_nodes[(t - 1 + tsp_in->num_nodes) % tsp_in->num_nodes], kopt_visited_nodes[next_index], tsp_in, &c_old[0]);
+				dist(kopt_visited_nodes[next_index], kopt_visited_nodes[(t + 1) % tsp_in->num_nodes], tsp_in, &c_old[1]);
+				dist(kopt_visited_nodes[t], kopt_visited_nodes[(next_index + 1) % tsp_in->num_nodes], tsp_in, &c_old[2]);
+				dist(kopt_visited_nodes[t], kopt_visited_nodes[(next_index - 1 + tsp_in->num_nodes) % tsp_in->num_nodes], tsp_in, &c_old[3]);
+				dist(kopt_visited_nodes[(t - 1 + tsp_in->num_nodes) % tsp_in->num_nodes], kopt_visited_nodes[t], tsp_in, &c_new[0]);
+				dist(kopt_visited_nodes[t], kopt_visited_nodes[(t + 1) % tsp_in->num_nodes], tsp_in, &c_new[1]);
+				dist(kopt_visited_nodes[next_index], kopt_visited_nodes[(next_index + 1) % tsp_in->num_nodes], tsp_in, &c_new[2]);
+				dist(kopt_visited_nodes[next_index], kopt_visited_nodes[(next_index - 1 + tsp_in->num_nodes) % tsp_in->num_nodes], tsp_in, &c_new[3]);
+
+				for (i = 0; i < 4; i++)
+					kopt_cost += (c_new[i] - c_old[i]);
+			}
+
+
+			int* result_kopt_visited_nodes = (int*)calloc((size_t)tsp_in->num_nodes, sizeof(int));
+			
+			i = 0;
+			for(; i < tsp_in->num_nodes; i++)
+			{
+				result_kopt_visited_nodes[i] = kopt_visited_nodes[i];
+			}
+
+			double result_kopt_cost = kopt_cost;
+			greedy_refinement(tsp_in, result_kopt_visited_nodes, &result_kopt_cost);
+			
+			if(abs(local_min_cost - result_kopt_cost)>1e-10)//local_min_cost != result_kopt_cost
+			{
+				num_local_mins++;
+				i = 0;
+				local_min_cost = result_kopt_cost;
+				found_min = 1;
+
+				for (; i < tsp_in->num_nodes; i++)
 				{
-					int i1 = i % tsp_in->num_nodes;
-					int i2 = (i + 1) % tsp_in->num_nodes;
-					int x;
-					dist(kopt_visited_nodes[i1],kopt_visited_nodes[i2], tsp_in, &x);
-					cost += (double)x;
+					local_min_visited_nodes[i] = result_kopt_visited_nodes[i];
 				}
-				else
+
+				if (local_min_cost < (*best_cost))
 				{
-					double x;
-					int i1 = i % tsp_in->num_nodes;
-					int i2 = (i + 1) % tsp_in->num_nodes;
-					dist(kopt_visited_nodes[i1], kopt_visited_nodes[i2], tsp_in, &x);
-					cost += x;
+					i = 0;
+					(*best_cost) = local_min_cost;
+					for (; i < tsp_in->num_nodes; i++)
+					{
+						visited_nodes[i] = result_kopt_visited_nodes[i];
+					}
 				}
 			}
-			
-			//refinement
 
-			//se peggiora la soluzione rispetto a quella attuale torno a calcolare t
-			//altrimenti aggiorno visited_nodes con il valore di kopt_visited_nodes e aumento il conto delle soluzioni locali trovate
+			free(result_kopt_visited_nodes);
 		}
-	}
 
-	//scandire visited nodes e aggiornare tsp_in->sol
+		if (k == max_k)
+			break;
+
+		free(kopt_visited_nodes);
+	}
 }
 
 void update_solution(int* visited_nodes, double* sol, int num_nodes)//necessario aver già allocato sol , un vettore di double generico

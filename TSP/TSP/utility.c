@@ -15,7 +15,7 @@ void dist(int node1, int node2, tsp_instance* tsp_in, void* dist)
 		int y_distI = (int)(y_dist + CAST_PRECISION);
 
 		int* distI = (int*)dist;
-		*distI = (int)(sqrt((double)x_distI * (double)x_distI + (double)y_distI * (double)y_distI) + CAST_PRECISION);
+		*distI = (int)(sqrt((double)x_distI * (double)x_distI + (double)y_distI * (double)y_distI) + 1.0);
 
 		return;
 	}
