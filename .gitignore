@@ -1,0 +1,17 @@
+
+TSP/.vs/TSP/v16/.suo
+TSP/.vs/TSP/v16/Browse.VC.opendb
+TSP/.vs/TSP/v16/ipch/AutoPCH/556e849a18aed40a/HEURISTIC.ipch
+TSP/TSP/heuristic.c
+TSP/TSP/heuristic.h
+TSP/TSP/solutionCPLEX.dat
+TSP/TSP/solutionCPLEX.png
+TSP/TSP/TSP.vcxproj.user
+TSP/TSP/x64/Release/heuristic.obj
+TSP/TSP/x64/Release/TSP.log
+TSP/TSP/x64/Release/tsp.obj
+TSP/TSP/x64/Release/TSP.tlog/TSP.write.1u.tlog
+TSP/x64/Release/TSP.exe
+TSP/x64/Release/TSP.iobj
+TSP/x64/Release/TSP.ipdb
+TSP/x64/Release/TSP.pdb

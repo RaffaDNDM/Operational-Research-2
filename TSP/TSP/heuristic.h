@@ -6,7 +6,7 @@
 #include <time.h>
 #include <float.h>
 
-//#define GRASP 1
+#define GRASP 
 #define MAX_LOCAL_MINS 40
 #define MAX_NUM_ITERATIONS 10000
 

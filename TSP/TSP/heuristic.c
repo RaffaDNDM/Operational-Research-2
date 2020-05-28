@@ -100,6 +100,7 @@ void heuristic_solver(tsp_instance* tsp_in)
 	}
 
 	free(tsp_in->sol);
+	free(visited_nodes);
 }
 
 void nearest_neighborhood(tsp_instance* tsp_in, int* visited_nodes)
@@ -742,7 +743,7 @@ void greedy_refinement(tsp_instance* tsp_in, int* visited_nodes, double* cost) /
 		node = succ[i];
 		i = node;
 		visited_nodes[++count] = node;  //inserirlo nell'algoritmo
-		printf("count: %d\n", visited_nodes[count - 1]);  
+		//printf("count: %d\n", visited_nodes[count - 1]);  
 	} 
 	while (node != begin);
 
