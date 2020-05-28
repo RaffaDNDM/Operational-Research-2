@@ -1,13 +1,12 @@
 ﻿  heuristic.c
 D:\github\OperationalResearch2\TSP\TSP\heuristic.h(37,36): warning C4224: nonstandard extension used: formal parameter 'tsp_instance' was previously defined as a type
-D:\github\OperationalResearch2\TSP\TSP\heuristic.c(264,18): warning C4244: 'function': conversion from 'time_t' to 'unsigned int', possible loss of data
-D:\github\OperationalResearch2\TSP\TSP\heuristic.c(383,18): warning C4244: 'function': conversion from 'time_t' to 'unsigned int', possible loss of data
-D:\github\OperationalResearch2\TSP\TSP\heuristic.c(724,33): warning C4244: 'function': conversion from 'double' to 'int', possible loss of data
-D:\github\OperationalResearch2\TSP\TSP\heuristic.c(755,18): warning C4244: 'function': conversion from 'time_t' to 'unsigned int', possible loss of data
-D:\github\OperationalResearch2\TSP\TSP\heuristic.c(836,44): warning C4244: 'function': conversion from 'double' to 'int', possible loss of data
+D:\github\OperationalResearch2\TSP\TSP\heuristic.c(266,18): warning C4244: 'function': conversion from 'time_t' to 'unsigned int', possible loss of data
+D:\github\OperationalResearch2\TSP\TSP\heuristic.c(385,18): warning C4244: 'function': conversion from 'time_t' to 'unsigned int', possible loss of data
+D:\github\OperationalResearch2\TSP\TSP\heuristic.c(757,18): warning C4244: 'function': conversion from 'time_t' to 'unsigned int', possible loss of data
+D:\github\OperationalResearch2\TSP\TSP\heuristic.c(838,44): warning C4244: 'function': conversion from 'double' to 'int', possible loss of data
   Generating code
-  18 of 52 functions (34.6%) were compiled, the rest were copied from previous compilation.
+  2 of 52 functions ( 3.8%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    12 functions had inline decision re-evaluated but remain unchanged
+    2 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   TSP.vcxproj -> D:\github\OperationalResearch2\TSP\x64\Release\TSP.exe

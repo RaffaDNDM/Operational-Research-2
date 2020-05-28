@@ -55,9 +55,6 @@ void heuristic_solver(tsp_instance* tsp_in)
 		}
 
 		plot(tsp_in, succ, comp, &n_comps);
-
-		free(succ);
-		free(comp);
 	}
 
 	//define_tour(tsp_in, tsp_in->sol, succ, comp, &n_comps);
@@ -79,18 +76,19 @@ void heuristic_solver(tsp_instance* tsp_in)
 	print_cost(tsp_in);
 	printf("Execution time: %lf\n", tsp_in->execution_time);
 
-	succ = calloc(tsp_in->num_nodes, sizeof(int));
-	comp = calloc(tsp_in->num_nodes, sizeof(int));
-	n_comps = 1;
 	if (tsp_in->plot)
 	{
 		switch (tsp_in->alg)
 		{
-			case 6: case 7:
-			{
-				define_tour(tsp_in, tsp_in->sol, succ, comp, &n_comps);
-				break;
-			}
+		case 6: case 7:
+		{
+			//define_tour(tsp_in, tsp_in->sol, succ, comp, &n_comps);
+			succ_construction(visited_nodes, succ, tsp_in->num_nodes);
+			int k;
+			for (k = 0; k < tsp_in->num_nodes; k++)
+				comp[k] = 1;
+			break;
+		}
 		}
 
 		plot(tsp_in, succ, comp, &n_comps);
@@ -100,7 +98,7 @@ void heuristic_solver(tsp_instance* tsp_in)
 	}
 
 	free(tsp_in->sol);
-	free(visited_nodes);
+	//free(visited_nodes);
 }
 
 void nearest_neighborhood(tsp_instance* tsp_in, int* visited_nodes)
@@ -722,7 +720,7 @@ void greedy_refinement(tsp_instance* tsp_in, int* visited_nodes, double* cost) /
 			}
 		}
 	}
-	while (abs(check_cost - (*cost))>1e-10);
+	while (check_cost != (*cost)); //abs(check_cost - (*cost))<1e-10
 
 	/*
 	i = 0;
