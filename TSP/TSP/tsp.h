@@ -32,8 +32,8 @@ as argument in the command line
 #define ALG3 "Branch&CutGeneral"
 #define ALG4 "MTZ"
 #define ALG5 "GG"
-#define ALG6 "Nearest Neighborhood"
-#define ALG7 "Insertion"
+#define ALG6 "VNS"
+#define ALG7 "TabuSearch"
 
 //Creation or not of the performance profile
 #define PERF_PROF_ON 1
