@@ -1,3 +1,10 @@
+/**
+	@file mtz_solver.c
+	@author Cristina Fabris
+	@author Raffaele Di Nardo Di Maio
+	@brief MTZ solver.
+*/
+
 #include "mtz_solver.h"
 
 void mtz_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in)
@@ -9,14 +16,14 @@ void mtz_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in)
 	tsp_in->sol = (double*)malloc(sizeof(double) * num_edges);
 
 	assert(CPXgetmipx(env, lp, tsp_in->sol, 0, num_edges - 1) == 0);
-	
+
 	if (tsp_in->integerDist)
 	{
 		double cost;
 		CPXgetbestobjval(env, lp, &cost);
 		tsp_in->bestCostI = (int)(cost + CAST_PRECISION);
 	}
-	else 
+	else
 		CPXgetbestobjval(env, lp, &tsp_in->bestCostD);
 }
 

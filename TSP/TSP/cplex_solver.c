@@ -1,3 +1,10 @@
+/**
+	@file cplex_solver.c
+	@author Cristina Fabris
+	@author Raffaele Di Nardo Di Maio
+	@brief CPLEX solvers.
+*/
+
 #include "cplex_solver.h"
 #include "bc_solver.h"
 #include "gg_solver.h"
@@ -75,7 +82,7 @@ void cplex_solver(tsp_instance* tsp_in)
 
 		}
 	}
-	
+
 	print_cost(tsp_in);
 	printf("Execution time: %lf\n", tsp_in->execution_time);
 
@@ -101,7 +108,7 @@ void cplex_solver(tsp_instance* tsp_in)
 
 				double* x = (double*)malloc(sizeof(double) * tsp_in->num_nodes);
 				assert(CPXgetmipx(env, lp, x, start_pos, end_pos) == 0);
-			
+
 				succ = calloc(tsp_in->num_nodes, sizeof(int));
 				comp = calloc(tsp_in->num_nodes, sizeof(int));
 				mtz_define_tour(tsp_in, x, succ, comp);
@@ -164,7 +171,7 @@ void cplex_build_model(tsp_instance* tsp_in, CPXENVptr env, CPXLPptr lp)
 			else
 				dist(i, j, tsp_in, &c);
 
-			double lb= 0.0;			
+			double lb= 0.0;
 			double ub = 1.0;
 
 			//Check if the column has been added correctly

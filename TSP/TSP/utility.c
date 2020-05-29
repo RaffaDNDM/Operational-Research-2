@@ -1,3 +1,10 @@
+/**
+	@file utility.c
+	@author Cristina Fabris
+	@author Raffaele Di Nardo Di Maio
+	@brief Utility functions.
+*/
+
 #include "utility.h"
 #include <math.h>
 
@@ -153,7 +160,7 @@ void plot(tsp_instance* tsp_in, int* succ, int* comp, int* n_comps)
 	}
 
 	fclose(f);
-	
+
 	FILE* pipe = _popen(GNUPLOT_EXE, "w");
 	f = fopen(GP_CPLEX_STYLE, "r");
 
@@ -168,7 +175,7 @@ void plot(tsp_instance* tsp_in, int* succ, int* comp, int* n_comps)
 			pipe = _popen(GNUPLOT_EXE, "w");
 			continue;
 		}
-		
+
 		fprintf(pipe, "%s ", line);
 	}
 

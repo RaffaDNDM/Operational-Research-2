@@ -1,3 +1,10 @@
+/**
+	@file loop_solver.c
+	@author Cristina Fabris
+	@author Raffaele Di Nardo Di Maio
+	@brief Loop solver.
+*/
+
 #include "loop_solver.h"
 
 void loop_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ, int* comp)
@@ -91,7 +98,7 @@ void loop_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ, in
 	}
 
 	tsp_in->execution_time = ((double)(end - start) / (double)CLOCKS_PER_SEC) * TIME_SCALE;
-	
+
 }
 
 
@@ -151,7 +158,7 @@ void add_sec_constraint(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* c
 		}
 
 		assert(CPXaddrows(env, lp, 0, 1, nnz, &const_term, &type_constraint, &first, indices, values, NULL, constraint) == 0); //one row for each node
-	
+
 		free(indices);
 		free(values);
 	}
@@ -162,7 +169,7 @@ void add_sec_constraint(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* c
 	free(constraint[0]);
 	free(constraint);
 	free(const_terms);
-	
+
 
 }
 

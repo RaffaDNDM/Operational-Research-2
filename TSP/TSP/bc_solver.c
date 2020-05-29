@@ -1,3 +1,10 @@
+/**
+	@file bc_solver.c
+	@author Cristina Fabris
+	@author Raffaele Di Nardo Di Maio
+	@brief CPLEX solutions with Branch & Cut.
+*/
+
 #include "bc_solver.h"
 
 void bc_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ, int* comp, int general)
@@ -14,20 +21,20 @@ void bc_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ, int*
 	int ncores = 1;
 	CPXgetnumcores(env, &ncores);
 	CPXsetintparam(env, CPX_PARAM_THREADS, ncores);
-	
+
 	int i = 0;
 	int percentage[] = {90, 75, 50, 25, 10, 0};
 
 	tsp_in->num_cols = CPXgetnumcols(env, lp);
 	tsp_in->sol = (double*)calloc((size_t)tsp_in->num_cols, sizeof(double));
-	
+
 	int k = 2;
 	int size_freedom = 10;
 	int freedom[10];
 
 	for (; k < 11; k++)
 		freedom[k - 2] = k;
-	
+
 	freedom[k-2] = 20;
 
 	int stop = 0;
@@ -68,7 +75,7 @@ void bc_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ, int*
 
 					assert(CPXgetmipx(env, lp, tsp_in->sol, 0, tsp_in->num_cols - 1) == 0);
 				}
-				
+
 				cplex_change_coeff(tsp_in, env, lp, tsp_in->sol, percentage[i]);
 			}
 		}
@@ -77,7 +84,7 @@ void bc_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ, int*
 		case 2:
 		{
 			tsp_in->bestCostD = CPX_INFBOUND;
-			
+
 			time_t start = 0;
 			time_t end = 0;
 
@@ -105,7 +112,7 @@ void bc_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ, int*
 				end = clock();
 
 				assert(CPXgetobjval(env, lp, &cost) == 0);
-				
+
 				if (tsp_in->bestCostD - cost > 1e-6)
 				{
 					tsp_in->bestCostD = cost;
@@ -119,7 +126,7 @@ void bc_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ, int*
 		}
 		break;
 	}
-	
+
 	CPXmipopt(env, lp);
 	assert(CPXgetobjval(env, lp, &cost) == 0);
 
@@ -357,7 +364,7 @@ void local_branching(tsp_instance* tsp_in, CPXENVptr env, CPXLPptr lp, double* x
 			}
 		}
 	}
-	
+
 	assert(CPXaddrows(env, lp, 0, 1, nnz, &const_term, &type_constraint, &first, indices, values, NULL, constraint) == 0);
 
 	CPXwriteprob(env, lp, LP_FILENAME, NULL);

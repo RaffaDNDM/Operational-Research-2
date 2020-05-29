@@ -1,3 +1,10 @@
+/**
+	@file cplex_solver.h
+	@author Cristina Fabris
+	@author Raffaele Di Nardo Di Maio
+	@brief Header of CPLEX solvers.
+*/
+
 #ifndef CPLEX_SOLVER
 
 #define CPLEX_SOLVER
@@ -24,32 +31,30 @@
 //#define ALL_PARAM_COMBINATIONS 1
 #define NODE_LIMIT 3
 #define EPS_GAP 0.1
-#define	SOL_LIMIT 5 
+#define	SOL_LIMIT 5
 #define SEED 500
 
 
 
 /**
-	CPLEX solver, call the select algorithm 
-	\param tsp_in reference to tsp instance structure
+	@brief CPLEX solver, call the select algorithm.
+	@param tsp_in reference to tsp instance structure
 */
 void cplex_solver(tsp_instance* tsp_in);
 
 /**
-	CPLEX definition of the model
-	\param tsp_in reference to tsp instance structure
-	\param env pointer to the ENV structure, used by CPLEX solver
-	\param lp pointer to the LP structure, used by CPLEX solver
+	@brief CPLEX definition of the model.
+	@param tsp_in reference to tsp instance structure
+	@param env pointer to the ENV structure, used by CPLEX solver
+	@param lp pointer to the LP structure, used by CPLEX solver
 */
 void cplex_build_model(tsp_instance* tsp_in, CPXENVptr env, CPXLPptr lp);
 
-/*
-	Return the position of the element (i,j) in the matrix
-	of corresponding edges, created from the nodes in the graph,
-	in a compact model
-	\param tsp_in reference to tsp instance structure
-	\param i first index
-	\param j second index
+/**
+	@brief Return the position of the element (i,j) in the matrix of corresponding edges, created from the nodes in the graph, in a compact model.
+	@param tsp_in reference to tsp instance structure
+	@param i first index
+	@param j second index
 */
 int compact_xpos(tsp_instance* tsp_in, int i, int j);
 

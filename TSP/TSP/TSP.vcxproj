@@ -109,7 +109,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(CPLEX)\concert\lib\x64_windows_msvc14\stat_mda;$(CPLEX)\cplex\lib\x64_windows_msvc14\stat_mda;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>cplex12100.lib;ilocplex.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>cplex12100.lib;ilocplex.lib;pthreadVC2.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -150,7 +150,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(CPLEX)\concert\lib\x64_windows_msvc14\stat_mda;$(CPLEX)\cplex\lib\x64_windows_msvc14\stat_mda;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>cplex12100.lib;ilocplex.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>cplex12100.lib;ilocplex.lib;pthreadVC2.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

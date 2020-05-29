@@ -1,3 +1,9 @@
+/**
+	@file gg_solver.c
+	@author Cristina Fabris
+	@author Raffaele Di Nardo Di Maio
+	@brief Gavish Graves solver.
+*/
 ﻿#include "gg_solver.h"
 
 void gg_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in)

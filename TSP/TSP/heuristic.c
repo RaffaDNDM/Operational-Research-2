@@ -1,92 +1,114 @@
+/**
+	@file heuristic.c
+	@author Cristina Fabris
+	@author Raffaele Di Nardo Di Maio
+	@brief Heuristic solvers.
+*/
+
 #include "heuristic.h"
 #include "utility.h"
-#define HAVE_STRUCT_TIMESPEC
-#include <pthread.h>
+
+pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+
 
 void heuristic_solver(tsp_instance* tsp_in)
 {
-	double best_cost=0.0;
-	int* visited_nodes = (int*)calloc((size_t)tsp_in->num_nodes, sizeof(int));
-
 	time_t start = clock();
 
-	if (!FIRST_SOLUTION)
+	tsp_in->bestCostD = DBL_MAX;
+	tsp_in->bestCostI = INT_MAX;
+
+	int  num_edges = (tsp_in->num_nodes * (tsp_in->num_nodes)) / 2;
+	tsp_in->sol = (double*) calloc((size_t) num_edges, sizeof(double));
+	int* succ = (int*) calloc((size_t)tsp_in->num_nodes, sizeof(int));
+
+	printf(LINE);
+	printf("[Construction] ");
+
+	if (!CONSTRUCTION_TYPE)
 	{
-		printf(LINE);
-		printf("Heuristic nearest neighborhood solver\n");
-		nearest_neighborhood(tsp_in, visited_nodes, &best_cost);
+		printf("Nearest Neighborhood\n");
 	}
 	else
 	{
-		printf(LINE);
-		printf("Heuristic insertion solver\n");
-		insertion(tsp_in, visited_nodes, &best_cost);
+		printf("Insertion\n");
 	}
 
-	printf("%s Cost: %lf\n %s", LINE, best_cost, LINE);
+
+	printf("[Meta-heuristic] ");
 
 	switch (tsp_in->alg)
 	{
 		case 6:
 		{
-			if (tsp_in->integerDist)
-			{
-				printf("VNS\n");
-				vns(tsp_in, visited_nodes, &best_cost);
-				tsp_in->bestCostI = (int)best_cost;
-			}
-			else
-			{
-				printf("VNS\n");
-				vns(tsp_in, visited_nodes, &best_cost);
-				tsp_in->bestCostD = best_cost;
-			}
+			printf("VNS\n");
 			break;
 		}
 		case 7:
 		{
-			if (tsp_in->integerDist)
-			{
-				printf("Tabu search\n");
-				tabu_search(tsp_in, visited_nodes, &best_cost);
-				tsp_in->bestCostI = (int)best_cost;
-			}
-			else
-			{
-				printf("Tabu search\n");
-				tabu_search(tsp_in, visited_nodes, &best_cost);
-				tsp_in->bestCostD = best_cost;
-			}
-
+			printf("Tabu search\n");
 			break;
 		}
 	}
-	
-	time_t end = clock();
+	printf(LINE);
 
-	int num_edges = tsp_in->num_nodes * (tsp_in->num_nodes - 1) / 2;
-	tsp_in->sol = (double*)calloc(num_edges, sizeof(double));
+	#ifdef MULTI_START
+		pthread_t threads[NUM_MULTI_START];
+		thread_args param[NUM_MULTI_START];
+
+		int i = 0;
+		for (; i < NUM_MULTI_START; i++)
+		{
+			param[i].tsp_in = tsp_in;
+			param[i].succ = succ;
+			param[i].seed = STEP_SEED*(i+1);
+
+			pthread_create(&threads[i], NULL, computeSolution, (void*)&param[i]);
+		}
+
+		for (i = 0; i < NUM_MULTI_START; i++)
+		{
+			int rc = pthread_join(threads[i], NULL);
+
+			if (rc)
+				exit(-1);
+		}
+
+	#else
+		pthread_t thread;
+		thread_args param;
+
+		param.tsp_in = tsp_in;
+		param.succ = succ;
+		param.seed = 0;
+
+		pthread_create(&thread, NULL, computeSolution, (void*)&param);
+
+		int rc = pthread_join(thread, NULL);
+
+		if (rc)
+			exit(-1);
+
+	#endif
+
+	time_t end = clock();
 	tsp_in->execution_time = ((double)(end - start) / (double)CLOCKS_PER_SEC);
-	
-	update_solution(visited_nodes, tsp_in->sol, tsp_in->num_nodes);
 	print_cost(tsp_in);
 	printf("Execution time: %lf\n", tsp_in->execution_time);
-	
-	int* succ = (int*)calloc(tsp_in->num_nodes, sizeof(int));
+
 	int* comp = (int*)calloc(tsp_in->num_nodes, sizeof(int));
 	int n_comps = 1;
 	if (tsp_in->plot)
 	{
 		switch (tsp_in->alg)
 		{
-			case 6: case 7:
-			{
-				succ_construction(visited_nodes, succ, tsp_in->num_nodes);
-				int k;
-				for (k = 0; k < tsp_in->num_nodes; k++)
-					comp[k] = 1;
-				break;
-			}
+		case 6: case 7:
+		{
+			int k;
+			for (k = 0; k < tsp_in->num_nodes; k++)
+				comp[k] = 1;
+			break;
+		}
 		}
 
 		plot(tsp_in, succ, comp, &n_comps);
@@ -96,10 +118,62 @@ void heuristic_solver(tsp_instance* tsp_in)
 	}
 
 	free(tsp_in->sol);
-	free(visited_nodes);
 }
 
-void nearest_neighborhood(tsp_instance* tsp_in, int* visited_nodes, double* best_cost)
+void* computeSolution(void* param)
+{
+	thread_args* args = (thread_args*) param;
+	double best_cost = 0.0;
+	int* visited_nodes = (int*)calloc((size_t) args->tsp_in->num_nodes, sizeof(int));
+
+	if (!CONSTRUCTION_TYPE)
+		nearest_neighborhood(args->tsp_in, visited_nodes, &best_cost, args->seed);
+	else
+		insertion(args->tsp_in, visited_nodes, &best_cost, args->seed);
+
+	switch (args->tsp_in->alg)
+	{
+		case 6:
+		{
+			vns(args->tsp_in, visited_nodes, &best_cost);
+			break;
+		}
+		case 7:
+		{
+			tabu_search(args->tsp_in, visited_nodes, &best_cost);
+			break;
+		}
+	}
+
+	pthread_mutex_lock(&mutex);
+	printf("Cost: %lf\n", best_cost);
+
+	if (args->tsp_in->integerDist)
+	{
+		if (((int)best_cost) < args->tsp_in->bestCostI)
+		{
+			args->tsp_in->bestCostI = (int)best_cost;
+			update_solution(visited_nodes, args->tsp_in->sol, args->tsp_in->num_nodes);
+			succ_construction(visited_nodes, args->succ, args->tsp_in->num_nodes);
+		}
+	}
+	else
+	{
+		if (best_cost < args->tsp_in->bestCostD)
+		{
+			args->tsp_in->bestCostD = best_cost;
+			update_solution(visited_nodes, args->tsp_in->sol, args->tsp_in->num_nodes);
+			succ_construction(visited_nodes, args->succ, args->tsp_in->num_nodes);
+		}
+	}
+
+	pthread_mutex_unlock(&mutex);
+
+	free(visited_nodes);
+	pthread_exit(NULL);
+}
+
+void nearest_neighborhood(tsp_instance* tsp_in, int* visited_nodes, double* best_cost, int seed)
 {
 	int i = 0;
 
@@ -118,8 +192,8 @@ void nearest_neighborhood(tsp_instance* tsp_in, int* visited_nodes, double* best
 		double min_dist = DBL_MAX;
 		int best = tsp_in->num_nodes;
 
-		min_cost(tsp_in, nodes, i, &min_dist, &best);
-		
+		min_cost(tsp_in, nodes, i, &min_dist, &best, seed);
+
 		if (best == tsp_in->num_nodes)
 		{
 			if (tsp_in->integerDist)
@@ -132,7 +206,7 @@ void nearest_neighborhood(tsp_instance* tsp_in, int* visited_nodes, double* best
 				dist(i, 0, tsp_in, &min_dist);
 
 			//printf("count = %d\n", count);
-			
+
 		}
 		else
 		{
@@ -147,7 +221,7 @@ void nearest_neighborhood(tsp_instance* tsp_in, int* visited_nodes, double* best
 
 }
 
-void insertion(tsp_instance* tsp_in, int* visited_nodes, double* best_cost)
+void insertion(tsp_instance* tsp_in, int* visited_nodes, double* best_cost, int seed)
 {
 	double max_dist = -1;
 	int indices[2];
@@ -197,14 +271,14 @@ void insertion(tsp_instance* tsp_in, int* visited_nodes, double* best_cost)
 	(*best_cost) = max_dist * 2;
 
 	int i_best;
-	
+
 	for (; count < tsp_in->num_nodes ; count++)
 	{
 		double best_cost_h = DBL_MAX;
 		int k_best;
 
-		min_extra_mileage(tsp_in, count, visited_nodes, node1, node2, costs, &i_best, &k_best ,&best_cost_h, best_cost);
-		
+		min_extra_mileage(tsp_in, count, visited_nodes, node1, node2, costs, &i_best, &k_best ,&best_cost_h, best_cost, seed);
+
 		if (tsp_in->integerDist)
 		{
 			int x1, x2;
@@ -232,11 +306,15 @@ void insertion(tsp_instance* tsp_in, int* visited_nodes, double* best_cost)
 	}
 }
 
-void min_cost(tsp_instance* tsp_in, int* nodes, int i, double* min_dist, int* best)
+void min_cost(tsp_instance* tsp_in, int* nodes, int i, double* min_dist, int* best, int seed)
 {
 #ifdef GRASP
 
-	srand(time(NULL));
+	if(!seed)
+		srand(time(NULL));
+	else
+		srand(seed);
+
 	double min[] = { DBL_MAX , DBL_MAX, DBL_MAX };
 	int min_pos[3];
 	min_pos[0] = tsp_in->num_nodes;
@@ -289,7 +367,7 @@ void min_cost(tsp_instance* tsp_in, int* nodes, int i, double* min_dist, int* be
 
 	}
 
-	
+
 	int max = 0;
 	if (min[1] == DBL_MAX)
 		max = 3;
@@ -351,11 +429,15 @@ void min_cost(tsp_instance* tsp_in, int* nodes, int i, double* min_dist, int* be
 
 }
 
-void min_extra_mileage(tsp_instance* tsp_in, int count, int* visited_nodes, int* node1, int* node2, double* costs, int* i_best, int* k_best, double* best_cost_h, double* best_cost )
+void min_extra_mileage(tsp_instance* tsp_in, int count, int* visited_nodes, int* node1, int* node2, double* costs, int* i_best, int* k_best, double* best_cost_h, double* best_cost, int seed)
 {
 #ifdef GRASP
 
-	srand(time(NULL));
+	if (!seed)
+		srand(time(NULL));
+	else
+		srand(seed);
+
 	double min[] = { DBL_MAX , DBL_MAX, DBL_MAX };
 	int min_nodes[3];
 	int min_edges[3];
@@ -437,8 +519,8 @@ void min_extra_mileage(tsp_instance* tsp_in, int count, int* visited_nodes, int*
 			min_nodes[2] = h;
 		}
 	}
-	
-	
+
+
 	if (count < tsp_in->num_nodes - 2)
 	{
 		int n = rand() % 9;
@@ -469,7 +551,7 @@ void min_extra_mileage(tsp_instance* tsp_in, int count, int* visited_nodes, int*
 	}
 
 #else
-	
+
 	int h = 0;
 	for (; h < tsp_in->num_nodes; h++)
 	{
@@ -563,7 +645,7 @@ void greedy_refinement(tsp_instance* tsp_in, int* visited_nodes, double* best_co
 {
 	static int greedy_count = 0;
 	greedy_count++;
-	int* succ = calloc(tsp_in->num_nodes, sizeof(int));
+	int* succ = calloc((size_t)tsp_in->num_nodes, sizeof(int));
 	succ_construction(visited_nodes, succ, tsp_in->num_nodes);
 
 	double check_cost;
@@ -571,7 +653,7 @@ void greedy_refinement(tsp_instance* tsp_in, int* visited_nodes, double* best_co
 	do
 	{
 		check_cost = (*best_cost);
-		
+
 		int i = 0;
 		for (; i < tsp_in->num_nodes; i++)
 		{
@@ -593,7 +675,7 @@ void greedy_refinement(tsp_instance* tsp_in, int* visited_nodes, double* best_co
 				if (j != i && j != succ[i] && succ[j] != i && succ[j] != succ[i])
 				{
 					double cost_j_h; //cost[i, succ[i]]
-					double cost_i_j; 
+					double cost_i_j;
 					double cost_k_h;
 
 					if (tsp_in->integerDist)
@@ -616,7 +698,7 @@ void greedy_refinement(tsp_instance* tsp_in, int* visited_nodes, double* best_co
 					double delta = cost_i_j + cost_k_h - cost_i_k - cost_j_h;
 
 					if (delta < 0.0)
-					{	
+					{
 						(*best_cost) += delta;
 
 						int k = succ[i];
@@ -664,8 +746,8 @@ void greedy_refinement(tsp_instance* tsp_in, int* visited_nodes, double* best_co
 		node = succ[i];
 		i = node;
 		visited_nodes[count] = node;  //inserirlo nell'algoritmo
-		//printf("[ %d ] count: %d\n", greedy_count, visited_nodes[count]);  
-	} 
+		//printf("[ %d ] count: %d\n", greedy_count, visited_nodes[count]);
+	}
 
 	free(succ);
 }
@@ -673,7 +755,7 @@ void greedy_refinement(tsp_instance* tsp_in, int* visited_nodes, double* best_co
 void vns(tsp_instance* tsp_in, int* visited_nodes, double *best_cost)
 {
 	srand(time(NULL));
-	
+
 	int* local_min_visited_nodes = (int*)calloc((size_t)tsp_in->num_nodes, sizeof(int));
 
 	int i = 0;
@@ -688,7 +770,7 @@ void vns(tsp_instance* tsp_in, int* visited_nodes, double *best_cost)
 	while(num_local_mins < MAX_LOCAL_MINS && num_iterations < MAX_NUM_ITERATIONS)
 	{
 		int* kopt_visited_nodes = (int*)calloc((size_t)tsp_in->num_nodes, sizeof(int));
-		
+
 		for (i=0; i < tsp_in->num_nodes; i++)
 		{
 			kopt_visited_nodes[i] = local_min_visited_nodes[i];
@@ -748,8 +830,8 @@ void vns(tsp_instance* tsp_in, int* visited_nodes, double *best_cost)
 
 
 			int* result_kopt_visited_nodes = (int*)calloc((size_t)tsp_in->num_nodes, sizeof(int));
-			
-			
+
+
 			for(i = 0; i < tsp_in->num_nodes; i++)
 			{
 				result_kopt_visited_nodes[i] = kopt_visited_nodes[i];
@@ -757,7 +839,7 @@ void vns(tsp_instance* tsp_in, int* visited_nodes, double *best_cost)
 
 			double result_kopt_cost = kopt_cost;
 			greedy_refinement(tsp_in, result_kopt_visited_nodes, &result_kopt_cost);
-			
+
 			if(local_min_cost != result_kopt_cost)//abs(local_min_cost - result_kopt_cost)>1e-10
 			{
 				num_local_mins++;
@@ -789,7 +871,7 @@ void vns(tsp_instance* tsp_in, int* visited_nodes, double *best_cost)
 	}
 }
 
-void update_solution(int* visited_nodes, double* sol, int num_nodes)//necessario aver già allocato sol , un vettore di double generico
+void update_solution(int* visited_nodes, double* sol, int num_nodes)//necessario aver giï¿½ allocato sol , un vettore di double generico
 {
 	int num_edges = num_nodes * (num_nodes - 1) / 2;
 
@@ -799,10 +881,10 @@ void update_solution(int* visited_nodes, double* sol, int num_nodes)//necessario
 
 	for (i = 0; i < num_nodes; i++)
 		sol[generic_xpos(visited_nodes[i], visited_nodes[(i + 1) % num_nodes], num_nodes)] = 1.0;
-	
+
 }
 
-void succ_construction(int* visited_nodes, int* succ, int num_nodes)//succ deve essere già allocato
+void succ_construction(int* visited_nodes, int* succ, int num_nodes)//succ deve essere giï¿½ allocato
 {
 	int i;
 	for (i = 0; i < num_nodes; i++)
@@ -935,7 +1017,6 @@ void tabu_search(tsp_instance* tsp_in, int* visited_nodes, double* best_cost)
 		//if (num_negative_delta == 2 * tsp_in->num_nodes)
 		if (negative)
 		{
-			printf("\nDone greedy refinement\n");
 			greedy_refinement_for_tabu_search(tsp_in, nodes, tabu_list, tenure, &num_tabu_edges, &actual_cost);
 
 		}
@@ -954,7 +1035,7 @@ void tabu_search(tsp_instance* tsp_in, int* visited_nodes, double* best_cost)
 			actual_cost = actual_cost + min_increase;
 		}
 
-		//aggionare vettore di costi ****************FARLO IN MANIERA PIù DECENTE***************
+		//aggionare vettore di costi ****************FARLO IN MANIERA PIï¿½ DECENTE***************
 		int h;
 		for (h = 0; h < tsp_in->num_nodes - 1; h++)
 		{
@@ -1077,7 +1158,7 @@ void greedy_refinement_for_tabu_search(tsp_instance* tsp_in, int* visited_nodes,
 							int next = succ[i];
 
 							int count = 0;
-							int* orientation = (int*)calloc(sizeof(int), (size_t)tsp_in->num_nodes);
+							int* orientation = (int*)calloc((size_t)tsp_in->num_nodes,sizeof(int));
 
 							while (next != j)
 							{
@@ -1119,7 +1200,7 @@ void greedy_refinement_for_tabu_search(tsp_instance* tsp_in, int* visited_nodes,
 	{
 		node = succ[i];
 		i = node;
-		visited_nodes[count] = node;  //inserirlo nell'algoritmo 
+		visited_nodes[count] = node;  //inserirlo nell'algoritmo
 	}
 
 	free(succ);
