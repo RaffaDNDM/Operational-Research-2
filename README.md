@@ -1,6 +1,6 @@
 # Operational-Research-2
 ### Algorithms of integer linear programming applied to TSP problem
-- [CPLEX exact solvers.](https://github.com/RaffaDNDM/Operational-Research-2/blob/master/TSP/TSP/cplex_solver.h)
+- CPLEX exact solvers.
   - [Branch&Cut.](https://github.com/RaffaDNDM/Operational-Research-2/blob/master/TSP/TSP/bc_solver.h)
   - Lazy callbacks.
     1. [Subtour Elimination Constraint (SEC).](https://github.com/RaffaDNDM/Operational-Research-2/blob/master/TSP/TSP/bc_solver.h)
@@ -15,7 +15,7 @@
   - [Loop solver.](https://github.com/RaffaDNDM/Operational-Research-2/blob/master/TSP/TSP/loop_solver.h)
   - [Hard Fixing.](https://github.com/RaffaDNDM/Operational-Research-2/blob/master/TSP/TSP/bc_solver.h)
   - [Soft fixing.](https://github.com/RaffaDNDM/Operational-Research-2/blob/master/TSP/TSP/bc_solver.h)
-- [Heuristic solvers.](https://github.com/RaffaDNDM/Operational-Research-2/blob/master/TSP/TSP/heuristic_solver.h)
+- Heuristic solvers.
   - Construction algorithm.
     1. [Nearest Neighborhood.](https://github.com/RaffaDNDM/Operational-Research-2/blob/master/TSP/TSP/heuristic_solver.h)
     2. [Insertion.](https://github.com/RaffaDNDM/Operational-Research-2/blob/master/TSP/TSP/heuristic_solver.h)
