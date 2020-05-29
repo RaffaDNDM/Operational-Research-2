@@ -1,9 +1,8 @@
 ﻿  heuristic.c
 D:\github\OperationalResearch2\TSP\TSP\heuristic.h(37,36): warning C4224: nonstandard extension used: formal parameter 'tsp_instance' was previously defined as a type
-D:\github\OperationalResearch2\TSP\TSP\heuristic.c(266,18): warning C4244: 'function': conversion from 'time_t' to 'unsigned int', possible loss of data
-D:\github\OperationalResearch2\TSP\TSP\heuristic.c(385,18): warning C4244: 'function': conversion from 'time_t' to 'unsigned int', possible loss of data
-D:\github\OperationalResearch2\TSP\TSP\heuristic.c(757,18): warning C4244: 'function': conversion from 'time_t' to 'unsigned int', possible loss of data
-D:\github\OperationalResearch2\TSP\TSP\heuristic.c(838,44): warning C4244: 'function': conversion from 'double' to 'int', possible loss of data
+D:\github\OperationalResearch2\TSP\TSP\heuristic.c(220,18): warning C4244: 'function': conversion from 'time_t' to 'unsigned int', possible loss of data
+D:\github\OperationalResearch2\TSP\TSP\heuristic.c(339,18): warning C4244: 'function': conversion from 'time_t' to 'unsigned int', possible loss of data
+D:\github\OperationalResearch2\TSP\TSP\heuristic.c(656,18): warning C4244: 'function': conversion from 'time_t' to 'unsigned int', possible loss of data
   Generating code
   2 of 52 functions ( 3.8%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation

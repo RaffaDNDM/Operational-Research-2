@@ -7,8 +7,8 @@
 #include <float.h>
 
 #define GRASP 
-#define MAX_LOCAL_MINS 40
-#define MAX_NUM_ITERATIONS 10000
+#define MAX_LOCAL_MINS 200
+#define MAX_NUM_ITERATIONS 1000
 
 /**
 	Heuristic solver, call the select algorithm
@@ -20,13 +20,13 @@ void heuristic_solver(tsp_instance* tsp_in);
 	Insertion algorithm
 	\param tsp_in reference to tsp instance structure
 */
-void insertion(tsp_instance* tsp_in, int* visited_nodes);
+void insertion(tsp_instance* tsp_in, int* visited_nodes, double* best_cost);
 
 /**
 	Nearest neighborhood algorithm
 	\param tsp_in reference to tsp instance structure
 */
-void nearest_neighborhood(tsp_instance* tsp_in, int* visited_nodes);
+void nearest_neighborhood(tsp_instance* tsp_in, int* visited_nodes, double* best_cost);
 
 void min_cost(tsp_instance* tsp_in, int* nodes, int i, double* min_dist, int* best);
 

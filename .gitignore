@@ -2,8 +2,6 @@
 TSP/.vs/TSP/v16/.suo
 TSP/.vs/TSP/v16/Browse.VC.opendb
 TSP/.vs/TSP/v16/ipch/AutoPCH/556e849a18aed40a/HEURISTIC.ipch
-TSP/TSP/heuristic.c
-TSP/TSP/heuristic.h
 TSP/TSP/solutionCPLEX.dat
 TSP/TSP/solutionCPLEX.png
 TSP/TSP/TSP.vcxproj.user
