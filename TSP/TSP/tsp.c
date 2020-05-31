@@ -48,7 +48,7 @@ int main(int argc, char** argv)
 void solution(tsp_instance* tsp_in)
 {
 	//tsp_in->sol = (int*)calloc(((size_t)tsp_in->num_nodes) +1, sizeof(int));
-	if (tsp_in->alg < 5)
+	if (tsp_in->alg < 5 || tsp_in->alg == 8)
 		cplex_solver(tsp_in);
 	else
 		heuristic_solver(tsp_in);

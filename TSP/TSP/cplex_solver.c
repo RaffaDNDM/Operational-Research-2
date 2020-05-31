@@ -81,6 +81,17 @@ void cplex_solver(tsp_instance* tsp_in)
 			break;
 
 		}
+
+		case 8:
+		{
+			printf(LINE);
+			printf("Patching algorithm\n\n");
+			time_t start_time = clock();
+			bc_solver(env, lp, tsp_in, succ, comp, 0);
+			time_t end_time = clock();
+			tsp_in->execution_time = ((double)(end_time - start_time) / (double)CLOCKS_PER_SEC);
+			break;
+		}
 	}
 
 	print_cost(tsp_in);

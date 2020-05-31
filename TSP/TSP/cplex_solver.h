@@ -58,4 +58,6 @@ void cplex_build_model(tsp_instance* tsp_in, CPXENVptr env, CPXLPptr lp);
 */
 int compact_xpos(tsp_instance* tsp_in, int i, int j);
 
+void cplex_define_tour(tsp_instance* tsp_in, double* x, int* succ, int* comp, int* n_comps);
+
 #endif

@@ -72,6 +72,8 @@ typedef struct
 	double eps_gap;
 	int seed;
 	char dir[DIR_SIZE];
+	int* heu_sol;
+	double cost_heu_sol;
 
 	//Output
 	double* sol;
