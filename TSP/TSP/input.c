@@ -200,6 +200,7 @@ void help()
 	printf("5) %s \n", ALG5);
 	printf("6) %s \n", ALG6);
 	printf("7) %s \n", ALG7);
+	printf("8) %s \n", ALG8);
 	printf(STAR_LINE);
 	printf("Insert the max time of the execution\n");
 	printf("-d dead_time\n");

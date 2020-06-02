@@ -1,11 +1,9 @@
 ﻿  bc_solver.c
-C:\Users\User\github\Operational-Research-2\TSP\TSP\bc_solver.c(184,35): warning C4090: 'funzione': qualificatori 'const' differenti
-C:\Users\User\github\Operational-Research-2\TSP\TSP\bc_solver.c(405,18): warning C4244: 'funzione': conversione da 'time_t' a 'unsigned int'. Possibile perdita di dati.
-C:\Users\User\github\Operational-Research-2\TSP\TSP\bc_solver.c(447,14): warning C4090: 'funzione': qualificatori 'const' differenti
-C:\Users\User\github\Operational-Research-2\TSP\TSP\bc_solver.c(679,28): warning C4244: '=': conversione da 'double' a 'int'. Possibile perdita di dati.
-C:\Users\User\github\Operational-Research-2\TSP\TSP\bc_solver.c(682,51): warning C4244: '=': conversione da 'double' a 'int'. Possibile perdita di dati.
-C:\Users\User\github\Operational-Research-2\TSP\TSP\bc_solver.c(704,28): warning C4244: '=': conversione da 'double' a 'int'. Possibile perdita di dati.
-C:\Users\User\github\Operational-Research-2\TSP\TSP\bc_solver.c(448): warning C4715: 'patching_callback': non tutti i percorsi di controllo restituiscono un valore
-C:\Users\User\github\Operational-Research-2\TSP\TSP\bc_solver.c(689): warning C4716: 'patching': deve restituire un valore
-C:\Users\User\github\Operational-Research-2\TSP\TSP\bc_solver.c(706): warning C4716: 'heuristic_callback': deve restituire un valore
+C:\Users\User\github\Operational-Research-2\TSP\TSP\bc_solver.c(32,63): warning C4047: '=': 'double **' differisce da 'int *' nei livelli di riferimento indiretto
+C:\Users\User\github\Operational-Research-2\TSP\TSP\bc_solver.c(39,77): warning C4133: '=': tipi non compatibili. Da 'int *' a 'double *'
+C:\Users\User\github\Operational-Research-2\TSP\TSP\bc_solver.c(188,35): warning C4090: 'funzione': qualificatori 'const' differenti
+C:\Users\User\github\Operational-Research-2\TSP\TSP\bc_solver.c(409,18): warning C4244: 'funzione': conversione da 'time_t' a 'unsigned int'. Possibile perdita di dati.
+C:\Users\User\github\Operational-Research-2\TSP\TSP\bc_solver.c(451,14): warning C4090: 'funzione': qualificatori 'const' differenti
+C:\Users\User\github\Operational-Research-2\TSP\TSP\bc_solver.c(694,48): warning C4244: 'funzione': conversione da 'double' a 'int'. Possibile perdita di dati.
+C:\Users\User\github\Operational-Research-2\TSP\TSP\bc_solver.c(677): warning C4716: 'patching': deve restituire un valore
   TSP.vcxproj -> C:\Users\User\github\Operational-Research-2\TSP\x64\Debug\TSP.exe

@@ -39,12 +39,12 @@ void heuristic_solver(tsp_instance* tsp_in)
 
 	switch (tsp_in->alg)
 	{
-		case 6:
+		case 7:
 		{
 			printf("VNS\n");
 			break;
 		}
-		case 7:
+		case 8:
 		{
 			printf("Tabu search\n");
 			break;
@@ -102,7 +102,7 @@ void heuristic_solver(tsp_instance* tsp_in)
 	{
 		switch (tsp_in->alg)
 		{
-		case 6: case 7:
+		case 7: case 8:
 		{
 			int k;
 			for (k = 0; k < tsp_in->num_nodes; k++)
@@ -133,12 +133,12 @@ void* computeSolution(void* param)
 
 	switch (args->tsp_in->alg)
 	{
-		case 6:
+		case 7:
 		{
 			vns(args->tsp_in, visited_nodes, &best_cost);
 			break;
 		}
-		case 7:
+		case 8:
 		{
 			tabu_search(args->tsp_in, visited_nodes, &best_cost);
 			break;

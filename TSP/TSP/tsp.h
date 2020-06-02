@@ -34,11 +34,11 @@
 #define ALG1 "Loop"
 #define ALG2 "Branch&Cut"
 #define ALG3 "Branch&CutGeneral"
-#define ALG4 "MTZ"
-#define ALG5 "GG"
-#define ALG6 "VNS"
-#define ALG7 "TabuSearch"
-#define ALG8 "Branch&Cut Patching"
+#define ALG4 "Branch&Cut Patching"
+#define ALG5 "MTZ"
+#define ALG6 "GG"
+#define ALG7 "VNS"
+#define ALG8 "TabuSearch"
 #define ALG9 "Branch&Cut General Patching"
 
 //Creation or not of the performance profile
@@ -72,8 +72,9 @@ typedef struct
 	double eps_gap;
 	int seed;
 	char dir[DIR_SIZE];
-	int* heu_sol;
-	double cost_heu_sol;
+	int* present_heu_sol; //1 se presente, 0 se assente
+	double** heu_sol;
+	double* cost_heu_sol;
 
 	//Output
 	double* sol;
