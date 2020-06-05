@@ -84,5 +84,6 @@ int patching(CPXENVptr env, tsp_instance* tsp_in, double* x_star, double objval,
 
 static int CPXPUBLIC heuristic_callback(CPXCENVptr env, void* cbdata, int wherefrom, void* cbhandle, double* objval_p, double* x, int* checkfeas_p, int* useraction_p);
 
+static int CPXPUBLIC set_incumbent(CPXCENVptr env, void* cbdata, int wherefrom, void* cbhandle, double objval, double* x, int* isfeas_p, int* useraction_p);
 
 #endif

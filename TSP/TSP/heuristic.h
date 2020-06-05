@@ -16,7 +16,7 @@
 
 #define HAVE_STRUCT_TIMESPEC
 #include <pthread.h>
-#define MULTI_START //Comment or not if you want multistart or not
+//#define MULTI_START //Comment or not if you want multistart or not
 #define NUM_MULTI_START 10
 #define STEP_SEED 100
 
@@ -30,7 +30,8 @@ typedef struct
 #define GRASP
 #define MAX_LOCAL_MINS 200
 #define MAX_NUM_ITERATIONS 1000
-#define CONSTRUCTION_TYPE 1	// 0 = nearest neighborhood algorithm, 1 = insertion algorithm
+#define CONSTRUCTION_TYPE 0	// 0 = nearest neighborhood algorithm, 1 = insertion algorithm
+
 
 void* computeSolution(void* param);
 
@@ -66,7 +67,8 @@ void succ_construction(int* visited_nodes, int* succ, int num_nodes);
 
 void tabu_search(tsp_instance* tsp_in, int* visited_nodes, double* best_cost);
 
-void add_element(int* list1, int* list2, int dimension, int element1, int element2);
+void add_element(int* list1, int* list2, int dimension, int element1, int element2, int with_reduction, int logically_full);
 
-void greedy_refinement_for_tabu_search(tsp_instance* tsp_in, int* visited_nodes, int** tabu_list, int tenure, int* num_tabu_edges, double* cost);
+void greedy_refinement_for_tabu_search(tsp_instance* tsp_in, int* visited_nodes, int** tabu_list, int max_tenure, 
+	int min_tenure, int* num_tabu_edges, double* cost);
 #endif

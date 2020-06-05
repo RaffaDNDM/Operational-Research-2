@@ -38,14 +38,21 @@ void bc_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ, int*
 			tsp_in->cost_heu_sol[k] = CPX_INFBOUND;
 			tsp_in->heu_sol[k] = (int*)calloc((size_t)tsp_in->num_nodes, sizeof(int));
 		}
+
+		//assert(CPXsetintparam(env, CPXPARAM_MIP_Strategy_HeuristicFreq, -1) == 0);
+
+		CPXsetintparam(env, CPX_PARAM_LBHEUR, CPX_OFF);
+
 		CPXsetlazyconstraintcallbackfunc(env, patching_callback, tsp_in);
-		CPXsetheuristiccallbackfunc(env, heuristic_callback, tsp_in);
+		//CPXsetheuristiccallbackfunc(env, heuristic_callback, tsp_in);
+		CPXsetincumbentcallbackfunc(env, set_incumbent, tsp_in);
 		//CPXsetintparam(env, CPX_PARAM_HEURFREQ, 5);
 		break;
 	}
 	}
 
-	CPXsetintparam(env, CPX_PARAM_THREADS, ncores);
+	if (tsp_in->alg != 4)
+		CPXsetintparam(env, CPX_PARAM_THREADS, ncores);
 
 	int i = 0;
 	int percentage[] = {90, 75, 50, 25, 10, 0};
@@ -154,8 +161,29 @@ void bc_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ, int*
 	}
 
 	CPXmipopt(env, lp);
-	assert(CPXgetobjval(env, lp, &cost) == 0);
 
+	/*
+	if (tsp_in->alg == 4)//patching
+	{
+		int* succ = (int*)calloc((size_t)tsp_in->num_nodes, sizeof(int));
+		int* comp = (int*)calloc((size_t)tsp_in->num_nodes, sizeof(int));
+		int n_comps = 0;
+		double* x = (double*)calloc((size_t)tsp_in->num_cols, sizeof(double));
+		assert(CPXgetmipx(env, lp, x, 0, tsp_in->num_cols - 1) == 0);
+		define_tour(tsp_in, x, succ, comp, &n_comps);
+		
+		while (n_comps != 1)
+		{
+			CPXmipopt(env, lp);
+			define_tour(tsp_in, x, succ, comp, &n_comps);
+		}
+
+		free(succ);
+		free(comp);
+		free(x);
+	}
+	*/
+	
 	if (tsp_in->bestCostD - cost > 1e-6)
 	{
 		tsp_in->bestCostD = cost;
@@ -170,6 +198,7 @@ void bc_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ, int*
 		tsp_in->bestCostI = (int)(tsp_in->bestCostD + CAST_PRECISION);
 		tsp_in->bestCostD = 0.0;
 	}
+	
 }
 
 static int CPXPUBLIC sec_callback(CPXCENVptr env, void* cbdata, int wherefrom, void* cbhandle, int* useraction_p)
@@ -450,6 +479,10 @@ static int CPXPUBLIC patching_callback(CPXCENVptr env, void* cbdata, int wherefr
 
 	patching(env, tsp_in, x_star, objval, cbdata, wherefrom);
 
+	*useraction_p = CPX_CALLBACK_SET;
+
+	free(x_star);
+
 	return 0;
 }
 
@@ -489,7 +522,7 @@ int patching(CPXENVptr env, tsp_instance* tsp_in, double* x_star, double objval,
 				continue;
 
 			int j;
-			for (j = 0; j < tsp_in->num_nodes; j++)
+			for (j = i+1; j < tsp_in->num_nodes; j++)
 			{
 				double cost_i_h; //[comp1[i], comp1[i+1]]
 				double cost_j_k; //[comp2[j], comp2[j+1]]
@@ -498,7 +531,7 @@ int patching(CPXENVptr env, tsp_instance* tsp_in, double* x_star, double objval,
 				double cost_h_j; //[comp1[i+1], comp2[j]]
 				double cost_k_i; //[comp2[j+1], comp1[i]]
 
-				if (i!= j  && comp[j] != 1) //ho selezionato la prima componente , ora la espando unendola alla più vicina
+				if (comp[j] != 1) //ho selezionato la prima componente , ora la espando unendola alla più vicina
 				{
 
 					if (tsp_in->integerDist)
@@ -555,8 +588,8 @@ int patching(CPXENVptr env, tsp_instance* tsp_in, double* x_star, double objval,
 			}
 		}
 
-		int* visited_nodes1 = calloc(tsp_in->num_nodes, sizeof(int));
-		int* visited_nodes2 = calloc(tsp_in->num_nodes, sizeof(int));
+		int* visited_nodes1 =(int*) calloc(tsp_in->num_nodes, sizeof(int));
+		int* visited_nodes2 =(int*) calloc(tsp_in->num_nodes, sizeof(int));
 		int num_nodes_vn1 = 0;
 		int num_nodes_vn2 = 0;
 		
@@ -580,11 +613,13 @@ int patching(CPXENVptr env, tsp_instance* tsp_in, double* x_star, double objval,
 		for (i=0; comp[i] != comp2; i++);
 
 		begin = i;
-		visited_nodes2[num_nodes_vn2++] = i;
+		visited_nodes2[num_nodes_vn2] = i;
+		num_nodes_vn2++;
 
 		while (succ[i] != begin)
 		{
-			visited_nodes2[num_nodes_vn2++] = succ[i];
+			visited_nodes2[num_nodes_vn2] = succ[i];
+			num_nodes_vn2++;
 			i = succ[i];
 		}
 
@@ -608,7 +643,8 @@ int patching(CPXENVptr env, tsp_instance* tsp_in, double* x_star, double objval,
 		{
 			for (i = 0; visited_nodes2[i] != node2; i++);
 
-			for (count=0; count < num_nodes_vn2 - 1; count++)
+			//for (count=0; count < num_nodes_vn2 - 1; count++)
+			while( visited_nodes2[(i + 1) % num_nodes_vn2] != succ_node1)
 			{
 				succ[visited_nodes2[(i + 1) % num_nodes_vn2]] = visited_nodes2[i];
 				i = (i + 1) % num_nodes_vn2;
@@ -656,6 +692,7 @@ int patching(CPXENVptr env, tsp_instance* tsp_in, double* x_star, double objval,
 
 	int thread;
 	CPXgetcallbackinfo(env, cbdata, wherefrom, CPX_CALLBACK_INFO_MY_THREAD_NUM, &thread);
+	printf(">>>>>>>>>>>>>>>>>>>>>>>>thread %d<<<<<<<<<<<<<<<<<<<<<<<<<<\n", thread);
 
 	//if (cost < objval && cost < tsp_in->cost_heu_sol)
 	if (cost < tsp_in->cost_heu_sol[thread])
@@ -687,9 +724,13 @@ static int CPXPUBLIC heuristic_callback(CPXCENVptr env, void* cbdata, int wheref
 
 	if (tsp_in->present_heu_sol[thread] == 1)
 	{
-		printf("++++++++++++ Used heuristic solution ++++++++++++++\n");
-	
+
+
+		printf("++++++++++++ Used heuristic solution ++++++++++++++   cost = %lf\n", tsp_in->cost_heu_sol[thread]);
 		int i;
+		for (i = 0; i < tsp_in->num_cols; i++)
+			x[i] = 0.0;
+
 		for (i = 0; i < tsp_in->num_nodes; i++)
 			x[xpos(tsp_in, i, tsp_in->heu_sol[thread][i])] = 1.0;
 
@@ -697,20 +738,59 @@ static int CPXPUBLIC heuristic_callback(CPXCENVptr env, void* cbdata, int wheref
 
 		tsp_in->cost_heu_sol[thread] = CPX_INFBOUND;
 		tsp_in->present_heu_sol[thread] = 0; //soluzione non più valida
-		
+
 		/*
 		printf("thread %d\n", thread);
+		printf("num cols %d\n", tsp_in->num_cols);
 
 		for (i = 0; i < tsp_in->num_cols; i++)
 		{
-			if (tsp_in->heu_sol[thread][i] == 1.0)
+			if (x[i] == 1.0)
 				printf("x[%d] = %lf\n", i, x[i]);
-		}
-		*/
+		}*/
+		
 
 		*useraction_p = CPX_CALLBACK_SET;
+		*checkfeas_p = 1;
 	}
 
 	return 0;
 
+}
+
+static int CPXPUBLIC set_incumbent(CPXCENVptr env, void* cbdata, int wherefrom, void* cbhandle, double objval, double* x, int* isfeas_p, int* useraction_p)
+{
+	*useraction_p = CPX_CALLBACK_DEFAULT;
+	tsp_instance* tsp_in = (tsp_instance*) cbhandle;
+
+
+	printf("objval = %lf\n", objval);
+
+	int thread;
+	CPXgetcallbackinfo(env, cbdata, wherefrom, CPX_CALLBACK_INFO_MY_THREAD_NUM, (void*)&thread);
+
+	if (tsp_in->present_heu_sol[thread] == 1)
+	{
+
+
+		printf("++++++++++++ Used heuristic solution ++++++++++++++   cost = %lf\n", tsp_in->cost_heu_sol[thread]);
+		int i;
+		for (i = 0; i < tsp_in->num_cols; i++)
+			x[i] = 0.0;
+
+		for (i = 0; i < tsp_in->num_nodes; i++)
+			x[xpos(tsp_in, i, tsp_in->heu_sol[thread][i])] = 1.0;
+
+		//*objval_p = tsp_in->cost_heu_sol[thread];
+
+		tsp_in->cost_heu_sol[thread] = CPX_INFBOUND;
+		tsp_in->present_heu_sol[thread] = 0; //soluzione non più valida
+
+
+		(*useraction_p) = CPX_CALLBACK_SET;
+		(*isfeas_p) = 1;
+	}
+
+
+	return 0;
 }
