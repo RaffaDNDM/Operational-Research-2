@@ -871,7 +871,7 @@ void vns(tsp_instance* tsp_in, int* visited_nodes, double *best_cost)
 	}
 }
 
-void update_solution(int* visited_nodes, double* sol, int num_nodes)//necessario aver gi� allocato sol , un vettore di double generico
+void update_solution(int* visited_nodes, double* sol, int num_nodes)//necessario aver già allocato sol , un vettore di double generico
 {
 	int num_edges = num_nodes * (num_nodes - 1) / 2;
 
@@ -894,17 +894,26 @@ void succ_construction(int* visited_nodes, int* succ, int num_nodes)//succ deve 
 
 void tabu_search(tsp_instance* tsp_in, int* visited_nodes, double* best_cost)
 {
-	printf("Starting cost = %lf\n", *best_cost);
+	#ifndef MULTI_START
+	if (tsp_in->verbose > 50)
+		printf("Starting cost = %lf\n", *best_cost);
+
+	#endif 
 
 	greedy_refinement(tsp_in, visited_nodes, best_cost); //prima di iniziare l'algoritmo devo essere sicura di trovarmi in un minimo locale
 
-	int** tabu_list = (int**)calloc((size_t)2, sizeof(int*));//[tabu_list[0][i], tabu_list[1][i]]
-	if (tabu_list == NULL)
-		printf("ERROR\n");
+	#ifndef MULTI_START
+	if (tsp_in->verbose > 50)
+		printf("Cost after first greedy = %lf\n", *best_cost);
+
+	#endif 
 
 	int min_tenure = ceil(tsp_in->num_nodes / 10.0);
 	int max_tenure = ceil(tsp_in->num_nodes / 5.0);
 
+	int** tabu_list = (int**)calloc((size_t)2, sizeof(int*));//[tabu_list[0][i], tabu_list[1][i]]
+	if (tabu_list == NULL)
+		printf("ERROR\n");
 
 	tabu_list[0] = (int*)calloc((size_t)max_tenure, sizeof(int));
 	if (tabu_list[0] == NULL)
@@ -912,6 +921,11 @@ void tabu_search(tsp_instance* tsp_in, int* visited_nodes, double* best_cost)
 	tabu_list[1] = (int*)calloc((size_t)max_tenure, sizeof(int));
 	if (tabu_list[1] == NULL)
 		printf("ERROR\n");
+
+	tabu_list_params param;
+	param.end_list = -1;
+	param.start_list = 0;
+
 	int i;
 	for (i = 0; i < max_tenure; i++)
 	{
@@ -946,8 +960,6 @@ void tabu_search(tsp_instance* tsp_in, int* visited_nodes, double* best_cost)
 		nodes[j] = visited_nodes[j];
 
 	double actual_cost = *best_cost;
-
-	printf("max_tenure = %d --------  min_tenure = %d\n", max_tenure, min_tenure);
 
 	int num_iteration = 0;
 	for (; num_iteration < MAX_NUM_ITERATIONS; num_iteration++)
@@ -1029,8 +1041,13 @@ void tabu_search(tsp_instance* tsp_in, int* visited_nodes, double* best_cost)
 		//if (num_negative_delta == 2 * tsp_in->num_nodes)
 		if (negative)
 		{
-			greedy_refinement_for_tabu_search(tsp_in, nodes, tabu_list, max_tenure, min_tenure, &num_tabu_edges, &actual_cost);
-			//printf("dopo greedy ---->> num tabu edges = %d\n", num_tabu_edges);
+			greedy_refinement_for_tabu_search(tsp_in, nodes, tabu_list, &param, max_tenure, min_tenure, &num_tabu_edges, &actual_cost);
+
+			#ifndef MULTI_START
+			if (tsp_in->verbose > 50)
+				printf("find local minimum ---->> cost = %lf\n", actual_cost);
+
+			#endif 
 
 		}//terminato il greedy devo riampliare la tabu list fino al massimo
 		else
@@ -1039,22 +1056,20 @@ void tabu_search(tsp_instance* tsp_in, int* visited_nodes, double* best_cost)
 			nodes[pos1] = nodes[pos2];
 			nodes[pos2] = temp;
 
-			add_element(tabu_list[0], tabu_list[1], max_tenure, nodes[(pos1 - 1 + tsp_in->num_nodes) % tsp_in->num_nodes], nodes[pos2], 0, 0);
-			add_element(tabu_list[0], tabu_list[1], max_tenure, nodes[pos1], nodes[(pos2 + 1) % tsp_in->num_nodes], 0, 0);
-
+			add_element(tabu_list[0], tabu_list[1], max_tenure, nodes[(pos1 - 1 + tsp_in->num_nodes) % tsp_in->num_nodes], nodes[pos2], 0, 0, &param);
+			add_element(tabu_list[0], tabu_list[1], max_tenure, nodes[pos1], nodes[(pos2 + 1) % tsp_in->num_nodes], 0, 0, &param);
+	
 			if (num_tabu_edges < max_tenure)
 				num_tabu_edges = num_tabu_edges + 2;
 
-
-			/*printf("TABU LIST ------- num_tabu_edges = %d\n", num_tabu_edges);
-
-			int k;
-			for (k = 0; k < max_tenure; k++)
-				printf("[%d, %d]\n", tabu_list[0][k], tabu_list[1][k]);
-				*/
 			actual_cost = actual_cost + min_increase;
 
-			//printf("durante diversificazione ---->> num tabu edges = %d\n", num_tabu_edges);
+			#ifndef MULTI_START
+			if (tsp_in->verbose > 50)
+				printf("Update cost >> cost = %lf\n", actual_cost);
+
+			#endif 
+
 		}
 
 		//aggionare vettore di costi ****************FARLO IN MANIERA PIù DECENTE***************
@@ -1087,38 +1102,35 @@ void tabu_search(tsp_instance* tsp_in, int* visited_nodes, double* best_cost)
 	free(nodes);
 }
 
-static int end_list = -1;
-static int start_list = 0;
-
-void add_element(int* list1, int* list2, int dimension, int element1, int element2, int with_reduction, int logically_full)
+void add_element(int* list1, int* list2, int dimension, int element1, int element2, int with_reduction, int logically_full, tabu_list_params* param)
 {
 	if (!with_reduction)
 	{
-		end_list = (end_list + 1) % dimension;
-		list1[end_list] = element1;
-		list2[end_list] = element2;
+		param->end_list = (param->end_list + 1) % dimension;
+		list1[param->end_list] = element1;
+		list2[param->end_list] = element2;
 
-		if (end_list == start_list || logically_full)//the buffer il full
-			start_list = (start_list + 1) % dimension;
+		if (param->end_list == param->start_list || logically_full)//the buffer il full
+			param->start_list = (param->start_list + 1) % dimension;
 	}
 	else
 	{
-		list1[start_list] = -1;
-		list2[start_list] = -1;
+		list1[param->start_list] = -1;
+		list2[param->start_list] = -1;
 
-		list1[(start_list + 1) % dimension] = -1;
-		list2[(start_list + 1) % dimension] = -1;
+		list1[(param->start_list + 1) % dimension] = -1;
+		list2[(param->start_list + 1) % dimension] = -1;
 
-		start_list = (start_list + 2) % dimension;
+		param->start_list = (param->start_list + 2) % dimension;
 
-		end_list = (end_list + 1) % dimension;
+		param->end_list = (param->end_list + 1) % dimension;
 
-		list1[end_list] = element1;
-		list2[end_list] = element2;
+		list1[param->end_list] = element1;
+		list2[param->end_list] = element2;
 	}
 }
 
-void greedy_refinement_for_tabu_search(tsp_instance* tsp_in, int* visited_nodes, int** tabu_list, int max_tenure, 
+void greedy_refinement_for_tabu_search(tsp_instance* tsp_in, int* visited_nodes, int** tabu_list, tabu_list_params* param, int max_tenure, 
 	int min_tenure, int* num_tabu_edges, double* best_cost)
 {
 	//la tabu list ad ogni iterazione deve diminuire la sua dimensione, prima la scelta e poi la riduzione
@@ -1194,33 +1206,36 @@ void greedy_refinement_for_tabu_search(tsp_instance* tsp_in, int* visited_nodes,
 
 						if (delta < 0.0) //if (0.0 - delta > EPS)
 						{
-							if (*num_tabu_edges > min_tenure)
-							{
-								add_element(tabu_list[0], tabu_list[1], max_tenure, i, succ[i], 1, 0);
-								(*num_tabu_edges)--;
-								add_element(tabu_list[0], tabu_list[1], max_tenure, j, succ[j], 1, 0);
-								(*num_tabu_edges)--;
-							}
-							else if (*num_tabu_edges == min_tenure)
-							{
-								add_element(tabu_list[0], tabu_list[1], max_tenure, i, succ[i], 0, 1);
-								add_element(tabu_list[0], tabu_list[1], max_tenure, j, succ[j], 0, 1);
-							}
-							else
-							{
-								add_element(tabu_list[0], tabu_list[1], max_tenure, i, succ[i], 0, 0);
-								add_element(tabu_list[0], tabu_list[1], max_tenure, j, succ[j], 0, 0);
+							#ifdef REACTIVE
+								if (*num_tabu_edges > min_tenure)
+								{
+									add_element(tabu_list[0], tabu_list[1], max_tenure, i, succ[i], 1, 0, param);
+									(*num_tabu_edges)--;
+									add_element(tabu_list[0], tabu_list[1], max_tenure, j, succ[j], 1, 0, param);
+									(*num_tabu_edges)--;
+								}
+								else if (*num_tabu_edges == min_tenure)
+								{
+									add_element(tabu_list[0], tabu_list[1], max_tenure, i, succ[i], 0, 1, param);
+									add_element(tabu_list[0], tabu_list[1], max_tenure, j, succ[j], 0, 1, param);
+								}
+								else
+								{
+									add_element(tabu_list[0], tabu_list[1], max_tenure, i, succ[i], 0, 0, param);
+									add_element(tabu_list[0], tabu_list[1], max_tenure, j, succ[j], 0, 0, param);
 								
-								*num_tabu_edges = *num_tabu_edges + 2;
-							}
+									*num_tabu_edges = *num_tabu_edges + 2;
+								}
 						
-							/*printf("min = %d max = %d\n", min_tenure, max_tenure);
-							printf("TABU LIST ------- num_tabu_edges = %d\n", *num_tabu_edges);
+							#else
 
-							int m;
-							for (m = 0; m < max_tenure; m++)
-								printf("[%d, %d]\n", tabu_list[0][m], tabu_list[1][m]);
-								*/
+								add_element(tabu_list[0], tabu_list[1], max_tenure, i, succ[i], 0, 0, param);
+								add_element(tabu_list[0], tabu_list[1], max_tenure, j, succ[j], 0, 0, param);	
+
+								if (*num_tabu_edges < max_tenure)
+									*num_tabu_edges = *num_tabu_edges + 2;
+
+							#endif
 
 							(*best_cost) += delta;
 

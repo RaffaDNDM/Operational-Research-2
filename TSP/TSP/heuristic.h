@@ -16,7 +16,7 @@
 
 #define HAVE_STRUCT_TIMESPEC
 #include <pthread.h>
-//#define MULTI_START //Comment or not if you want multistart or not
+#define MULTI_START //Comment or not if you want multistart or not
 #define NUM_MULTI_START 10
 #define STEP_SEED 100
 
@@ -27,11 +27,17 @@ typedef struct
 	int seed;
 }thread_args;
 
+typedef struct
+{
+	int end_list;//-1
+	int start_list; // 0
+} tabu_list_params;
+
 #define GRASP
 #define MAX_LOCAL_MINS 200
 #define MAX_NUM_ITERATIONS 1000
 #define CONSTRUCTION_TYPE 0	// 0 = nearest neighborhood algorithm, 1 = insertion algorithm
-
+//#define REACTIVE //define for use the reactive tabu search
 
 void* computeSolution(void* param);
 
@@ -67,8 +73,8 @@ void succ_construction(int* visited_nodes, int* succ, int num_nodes);
 
 void tabu_search(tsp_instance* tsp_in, int* visited_nodes, double* best_cost);
 
-void add_element(int* list1, int* list2, int dimension, int element1, int element2, int with_reduction, int logically_full);
+void add_element(int* list1, int* list2, int dimension, int element1, int element2, int with_reduction, int logically_full, tabu_list_params* param);
 
-void greedy_refinement_for_tabu_search(tsp_instance* tsp_in, int* visited_nodes, int** tabu_list, int max_tenure, 
+void greedy_refinement_for_tabu_search(tsp_instance* tsp_in, int* visited_nodes, int** tabu_list, tabu_list_params* param,int max_tenure, 
 	int min_tenure, int* num_tabu_edges, double* cost);
 #endif

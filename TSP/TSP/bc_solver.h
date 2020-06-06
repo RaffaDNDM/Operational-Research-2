@@ -10,6 +10,8 @@
 
 #include "cplex_solver.h"
 
+#define PATCHING
+
 /**
 	@brief Branch&Cut solver with lazy callbacks.
 	@param env pointer to the ENV structure, used by CPLEX solver
@@ -77,8 +79,6 @@ void cplex_change_coeff(tsp_instance* tsp_in, CPXENVptr env, CPXLPptr lp, double
 	@param freedom how many edge cplex can change in the next solution
 */
 void local_branching(tsp_instance* tsp_in, CPXENVptr env, CPXLPptr lp, double* x_best, int freedom);
-
-static int CPXPUBLIC patching_callback(CPXCENVptr env, void* cbdata, int wherefrom, void* cbhandle, int* useraction_p);
 
 int patching(CPXENVptr env, tsp_instance* tsp_in, double* x_star, double objval, void* cbdata, int wherefrom);
 

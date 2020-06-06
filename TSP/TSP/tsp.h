@@ -73,7 +73,7 @@ typedef struct
 	int seed;
 	char dir[DIR_SIZE];
 	int* present_heu_sol; //1 se presente, 0 se assente
-	double** heu_sol;
+	int** heu_sol; //continente per ogni thread il vettore di succ della sol euristica calcolata
 	double* cost_heu_sol;
 
 	//Output
