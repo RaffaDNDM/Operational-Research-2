@@ -27,6 +27,13 @@
 
 #define DEFAULT_SOLLIM_VALUE 2147483647
 
+//Colors
+#define BLUE "\033[1;34m"
+#define GREEN "\033[1;32m"
+#define RED "\033[1;31m"
+#define WHITE "\033[0m"
+#define YELLOW "\033[1;33m"
+
 /**
 	@brief Compute the distance between two nodes, looking to the specified way of computing distances in tsp_in.
 	@param node1 index of first node (index of the node specified in TSP file)

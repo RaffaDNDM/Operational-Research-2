@@ -18,7 +18,7 @@
 #define DEADLINE_MAX 7200000
 
 //Number of algoritms implemented
-#define NUM_ALGS 9
+#define NUM_ALGS 11
 
 //#define NUM_COMMANDS 8
 
@@ -40,6 +40,7 @@
 #define ALG7 "VNS"
 #define ALG8 "TabuSearch"
 #define ALG9 "Branch&Cut General Patching"
+#define ALG10 "Genetic"
 
 //Creation or not of the performance profile
 #define PERF_PROF_ON 1

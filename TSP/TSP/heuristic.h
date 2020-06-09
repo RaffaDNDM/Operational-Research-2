@@ -17,15 +17,30 @@
 #define HAVE_STRUCT_TIMESPEC
 #include <pthread.h>
 #define MULTI_START //Comment or not if you want multistart or not
-#define NUM_MULTI_START 10
+#define POPULATION_SIZE 12000
+#define NUM_MULTI_START 12
 #define STEP_SEED 100
 
 typedef struct
 {
-	tsp_instance* tsp_in;
-	int* succ;
-	int seed;
+	tsp_instance* tsp_in; //pointer to tsp instance
+	int* succ; //pointer to the best visited nodes sequence
+	int seed; //seed used by each thread
 }thread_args;
+
+typedef struct
+{
+	tsp_instance* tsp_in; //pointer to tsp instance
+	int* succ; //pointer to the best visited nodes sequence
+	int id; //id of the thread
+	int** members; //members of the population
+	double* fitnesses; //costs of each
+	int* num_instances;
+	int* num_worst;
+	int* worst_members;
+	double* sum_worst_fitnesses;
+	double* sum_fitnesses;
+}construction_args;
 
 typedef struct
 {
@@ -38,6 +53,7 @@ typedef struct
 #define MAX_NUM_ITERATIONS 1000
 #define CONSTRUCTION_TYPE 0	// 0 = nearest neighborhood algorithm, 1 = insertion algorithm
 //#define REACTIVE //define for use the reactive tabu search
+#define MAX_NUM_EPOCHS 100
 
 void* computeSolution(void* param);
 
@@ -57,7 +73,7 @@ void insertion(tsp_instance* tsp_in, int* visited_nodes, double* best_cost, int 
 	@brief Nearest neighborhood algorithm.
 	@param tsp_in reference to tsp instance structure
 */
-void nearest_neighborhood(tsp_instance* tsp_in, int* visited_nodes, double* best_cost, int seed);
+void nearest_neighborhood(tsp_instance* tsp_in, int* visited_nodes, double* best_cost, int seed, int first_node);
 
 void min_cost(tsp_instance* tsp_in, int* nodes, int i, double* min_dist, int* best, int seed);
 
@@ -77,4 +93,14 @@ void add_element(int* list1, int* list2, int dimension, int element1, int elemen
 
 void greedy_refinement_for_tabu_search(tsp_instance* tsp_in, int* visited_nodes, int** tabu_list, tabu_list_params* param,int max_tenure, 
 	int min_tenure, int* num_tabu_edges, double* cost);
+
+void genetic_solver(tsp_instance* tsp_in);
+
+void construction(void* param);
+
+void evolution(tsp_instance* tsp_in, int** members, double* fitnesses, int* worst_members, double* sum_fitnesses, double* sum_worst_fitnesses, time_t start);
+
+void crossover(tsp_instance* tsp_in, int** members, double* fitnesses, int* worst_members, double* sum_fitnesses, double* sum_worst_fitnesses, int seed, int* index);
+
+void mutation(tsp_instance* tsp_in, int** members, double* fitnesses, int* worst_members, double* sum_fitnesses, double* sum_worst_fitnesses, int seed, int* index);
 #endif

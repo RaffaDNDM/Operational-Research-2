@@ -1,11 +1,15 @@
 ﻿  heuristic.c
-C:\Users\User\github\Operational-Research-2\TSP\TSP\heuristic.h(68,36): warning C4224: utilizzata estensione non standard: il parametro formale 'tsp_instance' era stato precedentemente definito come un tipo
-C:\Users\User\github\Operational-Research-2\TSP\TSP\heuristic.c(314,19): warning C4244: 'funzione': conversione da 'time_t' a 'unsigned int'. Possibile perdita di dati.
-C:\Users\User\github\Operational-Research-2\TSP\TSP\heuristic.c(437,19): warning C4244: 'funzione': conversione da 'time_t' a 'unsigned int'. Possibile perdita di dati.
-C:\Users\User\github\Operational-Research-2\TSP\TSP\heuristic.c(757,18): warning C4244: 'funzione': conversione da 'time_t' a 'unsigned int'. Possibile perdita di dati.
-C:\Users\User\github\Operational-Research-2\TSP\TSP\heuristic.c(1021,18): warning C4244: 'funzione': conversione da 'double' a 'int'. Possibile perdita di dati.
-C:\Users\User\github\Operational-Research-2\TSP\TSP\heuristic.c(911,1): warning C4244: 'inizializzazione': conversione da 'double' a 'int'. Possibile perdita di dati.
-C:\Users\User\github\Operational-Research-2\TSP\TSP\heuristic.c(912,1): warning C4244: 'inizializzazione': conversione da 'double' a 'int'. Possibile perdita di dati.
-C:\Users\User\github\Operational-Research-2\TSP\TSP\heuristic.c(1276,40): warning C4244: 'funzione': conversione da 'double' a 'int'. Possibile perdita di dati.
-C:\Users\User\github\Operational-Research-2\TSP\TSP\heuristic.c(174): warning C4716: 'computeSolution': deve restituire un valore
-  TSP.vcxproj -> C:\Users\User\github\Operational-Research-2\TSP\x64\Debug\TSP.exe
+D:\github\OperationalResearch2\TSP\TSP\heuristic.h(84,36): warning C4224: nonstandard extension used: formal parameter 'tsp_instance' was previously defined as a type
+D:\github\OperationalResearch2\TSP\TSP\heuristic.c(322,19): warning C4244: 'function': conversion from 'time_t' to 'unsigned int', possible loss of data
+D:\github\OperationalResearch2\TSP\TSP\heuristic.c(445,19): warning C4244: 'function': conversion from 'time_t' to 'unsigned int', possible loss of data
+D:\github\OperationalResearch2\TSP\TSP\heuristic.c(765,18): warning C4244: 'function': conversion from 'time_t' to 'unsigned int', possible loss of data
+D:\github\OperationalResearch2\TSP\TSP\heuristic.c(1029,18): warning C4244: 'function': conversion from 'double' to 'int', possible loss of data
+D:\github\OperationalResearch2\TSP\TSP\heuristic.c(919,1): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+D:\github\OperationalResearch2\TSP\TSP\heuristic.c(920,1): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+D:\github\OperationalResearch2\TSP\TSP\heuristic.c(1284,40): warning C4244: 'function': conversion from 'double' to 'int', possible loss of data
+D:\github\OperationalResearch2\TSP\TSP\heuristic.c(1352,51): warning C4047: 'function': 'void *(*)(void *)' differs in levels of indirection from 'void (*)(void *)'
+D:\github\OperationalResearch2\TSP\TSP\heuristic.c(1352,51): warning C4022: 'pthread_create': pointer mismatch for actual parameter 3
+D:\github\OperationalResearch2\TSP\TSP\heuristic.c(1388,52): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
+D:\github\OperationalResearch2\TSP\TSP\heuristic.c(1432,10): warning C4477: 'printf' : format string '%d' requires an argument of type 'int', but variadic argument 2 has type 'double'
+D:\github\OperationalResearch2\TSP\TSP\heuristic.c(174): warning C4716: 'computeSolution': must return a value
+  TSP.vcxproj -> D:\github\OperationalResearch2\TSP\x64\Debug\TSP.exe

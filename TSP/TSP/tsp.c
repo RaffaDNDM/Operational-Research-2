@@ -51,8 +51,10 @@ void solution(tsp_instance* tsp_in)
 	//tsp_in->sol = (int*)calloc(((size_t)tsp_in->num_nodes) +1, sizeof(int));
 	if (tsp_in->alg < 7)
 		cplex_solver(tsp_in);
-	else
+	else if (tsp_in->alg < 10)
 		heuristic_solver(tsp_in);
+	else if (tsp_in->alg == 11)
+		genetic_solver(tsp_in);
 }
 
 void set_params_and_solve(tsp_instance* tsp_in)
