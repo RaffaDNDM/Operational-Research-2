@@ -34,7 +34,6 @@ void heuristic_solver(tsp_instance* tsp_in)
 		printf("Insertion\n");
 	}
 
-
 	printf("[Meta-heuristic] ");
 
 	switch (tsp_in->alg)
@@ -207,11 +206,11 @@ void nearest_neighborhood(tsp_instance* tsp_in, int* visited_nodes, double* best
 			if (tsp_in->integerDist)
 			{
 				int x;
-				dist(i, 0, tsp_in, &x);
+				dist(i, visited_nodes[0], tsp_in, &x);
 				min_dist = (double) x;
 			}
 			else
-				dist(i, 0, tsp_in, &min_dist);
+				dist(i, visited_nodes[0], tsp_in, &min_dist);
 
 			//printf("count = %d\n", count);
 
@@ -1306,10 +1305,6 @@ void genetic_solver(tsp_instance* tsp_in)
 	tsp_in->bestCostD = DBL_MAX;
 	tsp_in->bestCostI = INT_MAX;
 
-	int  num_edges = (tsp_in->num_nodes * (tsp_in->num_nodes)) / 2;
-	tsp_in->sol = (double*) calloc((size_t)num_edges, sizeof(double));
-	int* succ = (int*) calloc((size_t)tsp_in->num_nodes, sizeof(int));
-
 	int num_worst = 0;
 	int* worst_members = (int*) calloc((size_t) 1000, sizeof(int));
 
@@ -1321,17 +1316,17 @@ void genetic_solver(tsp_instance* tsp_in)
 
 	int** members = (int**) calloc((size_t)POPULATION_SIZE, sizeof(int*));
 	double* fitnesses = (double*) calloc((size_t)POPULATION_SIZE, sizeof(double));
-	double sum_fitnesses = 0.0, sum_worst_fitnesses = 0.0;
+	double sum_prob = 0.0;
 
-	int i=0;
-	for (; i < POPULATION_SIZE; i++)
+	int i = 0;
+	for (i=0; i < POPULATION_SIZE; i++)
 	{
 		members[i] = (int*) calloc((size_t) tsp_in->num_nodes, sizeof(int));
 		fitnesses[i] = DBL_MAX;
 	}
 
 	//pthread_t threads[NUM_MULTI_START];
-	int num_threads = POPULATION_SIZE * 4 / tsp_in->num_nodes;
+	int num_threads = 12;
 	pthread_t* threads=(pthread_t*) calloc((size_t) num_threads, sizeof(pthread_t));
 	construction_args* param = (construction_args*)calloc((size_t)num_threads, sizeof(construction_args));
 
@@ -1358,20 +1353,30 @@ void genetic_solver(tsp_instance* tsp_in)
 		printf("incumbent: UNDEFINED     ");
 	}
 
-	int num_instances = 0; //only for debugging purpouse
+	int num_instances = 0;
+	int num_members = POPULATION_SIZE / num_threads;
+	int best_index = 0;
+
 	i = 0;
 	for (; i < num_threads; i++)
 	{
 		param[i].tsp_in = tsp_in;
-		param[i].succ = succ;
-		param[i].id = i; //0,1,2,3,...
 		param[i].members = members;
 		param[i].fitnesses = fitnesses;
 		param[i].num_instances = &num_instances;
+		param[i].first_index = (POPULATION_SIZE/num_threads)*i;
+		param[i].best_index = &best_index;
+
+		if(i==num_threads)
+			param[i].num_members = num_members;
+		else
+		{
+			num_members += POPULATION_SIZE % num_threads;
+			param[i].num_members = num_members;
+		}
+
 		param[i].worst_members = worst_members;
-		param[i].num_worst = &num_worst;
-		param[i].sum_fitnesses = &sum_fitnesses;
-		param[i].sum_worst_fitnesses = &sum_worst_fitnesses;
+		param[i].sum_prob = &sum_prob;
 		pthread_create(&(threads[i]), NULL, construction, (void*)&param[i]);
 	}
 
@@ -1383,14 +1388,46 @@ void genetic_solver(tsp_instance* tsp_in)
 			exit(-1);
 	}
 
-	/*
-	printf("Num worst members: %d", num_worst);
-	
-	for (int i = 0; i < num_worst; i++)
-		printf("Fitness %4d: %lf\n", i, fitnesses[worst_members[i]]);
-	*/
+	free(threads);
+	free(param);
 
-	evolution(tsp_in, members, fitnesses, worst_members, &sum_fitnesses, &sum_worst_fitnesses, start);
+	for (i = 0; i < 1000; i++)
+	{
+		worst_members[i] = -1;
+	}
+
+	evolution(tsp_in, members, fitnesses, &best_index, worst_members, &sum_prob, start);
+	
+	print_cost(tsp_in);
+	printf("Execution time: %lf\n", tsp_in->execution_time);
+
+	int  num_edges = (tsp_in->num_nodes * (tsp_in->num_nodes)) / 2;
+	tsp_in->sol = (double*)calloc((size_t)num_edges, sizeof(double));
+
+	int* succ = (int*)calloc(tsp_in->num_nodes, sizeof(int));
+	int* comp = (int*)calloc(tsp_in->num_nodes, sizeof(int));
+	int n_comps = 1;
+	succ_construction(members[best_index], succ, tsp_in->num_nodes);
+	update_solution(members[best_index], tsp_in->sol, tsp_in->num_nodes);
+
+	if (tsp_in->plot)
+	{
+		int k;
+		for (k = 0; k < tsp_in->num_nodes; k++)
+			comp[k] = 1;
+		
+		plot(tsp_in, succ, comp, &n_comps);
+
+		free(succ);
+		free(comp);
+	}
+
+	for (i = 0; i < POPULATION_SIZE; i++)
+		free(members[i]);
+
+	free(members);
+	free(fitnesses);
+	free(tsp_in->sol);
 }
 
 void construction(void* param)
@@ -1398,51 +1435,25 @@ void construction(void* param)
 	construction_args* args = (construction_args*) param;
 	double best_cost = DBL_MAX;
 	int best_index = -1;
-	int sum_fitnesses = 0;
+	double sum_prob = 0.0;
 
 	int i = 0;
-	int num_members = args->tsp_in->num_nodes/4;
-	int first_index = args->id * (num_members);
-	for (; i < num_members && i < POPULATION_SIZE; i++)
+	for (; i < args->num_members && i < POPULATION_SIZE; i++)
 	{
-		nearest_neighborhood(args->tsp_in, args->members[i + first_index], &(args->fitnesses[i + first_index]), first_index + i + 1, (i + first_index) % args->tsp_in->num_nodes);
-		greedy_refinement(args->tsp_in, args->members[i+first_index], &(args->fitnesses[i + first_index]));
+		nearest_neighborhood(args->tsp_in, args->members[i + args->first_index], &(args->fitnesses[i + args->first_index]), args->first_index + i + 1, (i + args->first_index) % args->tsp_in->num_nodes);
+		
+		sum_prob += (1000.0 / args->fitnesses[i + args->first_index]);
 
-		sum_fitnesses += args->fitnesses[i + first_index];
-
-		if ((args->fitnesses[i + first_index]) < best_cost)
+		if ((args->fitnesses[i + args->first_index]) < best_cost)
 		{
-			best_cost = args->fitnesses[i + first_index];
-			best_index = i + first_index;
+			best_cost = args->fitnesses[i + args->first_index];
+			best_index = i + args->first_index;
 		}
-
-		pthread_mutex_lock(&mutex);
-		int j = 0;
-
-		for (; j < (*(args->num_worst)); j++)
-		{
-			if (args->fitnesses[i + first_index] > args->fitnesses[args->worst_members[j]])
-				break;
-		}
-
-		if ((*(args->num_worst)) < 1000)
-		{
-			args->worst_members[j] = i + first_index;
-			*(args->sum_worst_fitnesses) += args->fitnesses[args->worst_members[j]];
-			(*(args->num_worst))++;
-		}
-		else if (j != (*(args->num_worst)))
-		{
-			(*(args->sum_worst_fitnesses)) += (args->fitnesses[i+first_index]-args->fitnesses[args->worst_members[j]]);
-			args->worst_members[j] = i + first_index;
-		}
-
-		pthread_mutex_unlock(&mutex);
 	}
 
 	pthread_mutex_lock(&mutex);
 
-	*(args->num_instances) += num_members;
+	*(args->num_instances) += args->num_members;
 	printf("\r[%s", GREEN);
 
 	i = 0;
@@ -1463,12 +1474,11 @@ void construction(void* param)
 		if (best_cost < args->tsp_in->bestCostI)
 		{
 			args->tsp_in->bestCostI = (int)best_cost;
-			update_solution(args->members[best_index], args->tsp_in->sol, args->tsp_in->num_nodes);
-			succ_construction(args->members[best_index], args->succ, args->tsp_in->num_nodes);
+			*args->best_index = best_index;
 		}
 		
-		printf("worst cost: %d     ", (int) args->fitnesses[(args->worst_members[0])]);
 		printf("incumbent: %d     ", args->tsp_in->bestCostI);
+		printf("best_index: %d", (*args->best_index));
 		/*
 		printf("[Thread %2d]  best_cost: %d    instances: %5d     incumbent: %d\n",
 			   args->id, best_cost, *(args->num_instances), args->tsp_in->bestCostI);
@@ -1479,76 +1489,80 @@ void construction(void* param)
 		if (best_cost < args->tsp_in->bestCostD)
 		{
 			args->tsp_in->bestCostD = best_cost;
-			update_solution(args->members[best_index], args->tsp_in->sol, args->tsp_in->num_nodes);
-			succ_construction(args->members[best_index], args->succ, args->tsp_in->num_nodes);
+			*args->best_index = best_index;
 		}
 
-		printf("worst cost: %.2lf     ", args->fitnesses[(args->worst_members[0])]);
 		printf("incumbent: %.2lf     ", args->tsp_in->bestCostD);
+		printf("best_index: %d                    ", (*args->best_index));
 		/*
 		printf("[Thread %2d]  best_cost: %.2lf    instances: %5d     incumbent: %.2lf\n",
 			   args->id, best_cost, *(args->num_instances), args->tsp_in->bestCostD);
 		*/
 	}
 
-	(*(args->sum_fitnesses)) += sum_fitnesses;
+	(*(args->sum_prob)) += sum_prob;
 
 	pthread_mutex_unlock(&mutex);
 
 	pthread_exit(NULL);
 }
 
-void evolution(tsp_instance* tsp_in, int** members, double* fitnesses, int* worst_members, double* sum_fitnesses, double* sum_worst_fitnesses, time_t start)
+void evolution(tsp_instance* tsp_in, int** members, double* fitnesses, int* best_index, int* worst_members, double* sum_fitnesses, time_t start)
 {
-	/*
 	int num_epochs = 0;
 	time_t end = 0;
+	printf("\n%s",LINE);
+	printf("%s[Construction phase]  ", RED);
+	printf("%sbest index:%s %5d\n", GREEN, WHITE, *best_index);
 
-	printf("Sum_fitnesses: %lf\n", *sum_fitnesses);
-
-	while (num_epochs<MAX_NUM_EPOCHS && (((double)(end - start) / (double)CLOCKS_PER_SEC))<tsp_in->deadline)
+	while (num_epochs<3 && (((double)(end - start) / (double)CLOCKS_PER_SEC)) < tsp_in->deadline)
 	{
 		int index = 0; //first_index of worst_members
-		crossover(tsp_in, members, fitnesses, worst_members, sum_fitnesses, sum_worst_fitnesses, num_epochs*100, &index);
-		time_t end = clock();
+		update_worst(fitnesses, worst_members);
+
+		//printf("Sum_fitnesses: %.2lf      \n", (*sum_fitnesses));
+
+		crossover(tsp_in, members, fitnesses, best_index, worst_members, sum_fitnesses, (num_epochs + 1) * 100, &index);
+	
+		printf(LINE);
+		if (tsp_in->integerDist)
+			printf("%s[Crossover]%s     added instances: %d     cost: %d\n", RED, WHITE, index, tsp_in->bestCostI);
+		else
+			printf("%s[Crossover]%s     added instances: %d     cost: %.2lf \n", RED, WHITE, index, tsp_in->bestCostD);
+	
+		mutation(tsp_in, members, fitnesses, best_index, worst_members, sum_fitnesses, (num_epochs + 1) * 100, &index);
+	
+		if (tsp_in->integerDist)
+			printf("%s[Mutation]%s      added instances: %d     cost: %d\n", BLUE, WHITE, index, tsp_in->bestCostI);
+		else
+			printf("%s[Mutation]%s      added instances: %d     cost: %.2lf \n", BLUE, WHITE, index, tsp_in->bestCostD);
+		
+
+		printf("%sbest index:%s %5d\n", GREEN, WHITE, *best_index);
+		
+		end = clock();
+		num_epochs++;
 	}
-	*/
-
-	printf("\n\n");
-	int num_epochs = 0;
-	int index = 0; //first_index of worst_members
-	crossover(tsp_in, members, fitnesses, worst_members, sum_fitnesses, sum_worst_fitnesses, (num_epochs + 1) * 100, &index);
-	
-	if (tsp_in->integerDist)
-		printf("%s[Crossover]%s     added instances: %d     cost: %d\n", RED, WHITE, index, tsp_in->bestCostI);
-	else
-		printf("%s[Crossover]%s     added instances: %d     cost: %.2lf \n", RED, WHITE, index, tsp_in->bestCostD);
-	
-	mutation(tsp_in, members, fitnesses, worst_members, sum_fitnesses, sum_worst_fitnesses, (num_epochs + 1) * 100, &index);
-	//update_worst(tsp_in, members, fitnesses, );
-
-	if (tsp_in->integerDist)
-		printf("%s[Mutation]%s      added instances: %d     cost: %d\n", BLUE, WHITE, index, tsp_in->bestCostI);
-	else
-		printf("%s[Mutation]%s      added instances: %d     cost: %.2lf \n", BLUE, WHITE, index, tsp_in->bestCostD);
 
 	printf(LINE);
-
-	time_t end = clock();
+	tsp_in->execution_time = ((double)(end - start) / (double)CLOCKS_PER_SEC);
 }
 
-void crossover(tsp_instance* tsp_in, int** members, double* fitnesses, int* worst_members, 
-	           double* sum_fitnesses, double* sum_worst_fitnesses, int seed, int* index)
+void crossover(tsp_instance* tsp_in, int** members, double* fitnesses, int* best_index,
+	           int* worst_members, double* sum_prob, int seed, int* index)
 {
 	srand(seed);
 
 	int i = 0;
 	for (; i < 375; i++)
 	{
-		double dad = (double)  (rand() % ((int) ((*sum_fitnesses)/tsp_in->num_nodes)));
-		double mom = (double)  (rand() % ((int) ((*sum_fitnesses)/ tsp_in->num_nodes)));
-	
 		int j = 0;
+		double dad = (double)  (rand() % ((int) ((*sum_prob)*100000.0)));
+		double mom = (double)  (rand() % ((int)((*sum_prob)*100000.0)));
+		//printf("SUM: %.2lf\n",sum_prob*1000);
+		//printf("SUM: %.2lf\n", dad);
+		//printf("SUM: %.2lf\n", mom);
+
 		double sum_ranges = 0.0;
 		int found_dad = 0;
 		int found_mom = 0;
@@ -1561,43 +1575,38 @@ void crossover(tsp_instance* tsp_in, int** members, double* fitnesses, int* wors
 		printf("Dad: %.2lf   fitness: %.2lf\n", dad, *sum_fitnesses/ tsp_in->num_nodes);
 		*/
 
-		for (; j < POPULATION_SIZE; j++)
+		//1/fitness[i]
+		for (j=0; j < POPULATION_SIZE; j++)
 		{
-			if (((fitnesses[j] + sum_ranges)/ tsp_in->num_nodes) > dad && !found_dad)
+
+			if (((100000000.0/((*sum_prob) * fitnesses[j])) + sum_ranges) > dad && !found_dad)
 			{
 				dad_index = j;
 				found_dad = 1;
 			}
-			
-			if (((fitnesses[j] + sum_ranges)/ tsp_in->num_nodes) > mom && !found_mom)
+
+			if (((100000000.0 / ((*sum_prob) * fitnesses[j])) + sum_ranges) > mom && !found_mom)
 			{
 				mom_index = j;
 				found_mom = 1;
 			}
-				
+
 			if (found_dad && found_mom)
 				break;
 
-			sum_ranges+= fitnesses[j];
+			sum_ranges += (100000000.0 / ((*sum_prob) * fitnesses[j]));
 		}
-
-		/*
-		printf("Mom: %5d   fitness: %.2lf\n", mom_index, fitnesses[mom_index]);
-		printf("Dad: %5d   fitness: %.2lf\n", dad_index, fitnesses[dad_index]);
-		printf(LINE);
-		*/
 
 		int* offspring1 = (int*)calloc((size_t)tsp_in->num_nodes, sizeof(int));
 		int* offspring2 = (int*)calloc((size_t)tsp_in->num_nodes, sizeof(int));
 
 		j = 0;
-		int begin = (int)(((double)tsp_in->num_nodes) * (3.0 / 4.0));
+		int begin = (int)(((double)tsp_in->num_nodes) * (2.0 / 4.0));
 
 		for(j=begin; j<tsp_in->num_nodes; j++)
 		{
 			offspring1[j] = members[dad_index][j];
-			offspring2[j] = members[mom_index][j];
-			
+			offspring2[j] = members[mom_index][j];		
 		}
 
 		int count1=0; 
@@ -1650,24 +1659,30 @@ void crossover(tsp_instance* tsp_in, int** members, double* fitnesses, int* wors
 			}
 		}
 
-		//Removal of crossing edges
 		greedy_refinement(tsp_in, members[worst_members[*index]], &fitness);
-		
+
 		if (tsp_in->integerDist)
 		{
 			if ((int)fitness < tsp_in->bestCostI)
-				tsp_in->bestCostI = (int) fitness;
+			{
+				tsp_in->bestCostI = (int)fitness;
+				(*best_index) = worst_members[(*index)];
+			}
 		}
 		else 
 		{
 			if (fitness < tsp_in->bestCostD)
+			{
 				tsp_in->bestCostD = fitness;
+				(*best_index) = worst_members[(*index)];
+			}
 		}
 		
-		*sum_fitnesses += (fitness - fitnesses[worst_members[(*index)]]);
+		free(offspring1);
+		(*sum_prob) += ((1000.0/fitness) - (1000.0/fitnesses[worst_members[(*index)]]));
 		fitnesses[worst_members[(*index)]] = fitness;
-		worst_members[(*index)++] = -1;
-
+		worst_members[(*index)] = -1;
+		(*index)++;
 
 		fitness = 0.0;
 		for (k = 0; k < tsp_in->num_nodes; k++)
@@ -1690,44 +1705,59 @@ void crossover(tsp_instance* tsp_in, int** members, double* fitnesses, int* wors
 			}
 		}
 
-		//Removal of crossing edges
+		free(offspring2);
 		greedy_refinement(tsp_in, members[worst_members[*index]], &fitness);
-		*sum_fitnesses += (fitness - fitnesses[worst_members[(*index)]]);
+
+		if (tsp_in->integerDist)
+		{
+			if ((int)fitness < tsp_in->bestCostI)
+			{
+				tsp_in->bestCostI = (int)fitness;
+				(*best_index) = worst_members[(*index)];
+			}
+		}
+		else
+		{
+			if (fitness < tsp_in->bestCostD)
+			{
+				tsp_in->bestCostD = fitness;
+				(*best_index) = worst_members[(*index)];
+			}
+		}
+		
+		(*sum_prob) += ((1000.0 / fitness) - (1000.0 / fitnesses[worst_members[(*index)]]));
 		fitnesses[worst_members[(*index)]] = fitness;
-		worst_members[(*index)++] = -1;
+		worst_members[(*index)] = -1;
+		(*index)++;
 
 	}
 	//printf("Index: %d   ", *index);
 }
 
-void mutation(tsp_instance* tsp_in, int** members, double* fitnesses, int* worst_members,
-	          double* sum_fitnesses, double* sum_worst_fitnesses, int seed, int* index)
+void mutation(tsp_instance* tsp_in, int** members, double* fitnesses, int* best_index,
+	          int* worst_members, double* sum_prob, int seed, int* index)
 {
 	srand(seed);
 
 	int i = 0;
 	for (; i < 250; i++)
 	{
-		double dad = (double)(rand() % ((int)((*sum_fitnesses) / tsp_in->num_nodes)));
-
 		int j = 0;
-		double sum_ranges = 0.0;
+		double dad = (double)(rand() % ((int)((*sum_prob) * 100000.0)));
 		int dad_index;
+		
+		double sum_ranges = 0.0;
 
-		/*
-		printf(LINE);
-		printf("Dad: %.2lf   fitness: %.2lf\n", dad, *sum_fitnesses / tsp_in->num_nodes);
-		*/
-
-		for (; j < POPULATION_SIZE; j++)
+		//1/fitness[i]
+		for (j = 0; j < POPULATION_SIZE; j++)
 		{
-			if (((fitnesses[j] + sum_ranges) / tsp_in->num_nodes) > dad)
+			if (((100000000.0 / ((*sum_prob) * fitnesses[j])) + sum_ranges) > dad)
 			{
 				dad_index = j;
 				break;
 			}
 
-			sum_ranges += fitnesses[j];
+			sum_ranges += (100000000.0 / ((*sum_prob) * fitnesses[j]));
 		}
 
 		double start_choice = (double)(rand() % 100);
@@ -1759,7 +1789,8 @@ void mutation(tsp_instance* tsp_in, int** members, double* fitnesses, int* worst
 
 		int* offspring = (int*)calloc((size_t)tsp_in->num_nodes, sizeof(int));
 		j = 0;
-		int begin = (int)(((double)tsp_in->num_nodes) * (3.0 / 4.0));
+		start_range = (int)(((double)tsp_in->num_nodes) / 2.0);
+		end_range = (int)(((double)tsp_in->num_nodes));
 
 		for (j = start_range; j < end_range; j++)
 		{
@@ -1778,7 +1809,7 @@ void mutation(tsp_instance* tsp_in, int** members, double* fitnesses, int* worst
 
 		int k;
 		double fitness = 0.0;
-		fitness = 0.0;
+
 		for (k = 0; k < tsp_in->num_nodes; k++)
 		{
 			members[worst_members[(*index)]][k] = offspring[k];
@@ -1799,24 +1830,70 @@ void mutation(tsp_instance* tsp_in, int** members, double* fitnesses, int* worst
 			}
 		}
 
-		//Removal of crossing edges
+		free(offspring);
 		greedy_refinement(tsp_in, members[worst_members[*index]], &fitness);
 
 		if (tsp_in->integerDist)
 		{
 			if ((int)fitness < tsp_in->bestCostI)
+			{
 				tsp_in->bestCostI = (int)fitness;
+				(*best_index) = worst_members[(*index)];
+			}
 		}
 		else
 		{
 			if (fitness < tsp_in->bestCostD)
+			{
 				tsp_in->bestCostD = fitness;
+				(*best_index) = worst_members[(*index)];
+			}
 		}
 
-		*sum_fitnesses += (fitness - fitnesses[worst_members[(*index)]]);
+		(*sum_prob) += ((1000.0 / fitness) - (1000.0 / fitnesses[worst_members[(*index)]]));
 		fitnesses[worst_members[(*index)]] = fitness;
-		worst_members[(*index)++] = -1;
-
+		worst_members[(*index)] = -1;
+		(*index)++;
 	}
 	//printf("Index: %d   ", *index);
+}
+
+void update_worst(double* fitnesses, int* worst_members)
+{
+	int i = 0;
+	int size = 0;
+
+	for (; i < POPULATION_SIZE; i++)
+	{
+		int j = 0;
+		int found_worst = 0;
+
+		for(; j<=size; j++)
+		{
+			if (worst_members[j] == -1)
+				break;
+
+			if (fitnesses[worst_members[j]] < fitnesses[i])
+			{
+				found_worst = 1;
+				break;
+			}
+		}
+
+		if (j < 1000)
+		{
+			int k=j;
+
+			for (j = size; found_worst && j > k; j--)
+				worst_members[j] = worst_members[j-1];
+
+			worst_members[j] = i;
+			size= (size==(1000-1))? size : (size+1);
+		}
+	}
+
+	/*
+	for(i=0; i<1000; i++)
+		printf("[%d] worst_member: %2d    fitness: %.2lf\n", i, worst_members[i], fitnesses[worst_members[i]]);
+	*/
 }

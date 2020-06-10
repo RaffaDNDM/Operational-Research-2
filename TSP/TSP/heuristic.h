@@ -31,15 +31,14 @@ typedef struct
 typedef struct
 {
 	tsp_instance* tsp_in; //pointer to tsp instance
-	int* succ; //pointer to the best visited nodes sequence
-	int id; //id of the thread
 	int** members; //members of the population
+	int num_members;
+	int first_index;
 	double* fitnesses; //costs of each
 	int* num_instances;
-	int* num_worst;
 	int* worst_members;
-	double* sum_worst_fitnesses;
-	double* sum_fitnesses;
+	double* sum_prob;
+	int *best_index;
 }construction_args;
 
 typedef struct
@@ -48,7 +47,7 @@ typedef struct
 	int start_list; // 0
 } tabu_list_params;
 
-#define GRASP
+//#define GRASP
 #define MAX_LOCAL_MINS 200
 #define MAX_NUM_ITERATIONS 1000
 #define CONSTRUCTION_TYPE 0	// 0 = nearest neighborhood algorithm, 1 = insertion algorithm
@@ -98,9 +97,11 @@ void genetic_solver(tsp_instance* tsp_in);
 
 void construction(void* param);
 
-void evolution(tsp_instance* tsp_in, int** members, double* fitnesses, int* worst_members, double* sum_fitnesses, double* sum_worst_fitnesses, time_t start);
+void evolution(tsp_instance* tsp_in, int** members, double* fitnesses, int* best_index, int* worst_members, double* sum_prob, time_t start);
 
-void crossover(tsp_instance* tsp_in, int** members, double* fitnesses, int* worst_members, double* sum_fitnesses, double* sum_worst_fitnesses, int seed, int* index);
+void crossover(tsp_instance* tsp_in, int** members, double* fitnesses, int* best_index, int* worst_members, double* sum_prob, int seed, int* index);
 
-void mutation(tsp_instance* tsp_in, int** members, double* fitnesses, int* worst_members, double* sum_fitnesses, double* sum_worst_fitnesses, int seed, int* index);
+void mutation(tsp_instance* tsp_in, int** members, double* fitnesses, int* best_index, int* worst_members, double* sum_prob, int seed, int* index);
+
+void update_worst(double* fitnesses, int* worst_members);
 #endif
