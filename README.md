@@ -17,17 +17,17 @@
   - [Soft fixing.](https://github.com/RaffaDNDM/Operational-Research-2/blob/master/TSP/TSP/bc_solver.h)
 - Heuristic solvers.
   - Construction algorithm.
-    1. [Nearest Neighborhood.](https://github.com/RaffaDNDM/Operational-Research-2/blob/master/TSP/TSP/heuristic_solver.h)
-    2. [Insertion.](https://github.com/RaffaDNDM/Operational-Research-2/blob/master/TSP/TSP/heuristic_solver.h)
-    3. [GASP variants of previous algorithms.](https://github.com/RaffaDNDM/Operational-Research-2/blob/master/TSP/TSP/heuristic_solver.h)
+    1. [Nearest Neighborhood.](https://github.com/RaffaDNDM/Operational-Research-2/blob/master/TSP/TSP/heuristic.h)
+    2. [Insertion.](https://github.com/RaffaDNDM/Operational-Research-2/blob/master/TSP/TSP/heuristic.h)
+    3. [GASP variants of previous algorithms.](https://github.com/RaffaDNDM/Operational-Research-2/blob/master/TSP/TSP/heuristic.h)
   - Refinement algorithm.
-    1. [Greedy Refinement.](https://github.com/RaffaDNDM/Operational-Research-2/blob/master/TSP/TSP/heuristic_solver.h)
+    1. [Greedy Refinement.](https://github.com/RaffaDNDM/Operational-Research-2/blob/master/TSP/TSP/heuristic.h)
   - Meta-heuristich algorithm.
-    1. [Variable Neighborhood Search (VNS).](https://github.com/RaffaDNDM/Operational-Research-2/blob/master/TSP/TSP/heuristic_solver.h)
-    2. [Tabu Search.](https://github.com/RaffaDNDM/Operational-Research-2/blob/master/TSP/TSP/heuristic_solver.h)
-    3. [Genetic algorithms.](https://github.com/RaffaDNDM/Operational-Research-2/blob/master/TSP/TSP/heuristic_solver.h)
-    4. [Simulating anealing.](https://github.com/RaffaDNDM/Operational-Research-2/blob/master/TSP/TSP/heuristic_solver.h)
-    5. [Multi-start variations (using multithreading).](https://github.com/RaffaDNDM/Operational-Research-2/blob/master/TSP/TSP/heuristic_solver.h)
+    1. [Variable Neighborhood Search (VNS).](https://github.com/RaffaDNDM/Operational-Research-2/blob/master/TSP/TSP/heuristic.h)
+    2. [Tabu Search.](https://github.com/RaffaDNDM/Operational-Research-2/blob/master/TSP/TSP/heuristic.h)
+    3. [Genetic algorithms.](https://github.com/RaffaDNDM/Operational-Research-2/blob/master/TSP/TSP/heuristic.h)
+    4. [Simulating anealing.](https://github.com/RaffaDNDM/Operational-Research-2/blob/master/TSP/TSP/heuristic.h)
+    5. [Multi-start variations (using multithreading).](https://github.com/RaffaDNDM/Operational-Research-2/blob/master/TSP/TSP/heuristic.h)
 
 ### Report about used techniques
 
