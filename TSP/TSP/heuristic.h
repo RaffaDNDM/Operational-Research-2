@@ -17,9 +17,11 @@
 #define HAVE_STRUCT_TIMESPEC
 #include <pthread.h>
 //#define MULTI_START //Comment or not if you want multistart or not
-#define NUM_MULTI_START 10
-#define POPULATION_SIZE 12000
+
 #define STEP_SEED 100
+#define NUM_MULTI_START 12 //Number of threads in multi start and for construction in Genetic
+#define POPULATION_SIZE 12000 //Size of the population
+#define NUM_WORST_MEMBERS 2000 //Size of the buffer with indices of worst members in the population
 
 typedef struct
 {

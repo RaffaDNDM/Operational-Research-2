@@ -1,3 +1,1 @@
-﻿  loop_solver.c
-C:\Users\User\Desktop\TSP\TSP\loop_solver.c(25,38): warning C4101: 'end': variabile locale senza riferimenti
-  TSP.vcxproj -> C:\Users\User\Desktop\TSP\x64\Debug\TSP.exe
+﻿  TSP.vcxproj -> D:\github\OperationalResearch2\TSP\x64\Debug\TSP.exe
