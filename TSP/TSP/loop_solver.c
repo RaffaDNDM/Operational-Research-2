@@ -7,7 +7,7 @@
 
 #include "loop_solver.h"
 
-void loop_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ, int* comp)
+void loop_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ, int* comp, int* n_comps)
 {
 #ifdef METAHEURISTIC
 	CPXsetintparam(env, CPX_PARAM_NODELIM, tsp_in->node_lim);
@@ -15,12 +15,11 @@ void loop_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ, in
 	CPXsetdblparam(env, CPX_PARAM_EPGAP, tsp_in->eps_gap);
 	CPXsetintparam(env, CPX_PARAM_RANDOMSEED, tsp_in->seed);
 
-	printf(LINE);
-	printf("Metaheuristic Procedure: \n");
-	printf("Node limit: %d    ", tsp_in->node_lim);
-	printf("Pool solution: %d    ", tsp_in->sol_lim);
-	printf("Cplex precision: %lf   ", tsp_in->eps_gap);
-	printf("Seed: %d\n\n", tsp_in->seed);
+	printf("%sMetaheuristic Procedure: %s\n", GREEN, WHITE);
+	printf("%sNode limit:%s %d    ",CYAN, WHITE, tsp_in->node_lim);
+	printf("%sPool solution:%s %d    ",CYAN, WHITE, tsp_in->sol_lim);
+	printf("%sCplex precision:%s %lf   ",CYAN, WHITE, tsp_in->eps_gap);
+	printf("%sSeed:%s %d\n\n",CYAN, WHITE, tsp_in->seed);
 #endif
 
 	time_t start, start_iter, end_iter, end;
@@ -32,30 +31,44 @@ void loop_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ, in
 	tsp_in->num_cols = CPXgetnumcols(env, lp);
 	tsp_in->sol = calloc(sizeof(double), tsp_in->num_cols);
 	//double* x = calloc(sizeof(double), tsp_in->num_cols);
-	int n_comps = 3;
 
 	CPXmipopt(env, lp);
 	end_iter = clock();
 	CPXgetbestobjval(env, lp, &tsp_in->bestCostD);
 	assert(CPXgetmipx(env, lp, tsp_in->sol, 0, CPXgetnumcols(env, lp) - 1) == 0);
-	define_tour(tsp_in, tsp_in->sol, succ, comp, &n_comps);
+	define_tour(tsp_in, tsp_in->sol, succ, comp, n_comps);
 	//plot(tsp_in, succ, comp, &n_comps);
 
-	print_state(env, lp, n_comps, start_iter, end_iter);
+	print_state(env, lp, *n_comps, start_iter, end_iter);
 
-	while (n_comps >= 2)
+	double remaining_time = tsp_in->deadline - ((double) (end_iter - start_iter) / CLOCKS_PER_SEC);
+
+	while (*n_comps >= 2)
 	{
+		
+		CPXsetdblparam(env, CPXPARAM_TimeLimit, remaining_time);
 		start_iter = clock();
-		add_sec_constraint(env, lp, tsp_in, comp, n_comps);
+		add_sec_constraint(env, lp, tsp_in, comp, *n_comps);
 
 		CPXmipopt(env, lp);
-		CPXgetbestobjval(env, lp, &tsp_in->bestCostD);
 		end_iter = clock();
+		remaining_time = remaining_time - ((double)(end_iter - start_iter) / CLOCKS_PER_SEC);
+		if (remaining_time <= 0)
+			break;
+		
+		CPXgetbestobjval(env, lp, &tsp_in->bestCostD);
 		assert(CPXgetmipx(env, lp, tsp_in->sol, 0, CPXgetnumcols(env, lp) - 1) == 0);
-		define_tour(tsp_in, tsp_in->sol, succ, comp, &n_comps);
-		//plot(tsp_in, succ, comp, &n_comps);
-		print_state(env, lp, n_comps, start_iter, end_iter);
+		//define_tour(tsp_in, tsp_in->sol, succ, comp, &n_comps);
+		cplex_define_tour(tsp_in, tsp_in->sol, succ, comp, n_comps);
+		
+		print_state(env, lp, *n_comps, start_iter, end_iter);
+		/*int j;
+		for (j = 0; j < tsp_in->num_nodes; j++)
+			printf("succ[%d] = %d    comp[%d] = %d \n", j, succ[j], j, comp[j]);*/
 
+		//plot(tsp_in, succ, comp, &n_comps);
+
+		
 	}
 
 	#ifdef METAHEURISTIC
@@ -72,24 +85,31 @@ void loop_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ, in
 		print_state(env, lp, n_comps, start_iter, end_iter);
 		//plot(tsp_in, succ, comp, &n_comps);
 
-		while (n_comps >= 2)
+		remaining_time = tsp_in->deadline - ((double) (end_iter - start_iter) / CLOCKS_PER_SEC);
+
+		while (*n_comps >= 2)
 		{
+			CPXsetdblparam(env, CPXPARAM_TimeLimit, remaining_time);
 			start_iter = clock();
-			add_sec_constraint(env, lp, tsp_in, comp, n_comps);
+			add_sec_constraint(env, lp, tsp_in, comp, *n_comps);
 
 			CPXmipopt(env, lp);
 			end_iter = clock();
 			CPXgetbestobjval(env, lp, &tsp_in->bestCostD);
 			assert(CPXgetmipx(env, lp, tsp_in->sol, 0, CPXgetnumcols(env, lp) - 1) == 0);
-			define_tour(tsp_in, tsp_in->sol, succ, comp, &n_comps);
-			print_state(env, lp, n_comps, start_iter, end_iter);
+			define_tour(tsp_in, tsp_in->sol, succ, comp, n_comps);
+			print_state(env, lp, *n_comps, start_iter, end_iter);
+
+			remaining_time = remaining_time - ((double)(end_iter - start_iter) / CLOCKS_PER_SEC);
+			if (remaining_time < 0)
+				break;
 			//plot(tsp_in, succ, comp, &n_comps);
 		}
 	#endif
 
 	//free(x);
 
-	end = clock();
+	//end = clock();
 
 	if (tsp_in->integerDist)
 	{
@@ -97,7 +117,7 @@ void loop_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ, in
 		tsp_in->bestCostD = 0.0;
 	}
 
-	tsp_in->execution_time = ((double)(end - start) / (double)CLOCKS_PER_SEC) * TIME_SCALE;
+	//tsp_in->execution_time = ((double)(end - start) / (double)CLOCKS_PER_SEC);
 
 }
 
@@ -178,8 +198,8 @@ void print_state(CPXENVptr env, CPXLPptr lp, int ncomps, time_t start, time_t en
 	double actual_bound, best_bound;
 	CPXgetbestobjval(env, lp, &best_bound);
 	CPXgetobjval(env, lp, &actual_bound);
-	printf("Best bound of all the remaining open nodes: %lf\n", best_bound);
-	printf("Object value of the solution in the solution pool: %lf\n", actual_bound);
-	printf("Number of components: %d\n", ncomps);
-	printf("Time: %lf\n\n", (((double)(end - start) / (double)CLOCKS_PER_SEC)) * TIME_SCALE);
+	printf("\n%sBest bound of all the remaining open nodes:%s %.2lf\n",BLUE,WHITE, best_bound);
+	printf("%sObject value of the solution in the solution pool:%s %.2lf\n",BLUE, WHITE, actual_bound);
+	printf("%sNumber of components:%s %d\n",BLUE, WHITE, ncomps);
+	printf("%sTime:%s %.2lf\n\n",BLUE, WHITE, (((double)(end - start) / (double)CLOCKS_PER_SEC)) * TIME_SCALE);
 }

@@ -19,7 +19,7 @@
 	@param succ array of the successor of each node
 	@param comp array with the component of each node
 	*/
-void loop_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ, int* comp);
+void loop_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ, int* comp, int* n_comps);
 
 /**
 	@brief Add all the sec constraints to the initial model.

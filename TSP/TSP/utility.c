@@ -33,13 +33,13 @@ void dist(int node1, int node2, tsp_instance* tsp_in, void* dist)
 
 void print_cost(tsp_instance* tsp_in)
 {
-	printf(LINE);
-	printf("The solution cost is:\n");
+	printf("%s%s%s", RED, LINE, WHITE);
+	printf("%sSolution cost : %s", BLUE, WHITE);
 	if (tsp_in->integerDist)
-		printf("int cost %d\n", tsp_in->bestCostI);
+		printf("%5d\n",tsp_in->bestCostI);
 	else
-		printf("double cost %10.31f\n", tsp_in->bestCostD);
-	printf(LINE);
+		printf("%.2lf\n", tsp_in->bestCostD);
+
 }
 
 void define_tour(tsp_instance* tsp_in, double* x, int* succ, int* comp, int* n_comps)

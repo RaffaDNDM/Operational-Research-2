@@ -32,15 +32,16 @@
 
 //Names of the algorithms
 #define ALG1 "Loop"
-#define ALG2 "Branch&Cut"
-#define ALG3 "Branch&CutGeneral"
-#define ALG4 "Branch&Cut Patching"
-#define ALG5 "MTZ"
-#define ALG6 "GG"
-#define ALG7 "VNS"
-#define ALG8 "TabuSearch"
-#define ALG9 "Branch&Cut General Patching"
-#define ALG10 "Genetic"
+#define ALG2 "Branch& CutGeneral"
+#define ALG3 "Branch&Cut"
+#define ALG4 "Branch&Cut + Patching"
+#define ALG5 "Branch&Cut General + Patching"
+#define ALG6 "MTZ"
+#define ALG7 "GG"
+#define ALG8 "VNS"
+#define ALG9 "TabuSearch"
+#define ALG10 "Simulated Annealing"
+#define ALG11 "Genetic"
 
 //Creation or not of the performance profile
 #define PERF_PROF_ON 1

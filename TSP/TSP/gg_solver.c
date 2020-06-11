@@ -32,8 +32,8 @@ void gg_build_model(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in)
 	CPXsetintparam(env, CPX_PARAM_RANDOMSEED, tsp_in->seed);
 
 	printf(LINE);
-	printf("Metaheuristic Procedure: \n");
-	printf("Seed: %d\n\n", tsp_in->seed);
+	printf("%sMetaheuristic Procedure:%s \n", GREEN, WHITE);
+	printf("%sSeed:%s %d\n\n",CYAN, WHITE, tsp_in->seed);
 
 #endif
 

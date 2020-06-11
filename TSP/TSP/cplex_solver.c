@@ -24,24 +24,33 @@ void cplex_solver(tsp_instance* tsp_in)
 	if (tsp_in->verbose > 60)
 		CPXsetintparam(env, CPX_PARAM_SCRIND, CPX_ON);
 
+	if (tsp_in->deadline != DEADLINE_MAX)
+		CPXsetdblparam(env, CPXPARAM_TimeLimit, tsp_in->deadline);
+
 	int* succ = calloc(tsp_in->num_nodes, sizeof(int));
 	int* comp = calloc(tsp_in->num_nodes, sizeof(int));
+
+	int n_comps = 1;
+
+	printf("%sCplex solver%s\n", RED, WHITE);
+	printf("%s[Cplex]%s", BLUE, WHITE);
 
 	switch (tsp_in->alg)
 	{
 		case 1:
 		{
-			printf(LINE);
+			time_t start = clock();
 			printf("Loop solver\n\n");
-			loop_solver(env, lp, tsp_in, succ, comp);
+			loop_solver(env, lp, tsp_in, succ, comp, &n_comps);
+			time_t end = clock();
+			tsp_in->execution_time = ((double)(end - start) / (double)CLOCKS_PER_SEC);
 			break;
 		}
 
 		case 2:
 		{
-			printf(LINE);
 			time_t start = clock();
-			printf("Branch&Cut solver\n\n");
+			printf("Branch&Cut solver with general callbacks\n\n");
 			bc_solver(env, lp, tsp_in, succ, comp, 0);
 			time_t end = clock();
 			tsp_in->execution_time = ((double)(end - start) / (double)CLOCKS_PER_SEC);
@@ -50,9 +59,8 @@ void cplex_solver(tsp_instance* tsp_in)
 
 		case 3:
 		{
-			printf(LINE);
 			time_t start = clock();
-			printf("Branch&Cut solver with general callbacks\n\n");
+			printf("Branch&Cut solver\n\n");
 			bc_solver(env, lp, tsp_in, succ, comp, 1);
 			time_t end = clock();
 			tsp_in->execution_time = ((double)(end - start) / (double)CLOCKS_PER_SEC);
@@ -61,8 +69,7 @@ void cplex_solver(tsp_instance* tsp_in)
 
 		case 4:
 		{
-			printf(LINE);
-			printf("Patching algorithm\n\n");
+			printf("Branch&Cut solver with patching\n\n");
 			time_t start_time = clock();
 			bc_solver(env, lp, tsp_in, succ, comp, 0);
 			time_t end_time = clock();
@@ -72,7 +79,16 @@ void cplex_solver(tsp_instance* tsp_in)
 
 		case 5:
 		{
-			printf(LINE);
+			printf("Branch&Cut solver with general callback and patching\n\n");
+			time_t start_time = clock();
+			bc_solver(env, lp, tsp_in, succ, comp, 0);
+			time_t end_time = clock();
+			tsp_in->execution_time = ((double)(end_time - start_time) / (double)CLOCKS_PER_SEC);
+			break;
+		}
+
+		case 6:
+		{
 			printf("MTZ solver\n\n");
 			time_t start_time = clock();
 			mtz_solver(env, lp, tsp_in);
@@ -81,9 +97,8 @@ void cplex_solver(tsp_instance* tsp_in)
 			break;
 		}
 
-		case 6:
+		case 7:
 		{
-			printf(LINE);
 			printf("GG solver\n\n");
 			time_t start_time = clock();
 			gg_solver(env, lp, tsp_in);
@@ -95,14 +110,14 @@ void cplex_solver(tsp_instance* tsp_in)
 	}
 
 	print_cost(tsp_in);
-	printf("Execution time: %lf\n", tsp_in->execution_time);
+	printf("%sExecution time:%s %.3lf seconds\n",GREEN, WHITE ,tsp_in->execution_time);
+	printf("%s%s%s", RED, LINE, WHITE);
 
-	int n_comps = 1;
 	if (tsp_in->plot)
 	{
 		switch (tsp_in->alg)
 		{
-		case 2:; case 3:; case 4:
+		case 2:; case 3:; case 4:; case 5:
 			{
 				succ = calloc(tsp_in->num_nodes, sizeof(int));
 				comp = calloc(tsp_in->num_nodes, sizeof(int));
@@ -110,7 +125,7 @@ void cplex_solver(tsp_instance* tsp_in)
 				break;
 			}
 
-			case 5:
+			case 6:
 			{
 				tsp_in->num_cols = CPXgetnumcols(env, lp);
 				int num_edges = (tsp_in->num_nodes) * (tsp_in->num_nodes);
@@ -126,7 +141,7 @@ void cplex_solver(tsp_instance* tsp_in)
 				break;
 			}
 
-			case 6:
+			case 7:
 			{
 				int num_edges = (tsp_in->num_nodes) * (tsp_in->num_nodes);
 				tsp_in->num_cols = CPXgetnumcols(env, lp);

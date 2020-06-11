@@ -33,6 +33,7 @@
 #define RED "\033[1;31m"
 #define WHITE "\033[0m"
 #define YELLOW "\033[1;33m"
+#define CYAN "\033[1;36m"
 
 /**
 	@brief Compute the distance between two nodes, looking to the specified way of computing distances in tsp_in.

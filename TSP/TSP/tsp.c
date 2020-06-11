@@ -32,6 +32,9 @@ int main(int argc, char** argv)
 		printf("6) %s \n", ALG6);
 		printf("7) %s \n", ALG7);
 		printf("8) %s \n", ALG8);
+		printf("9) %s \n", ALG9);
+		printf("10) %s \n", ALG10);
+		printf("11) %s \n", ALG11);
 		printf(STAR_LINE);
 
 		char s[LINE_SIZE];
@@ -49,9 +52,9 @@ int main(int argc, char** argv)
 void solution(tsp_instance* tsp_in)
 {
 	//tsp_in->sol = (int*)calloc(((size_t)tsp_in->num_nodes) +1, sizeof(int));
-	if (tsp_in->alg < 7)
+	if (tsp_in->alg < 8)
 		cplex_solver(tsp_in);
-	else if (tsp_in->alg < 10)
+	else if (tsp_in->alg < 11)
 		heuristic_solver(tsp_in);
 	else if (tsp_in->alg == 11)
 		genetic_solver(tsp_in);
@@ -130,7 +133,7 @@ void set_params_and_solve(tsp_instance* tsp_in)
 
 void manage_input(tsp_instance* tsp_in)
 {
-	char* name_algs[] = { ALG1, ALG2, ALG3, ALG4, ALG5, ALG6, ALG7, ALG8};
+	char* name_algs[] = { ALG1, ALG2, ALG3, ALG4, ALG5, ALG6, ALG7, ALG8, ALG9, ALG10, ALG11};
 	FILE* perf_data = NULL;
 
 	if (strncmp(tsp_in->dir, "NULL", 4) != 0)

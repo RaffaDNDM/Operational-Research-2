@@ -104,8 +104,6 @@ void parse_cmd(char** argv, int argc, tsp_instance* tsp_in)
 			if (strncmp(tsp_in->input, "NULL", 4) == 0)
 			{
 				strcpy(tsp_in->input, argv[++i]);
-				printf("%s\n", tsp_in->input);
-
 				continue;
 			}
 
@@ -149,8 +147,8 @@ void parse_cmd(char** argv, int argc, tsp_instance* tsp_in)
 
 	if (tsp_in->verbose > 30)
 	{
-		printf(LINE);
-		printf("List of parameters specified on command line: \n");
+		printf("%s%s%s",RED, LINE, WHITE);
+		printf("%sList of parameters specified on command line:%s \n", RED,WHITE);
 		int i;
 		for (i=1; i<argc; i++)
 		{
@@ -159,27 +157,29 @@ void parse_cmd(char** argv, int argc, tsp_instance* tsp_in)
 
 			if (i_check || np_check )
 			{
-				printf("%s\n", argv[i]);
+				printf("%s%s%s\n",YELLOW, argv[i], WHITE);
 			}
 			else
 			{
-				printf("%s : %s\n", argv[i], argv[i+1]);
+				printf("%s%s%s : %s\n",YELLOW, argv[i], WHITE, argv[i+1]);
 				i++;
 			}
 		}
-		printf(LINE);
 	}
 
 	if (tsp_in->heuristic != 0)
 	{
-		if (tsp_in->alg ==1 || tsp_in->alg == 4 || tsp_in->alg == 5)
+		if (tsp_in->alg != 2 && tsp_in->alg != 3)
 		{
 			printf("Not valid algorithm for heuristic option\n");
 			exit(1);
 		}
-		else if (tsp_in->which_alg[0] == 1 || tsp_in->which_alg[3] == 1 || tsp_in->which_alg[4] == 1)
+		else if (tsp_in->which_alg[0] == 1 || tsp_in->which_alg[3] == 1 || tsp_in->which_alg[4] == 1 ||
+			tsp_in->which_alg[5] == 1 || tsp_in->which_alg[6] == 1 || tsp_in->which_alg[7] == 1 ||
+			tsp_in->which_alg[8] == 1 || tsp_in->which_alg[9] == 1 || tsp_in->which_alg[10] == 1 ||
+			tsp_in->which_alg[11] == 1)
 		{
-			printf("The heuristic option will be ignored for algorithms 1, 4 and 5\n");
+			printf("The heuristic option will be ignored for algorithms different from 2 and 3\n");
 		}
 	}
 }
@@ -201,6 +201,9 @@ void help()
 	printf("6) %s \n", ALG6);
 	printf("7) %s \n", ALG7);
 	printf("8) %s \n", ALG8);
+	printf("9) %s \n", ALG9);
+	printf("10) %s \n", ALG10);
+	printf("11) %s \n", ALG11);
 	printf(STAR_LINE);
 	printf("Insert the max time of the execution\n");
 	printf("-d dead_time\n");
@@ -304,16 +307,15 @@ void parse_file(tsp_instance* tsp_in)
 
 	fclose(f);
 
-	printf(LINE);
-	printf("Name of the input instance : %s\n", tsp_in->input);
-	printf("Number of input nodes : %d\n", tsp_in->num_nodes);
+	printf("%sName of the input instance :%s %s\n",GREEN, WHITE, tsp_in->input);
+	printf("%sNumber of input nodes :%s %d\n",GREEN, WHITE, tsp_in->num_nodes);
 
 	if (tsp_in->verbose > 80)
 	{
 		if (tsp_in->deadline < DEADLINE_MAX)
-			printf("Deadline time : %f\n",tsp_in->deadline);
+			printf("%sDeadline time :%s %f\n",GREEN, WHITE, tsp_in->deadline);
 
-		printf("\nInput nodes coordinates:\n");
+		printf("\n%sInput nodes coordinates:%s\n", GREEN, WHITE);
 
 		for (int i = 0; i < tsp_in->num_nodes; i++)
 		{
@@ -321,7 +323,7 @@ void parse_file(tsp_instance* tsp_in)
 		}
 	}
 
-	printf(LINE);
+	printf("%s%s%s", RED, LINE, WHITE);
 }
 
 void select_alg(tsp_instance* tsp_in, char* alg_string, int in_main)

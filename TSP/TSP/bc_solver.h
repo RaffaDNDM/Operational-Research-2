@@ -10,7 +10,7 @@
 
 #include "cplex_solver.h"
 
-#define PATCHING
+
 
 /**
 	@brief Branch&Cut solver with lazy callbacks.
@@ -80,10 +80,10 @@ void cplex_change_coeff(tsp_instance* tsp_in, CPXENVptr env, CPXLPptr lp, double
 */
 void local_branching(tsp_instance* tsp_in, CPXENVptr env, CPXLPptr lp, double* x_best, int freedom);
 
-int patching(CPXENVptr env, tsp_instance* tsp_in, double* x_star, double objval, void* cbdata, int wherefrom);
+int patching(tsp_instance* tsp_in, double* x_star, double objval, int thread);
 
 static int CPXPUBLIC heuristic_callback(CPXCENVptr env, void* cbdata, int wherefrom, void* cbhandle, double* objval_p, double* x, int* checkfeas_p, int* useraction_p);
 
-static int CPXPUBLIC set_incumbent(CPXCENVptr env, void* cbdata, int wherefrom, void* cbhandle, double objval, double* x, int* isfeas_p, int* useraction_p);
+static int CPXPUBLIC general_heuristic_callback(CPXCALLBACKCONTEXTptr context, CPXLONG contextid, void* cbhandle);
 
 #endif
