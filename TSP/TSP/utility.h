@@ -16,6 +16,13 @@
 #define LINE_SIZE 180 //size of the line gets from the input
 #define NAME_SIZE 30 //size of the variable name in the cplex model
 
+
+//Check if the solution is an integer vector and respect constraints
+#define SOLUTION_CORRECTNESS 1
+
+//Approximation value for the cplex result values in pre-solution
+#define EPS 1e-5
+
 #define GP_DEFAULT_STYLE "style.txt" //name of the style file needed by Gnuplot
 #define DEFAULT_DAT "solution.dat" //name of the file where to print the solution of the default algoritm
 #define CPLEX_DAT "solutionCPLEX.dat" //name of the file where to print the cplex solution

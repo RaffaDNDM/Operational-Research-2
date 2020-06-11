@@ -1,3 +1,4 @@
 tsp_my_short_inst/att10.tsp
 tsp_my_short_inst/att20.tsp
 tsp_my_short_inst/att30.tsp
+tsp_my_short_inst/att48.tsp

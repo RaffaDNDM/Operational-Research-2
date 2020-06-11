@@ -907,7 +907,7 @@ void vns(tsp_instance* tsp_in, int* visited_nodes, double *best_cost, double dea
 		time_t end = clock();
 		remaining_time = remaining_time - ((double)(end - start) / CLOCKS_PER_SEC);
 
-		#ifndef MULTISTART
+		#ifndef MULTI_START
 			printf("%sRemaining time : %s%.2lf\n", CYAN, WHITE, remaining_time);
 		#endif 
 
@@ -1148,7 +1148,7 @@ void tabu_search(tsp_instance* tsp_in, int* visited_nodes, double* best_cost, do
 		end = clock();
 		remaining_time = remaining_time - ((double)(end - start) / CLOCKS_PER_SEC);
 
-#ifndef MULTISTART
+#ifndef MULTI_START
 		printf("%sRemaining time : %s%.2lf\n", CYAN, WHITE, remaining_time);
 #endif 
 
@@ -1776,7 +1776,7 @@ void evolution(tsp_instance* tsp_in, int** members, double* fitnesses, int* best
 	           int* worst_members, double* sum_prob, double* sum_fitnesses, time_t start)
 {
 	int num_epochs = 0;
-	time_t end = 0;
+	time_t end = clock();
 	printf("\n%s", LINE);
 	printf("%s[Construction phase]  ", RED);
 	printf("%sbest index:%s %5d\n", GREEN, WHITE, *best_index);

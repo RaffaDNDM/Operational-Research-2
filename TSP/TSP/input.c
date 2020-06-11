@@ -352,15 +352,42 @@ void select_alg(tsp_instance* tsp_in, char* alg_string, int in_main)
 				return;
 			}
 		else
-			assert(alg > 0 && algF == alg);
+			assert(alg >= 0 && algF == alg);
 
-		if (alg <= NUM_ALGS)
+		if (alg!=0 && alg <= NUM_ALGS)
 			tsp_in->alg = alg;
 		else
 		{
 			tsp_in->alg = 0;
 			int length = strlen(alg_string);
 
+			char* token = strtok(alg_string+1, "/");
+
+			while (token != NULL)
+			{
+				//int index = (token - '0') - 1;
+				int index = ((int)atof(token) - 1);
+
+				if (index >= 0 && index < NUM_ALGS)
+					tsp_in->which_alg[index] = 1;
+				else
+				{
+					printf("Undefined algorithm\n");
+
+					if (in_main)
+					{
+						tsp_in->alg = -1;
+						return;
+					}
+					else
+						exit(1);
+				}
+
+				token = strtok(NULL, "/");
+			}
+
+
+			/*
 			int j = 0;
 			for (; j < length; j++)
 			{
@@ -380,7 +407,7 @@ void select_alg(tsp_instance* tsp_in, char* alg_string, int in_main)
 					else
 						exit(1);
 				}
-			}
+			}*/
 		}
 	}
 }

@@ -172,6 +172,7 @@ void plot(tsp_instance* tsp_in, int* succ, int* comp, int* n_comps)
 			_pclose(pipe);
 			printf("Type something to continue and create the image");
 			gets(line, LINE_SIZE);
+			printf("%s%s%s\n", RED, LINE, WHITE);
 			pipe = _popen(GNUPLOT_EXE, "w");
 			continue;
 		}

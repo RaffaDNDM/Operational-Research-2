@@ -19,13 +19,10 @@
 //Set the use of lazy constraint
 #define LAZY_CONSTRAINTS 1
 
-//Check if the solution is an integer vector and respect constraints
-#define SOLUTION_CORRECTNESS 1
 
 //Use metaheuristic pre-solution in LOOP
 //#define METAHEURISTIC 1
-//Approximation value for the cplex result values in pre-solution
-#define EPS 1e-5
+
 
 //Do all the combinations of CPLEX parameters
 //#define ALL_PARAM_COMBINATIONS 1
@@ -58,6 +55,5 @@ void cplex_build_model(tsp_instance* tsp_in, CPXENVptr env, CPXLPptr lp);
 */
 int compact_xpos(tsp_instance* tsp_in, int i, int j);
 
-void cplex_define_tour(tsp_instance* tsp_in, double* x, int* succ, int* comp, int* n_comps);
 
 #endif

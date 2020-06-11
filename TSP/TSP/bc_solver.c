@@ -626,7 +626,7 @@ int patching(tsp_instance* tsp_in, double* x_star, double objval, int thread)
 	int* succ = calloc(tsp_in->num_nodes, sizeof(int));
 	int* comp = calloc(tsp_in->num_nodes, sizeof(int));
 
-	cplex_define_tour(tsp_in, x_star, succ, comp, &n_comps);
+	define_tour(tsp_in, x_star, succ, comp, &n_comps);
 
 	while (n_comps != 1)
 	{

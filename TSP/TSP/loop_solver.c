@@ -43,7 +43,7 @@ void loop_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ, in
 
 	double remaining_time = tsp_in->deadline - ((double) (end_iter - start_iter) / CLOCKS_PER_SEC);
 
-	while (*n_comps >= 2)
+	while ((*n_comps) >= 2)
 	{
 		
 		CPXsetdblparam(env, CPXPARAM_TimeLimit, remaining_time);
@@ -59,7 +59,7 @@ void loop_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ, in
 		CPXgetbestobjval(env, lp, &tsp_in->bestCostD);
 		assert(CPXgetmipx(env, lp, tsp_in->sol, 0, CPXgetnumcols(env, lp) - 1) == 0);
 		//define_tour(tsp_in, tsp_in->sol, succ, comp, &n_comps);
-		cplex_define_tour(tsp_in, tsp_in->sol, succ, comp, n_comps);
+		define_tour(tsp_in, tsp_in->sol, succ, comp, n_comps);
 		
 		print_state(env, lp, *n_comps, start_iter, end_iter);
 		/*int j;
@@ -72,8 +72,10 @@ void loop_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ, in
 	}
 
 	#ifdef METAHEURISTIC
-		CPXsetintparam(env, CPX_PARAM_NODELIM, 9223372036800000000);
-		CPXsetintparam(env, CPX_PARAM_INTSOLLIM, 9223372036800000000);
+	printf("%sFinish pre-processing%s\n", GREEN, WHITE);
+
+		CPXsetintparam(env, CPX_PARAM_NODELIM, 2100000000);
+		CPXsetintparam(env, CPX_PARAM_INTSOLLIM, 2100000000);
 		CPXsetdblparam(env, CPX_PARAM_EPGAP, 1e-04);
 
 		start_iter = clock();
@@ -81,11 +83,11 @@ void loop_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ, in
 		end_iter = clock();
 		CPXgetbestobjval(env, lp, &tsp_in->bestCostD);
 		assert(CPXgetmipx(env, lp, tsp_in->sol, 0, CPXgetnumcols(env, lp) - 1) == 0);
-		define_tour(tsp_in, tsp_in->sol, succ, comp, &n_comps);
-		print_state(env, lp, n_comps, start_iter, end_iter);
+		define_tour(tsp_in, tsp_in->sol, succ, comp, n_comps);
+		print_state(env, lp, *n_comps, start_iter, end_iter);
 		//plot(tsp_in, succ, comp, &n_comps);
 
-		remaining_time = tsp_in->deadline - ((double) (end_iter - start_iter) / CLOCKS_PER_SEC);
+		remaining_time = remaining_time - ((double) (end_iter - start_iter) / CLOCKS_PER_SEC);
 
 		while (*n_comps >= 2)
 		{
@@ -201,5 +203,5 @@ void print_state(CPXENVptr env, CPXLPptr lp, int ncomps, time_t start, time_t en
 	printf("\n%sBest bound of all the remaining open nodes:%s %.2lf\n",BLUE,WHITE, best_bound);
 	printf("%sObject value of the solution in the solution pool:%s %.2lf\n",BLUE, WHITE, actual_bound);
 	printf("%sNumber of components:%s %d\n",BLUE, WHITE, ncomps);
-	printf("%sTime:%s %.2lf\n\n",BLUE, WHITE, (((double)(end - start) / (double)CLOCKS_PER_SEC)) * TIME_SCALE);
+	printf("%sTime:%s %.2lf seconds\n\n",BLUE, WHITE, (((double)(end - start) / (double)CLOCKS_PER_SEC)));
 }
