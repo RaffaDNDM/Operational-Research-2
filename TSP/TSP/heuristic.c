@@ -145,6 +145,27 @@ void* computeSolution(void* param)
 	else
 		insertion(args->tsp_in, visited_nodes, &best_cost, args->seed);
 
+	printf("cost %lf\n", best_cost);
+	int* temp_comp = (int*)calloc((size_t)args->tsp_in->num_nodes, sizeof(int));
+	int* temp_succ = (int*)calloc((size_t)args->tsp_in->num_nodes, sizeof(int));
+
+	int k;
+	for (k = 0; k < args->tsp_in->num_nodes; k++)
+		temp_comp[k] = 1;
+
+	int temp_ncomps = 1;
+	succ_construction(visited_nodes, temp_succ, args->tsp_in->num_nodes);
+
+	
+	plot(args->tsp_in, temp_succ, temp_comp, &temp_ncomps);
+
+	greedy_refinement(args->tsp_in, visited_nodes, &best_cost);
+
+	printf("cost %lf\n", best_cost);
+	succ_construction(visited_nodes, temp_succ, args->tsp_in->num_nodes);
+	plot(args->tsp_in, temp_succ, temp_comp, &temp_ncomps);
+
+
 	time_t end_first_generation = clock();
 	remaining_time = remaining_time - ((double)(end_first_generation-start)/(double)CLOCKS_PER_SEC);
 
@@ -674,6 +695,109 @@ void min_extra_mileage(tsp_instance* tsp_in, int count, int* visited_nodes, int*
 
 void greedy_refinement(tsp_instance* tsp_in, int* visited_nodes, double* best_cost)
 {
+	static int greedy_count = 0;
+	greedy_count++;
+
+	int* succ = calloc((size_t)tsp_in->num_nodes, sizeof(int));
+	succ_construction(visited_nodes, succ, tsp_in->num_nodes);
+
+	double check_cost;
+
+	do
+	{
+		check_cost = (*best_cost);
+
+		int i = 0;
+		for (; i < tsp_in->num_nodes; i++)
+		{
+			double cost_i_k; //cost [i, succ[i]]
+			if (tsp_in->integerDist)
+			{
+				int x;
+				dist(i, succ[i], tsp_in, &x);
+				cost_i_k = (double)(x);
+			}
+			else
+			{
+				dist(i, succ[i], tsp_in, &cost_i_k);
+			}
+
+			int j = 0;
+			for (; j < tsp_in->num_nodes; j++)
+			{
+				if (j != i && j != succ[i] && succ[j] != i && succ[j] != succ[i])
+				{
+					double cost_j_h; //cost[i, succ[i]]
+					double cost_i_j;
+					double cost_k_h;
+					if (tsp_in->integerDist)
+					{
+						int x1, x2, x3;
+						dist(j, succ[j], tsp_in, &x1);
+						dist(i, j, tsp_in, &x2);
+						dist(succ[i], succ[j], tsp_in, &x3);
+						cost_j_h = (double)x1;
+						cost_i_j = (double)x2;
+						cost_k_h = (double)x3;
+					}
+					else
+					{
+						dist(j, succ[j], tsp_in, &cost_j_h);
+						dist(i, j, tsp_in, &cost_i_j);
+						dist(succ[i], succ[j], tsp_in, &cost_k_h);
+					}
+					double delta = cost_i_j + cost_k_h - cost_i_k - cost_j_h;
+					if (delta < 0.0)
+					{
+						(*best_cost) += delta;
+						int k = succ[i];
+						int next = succ[i];
+
+						int count = 0;
+						int* orientation = (int*)calloc((size_t)tsp_in->num_nodes, sizeof(int));
+						while (next != j)
+						{
+							orientation[count++] = next;
+							next = succ[next];
+						}
+						next = succ[k];
+						int next_count = 0;
+
+						while (next != j)
+						{
+							int temp = succ[next];
+							succ[next] = orientation[next_count++];
+							next = temp;
+						}
+						succ[i] = j;
+						succ[k] = succ[j];
+						succ[j] = orientation[count - 1];
+						free(orientation);
+						break;
+					}
+				}
+			}
+		}
+	} while (check_cost != (*best_cost)); //abs(check_cost - (*cost))<1e-10
+
+	visited_nodes[0] = 0;
+	int i = 0;
+	int count = 1;
+	int node = -1;
+	for (; count < tsp_in->num_nodes; count++)
+	{
+		node = succ[i];
+		i = node;
+		visited_nodes[count] = node;  //inserirlo nell'algoritmo
+		//printf("[ %d ] count: %d\n", greedy_count, visited_nodes[count]);
+	}
+
+	free(succ);
+}
+
+/*
+void greedy_refinement(tsp_instance* tsp_in, int* visited_nodes, double* best_cost)
+{
 	static int check_count;
 	check_count++;
 
@@ -692,15 +816,15 @@ void greedy_refinement(tsp_instance* tsp_in, int* visited_nodes, double* best_co
 		{
 			(*best_cost) += delta;
 		}
-	}
-	while (check_cost != (*best_cost)); //abs(check_cost - (*cost))<1e-10
+
+	} while (check_cost != (*best_cost)); //abs(check_cost - (*cost))<1e-10
 
 	visited_nodes[0] = 0;
 	int i = 0;
 	int count = 1;
 	int node = -1;
 
-	for(; count<tsp_in->num_nodes; count++)
+	for (; count < tsp_in->num_nodes; count++)
 	{
 		node = succ[i];
 		i = node;
@@ -709,6 +833,7 @@ void greedy_refinement(tsp_instance* tsp_in, int* visited_nodes, double* best_co
 	}
 
 	free(succ);
+	
 }
 
 double move_2opt(tsp_instance* tsp_in, int* succ)
@@ -834,7 +959,7 @@ void invert_path(tsp_instance* tsp_in, int* succ, int first, int second, int suc
 	succ[j_best] = orientation[count - 1];
 
 	free(orientation);
-}
+}*/
 
 void vns(tsp_instance* tsp_in, int* visited_nodes, double *best_cost, double deadline)
 {

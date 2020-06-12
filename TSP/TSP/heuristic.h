@@ -109,9 +109,9 @@ void mutation(tsp_instance* tsp_in, int** members, double* fitnesses, int* best_
 
 void update_worst(double* fitnesses, int* worst_members);
 
-double move_2opt(tsp_instance* tsp_in, int* succ);
+//double move_2opt(tsp_instance* tsp_in, int* succ);
 
-void invert_path(tsp_instance* tsp_in, int* succ, int i_best, int j_best);
+//void invert_path(tsp_instance* tsp_in, int* succ, int i_best, int j_best);
 
 #endif
 
