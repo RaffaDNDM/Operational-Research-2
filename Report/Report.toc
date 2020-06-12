@@ -1,49 +1,49 @@
 \babel@toc {italian}{}
 \babel@toc {italian}{}
-\contentsline {chapter}{\numberline {1}Introduzione}{1}{chapter.1}%
-\contentsline {chapter}{\numberline {2}Istanze e soluzioni del problema}{3}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Istanze}{3}{section.2.1}%
-\contentsline {section}{\numberline {2.2}Soluzioni}{4}{section.2.2}%
-\contentsline {chapter}{\numberline {3}Risoluzione del problema tramite CPLEX}{5}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Modelli compatti}{6}{section.3.1}%
-\contentsline {subsection}{\numberline {3.1.1}Formulazione sequenziale}{7}{subsection.3.1.1}%
-\contentsline {subsection}{\numberline {3.1.2}Formulazione basata sul flusso}{8}{subsection.3.1.2}%
-\contentsline {section}{\numberline {3.2}Loop}{9}{section.3.2}%
-\contentsline {subsection}{\numberline {3.2.1}Formulazione di Benders}{9}{subsection.3.2.1}%
-\contentsline {subsection}{\numberline {3.2.2}Formulazione con callback}{11}{subsection.3.2.2}%
-\contentsline {section}{\numberline {3.3}Algoritmi Math-Heuristic}{12}{section.3.3}%
-\contentsline {subsection}{\numberline {3.3.1}Hard Fixing}{13}{subsection.3.3.1}%
-\contentsline {subsection}{\numberline {3.3.2}Soft Fixing}{16}{subsection.3.3.2}%
-\contentsline {subsection}{\numberline {3.3.3}Patching algorithm}{18}{subsection.3.3.3}%
-\contentsline {chapter}{\numberline {4}Algoritmi euristici}{21}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Euristici di costruzione}{21}{section.4.1}%
-\contentsline {subsection}{\numberline {4.1.1}Nearest Neighborhood}{21}{subsection.4.1.1}%
-\contentsline {subsection}{\numberline {4.1.2}Heuristic Insertion}{23}{subsection.4.1.2}%
-\contentsline {section}{\numberline {4.2}Algoritmi di raffinamento}{23}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}Algoritmo di 2 ottimalità}{24}{subsection.4.2.1}%
-\contentsline {subsection}{\numberline {4.2.2}Algoritmo di 3 ottimalità}{25}{subsection.4.2.2}%
-\contentsline {section}{\numberline {4.3}Meta-euristici}{25}{section.4.3}%
-\contentsline {subsection}{\numberline {4.3.1}Multi-starting}{26}{subsection.4.3.1}%
-\contentsline {subsection}{\numberline {4.3.2}Variable Neighborhood Search \cite {VNS}}{26}{subsection.4.3.2}%
-\contentsline {subsection}{\numberline {4.3.3}Tabu search \cite {Tabu}}{28}{subsection.4.3.3}%
-\contentsline {subsection}{\numberline {4.3.4}Simulated annealing}{30}{subsection.4.3.4}%
-\contentsline {section}{\numberline {4.4}Funzione di costo a scalini}{31}{section.4.4}%
-\contentsline {chapter}{\numberline {5}Performance}{33}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Performance variabilty}{33}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Analisi tabulare}{34}{section.5.2}%
-\contentsline {section}{\numberline {5.3}Performance profiling}{35}{section.5.3}%
-\contentsline {section}{\numberline {5.4}Analisi degli algoritmi sviluppati}{36}{section.5.4}%
-\contentsline {chapter}{\numberline {6}Appendice}{37}{chapter.6}%
-\contentsline {section}{\numberline {6.1}CPLEX}{37}{section.6.1}%
-\contentsline {subsection}{\numberline {6.1.1}Funzioni}{37}{subsection.6.1.1}%
-\contentsline {subsubsection}{\numberline {6.1.1.1}Costruzione e modifica del modello}{37}{subsubsection.6.1.1.1}%
-\contentsline {subsubsection}{\numberline {6.1.1.2}Calcolo della soluzione}{42}{subsubsection.6.1.1.2}%
-\contentsline {subsubsection}{\numberline {6.1.1.3}Lazy constraints}{44}{subsubsection.6.1.1.3}%
-\contentsline {subsubsection}{\numberline {6.1.1.4}Lazy Constraint Callback}{45}{subsubsection.6.1.1.4}%
-\contentsline {subsubsection}{\numberline {6.1.1.5}Lazy Constraint Callback General}{48}{subsubsection.6.1.1.5}%
-\contentsline {subsubsection}{\numberline {6.1.1.6}Algoritmi Euristici}{51}{subsubsection.6.1.1.6}%
-\contentsline {subsection}{\numberline {6.1.2}Parametri}{51}{subsection.6.1.2}%
-\contentsline {subsection}{\numberline {6.1.3}Costanti utili}{52}{subsection.6.1.3}%
-\contentsline {section}{\numberline {6.2}Gnuplot}{52}{section.6.2}%
-\contentsline {section}{\numberline {6.3}perprof.py}{56}{section.6.3}%
-\contentsline {chapter}{Bibliografia}{57}{figure.caption.59}%
+\contentsline {chapter}{\numberline {1}Introduzione}{1}{chapter.1}% 
+\contentsline {chapter}{\numberline {2}Istanze e soluzioni del problema}{3}{chapter.2}% 
+\contentsline {section}{\numberline {2.1}Istanze}{3}{section.2.1}% 
+\contentsline {section}{\numberline {2.2}Soluzioni}{4}{section.2.2}% 
+\contentsline {chapter}{\numberline {3}Risoluzione del problema tramite CPLEX}{5}{chapter.3}% 
+\contentsline {section}{\numberline {3.1}Modelli compatti}{6}{section.3.1}% 
+\contentsline {subsection}{\numberline {3.1.1}Formulazione sequenziale}{7}{subsection.3.1.1}% 
+\contentsline {subsection}{\numberline {3.1.2}Formulazione basata sul flusso}{8}{subsection.3.1.2}% 
+\contentsline {section}{\numberline {3.2}Loop}{9}{section.3.2}% 
+\contentsline {subsection}{\numberline {3.2.1}Formulazione di Benders}{9}{subsection.3.2.1}% 
+\contentsline {subsection}{\numberline {3.2.2}Formulazione con callback}{11}{subsection.3.2.2}% 
+\contentsline {section}{\numberline {3.3}Algoritmi Math-Heuristic}{12}{section.3.3}% 
+\contentsline {subsection}{\numberline {3.3.1}Hard Fixing}{13}{subsection.3.3.1}% 
+\contentsline {subsection}{\numberline {3.3.2}Soft Fixing}{15}{subsection.3.3.2}% 
+\contentsline {subsection}{\numberline {3.3.3}Patching algorithm}{17}{subsection.3.3.3}% 
+\contentsline {chapter}{\numberline {4}Algoritmi euristici}{19}{chapter.4}% 
+\contentsline {section}{\numberline {4.1}Euristici di costruzione}{19}{section.4.1}% 
+\contentsline {subsection}{\numberline {4.1.1}Nearest Neighborhood}{20}{subsection.4.1.1}% 
+\contentsline {subsection}{\numberline {4.1.2}Heuristic Insertion}{20}{subsection.4.1.2}% 
+\contentsline {section}{\numberline {4.2}Algoritmi di raffinamento}{22}{section.4.2}% 
+\contentsline {subsection}{\numberline {4.2.1}Algoritmo di 2 ottimalità}{22}{subsection.4.2.1}% 
+\contentsline {subsection}{\numberline {4.2.2}Algoritmo di 3 ottimalità}{23}{subsection.4.2.2}% 
+\contentsline {section}{\numberline {4.3}Meta-euristici}{24}{section.4.3}% 
+\contentsline {subsection}{\numberline {4.3.1}Multi-starting}{24}{subsection.4.3.1}% 
+\contentsline {subsection}{\numberline {4.3.2}Variable Neighborhood Search \cite {VNS}}{25}{subsection.4.3.2}% 
+\contentsline {subsection}{\numberline {4.3.3}Tabu search \cite {Tabu}}{27}{subsection.4.3.3}% 
+\contentsline {subsection}{\numberline {4.3.4}Simulated annealing}{28}{subsection.4.3.4}% 
+\contentsline {section}{\numberline {4.4}Algoritmo genetico}{29}{section.4.4}% 
+\contentsline {section}{\numberline {4.5}Funzione di costo a scalini}{30}{section.4.5}% 
+\contentsline {chapter}{\numberline {5}Performance}{31}{chapter.5}% 
+\contentsline {section}{\numberline {5.1}Performance variabilty}{31}{section.5.1}% 
+\contentsline {section}{\numberline {5.2}Analisi tabulare}{32}{section.5.2}% 
+\contentsline {section}{\numberline {5.3}Performance profiling}{33}{section.5.3}% 
+\contentsline {section}{\numberline {5.4}Analisi degli algoritmi sviluppati}{34}{section.5.4}% 
+\contentsline {chapter}{\numberline {A}CPLEX}{35}{appendix.Alph1}% 
+\contentsline {subsection}{\numberline {A.0.1}Funzioni}{35}{subsection.Alph1.0.1}% 
+\contentsline {subsubsection}{\numberline {A.0.1.1}Costruzione e modifica del modello}{35}{subsubsection.Alph1.0.1.1}% 
+\contentsline {subsubsection}{\numberline {A.0.1.2}Calcolo della soluzione}{40}{subsubsection.Alph1.0.1.2}% 
+\contentsline {subsubsection}{\numberline {A.0.1.3}Lazy constraints}{42}{subsubsection.Alph1.0.1.3}% 
+\contentsline {subsubsection}{\numberline {A.0.1.4}Lazy Constraint Callback}{43}{subsubsection.Alph1.0.1.4}% 
+\contentsline {subsubsection}{\numberline {A.0.1.5}Lazy Constraint Callback General}{46}{subsubsection.Alph1.0.1.5}% 
+\contentsline {subsubsection}{\numberline {A.0.1.6}Algoritmi Euristici}{49}{subsubsection.Alph1.0.1.6}% 
+\contentsline {subsection}{\numberline {A.0.2}Parametri}{49}{subsection.Alph1.0.2}% 
+\contentsline {subsection}{\numberline {A.0.3}Costanti utili}{50}{subsection.Alph1.0.3}% 
+\contentsline {section}{\numberline {A.1}Gnuplot}{50}{section.Alph1.1}% 
+\contentsline {section}{\numberline {A.2}perprof.py}{54}{section.Alph1.2}% 
+\contentsline {chapter}{Bibliografia}{55}{figure.caption.59}% 

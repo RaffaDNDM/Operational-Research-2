@@ -49,7 +49,7 @@ typedef struct
 	int start_list; // 0
 } tabu_list_params;
 
-#define GRASP
+//#define GRASP
 #define MAX_LOCAL_MINS 200
 #define MAX_NUM_ITERATIONS 1000
 #define CONSTRUCTION_TYPE 0	// 0 = nearest neighborhood algorithm, 1 = insertion algorithm
@@ -108,6 +108,10 @@ void crossover(tsp_instance* tsp_in, int** members, double* fitnesses, int* best
 void mutation(tsp_instance* tsp_in, int** members, double* fitnesses, int* best_index, int* worst_members, double* sum_prob, double* sum_fitnesses, int seed, int* index);
 
 void update_worst(double* fitnesses, int* worst_members);
+
+double move_2opt(tsp_instance* tsp_in, int* succ);
+
+void invert_path(tsp_instance* tsp_in, int* succ, int i_best, int j_best);
 
 #endif
 

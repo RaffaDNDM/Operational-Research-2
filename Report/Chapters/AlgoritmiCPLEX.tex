@@ -84,28 +84,27 @@ o equivalentemente:
 &\underset{e\in \delta(S)}\sum{x_{e}}\geq 2\;\forall\;S\underset{\neq}{\subset}V\; : \; \mid S\mid\geq 2
 \end{align}
 Viene definito un nuovo modello per il problema del commesso viaggiatore simmetrico, in cui vengono rimossi tali vincoli, aggiungendo così la possibilità di avere dei subtour nella soluzione finale.\\
-Viene risolto il problema e nel caso in cui ci sia più di una componente connessa, viene aggiunto al modello un vincolo di subtour elimination per ogni ciclo generato.\\
-\begin{algorithm}
-\caption{Risoluzione del problema}
-\begin{algorithmic}
-\REQUIRE {$MODEL =$ Modello TSP simmetrico senza vincoli di Subtour elimination}
-\ENSURE {$x$: soluzione intera senza subtour}
-\STATE {}
-\STATE {$x \leftarrow solve(MODEL)$}
-\STATE {$num\_comps \leftarrow comps(x)$}
-\STATE {}
-\WHILE{$num\_comps \geq 2$}
-\STATE{Add $\underset{e\in \delta(S_k)}\sum{x_{e}}\leq \mid S_k\mid - 1\;\forall\; componente\; connessa\; S_k$}
-\STATE {}
-\IF{$num\_comps \geq 2$}
-\STATE {$x \leftarrow solve(MODEL)$}
-\STATE {$num\_comps \leftarrow comps(x)$}
-\ENDIF
-\STATE {}
-\ENDWHILE
-\end{algorithmic}
+Viene risolto il problema e nel caso in cui ci sia più di una componente connessa, viene aggiunto al modello un vincolo di subtour elimination per ogni 
+ciclo generato.\\
+\begin{algorithm}[H]
+\DontPrintSemicolon
+\KwIn {$\mathtt{model}$= Modello TSP simmetrico senza vincoli di Subtour Elimination}
+\KwOut {$\mathtt{x}$= soluzione intera senza subtour}
+\BlankLine 
+ $\mathtt{x} \gets$ solve(model)\;
+ $\mathtt{ncomps} \gets$ comps(x)\;
+ \BlankLine 
+ \While{$\mathtt{ncomps} \geq 2$}{
+  Aggiungi $\underset{e\in \delta(S_k)}\sum{x_{e}}\leq \mid S_k\mid - 1\;\forall$ componente connessa $S_k$\;
+  \BlankLine  
+  \If{$\mathtt{ncomps} \geq 2$}{
+   $\mathtt{x} \gets$ solve(model)\;
+   $\mathtt{ncomps} \gets$ comps(x)\;
+  }
+ }
+ \caption{LOOP}
 \end{algorithm}
-\vspace{10cm}
+
 All'aumentare del numero di vincoli, il costo della soluzione ottenuta da CPLEX peggiora o resta identica a quella elaborata all'iterazione precedente del metodo loop.\\
 Il numero di iterazioni che vengono effettuate dall'algoritmo non è conosciuto e potrebbe essere anche molto elevato. Nel caso peggiore vengono inseriti tutti i vincoli di Subtour elimination, ovvero un numero esponenziale di disequazioni, soprattutto con istanze clusterizzate.\\
 Inoltre il problema principale di questo algoritmo è la generazione, ad ogni iterazione, di un albero completo di branching, eliminando quello precedentemente sviluppato.\\
@@ -151,29 +150,38 @@ Di seguito viene inoltre riportato lo pseudocodice dell'algoritmo appena descrit
   \label{selezione_rami} 
 \end{center} 
 \end{figure}
-\begin{algorithm}[h]
+
+\begin{algorithm}[H]
+\DontPrintSemicolon
+\KwIn {$\mathtt{model}$= Modello TSP simmetrico senza vincoli di Subtour\;           Elimination\;
+$\mathtt{deadline}$= time limit complessivo dell'algoritmo\;
+$\mathtt{percentage}$= percentuale di fissagio degli archi\;
+}
+\KwOut {$\mathtt{x}$= soluzione intera senza subtour}
+\BlankLine
+$\mathtt{n}=0$\;
+\BlankLine
+\While{$(n < num_iterations)$}{
+\BlankLine
+$setTimeLimit(deadline/num\_iterations)$\;
+$\mathtt{x} \gets solve(model)$\;
+\BlankLine
+\For{$\mathtt{j} \gets \;0,...,num\_nodi-1$}{
+$k \gets random(0,1)$\;
+\BlankLine
+\If{$(100k \leq percentuale)$}{
+$Add\;\;x\_best[j]\;\;to\;\;S$\;
+}
+}
+\BlankLine
+\ForAll{$x_{i,j} \in S$}{
+$x_{i,j}=1$\;
+}
+$n++$\;
+}
 \caption{Hard Fixing}
-\begin{algorithmic}
-\REQUIRE{$ modello,\;\;deadline,\;\;percentuale$}
-\STATE{$n=0$}
-\WHILE{$(n < num\_iterazioni)$}
-\STATE{$set\_time\_limit(deadline/num\_iterazioni)$}
-\STATE{$solve(modello)$}
-\STATE {$x\_best \leftarrow {soluzione\;\;calcolata}$}
-\FOR{$j \leftarrow \;0,...,num\_nodi-1$}
-\STATE{$ k = random(0,1)$ }
-\IF{$(100k \leq percentuale)$}
-\STATE{$Add\;\;x\_best[j]\;\;to\;\;S$}
-\ENDIF
-\ENDFOR
-\FORALL{$x_{i,j} \in S$}
-\STATE{$x_{i,j}=1$}
-\ENDFOR
-\STATE{$n++$}
-\ENDWHILE
-\end{algorithmic}
 \end{algorithm}
-\clearpage
+
 \subsection{Soft Fixing}\label{soft fixing}
 Il metodo seguente fa utilizzo di vincoli aggiuntivi, detti \textbf{Local Branching} e che ha dato il via alla sviluppo della \textbf{Math-Heuristic}, approccio di programmazione matematica (es. tramite CPLEX) unita all'algoritmica euristica\cite{local_branching}.\\
 L'approccio utilizzato è simile a quello dell'Hard Fixing, ma la scelta delle variabili da imporre a 1 non viene fatta in maniera randomica ma viene lasciata a CPLEX.\\

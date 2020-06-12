@@ -1,3 +1,11 @@
-﻿  utility.c
-C:\Users\User\github\Operational-Research-2\TSP\TSP\utility.c(174,8): warning C4013: 'gets' non definita. Verrà considerata come esterna che restituisce un int.
-  TSP.vcxproj -> C:\Users\User\github\Operational-Research-2\TSP\x64\Debug\TSP.exe
+﻿  heuristic.c
+D:\github\OperationalResearch2\TSP\TSP\heuristic.h(85,36): warning C4224: nonstandard extension used: formal parameter 'tsp_instance' was previously defined as a type
+D:\github\OperationalResearch2\TSP\TSP\heuristic.c(814,18): warning C4244: 'function': conversion from 'time_t' to 'unsigned int', possible loss of data
+D:\github\OperationalResearch2\TSP\TSP\heuristic.c(1098,18): warning C4244: 'function': conversion from 'double' to 'int', possible loss of data
+D:\github\OperationalResearch2\TSP\TSP\heuristic.c(983,1): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+D:\github\OperationalResearch2\TSP\TSP\heuristic.c(984,1): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+D:\github\OperationalResearch2\TSP\TSP\heuristic.c(1363,40): warning C4244: 'function': conversion from 'double' to 'int', possible loss of data
+D:\github\OperationalResearch2\TSP\TSP\heuristic.c(1663,51): warning C4047: 'function': 'void *(*)(void *)' differs in levels of indirection from 'void (*)(void *)'
+D:\github\OperationalResearch2\TSP\TSP\heuristic.c(1663,51): warning C4022: 'pthread_create': pointer mismatch for actual parameter 3
+D:\github\OperationalResearch2\TSP\TSP\heuristic.c(196): warning C4716: 'computeSolution': must return a value
+  TSP.vcxproj -> D:\github\OperationalResearch2\TSP\x64\Debug\TSP.exe

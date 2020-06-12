@@ -10,7 +10,7 @@
 \usepackage{verbatim} %per i commenti1
 \usepackage{subfig}
 \usepackage{amsmath}
-\usepackage{algorithm}
+\usepackage[linesnumbered, ruled, vlined]{algorithm2e}
 \usepackage{algorithmic}
 \setcounter{secnumdepth}{3}
 \setcounter{tocdepth}{6}
@@ -20,7 +20,7 @@
 \usepackage{xfrac}
 \usepackage{enumitem}
 \usepackage{amsmath}
-%\usepackage{showlabels}
+\usepackage{showlabels}
 \usepackage{cases}
 
 \DeclareMathOperator*{\argmax}{arg\,max}
@@ -155,7 +155,8 @@
 \endgroup
 %\end{comment}
 
-\makeatletter
+\begin{comment}
+\makeatletter %REMOVE Chapter Title in each chapter but not in the index
 \def\@makechapterhead#1{%
   \vspace*{50\p@}%
   {\parindent \z@ \raggedright \normalfont
@@ -165,7 +166,7 @@
     \vskip 40\p@
   }}
 \makeatother
-
+\end{comment}
 
 \mainmatter
 \input{Chapters/Introduzione.tex}

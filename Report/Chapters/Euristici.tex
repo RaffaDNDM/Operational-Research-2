@@ -151,6 +151,22 @@ L'algoritmo simulated annealign, come dice il nome, è ispirato dal processo di 
 \end{center}
 \end{figure}
  Con il procedere delle iterazioni, l'aggiornamento ad un costo peggiore avviene sempre meno frequentemente, fino ad ottenere solo aggiornamenti con soluzioni più vantaggiose. Esiste un teorema secondo il quale se la temperatura varia in maniera estremamente lenta ed è consentito effettuare un numero di iterazioni estremamente elevato, questo algoritmo garantisce di trovare l'ottimo globale. Concretamente queste ipotesi sono molto difficili da realizzare, ma è statisticamente comunque possibile dichiarare che l'approccio del simulated annealing restituisce una buona soluzione.
+\section{Algoritmo genetico}
+L'algoritmo genetico è legato alla teoria dell'evoluzione di Darwin, con cui condivide numerosi concetti. Da un punto di vista teorico, l'algoritmo definisce in prima battuta una serie di individui, che costituiscono una popolazione.\\
+In seguito, attraverso mutazioni dei singoli soggetti e la riproduzione di questi, si crea una nuova popolazione. Il concetto fondamentale alla base di tale algoritmo è che associando ad un individuo uno score, lo si possa utilizzare per far progredire la specie.\\
+Ad ogni individuo viene associata una fitness, che rappresenta quanto sia forte ed efficiente. Applicando tale concetto al Travelling Salesman Problem, ad ogni individuo $i$ è stata associata una fitness pari a:
+$$fitness_i=\frac{1}{costo_i}$$
+dove $costo_i$ rappresenta il valore della funzione obiettivo per l'istanza $i$.\\
+In seguito vengono generati nuovi individui a partire dalla popolazione attuale, utilizzando due tecniche differenti:
+\begin{itemize}
+\item{\textbf{Crossover}\\
+in questa operazione vengono selezionati randomicamente due individui della popolazione, denominati padre e madre. A partire da questi vengono creati nuovi individui che ereditano dai genitori delle caratteristiche.}
+\item{\textbf{Mutazione}\\
+in questa fase un certo numero di individui viene selezionato in maniera casuale. Da ciascuno di questi, viene generato un nuovo individuo attraverso l'aggiunta di modifiche all'istanza di partenza.}
+\end{itemize}
+All'interno del programma sviluppato, le precedenti tecniche non sono state applicate in ogni iterazione ma in istanti differenti, secondo quanto descritto nel seguente algoritmo.
+
+
 \section{Funzione di costo a scalini}
 La funzione obiettivo di un problema può avere, in particolari circostanze, un grafico a scalini, in cui cioè esistano diverse soluzioni dell'istanza con lo stesso costo. In questo caso è consigliabile applicare una politica che utilizzi delle penalità per perturbare la funzione affinché non siano più presenti le zone costanti, che potrebbero causare problemi nell'aggiornamento della soluzione da restituire. Generalmente questa situazione non si verifica con istanze del problema del commesso viaggiatore in cui i costi dipendono dalla distanza euclidea. Nel caso fosse necessario, però, è possibile ammettere che l'algoritmo utilizzato per la risoluzione del problema, restituisca anche soluzioni con più componenti connesse. In questo modo sarebbe possibile scegliere una penalità dipendente dal numero di vincoli violati (ovvero dal numero di subtour presenti) che influenzi il costo della soluzione nel seguente modo:
 $$costo\_totale = costo\_archi + M (num\_subtour -1)$$
