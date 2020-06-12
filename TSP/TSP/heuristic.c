@@ -218,7 +218,7 @@ void* computeSolution(void* param)
 
 void nearest_neighborhood(tsp_instance* tsp_in, int* visited_nodes, double* best_cost, int seed, int first_node) 
 {
-	int i = 0;
+	
 
 	int* nodes = (int*)calloc((size_t)tsp_in->num_nodes, sizeof(int));
 	//vettore di dim num nodes -> nodes utilizzato per fare le verifiche in min_cost
@@ -230,6 +230,7 @@ void nearest_neighborhood(tsp_instance* tsp_in, int* visited_nodes, double* best
 	{
 		visited_nodes[0] = first_node;
 		nodes[visited_nodes[0]] = 1;
+		//i = first_node;//aggiunto
 	}
 	else
 	{
@@ -239,11 +240,15 @@ void nearest_neighborhood(tsp_instance* tsp_in, int* visited_nodes, double* best
 
 	int count = 1;
 
+	int i = visited_nodes[0];
+	int iter = 0;
 	for (; i < (tsp_in->num_nodes); i++)
+	//for(; iter< tsp_in->num_nodes; iter++)
 	{
 		double min_dist = DBL_MAX;
 		int best = tsp_in->num_nodes;
 
+		
 		min_cost(tsp_in, nodes, i, &min_dist, &best, seed);
 
 		if (best == tsp_in->num_nodes)
@@ -695,12 +700,39 @@ void min_extra_mileage(tsp_instance* tsp_in, int count, int* visited_nodes, int*
 
 void greedy_refinement(tsp_instance* tsp_in, int* visited_nodes, double* best_cost)
 {
-	static int greedy_count = 0;
-	greedy_count++;
+	//static int greedy_count = 0;
+	//greedy_count++;
 
+	//printf("best cost %lf\n", *best_cost);
+
+	//int r;
+	/*for (r = 0; r < tsp_in->num_nodes; r++)
+	{
+		printf("%d     ", visited_nodes[r]);
+	}
+
+	printf("\n");*/
+	/*
+	double edge;
+	double first_cost = 0.0;
+	for (r = 0; r < tsp_in->num_nodes; r++)
+	{
+		dist(visited_nodes[r], visited_nodes[(r+1)%tsp_in->num_nodes], tsp_in, &edge);
+		first_cost = first_cost + edge;
+	}
+	printf("first cost %lf \n", first_cost);
+	*/
 	int* succ = calloc((size_t)tsp_in->num_nodes, sizeof(int));
 	succ_construction(visited_nodes, succ, tsp_in->num_nodes);
-
+	/*
+	first_cost=0.0;
+	for (r = 0; r < tsp_in->num_nodes; r++)
+	{
+		dist(r, succ[r], tsp_in, &edge);
+		first_cost = first_cost + edge;
+	}
+	printf("first cost %lf \n", first_cost);
+	*/
 	double check_cost;
 
 	do
@@ -708,7 +740,7 @@ void greedy_refinement(tsp_instance* tsp_in, int* visited_nodes, double* best_co
 		check_cost = (*best_cost);
 
 		int i = 0;
-		for (; i < tsp_in->num_nodes; i++)
+		for (i=0; i < tsp_in->num_nodes; i++)//aggiunto i=0 dentro
 		{
 			double cost_i_k; //cost [i, succ[i]]
 			if (tsp_in->integerDist)
@@ -727,9 +759,9 @@ void greedy_refinement(tsp_instance* tsp_in, int* visited_nodes, double* best_co
 			{
 				if (j != i && j != succ[i] && succ[j] != i && succ[j] != succ[i])
 				{
-					double cost_j_h; //cost[i, succ[i]]
-					double cost_i_j;
-					double cost_k_h;
+					double cost_j_h=0.0; //cost[i, succ[i]]
+					double cost_i_j=0.0;
+					double cost_k_h=0.0;
 					if (tsp_in->integerDist)
 					{
 						int x1, x2, x3;
@@ -745,11 +777,23 @@ void greedy_refinement(tsp_instance* tsp_in, int* visited_nodes, double* best_co
 						dist(j, succ[j], tsp_in, &cost_j_h);
 						dist(i, j, tsp_in, &cost_i_j);
 						dist(succ[i], succ[j], tsp_in, &cost_k_h);
+						dist(i, succ[i], tsp_in, &cost_i_k);//aggiunto
 					}
 					double delta = cost_i_j + cost_k_h - cost_i_k - cost_j_h;
 					if (delta < 0.0)
 					{
-						(*best_cost) += delta;
+						//printf("best cost prima %lf\n", *best_cost);
+						/*
+						printf("\n\n  cost_i_j = %lf  cost_k_h =%lf cost_i_k =%lf cost_j_h=%lf\n\n", cost_i_j, cost_k_h, cost_i_k, cost_j_h);
+						//(*best_cost) += delta;
+						(*best_cost) = (*best_cost) + delta;
+						
+						printf("i=%d succ[%d] = %d     j=%d   succ[%d] = %d          delta = %lf    best_cost = %lf\n", i, i, succ[i], j, j, succ[j], delta, *best_cost);
+						double edge_new1, edge_new2, edge_old1, edge_old2;
+						*/
+
+
+						
 						int k = succ[i];
 						int next = succ[i];
 
@@ -773,6 +817,21 @@ void greedy_refinement(tsp_instance* tsp_in, int* visited_nodes, double* best_co
 						succ[k] = succ[j];
 						succ[j] = orientation[count - 1];
 						free(orientation);
+
+						/*
+						double inner_cost = 0.0;
+						double edge = 0.0;
+						int s;
+						for (s = 0; s < tsp_in->num_nodes; s++)
+						{
+							//dist(visited_nodes[i], visited_nodes[(i + 1) % tsp_in->num_nodes], tsp_in, &edge);
+							dist(s, succ[s], tsp_in, &edge);
+							inner_cost = inner_cost + edge;
+						}
+
+						printf("inner_cost = %lf\n", inner_cost);
+
+						*/
 						break;
 					}
 				}
@@ -792,6 +851,7 @@ void greedy_refinement(tsp_instance* tsp_in, int* visited_nodes, double* best_co
 		//printf("[ %d ] count: %d\n", greedy_count, visited_nodes[count]);
 	}
 
+	
 	free(succ);
 }
 
@@ -1200,7 +1260,7 @@ void tabu_search(tsp_instance* tsp_in, int* visited_nodes, double* best_cost, do
 		int refinement_done = 0;
 		int negative = 0;
 
-		for (i = 0; i < tsp_in->num_nodes && !negative; i++)
+	/*	for (i = 0; i < tsp_in->num_nodes && !negative; i++)
 		{
 			int start_edge1, end_edge1, start_edge2, end_edge2;
 
@@ -1264,8 +1324,8 @@ void tabu_search(tsp_instance* tsp_in, int* visited_nodes, double* best_cost, do
 					pos2 = (i + j) % tsp_in->num_nodes;
 				}
 			}
-
-		}
+		sostiutire da una chiamata alla funzione 2-opt, poi devo verificare che delta < 0  e che la mossa sia accettabile con la tabù list
+		}*/
 
 		//if (num_negative_delta == 2 * tsp_in->num_nodes)
 		if (negative)
@@ -1830,7 +1890,7 @@ void genetic_solver(tsp_instance* tsp_in)
 	{
 		worst_members[i] = -1;
 	}
-
+	/*
 	int* succ = (int*)calloc(tsp_in->num_nodes, sizeof(int));
 	int* comp = (int*)calloc(tsp_in->num_nodes, sizeof(int));
 	int n_comps = 1;
@@ -1847,7 +1907,7 @@ void genetic_solver(tsp_instance* tsp_in)
 		double x;
 		dist(members[best_index][i], members[best_index][(i + 1) % tsp_in->num_nodes], tsp_in, &x);
 		tmp += x;
-	}
+	}*/
 	evolution(tsp_in, members, fitnesses, &best_index, worst_members, &sum_prob, &sum_fitnesses, start);
 
 	print_cost(tsp_in);
@@ -1879,7 +1939,7 @@ void genetic_solver(tsp_instance* tsp_in)
 
 	free(members);
 	free(fitnesses);
-	free(tsp_in->sol);
+	//free(tsp_in->sol);
 }
 
 void construction(void* param)
@@ -1896,7 +1956,65 @@ void construction(void* param)
 	{
 		nearest_neighborhood(args->tsp_in, args->members[i + args->first_index], &(args->fitnesses[i + args->first_index]), args->first_index + i + 1, (i + args->first_index) % args->tsp_in->num_nodes);
 		double cost = args->fitnesses[i+args->first_index];
+		 //((i + args->first_index) % args->tsp_in->num_nodes);
+		/*int r = 0;
+		double nn_cost = 0.0;
+		double edge;
+		for (r = 0; r < args->tsp_in->num_nodes; r++)
+		{
+			dist(args->members[i + args->first_index][r], args->members[i + args->first_index][(r + 1) % args->tsp_in->num_nodes], args->tsp_in, &edge);
+			nn_cost = nn_cost + edge;
+		}
+		printf("my nn_cost %lf\n", nn_cost);
+		while (args->members[i + args->first_index][r] != 0)
+			r++;
+		int h = 0;
+		int* temp = (int*)calloc((size_t)args->tsp_in->num_nodes, sizeof(int));
+		for (; h < args->tsp_in->num_nodes; h++ )
+		{
+			temp[h] = args->members[i + args->first_index][(h + r) % args->tsp_in->num_nodes];
+		}
+		free(args->members[i + args->first_index]);
+		args->members[i + args->first_index] = temp;*/
+
+		/*printf("\n");
+		
+		for (r = 0; r < args->tsp_in->num_nodes; r++)
+		{
+			printf("%d    ", args->members[i + args->first_index][r]);
+		}
+		printf("\ncost nn %lf\n", args->fitnesses[i + args->first_index]);*/
+
 		greedy_refinement(args->tsp_in, args->members[i + args->first_index], &(args->fitnesses[i + args->first_index]));
+
+		/*double my_cost = 0.0;
+		for (r = 0; r < args->tsp_in->num_nodes; r++)
+		{
+			//printf("%d    ", args->members[i + args->first_index][r]);
+
+			double my_edge;
+			dist(args->members[i + args->first_index][r], args->members[i + args->first_index][(r + 1) % (args->tsp_in->num_nodes)], args->tsp_in, &my_edge);
+			my_cost = my_cost + my_edge;
+		}
+		printf("\n");
+
+		printf("cost greedy %lf      my_cost %lf\n\n", (args->fitnesses[i + args->first_index]), my_cost);
+		printf("%s%s%s", RED, LINE, WHITE);
+
+		int* temp_comp = (int*)calloc((size_t)args->tsp_in->num_nodes, sizeof(int));
+		int* temp_succ = (int*)calloc((size_t)args->tsp_in->num_nodes, sizeof(int));
+
+		int k;
+		for (k = 0; k < args->tsp_in->num_nodes; k++)
+			temp_comp[k] = 1;
+
+		int temp_ncomps = 1;
+		succ_construction(args->members[i + args->first_index], temp_succ, args->tsp_in->num_nodes);*/
+
+
+		//plot(args->tsp_in, temp_succ, temp_comp, &temp_ncomps);
+
+		
 		
 		sum_prob += (1000.0 / args->fitnesses[i + args->first_index]);
 		sum_fitnesses += args->fitnesses[i + args->first_index];
