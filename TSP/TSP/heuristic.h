@@ -28,6 +28,7 @@ typedef struct
 	tsp_instance* tsp_in; //pointer to tsp instance
 	int* succ; //pointer to the best visited nodes sequence
 	int seed; //seed used by each thread
+	time_t start;
 }thread_args;
 
 typedef struct
@@ -109,9 +110,11 @@ void mutation(tsp_instance* tsp_in, int** members, double* fitnesses, int* best_
 
 void update_worst(double* fitnesses, int* worst_members);
 
-//double move_2opt(tsp_instance* tsp_in, int* succ);
+//return 1 if the edge is forbidden, 0 otherwise
+int check_tabu_list(int** tabu_list, int tenure, int node1, int node2);
 
-//void invert_path(tsp_instance* tsp_in, int* succ, int i_best, int j_best);
+// return the delta_min
+double move2opt_for_tabu_search(tsp_instance* tsp_in, int* succ, int** tabu_list, int* tenure, tabu_list_params* params); 
 
 #endif
 

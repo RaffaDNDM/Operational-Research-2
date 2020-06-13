@@ -72,6 +72,7 @@ void heuristic_solver(tsp_instance* tsp_in)
 			param[i].tsp_in = tsp_in;
 			param[i].succ = succ;
 			param[i].seed = STEP_SEED*(i+1);
+			param[i].start = start;
 
 			pthread_create(&threads[i], NULL, computeSolution, (void*)&param[i]);
 		}
@@ -91,6 +92,7 @@ void heuristic_solver(tsp_instance* tsp_in)
 		param.tsp_in = tsp_in;
 		param.succ = succ;
 		param.seed = 0;
+		param.start = start;
 
 		pthread_create(&thread, NULL, computeSolution, (void*)&param);
 
@@ -138,33 +140,14 @@ void* computeSolution(void* param)
 	int* visited_nodes = (int*)calloc((size_t) args->tsp_in->num_nodes, sizeof(int));
 
 	time_t start = clock();
-	double remaining_time = args->tsp_in->deadline;
+	double remaining_time = args->tsp_in->deadline -( (double)(start - args->start) / (double) CLOCKS_PER_SEC );
 
 	if (!CONSTRUCTION_TYPE)
 		nearest_neighborhood(args->tsp_in, visited_nodes, &best_cost, args->seed, -1);
 	else
 		insertion(args->tsp_in, visited_nodes, &best_cost, args->seed);
 
-	printf("cost %lf\n", best_cost);
-	int* temp_comp = (int*)calloc((size_t)args->tsp_in->num_nodes, sizeof(int));
-	int* temp_succ = (int*)calloc((size_t)args->tsp_in->num_nodes, sizeof(int));
-
-	int k;
-	for (k = 0; k < args->tsp_in->num_nodes; k++)
-		temp_comp[k] = 1;
-
-	int temp_ncomps = 1;
-	succ_construction(visited_nodes, temp_succ, args->tsp_in->num_nodes);
-
-	
-	plot(args->tsp_in, temp_succ, temp_comp, &temp_ncomps);
-
 	greedy_refinement(args->tsp_in, visited_nodes, &best_cost);
-
-	printf("cost %lf\n", best_cost);
-	succ_construction(visited_nodes, temp_succ, args->tsp_in->num_nodes);
-	plot(args->tsp_in, temp_succ, temp_comp, &temp_ncomps);
-
 
 	time_t end_first_generation = clock();
 	remaining_time = remaining_time - ((double)(end_first_generation-start)/(double)CLOCKS_PER_SEC);
@@ -218,8 +201,6 @@ void* computeSolution(void* param)
 
 void nearest_neighborhood(tsp_instance* tsp_in, int* visited_nodes, double* best_cost, int seed, int first_node) 
 {
-	
-
 	int* nodes = (int*)calloc((size_t)tsp_in->num_nodes, sizeof(int));
 	//vettore di dim num nodes -> nodes utilizzato per fare le verifiche in min_cost
 	//metto a 1 i nodi visitati
@@ -700,39 +681,9 @@ void min_extra_mileage(tsp_instance* tsp_in, int count, int* visited_nodes, int*
 
 void greedy_refinement(tsp_instance* tsp_in, int* visited_nodes, double* best_cost)
 {
-	//static int greedy_count = 0;
-	//greedy_count++;
-
-	//printf("best cost %lf\n", *best_cost);
-
-	//int r;
-	/*for (r = 0; r < tsp_in->num_nodes; r++)
-	{
-		printf("%d     ", visited_nodes[r]);
-	}
-
-	printf("\n");*/
-	/*
-	double edge;
-	double first_cost = 0.0;
-	for (r = 0; r < tsp_in->num_nodes; r++)
-	{
-		dist(visited_nodes[r], visited_nodes[(r+1)%tsp_in->num_nodes], tsp_in, &edge);
-		first_cost = first_cost + edge;
-	}
-	printf("first cost %lf \n", first_cost);
-	*/
 	int* succ = calloc((size_t)tsp_in->num_nodes, sizeof(int));
 	succ_construction(visited_nodes, succ, tsp_in->num_nodes);
-	/*
-	first_cost=0.0;
-	for (r = 0; r < tsp_in->num_nodes; r++)
-	{
-		dist(r, succ[r], tsp_in, &edge);
-		first_cost = first_cost + edge;
-	}
-	printf("first cost %lf \n", first_cost);
-	*/
+	
 	double check_cost;
 
 	do
@@ -740,7 +691,7 @@ void greedy_refinement(tsp_instance* tsp_in, int* visited_nodes, double* best_co
 		check_cost = (*best_cost);
 
 		int i = 0;
-		for (i=0; i < tsp_in->num_nodes; i++)//aggiunto i=0 dentro
+		for (; i < tsp_in->num_nodes; i++)//aggiunto i=0 dentro
 		{
 			double cost_i_k; //cost [i, succ[i]]
 			if (tsp_in->integerDist)
@@ -777,23 +728,13 @@ void greedy_refinement(tsp_instance* tsp_in, int* visited_nodes, double* best_co
 						dist(j, succ[j], tsp_in, &cost_j_h);
 						dist(i, j, tsp_in, &cost_i_j);
 						dist(succ[i], succ[j], tsp_in, &cost_k_h);
-						dist(i, succ[i], tsp_in, &cost_i_k);//aggiunto
+						//dist(i, succ[i], tsp_in, &cost_i_k);//aggiunto
 					}
 					double delta = cost_i_j + cost_k_h - cost_i_k - cost_j_h;
 					if (delta < 0.0)
-					{
-						//printf("best cost prima %lf\n", *best_cost);
-						/*
-						printf("\n\n  cost_i_j = %lf  cost_k_h =%lf cost_i_k =%lf cost_j_h=%lf\n\n", cost_i_j, cost_k_h, cost_i_k, cost_j_h);
-						//(*best_cost) += delta;
-						(*best_cost) = (*best_cost) + delta;
-						
-						printf("i=%d succ[%d] = %d     j=%d   succ[%d] = %d          delta = %lf    best_cost = %lf\n", i, i, succ[i], j, j, succ[j], delta, *best_cost);
-						double edge_new1, edge_new2, edge_old1, edge_old2;
-						*/
+					{	
+						(*best_cost) += delta;
 
-
-						
 						int k = succ[i];
 						int next = succ[i];
 
@@ -818,20 +759,6 @@ void greedy_refinement(tsp_instance* tsp_in, int* visited_nodes, double* best_co
 						succ[j] = orientation[count - 1];
 						free(orientation);
 
-						/*
-						double inner_cost = 0.0;
-						double edge = 0.0;
-						int s;
-						for (s = 0; s < tsp_in->num_nodes; s++)
-						{
-							//dist(visited_nodes[i], visited_nodes[(i + 1) % tsp_in->num_nodes], tsp_in, &edge);
-							dist(s, succ[s], tsp_in, &edge);
-							inner_cost = inner_cost + edge;
-						}
-
-						printf("inner_cost = %lf\n", inner_cost);
-
-						*/
 						break;
 					}
 				}
@@ -851,175 +778,8 @@ void greedy_refinement(tsp_instance* tsp_in, int* visited_nodes, double* best_co
 		//printf("[ %d ] count: %d\n", greedy_count, visited_nodes[count]);
 	}
 
-	
 	free(succ);
 }
-
-/*
-void greedy_refinement(tsp_instance* tsp_in, int* visited_nodes, double* best_cost)
-{
-	static int check_count;
-	check_count++;
-
-	int* succ = calloc((size_t)tsp_in->num_nodes, sizeof(int));
-	succ_construction(visited_nodes, succ, tsp_in->num_nodes);
-	double check_cost;
-	int check = 0;
-
-	do
-	{
-		check_cost = (*best_cost);
-
-		double delta = move_2opt(tsp_in, succ);
-
-		if (delta < 0.0)
-		{
-			(*best_cost) += delta;
-		}
-
-	} while (check_cost != (*best_cost)); //abs(check_cost - (*cost))<1e-10
-
-	visited_nodes[0] = 0;
-	int i = 0;
-	int count = 1;
-	int node = -1;
-
-	for (; count < tsp_in->num_nodes; count++)
-	{
-		node = succ[i];
-		i = node;
-		visited_nodes[count] = node;  //inserirlo nell'algoritmo
-		//printf("[ %d ] count: %d\n", greedy_count, visited_nodes[count]);
-	}
-
-	free(succ);
-	
-}
-
-double move_2opt(tsp_instance* tsp_in, int* succ)
-{
-	double delta_best=0.0;
-	int first_best = 0;
-	int second_best = 0;
-	int first_succ_best = 0;
-	int second_succ_best = 0;
-
-	int i = 0;
-	for (; i < tsp_in->num_nodes; i++)
-	{
-		double cost_i_k; //cost [i, succ[i]]
-		if (tsp_in->integerDist)
-		{
-			int x;
-			dist(i, succ[i], tsp_in, &x);
-			cost_i_k = x + 0.0;
-		}
-		else
-		{
-			dist(i, succ[i], tsp_in, &cost_i_k);
-		}
-
-		int j = i+1;
-		for (; j < tsp_in->num_nodes; j++)
-		{
-			if (j != i && j != succ[i] && succ[j] != i && succ[j] != succ[i])
-			{
-				double cost_j_h; //cost[i, succ[i]]
-				double cost_i_j;
-				double cost_k_h;
-				double cost_i_h;
-				double cost_j_k;
-
-				if (tsp_in->integerDist)
-				{
-					int x1, x2, x3, x4, x5;
-					dist(j, succ[j], tsp_in, &x1);
-					dist(i, j, tsp_in, &x2);
-					dist(succ[i], succ[j], tsp_in, &x3);
-					dist(i, succ[j], tsp_in, &x4);
-					dist(j, succ[i], tsp_in, &x5);
-					cost_j_h = (double)x1;
-					cost_i_j = (double)x2;
-					cost_k_h = (double)x3;
-					cost_i_h = (double)x4;
-					cost_j_k = (double)x5;
-				}
-				else
-				{
-					dist(j, succ[j], tsp_in, &cost_j_h);
-					dist(i, j, tsp_in, &cost_i_j);
-					dist(succ[i], succ[j], tsp_in, &cost_k_h);
-					dist(i, succ[j], tsp_in, &cost_i_h);
-					dist(j, succ[i], tsp_in, &cost_j_k);
-				}
-
-				double delta = cost_i_j + cost_k_h - cost_i_k - cost_j_h;
-				first_best = i;
-				first_succ_best = j;
-				second_best = succ[i];
-				second_succ_best = succ[j];
-
-				double delta1 = cost_i_h + cost_j_k - cost_i_k - cost_j_h;
-
-				if (delta1 < delta)
-				{
-					delta = delta1;
-					first_best = i;
-					first_succ_best = succ[j];
-					second_best = j;
-					second_succ_best = succ[i];
-				}
-
-				if (delta < delta_best)
-				{
-					delta_best = delta;
-					first_best = i;
-					second_best = j;
-					first_succ_best = i;
-					second_succ_best = i;
-				}
-			}
-		}
-	}
-
-	if (delta_best < 0.0)
-		invert_path(tsp_in, succ, i_best, j_best);
-
-
-	return delta_best;
-}
-
-
-void invert_path(tsp_instance* tsp_in, int* succ, int first, int second, int succ_first, int succ_second)
-{
-	int k = succ[i_best];
-	int next = succ[i_best];
-
-	int count = 0;
-	int* orientation = (int*)calloc((size_t)tsp_in->num_nodes, sizeof(int));
-
-	while (next != j_best)
-	{
-		orientation[count++] = next;
-		next = succ[next];
-	}
-
-	next = succ[k];
-	int next_count = 0;
-
-	while (next != j_best)
-	{
-		int temp = succ[next];
-		succ[next] = orientation[next_count++];
-		next = temp;
-	}
-
-	succ[i_best] = j_best;
-	succ[k] = succ[j_best];
-	succ[j_best] = orientation[count - 1];
-
-	free(orientation);
-}*/
 
 void vns(tsp_instance* tsp_in, int* visited_nodes, double *best_cost, double deadline)
 {
@@ -1178,33 +938,27 @@ void tabu_search(tsp_instance* tsp_in, int* visited_nodes, double* best_cost, do
 	time_t start = clock();
 	double remaining_time = deadline;
 
+	int* succ = (int*)calloc((size_t)tsp_in->num_nodes, sizeof(int));
+	succ_construction(visited_nodes, succ, tsp_in->num_nodes);
+
 	#ifndef MULTI_START
 	if (tsp_in->verbose > 50)
 		printf("%sStarting cost :%s%.2lf\n",RED, WHITE, *best_cost);
-
 	#endif 
 
-	greedy_refinement(tsp_in, visited_nodes, best_cost); //prima di iniziare l'algoritmo devo essere sicura di trovarmi in un minimo locale
+	/*greedy_refinement(tsp_in, visited_nodes, best_cost); //prima di iniziare l'algoritmo devo essere sicura di trovarmi in un minimo locale
 
 	#ifndef MULTI_START
 	if (tsp_in->verbose > 50)
 		printf("%sCost after first greedy :%s %.2lf\n",GREEN, WHITE, *best_cost);
-
 	#endif 
-
+	*/
 	int min_tenure = ceil(tsp_in->num_nodes / 10.0);
 	int max_tenure = ceil(tsp_in->num_nodes / 5.0);
 
 	int** tabu_list = (int**)calloc((size_t)2, sizeof(int*));//[tabu_list[0][i], tabu_list[1][i]]
-	if (tabu_list == NULL)
-		printf("ERROR\n");
-
 	tabu_list[0] = (int*)calloc((size_t)max_tenure, sizeof(int));
-	if (tabu_list[0] == NULL)
-		printf("ERROR\n");
 	tabu_list[1] = (int*)calloc((size_t)max_tenure, sizeof(int));
-	if (tabu_list[1] == NULL)
-		printf("ERROR\n");
 
 	tabu_list_params param;
 	param.end_list = -1;
@@ -1218,31 +972,6 @@ void tabu_search(tsp_instance* tsp_in, int* visited_nodes, double* best_cost, do
 	}
 
 	int num_tabu_edges = 0;
-
-	//in position i has the cost of the edge [visited_nodes[i], visited_nodes[i+1] ]
-	double* costs = (double*)calloc((size_t)tsp_in->num_nodes, sizeof(double));
-	if (costs == NULL)
-		printf("ERROR\n");
-	
-	for (i = 0; i < tsp_in->num_nodes - 1; i++)
-	{
-		if (tsp_in->integerDist)
-		{
-			int x;
-			dist(visited_nodes[i], visited_nodes[i + 1], tsp_in, &x);
-			costs[i] = (double)x;
-		}
-		else
-			dist(visited_nodes[i], visited_nodes[i + 1], tsp_in, &(costs[i]));
-	}
-
-	int* nodes = (int*)calloc((size_t)tsp_in->num_nodes, sizeof(int));
-	if (nodes == NULL)
-		printf("ERROR\n");
-	int j;
-	for (j = 0; j < tsp_in->num_nodes; j++)
-		nodes[j] = visited_nodes[j];
-
 	double actual_cost = *best_cost;
 
 	time_t end = clock();
@@ -1254,133 +983,43 @@ void tabu_search(tsp_instance* tsp_in, int* visited_nodes, double* best_cost, do
 		start = clock();
 
 		double min_increase = DBL_MAX;
-		int pos1 = -1;
-		int pos2 = -1;
-		int restart = 1;
-		int refinement_done = 0;
-		int negative = 0;
 
-	/*	for (i = 0; i < tsp_in->num_nodes && !negative; i++)
+		min_increase = move2opt_for_tabu_search(tsp_in, succ, tabu_list, &max_tenure , &param);
+
+		if (num_tabu_edges < max_tenure)
+			num_tabu_edges = num_tabu_edges + 2;
+
+		actual_cost = actual_cost + min_increase;
+
+		if (min_increase < 0.0 )
 		{
-			int start_edge1, end_edge1, start_edge2, end_edge2;
-
-			for (j = 1; j < 3; j++)
-			{
-				int jump = 0;
-
-				start_edge1 = nodes[(i - 1 + tsp_in->num_nodes) % tsp_in->num_nodes];
-				end_edge1 = nodes[(i + j) % tsp_in->num_nodes];
-				start_edge2 = nodes[i];
-				end_edge2 = nodes[(i + j + 1) % tsp_in->num_nodes];
-
-				int k;
-				
-				for (k = 0; k < num_tabu_edges; k++)
-				{
-					if ((start_edge1 == tabu_list[0][k] && end_edge1 == tabu_list[1][k])
-						|| (start_edge2 == tabu_list[0][k] && end_edge2 == tabu_list[1][k])
-						|| (start_edge1 == tabu_list[1][k] && end_edge1 == tabu_list[0][k])
-						|| (start_edge2 == tabu_list[1][k] && end_edge2 == tabu_list[0][k])
-						)
-					{
-						jump = 1;
-						break;
-					}
-				}
-
-				if (jump)
-					continue;
-
-				double delta;
-				if (tsp_in->integerDist)
-				{
-					int x1, x2;
-					dist(start_edge1, end_edge1, tsp_in, &x1);
-					dist(start_edge2, end_edge2, tsp_in, &x2);
-					delta = (double)x1 + x2 - costs[(i + j) % tsp_in->num_nodes] - costs[i - 1];
-				}
-				else
-				{
-					double x1, x2;
-					dist(start_edge1, end_edge1, tsp_in, &x1);
-					dist(start_edge2, end_edge2, tsp_in, &x2);
-					delta = x1 + x2 - costs[(i + j) % tsp_in->num_nodes] - costs[i - 1];
-				}
-
-				if (abs(delta) < 1e-10)//in valore assoluto
-					delta = 0.0;
-
-				if (delta < 0)
-				{
-					negative = 1;
-					break;
-				}
-
-				if (delta < min_increase && delta != 0)
-					//if (min_increase - delta > EPS && delta != 0.0)
-				{
-					min_increase = delta;
-					pos1 = i;
-					pos2 = (i + j) % tsp_in->num_nodes;
-				}
-			}
-		sostiutire da una chiamata alla funzione 2-opt, poi devo verificare che delta < 0  e che la mossa sia accettabile con la tabù list
-		}*/
-
-		//if (num_negative_delta == 2 * tsp_in->num_nodes)
-		if (negative)
-		{
-			greedy_refinement_for_tabu_search(tsp_in, nodes, tabu_list, &param, max_tenure, min_tenure, &num_tabu_edges, &actual_cost);
+			greedy_refinement_for_tabu_search(tsp_in, succ, tabu_list, &param, max_tenure, min_tenure, &num_tabu_edges, &actual_cost);
 
 			#ifndef MULTI_START
 			if (tsp_in->verbose > 50)
 				printf("%sfind local minimum with cost : %s%.2lf\n",GREEN, WHITE, actual_cost);
-
 			#endif 
 
 		}//terminato il greedy devo riampliare la tabu list fino al massimo
 		else
 		{
-			int temp = nodes[pos1];
-			nodes[pos1] = nodes[pos2];
-			nodes[pos2] = temp;
-
-			add_element(tabu_list[0], tabu_list[1], max_tenure, nodes[(pos1 - 1 + tsp_in->num_nodes) % tsp_in->num_nodes], nodes[pos2], 0, 0, &param);
-			add_element(tabu_list[0], tabu_list[1], max_tenure, nodes[pos1], nodes[(pos2 + 1) % tsp_in->num_nodes], 0, 0, &param);
-	
-			if (num_tabu_edges < max_tenure)
-				num_tabu_edges = num_tabu_edges + 2;
-
-			actual_cost = actual_cost + min_increase;
-
 			#ifndef MULTI_START
 			if (tsp_in->verbose > 50)
-				printf("%sUpdate cost :%s %.2lf\n",BLUE, WHITE, actual_cost);
-
-			#endif 
-
+				printf("%sUpdate cost :%s %.2lf\n", BLUE, WHITE, actual_cost);
+			#endif
 		}
-
-		//aggionare vettore di costi ****************FARLO IN MANIERA PIù DECENTE***************
-		int h;
-		for (h = 0; h < tsp_in->num_nodes - 1; h++)
-		{
-			if (tsp_in->integerDist)
-			{
-				int x;
-				dist(nodes[h], nodes[h + 1], tsp_in, &x);
-				costs[h] = (double)x;
-			}
-			else
-				dist(nodes[h], nodes[h + 1], tsp_in, &(costs[h]));
-		}
-
+	
 		if (actual_cost < *best_cost)//controllare precisione
 		{
 			*best_cost = actual_cost;
-
-			for (j = 0; j < tsp_in->num_nodes; j++)
-				visited_nodes[j] = nodes[j];
+			
+			int j = 0;
+			int next = j;
+			for (; j < tsp_in->num_nodes; j++)
+			{
+				visited_nodes[j] = next;
+				next = succ[next];
+			}
 		}
 
 		end = clock();
@@ -1392,13 +1031,121 @@ void tabu_search(tsp_instance* tsp_in, int* visited_nodes, double* best_cost, do
 
 	}
 
-	free(costs);
+
+	free(succ);
 	free(tabu_list[0]);
 	free(tabu_list[1]);
 	free(tabu_list);
-	free(nodes);
-
 	
+}
+
+double move2opt_for_tabu_search(tsp_instance* tsp_in, int* succ, int** tabu_list, int* tenure, tabu_list_params* params) //return the delta_min
+{
+	double delta_min = DBL_MAX;
+	int start_edge1 = -1;
+	int end_edge1 = -1;
+	int start_edge2 = -1;
+	int end_edge2 = -1;
+
+	int i=0;
+	for (; i < tsp_in->num_nodes; i++)//aggiunto i=0 dentro
+	{
+		double cost_i_k = 0.0; //cost [i, succ[i]]
+
+		int j = 0;
+		for (; j < tsp_in->num_nodes; j++)
+		{
+
+			if (j != i && j != succ[i] && succ[j] != i && succ[j] != succ[i])
+			{
+
+				if (check_tabu_list(tabu_list, *tenure, i, j) == 1)
+					continue;
+
+				if (check_tabu_list(tabu_list, *tenure, succ[i], succ[j]) == 1)
+					continue;
+
+
+				double cost_j_h = 0.0; //cost[i, succ[i]]
+				double cost_i_j = 0.0;
+				double cost_k_h = 0.0;
+				if (tsp_in->integerDist)
+				{
+					int x1, x2, x3, x4;
+					dist(j, succ[j], tsp_in, &x1);
+					dist(i, j, tsp_in, &x2);
+					dist(succ[i], succ[j], tsp_in, &x3);
+					dist(i, succ[i], tsp_in, &x4);
+					cost_j_h = (double)x1;
+					cost_i_j = (double)x2;
+					cost_k_h = (double)x3;
+					cost_i_k = (double)x4;
+				}
+				else
+				{
+					dist(j, succ[j], tsp_in, &cost_j_h);
+					dist(i, j, tsp_in, &cost_i_j);
+					dist(succ[i], succ[j], tsp_in, &cost_k_h);
+					dist(i, succ[i], tsp_in, &cost_i_k);//aggiunto
+				}
+				double delta = cost_i_j + cost_k_h - cost_i_k - cost_j_h;
+
+				if ( fabs(delta) > 0.1   && delta < delta_min)
+				{
+					delta_min = delta;
+					start_edge1 = i;
+					end_edge1 = j;
+					start_edge2 = succ[i];
+					end_edge2 = succ[j];
+				}
+			}
+		}
+	}
+
+	add_element(tabu_list[0], tabu_list[1], *tenure, start_edge1, start_edge2, 0, 0, params);
+	add_element(tabu_list[0], tabu_list[1], *tenure, end_edge1, end_edge2, 0, 0, params);
+
+	int k = start_edge2;
+	int next = start_edge2;
+
+	int count = 0;
+	int* orientation = (int*)calloc((size_t)tsp_in->num_nodes, sizeof(int));
+	while (next != end_edge1)
+	{
+		orientation[count++] = next;
+		next = succ[next];
+	}
+	next = succ[k];
+	int next_count = 0;
+
+	while (next != end_edge1)
+	{
+		int temp = succ[next];
+		succ[next] = orientation[next_count++];
+		next = temp;
+	}
+	succ[start_edge1] = end_edge1;
+	succ[k] = succ[end_edge1];
+	succ[end_edge1] = orientation[count - 1];
+	free(orientation);
+
+	return delta_min;
+}
+
+int check_tabu_list(int** tabu_list, int tenure, int node1, int node2)//return 1 if the edge is forbidden, 0 otherwise
+{
+	int i;
+	for (i = 0; i < tenure; i++)
+	{
+		if ((tabu_list[0][i] == node1 && tabu_list[1][i] == node2) ||
+			(tabu_list[0][i] == node2 && tabu_list[1][i] == node1)    )
+		{
+			return 1;
+		}
+
+	}
+
+	return 0;
 }
 
 void add_element(int* list1, int* list2, int dimension, int element1, int element2, int with_reduction, int logically_full, tabu_list_params* param)
@@ -1429,15 +1176,10 @@ void add_element(int* list1, int* list2, int dimension, int element1, int elemen
 	}
 }
 
-void greedy_refinement_for_tabu_search(tsp_instance* tsp_in, int* visited_nodes, int** tabu_list, tabu_list_params* param, int max_tenure, 
+void greedy_refinement_for_tabu_search(tsp_instance* tsp_in, int* succ, int** tabu_list, tabu_list_params* param, int max_tenure, 
 	int min_tenure, int* num_tabu_edges, double* best_cost)
 {
 	//la tabu list ad ogni iterazione deve diminuire la sua dimensione, prima la scelta e poi la riduzione
-
-
-	int* succ = calloc(tsp_in->num_nodes, sizeof(int));
-	succ_construction(visited_nodes, succ, tsp_in->num_nodes);
-
 	double check_cost;
 
 	do
@@ -1573,21 +1315,6 @@ void greedy_refinement_for_tabu_search(tsp_instance* tsp_in, int* visited_nodes,
 		}
 
 	} while (abs(check_cost - (*best_cost)) > 1e-10);
-
-
-	visited_nodes[0] = 0;
-	int i = 0;
-	int count = 1;
-	int node = -1;
-
-	for (; count < tsp_in->num_nodes; count++)
-	{
-		node = succ[i];
-		i = node;
-		visited_nodes[count] = node;  //inserirlo nell'algoritmo
-	}
-
-	free(succ);
 }
 
 
@@ -1893,11 +1620,11 @@ void genetic_solver(tsp_instance* tsp_in)
 	/*
 	int* succ = (int*)calloc(tsp_in->num_nodes, sizeof(int));
 	int* comp = (int*)calloc(tsp_in->num_nodes, sizeof(int));
-	int n_comps = 1;
+	int n_comps = 1;*/
 	int  num_edges = (tsp_in->num_nodes * (tsp_in->num_nodes-1)) / 2;
 	tsp_in->sol = (double*)calloc((size_t)num_edges, sizeof(double));
 
-	update_solution(members[best_index], tsp_in->sol, tsp_in->num_nodes);
+	/*update_solution(members[best_index], tsp_in->sol, tsp_in->num_nodes);
 	define_tour(tsp_in, tsp_in->sol, succ, comp, &n_comps);
 	plot(tsp_in, succ, comp, &n_comps);
 
@@ -1914,7 +1641,7 @@ void genetic_solver(tsp_instance* tsp_in)
 	printf("%sExecution time:%s %.2lf seconds\n", GREEN, WHITE, tsp_in->execution_time);
 	printf("%s%s%s", RED, LINE, WHITE);
 
-	/*
+	
 	int* succ = (int*)calloc(tsp_in->num_nodes, sizeof(int));
 	int* comp = (int*)calloc(tsp_in->num_nodes, sizeof(int));
 	int n_comps = 1;
@@ -1933,13 +1660,13 @@ void genetic_solver(tsp_instance* tsp_in)
 		free(succ);
 		free(comp);
 	}
-*/
+
 	for (i = 0; i < POPULATION_SIZE; i++)
 		free(members[i]);
 
 	free(members);
 	free(fitnesses);
-	//free(tsp_in->sol);
+	free(tsp_in->sol);
 }
 
 void construction(void* param)
@@ -1956,65 +1683,7 @@ void construction(void* param)
 	{
 		nearest_neighborhood(args->tsp_in, args->members[i + args->first_index], &(args->fitnesses[i + args->first_index]), args->first_index + i + 1, (i + args->first_index) % args->tsp_in->num_nodes);
 		double cost = args->fitnesses[i+args->first_index];
-		 //((i + args->first_index) % args->tsp_in->num_nodes);
-		/*int r = 0;
-		double nn_cost = 0.0;
-		double edge;
-		for (r = 0; r < args->tsp_in->num_nodes; r++)
-		{
-			dist(args->members[i + args->first_index][r], args->members[i + args->first_index][(r + 1) % args->tsp_in->num_nodes], args->tsp_in, &edge);
-			nn_cost = nn_cost + edge;
-		}
-		printf("my nn_cost %lf\n", nn_cost);
-		while (args->members[i + args->first_index][r] != 0)
-			r++;
-		int h = 0;
-		int* temp = (int*)calloc((size_t)args->tsp_in->num_nodes, sizeof(int));
-		for (; h < args->tsp_in->num_nodes; h++ )
-		{
-			temp[h] = args->members[i + args->first_index][(h + r) % args->tsp_in->num_nodes];
-		}
-		free(args->members[i + args->first_index]);
-		args->members[i + args->first_index] = temp;*/
-
-		/*printf("\n");
-		
-		for (r = 0; r < args->tsp_in->num_nodes; r++)
-		{
-			printf("%d    ", args->members[i + args->first_index][r]);
-		}
-		printf("\ncost nn %lf\n", args->fitnesses[i + args->first_index]);*/
-
 		greedy_refinement(args->tsp_in, args->members[i + args->first_index], &(args->fitnesses[i + args->first_index]));
-
-		/*double my_cost = 0.0;
-		for (r = 0; r < args->tsp_in->num_nodes; r++)
-		{
-			//printf("%d    ", args->members[i + args->first_index][r]);
-
-			double my_edge;
-			dist(args->members[i + args->first_index][r], args->members[i + args->first_index][(r + 1) % (args->tsp_in->num_nodes)], args->tsp_in, &my_edge);
-			my_cost = my_cost + my_edge;
-		}
-		printf("\n");
-
-		printf("cost greedy %lf      my_cost %lf\n\n", (args->fitnesses[i + args->first_index]), my_cost);
-		printf("%s%s%s", RED, LINE, WHITE);
-
-		int* temp_comp = (int*)calloc((size_t)args->tsp_in->num_nodes, sizeof(int));
-		int* temp_succ = (int*)calloc((size_t)args->tsp_in->num_nodes, sizeof(int));
-
-		int k;
-		for (k = 0; k < args->tsp_in->num_nodes; k++)
-			temp_comp[k] = 1;
-
-		int temp_ncomps = 1;
-		succ_construction(args->members[i + args->first_index], temp_succ, args->tsp_in->num_nodes);*/
-
-
-		//plot(args->tsp_in, temp_succ, temp_comp, &temp_ncomps);
-
-		
 		
 		sum_prob += (1000.0 / args->fitnesses[i + args->first_index]);
 		sum_fitnesses += args->fitnesses[i + args->first_index];
