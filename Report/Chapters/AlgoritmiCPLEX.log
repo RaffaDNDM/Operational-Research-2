@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2020.1.11)  11 JUN 2020 19:06
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2020.1.11)  14 JUN 2020 20:48
 entering extended mode
 **./AlgoritmiCPLEX.tex
 (AlgoritmiCPLEX.tex
@@ -752,8 +752,8 @@ Overfull \hbox (20.0pt too wide) in paragraph at lines 17--18
  []
 
 ! Undefined control sequence.
-l.20   \includegraphics
-                       [scale=0.5]{Images/cplex_structs}\\
+l.19   \includegraphics
+                       [scale=0.7]{Images/cplex_structs}\\
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -769,7 +769,7 @@ Missing character: There is no e in font nullfont!
 Missing character: There is no = in font nullfont!
 Missing character: There is no 0 in font nullfont!
 Missing character: There is no . in font nullfont!
-Missing character: There is no 5 in font nullfont!
+Missing character: There is no 7 in font nullfont!
 Missing character: There is no ] in font nullfont!
 Missing character: There is no I in font nullfont!
 Missing character: There is no m in font nullfont!
@@ -786,17 +786,17 @@ Missing character: There is no x in font nullfont!
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.20   \includegraphics[scale=0.5]{Images/cplex_
+l.19   \includegraphics[scale=0.7]{Images/cplex_
                                                 structs}\\
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 20.
+(Font)              <7> on input line 19.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 20.
+(Font)              <5> on input line 19.
 ! Extra }, or forgotten $.
-l.20 ...egraphics[scale=0.5]{Images/cplex_structs}
+l.19 ...egraphics[scale=0.7]{Images/cplex_structs}
                                                   \\
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -811,7 +811,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.20 ...raphics[scale=0.5]{Images/cplex_structs}\\
+l.19 ...raphics[scale=0.7]{Images/cplex_structs}\\
                                                   
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -820,7 +820,7 @@ or  <return>  to continue without it.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.20 ...raphics[scale=0.5]{Images/cplex_structs}\\
+l.19 ...raphics[scale=0.7]{Images/cplex_structs}\\
                                                   
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
@@ -828,7 +828,7 @@ you left one out. Proceed, with fingers crossed.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.20 ...raphics[scale=0.5]{Images/cplex_structs}\\
+l.19 ...raphics[scale=0.7]{Images/cplex_structs}\\
                                                   
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -837,7 +837,7 @@ really didn't forget anything, try typing `2' now; then
 my insertion and my current dilemma will both disappear.
 
 
-Overfull \hbox (31.02556pt too wide) in paragraph at lines 20--20
+Overfull \hbox (31.02556pt too wide) in paragraph at lines 19--19
  []\OML/cmm/m/it/10 tructs[]$ 
  []
 
@@ -848,13 +848,13 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.21   \caption
+l.20   \caption
                {\footnotesize{Strutture CPLEX}}
 You're in trouble here.  Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 ! Undefined control sequence.
-l.21   \caption{\footnotesize
+l.20   \caption{\footnotesize
                              {Strutture CPLEX}}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -883,7 +883,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.24 \end{figure}
+l.23 \end{figure}
                  
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -1108,7 +1108,7 @@ Missing character: There is no a in font nullfont!
 ! Undefined control sequence.
 <write> ...ence `Indici_matrice' on page \thepage 
                                                   \space undefined\on@line .
-l.27 ...età $i<j$. In Figura \ref{Indici_matrice}
+l.26 ...età $i<j$. In Figura \ref{Indici_matrice}
                                                    è riportato lo schema de...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1117,7 +1117,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 
-LaTeX Warning: Reference `Indici_matrice' on page  undefined on input line 27.
+LaTeX Warning: Reference `Indici_matrice' on page  undefined on input line 26.
 
 Missing character: There is no r in font nullfont!
 Missing character: There is no i in font nullfont!
@@ -1631,7 +1631,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.29 \begin{figure}
+l.28 \begin{figure}
                    [h]
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -1641,83 +1641,83 @@ Missing character: There is no [ in font nullfont!
 Missing character: There is no h in font nullfont!
 Missing character: There is no ] in font nullfont!
 
-Overfull \hbox (20.0pt too wide) in paragraph at lines 26--30
+Overfull \hbox (20.0pt too wide) in paragraph at lines 25--29
 []
  []
 
 
-Overfull \hbox (4.44444pt too wide) in paragraph at lines 26--30
+Overfull \hbox (4.44444pt too wide) in paragraph at lines 25--29
 \/cmr/m/n/10 e
  []
 
 
-Overfull \hbox (5.55557pt too wide) in paragraph at lines 26--30
+Overfull \hbox (5.55557pt too wide) in paragraph at lines 25--29
 \/cmr/m/n/10 u
  []
 
 
-Overfull \hbox (5.55557pt too wide) in paragraph at lines 26--30
+Overfull \hbox (5.55557pt too wide) in paragraph at lines 25--29
 \/cmr/m/n/10 u
  []
 
 
-Overfull \hbox (5.00002pt too wide) in paragraph at lines 26--30
+Overfull \hbox (5.00002pt too wide) in paragraph at lines 25--29
 \/cmr/m/n/10 a
  []
 
 
-Overfull \hbox (4.44444pt too wide) in paragraph at lines 26--30
+Overfull \hbox (4.44444pt too wide) in paragraph at lines 25--29
 \/cmr/m/n/10 e
  []
 
 
-Overfull \hbox (20.35783pt too wide) in paragraph at lines 26--30
+Overfull \hbox (20.35783pt too wide) in paragraph at lines 25--29
 \/cmr/m/n/10 (\OML/cmm/m/it/10 i; j\/cmr/m/n/10 )$
  []
 
 
-Overfull \hbox (5.00002pt too wide) in paragraph at lines 26--30
+Overfull \hbox (5.00002pt too wide) in paragraph at lines 25--29
 \/cmr/m/n/10 a
  []
 
 
-Overfull \hbox (14.00064pt too wide) in paragraph at lines 26--30
+Overfull \hbox (14.00064pt too wide) in paragraph at lines 25--29
 \OML/cmm/m/it/10 i <
  []
 
 
-Overfull \hbox (4.69049pt too wide) in paragraph at lines 26--30
+Overfull \hbox (4.69049pt too wide) in paragraph at lines 25--29
 \OML/cmm/m/it/10 j$
  []
 
 
-Overfull \hbox (10.86105pt too wide) in paragraph at lines 26--30
+Overfull \hbox (10.86105pt too wide) in paragraph at lines 25--29
 []
  []
 
 
-Overfull \hbox (4.44444pt too wide) in paragraph at lines 26--30
+Overfull \hbox (4.44444pt too wide) in paragraph at lines 25--29
 \/cmr/m/n/10 e
  []
 
 
-Overfull \hbox (20.35783pt too wide) in paragraph at lines 26--30
+Overfull \hbox (20.35783pt too wide) in paragraph at lines 25--29
 \/cmr/m/n/10 (\OML/cmm/m/it/10 i; j\/cmr/m/n/10 )$
  []
 
 
-Overfull \hbox (2.77779pt too wide) in paragraph at lines 26--30
+Overfull \hbox (2.77779pt too wide) in paragraph at lines 25--29
 \/cmr/m/n/10 
  []
 
 
-Overfull \hbox (5.00002pt too wide) in paragraph at lines 26--30
+Overfull \hbox (5.00002pt too wide) in paragraph at lines 25--29
 \/cmr/m/n/10 o
  []
 
 ! Undefined control sequence.
-l.31   \includegraphics
-                       [scale=0.5]{Images/indices_matrix}\\
+l.30   \includegraphics
+                       [scale=0.6]{Images/indices_matrix}\\
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -1733,7 +1733,7 @@ Missing character: There is no e in font nullfont!
 Missing character: There is no = in font nullfont!
 Missing character: There is no 0 in font nullfont!
 Missing character: There is no . in font nullfont!
-Missing character: There is no 5 in font nullfont!
+Missing character: There is no 6 in font nullfont!
 Missing character: There is no ] in font nullfont!
 Missing character: There is no I in font nullfont!
 Missing character: There is no m in font nullfont!
@@ -1752,13 +1752,13 @@ Missing character: There is no s in font nullfont!
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.31   \includegraphics[scale=0.5]{Images/indices_
+l.30   \includegraphics[scale=0.6]{Images/indices_
                                                   matrix}\\
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
 ! Extra }, or forgotten $.
-l.31 ...graphics[scale=0.5]{Images/indices_matrix}
+l.30 ...graphics[scale=0.6]{Images/indices_matrix}
                                                   \\
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -1773,7 +1773,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.31 ...aphics[scale=0.5]{Images/indices_matrix}\\
+l.30 ...aphics[scale=0.6]{Images/indices_matrix}\\
                                                   
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -1782,7 +1782,7 @@ or  <return>  to continue without it.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.31 ...aphics[scale=0.5]{Images/indices_matrix}\\
+l.30 ...aphics[scale=0.6]{Images/indices_matrix}\\
                                                   
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
@@ -1790,7 +1790,7 @@ you left one out. Proceed, with fingers crossed.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.31 ...aphics[scale=0.5]{Images/indices_matrix}\\
+l.30 ...aphics[scale=0.6]{Images/indices_matrix}\\
                                                   
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -1799,7 +1799,7 @@ really didn't forget anything, try typing `2' now; then
 my insertion and my current dilemma will both disappear.
 
 
-Overfull \hbox (30.44289pt too wide) in paragraph at lines 31--31
+Overfull \hbox (30.44289pt too wide) in paragraph at lines 30--30
  []\OML/cmm/m/it/10 atrix[]$ 
  []
 
@@ -1810,13 +1810,13 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.32   \caption
+l.31   \caption
                {\footnotesize{Indici della matrice}}
 You're in trouble here.  Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 ! Undefined control sequence.
-l.32   \caption{\footnotesize
+l.31   \caption{\footnotesize
                              {Indici della matrice}}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1849,14 +1849,14 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.35 \end{figure}
+l.34 \end{figure}
                  
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
 ! Undefined control sequence.
-l.37 \section
+l.36 \section
              {Modelli compatti}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -2555,9 +2555,7 @@ Missing character: There is no l in font nullfont!
 Missing character: There is no e in font nullfont!
 Missing character: There is no . in font nullfont!
 ! Undefined control sequence.
-<recently read> \subsection 
-                            
-l.40 \subsection
+l.39 \subsection
                 {Formulazione sequenziale}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -2979,14 +2977,14 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.42 \begin{align}
+l.41 \begin{align}
                   
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
 ! Misplaced alignment tab character &.
-l.43 &
+l.42 &
        min \underset{i\in V}\sum{}\underset{j\in V}\sum{c_{i,j}\; x_{i,j}} \...
 I can't figure out why you would want to use a tab mark
 here. If you just want an ampersand, the remedy is
@@ -2999,7 +2997,7 @@ Missing character: There is no m in font nullfont!
 Missing character: There is no i in font nullfont!
 Missing character: There is no n in font nullfont!
 ! Undefined control sequence.
-l.43 & min \underset
+l.42 & min \underset
                     {i\in V}\sum{}\underset{j\in V}\sum{c_{i,j}\; x_{i,j}} \...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -3011,13 +3009,13 @@ Missing character: There is no i in font nullfont!
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.43 & min \underset{i\in
+l.42 & min \underset{i\in
                           V}\sum{}\underset{j\in V}\sum{c_{i,j}\; x_{i,j}} \...
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
 ! Extra }, or forgotten $.
-l.43 & min \underset{i\in V}
+l.42 & min \underset{i\in V}
                             \sum{}\underset{j\in V}\sum{c_{i,j}\; x_{i,j}} \...
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -3026,7 +3024,7 @@ the way to recover is to insert both the forgotten and the
 deleted material, e.g., by typing `I$}'.
 
 ! Undefined control sequence.
-l.43 & min \underset{i\in V}\sum{}\underset
+l.42 & min \underset{i\in V}\sum{}\underset
                                            {j\in V}\sum{c_{i,j}\; x_{i,j}} \...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -3037,7 +3035,49 @@ and I'll forget about whatever was undefined.
 ! Undefined control sequence.
 <recently read> \notag 
                        
-l.43 ...t{j\in V}\sum{c_{i,j}\; x_{i,j}} \\ \notag
+l.42 ...t{j\in V}\sum{c_{i,j}\; x_{i,j}} \\ \notag
+                                                   \\
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Misplaced alignment tab character &.
+<recently read> &
+                 
+l.43 &
+       \underset{i\in V}\sum{x_{ih}}\; =\; 1 & \forall\; h\in V \\ \notag \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Undefined control sequence.
+l.43 & \underset
+                {i\in V}\sum{x_{ih}}\; =\; 1 & \forall\; h\in V \\ \notag \\
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Misplaced alignment tab character &.
+l.43 & \underset{i\in V}\sum{x_{ih}}\; =\; 1 &
+                                               \forall\; h\in V \\ \notag \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Undefined control sequence.
+<recently read> \notag 
+                       
+l.43 ...{ih}}\; =\; 1 & \forall\; h\in V \\ \notag
                                                    \\
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -3049,7 +3089,7 @@ and I'll forget about whatever was undefined.
 <recently read> &
                  
 l.44 &
-       \underset{i\in V}\sum{x_{ih}}\; =\; 1 & \forall\; h\in V \\ \notag \\
+       \underset{j\in V}\sum{x_{hj}}\; =\; 1 & \forall\; h\in V \\ \notag \\
 I can't figure out why you would want to use a tab mark
 here. If you just want an ampersand, the remedy is
 simple: Just type `I\&' now. But if some right brace
@@ -3059,7 +3099,7 @@ might try typing `S' now just to see what is salvageable.
 
 ! Undefined control sequence.
 l.44 & \underset
-                {i\in V}\sum{x_{ih}}\; =\; 1 & \forall\; h\in V \\ \notag \\
+                {j\in V}\sum{x_{hj}}\; =\; 1 & \forall\; h\in V \\ \notag \\
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -3067,7 +3107,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 ! Misplaced alignment tab character &.
-l.44 & \underset{i\in V}\sum{x_{ih}}\; =\; 1 &
+l.44 & \underset{j\in V}\sum{x_{hj}}\; =\; 1 &
                                                \forall\; h\in V \\ \notag \\
 I can't figure out why you would want to use a tab mark
 here. If you just want an ampersand, the remedy is
@@ -3079,7 +3119,7 @@ might try typing `S' now just to see what is salvageable.
 ! Undefined control sequence.
 <recently read> \notag 
                        
-l.44 ...{ih}}\; =\; 1 & \forall\; h\in V \\ \notag
+l.44 ...{hj}}\; =\; 1 & \forall\; h\in V \\ \notag
                                                    \\
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -3091,48 +3131,6 @@ and I'll forget about whatever was undefined.
 <recently read> &
                  
 l.45 &
-       \underset{j\in V}\sum{x_{hj}}\; =\; 1 & \forall\; h\in V \\ \notag \\
-I can't figure out why you would want to use a tab mark
-here. If you just want an ampersand, the remedy is
-simple: Just type `I\&' now. But if some right brace
-up above has ended a previous alignment prematurely,
-you're probably due for more error messages, and you
-might try typing `S' now just to see what is salvageable.
-
-! Undefined control sequence.
-l.45 & \underset
-                {j\in V}\sum{x_{hj}}\; =\; 1 & \forall\; h\in V \\ \notag \\
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-! Misplaced alignment tab character &.
-l.45 & \underset{j\in V}\sum{x_{hj}}\; =\; 1 &
-                                               \forall\; h\in V \\ \notag \\
-I can't figure out why you would want to use a tab mark
-here. If you just want an ampersand, the remedy is
-simple: Just type `I\&' now. But if some right brace
-up above has ended a previous alignment prematurely,
-you're probably due for more error messages, and you
-might try typing `S' now just to see what is salvageable.
-
-! Undefined control sequence.
-<recently read> \notag 
-                       
-l.45 ...{hj}}\; =\; 1 & \forall\; h\in V \\ \notag
-                                                   \\
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-! Misplaced alignment tab character &.
-<recently read> &
-                 
-l.46 &
        u_i-u_j+n\; x_{i,j}\;\leq\; n-1 & \forall\; i,j\in V-\{ 1\} , i\neq j...
 I can't figure out why you would want to use a tab mark
 here. If you just want an ampersand, the remedy is
@@ -3142,7 +3140,7 @@ you're probably due for more error messages, and you
 might try typing `S' now just to see what is salvageable.
 
 ! Misplaced alignment tab character &.
-l.46 & u_i-u_j+n\; x_{i,j}\;\leq\; n-1 &
+l.45 & u_i-u_j+n\; x_{i,j}\;\leq\; n-1 &
                                          \forall\; i,j\in V-\{ 1\} , i\neq j...
 I can't figure out why you would want to use a tab mark
 here. If you just want an ampersand, the remedy is
@@ -3154,7 +3152,7 @@ might try typing `S' now just to see what is salvageable.
 ! Undefined control sequence.
 <recently read> \notag 
                        
-l.46 ...rall\; i,j\in V-\{ 1\} , i\neq j \\ \notag
+l.45 ...rall\; i,j\in V-\{ 1\} , i\neq j \\ \notag
                                                    \\
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -3165,7 +3163,7 @@ and I'll forget about whatever was undefined.
 ! Misplaced alignment tab character &.
 <recently read> &
                  
-l.47 &
+l.46 &
        0\leq u_i\;\leq\; n-2 & \forall\; i\in V-\{ 1\} \\ \notag
 I can't figure out why you would want to use a tab mark
 here. If you just want an ampersand, the remedy is
@@ -3175,7 +3173,7 @@ you're probably due for more error messages, and you
 might try typing `S' now just to see what is salvageable.
 
 ! Misplaced alignment tab character &.
-l.47 & 0\leq u_i\;\leq\; n-2 &
+l.46 & 0\leq u_i\;\leq\; n-2 &
                                \forall\; i\in V-\{ 1\} \\ \notag
 I can't figure out why you would want to use a tab mark
 here. If you just want an ampersand, the remedy is
@@ -3187,7 +3185,7 @@ might try typing `S' now just to see what is salvageable.
 ! Undefined control sequence.
 <recently read> \notag 
                        
-l.47 ...\; n-2 & \forall\; i\in V-\{ 1\} \\ \notag
+l.46 ...\; n-2 & \forall\; i\in V-\{ 1\} \\ \notag
                                                   
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -3202,7 +3200,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.48 \end{align}
+l.47 \end{align}
                 
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -3211,7 +3209,7 @@ or  <return>  to continue without it.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.48 \end{align}
+l.47 \end{align}
                 
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -3222,7 +3220,7 @@ my insertion and my current dilemma will both disappear.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.48 \end{align}
+l.47 \end{align}
                 
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -4087,263 +4085,263 @@ Missing character: There is no i in font nullfont!
 Missing character: There is no o in font nullfont!
 Missing character: There is no . in font nullfont!
 
-Overfull \hbox (20.0pt too wide) in paragraph at lines 37--52
+Overfull \hbox (20.0pt too wide) in paragraph at lines 36--51
 []
  []
 
 
-Overfull \hbox (4.44444pt too wide) in paragraph at lines 37--52
+Overfull \hbox (4.44444pt too wide) in paragraph at lines 36--51
 \/cmr/m/n/10 e
  []
 
 
-Overfull \hbox (26.17183pt too wide) in paragraph at lines 37--52
+Overfull \hbox (26.17183pt too wide) in paragraph at lines 36--51
 \OML/cmm/m/it/10 O\/cmr/m/n/10 (\OML/cmm/m/it/10 n[]\/cmr/m/n/10 )$
  []
 
 
-Overfull \hbox (5.6222pt too wide) in paragraph at lines 37--52
+Overfull \hbox (5.6222pt too wide) in paragraph at lines 36--51
 \OT1/cmr/m/it/10 n
  []
 
 
-Overfull \hbox (7.66663pt too wide) in paragraph at lines 37--52
+Overfull \hbox (7.66663pt too wide) in paragraph at lines 36--51
 \OT1/cmr/m/it/10 =
  []
 
 
-Overfull \hbox (14.56657pt too wide) in paragraph at lines 37--52
+Overfull \hbox (14.56657pt too wide) in paragraph at lines 36--51
 \OT1/cmr/m/it/10 nu-
  []
 
 
-Overfull \hbox (21.59428pt too wide) in paragraph at lines 37--52
+Overfull \hbox (21.59428pt too wide) in paragraph at lines 36--51
 \OT1/cmr/m/it/10 mero
  []
 
 
-Overfull \hbox (8.17773pt too wide) in paragraph at lines 37--52
+Overfull \hbox (8.17773pt too wide) in paragraph at lines 36--51
 \OT1/cmr/m/it/10 di
  []
 
 
-Overfull \hbox (18.39989pt too wide) in paragraph at lines 37--52
+Overfull \hbox (18.39989pt too wide) in paragraph at lines 36--51
 \OT1/cmr/m/it/10 nodi 
  []
 
 
-Overfull \hbox (5.00002pt too wide) in paragraph at lines 37--52
+Overfull \hbox (5.00002pt too wide) in paragraph at lines 36--51
 \/cmr/m/n/10 o
  []
 
 
-Overfull \hbox (4.44444pt too wide) in paragraph at lines 37--52
+Overfull \hbox (4.44444pt too wide) in paragraph at lines 36--51
 \/cmr/m/n/10 e
  []
 
 
-Overfull \hbox (20.35783pt too wide) in paragraph at lines 37--52
+Overfull \hbox (20.35783pt too wide) in paragraph at lines 36--51
 \/cmr/m/n/10 (\OML/cmm/m/it/10 i; j\/cmr/m/n/10 )$
  []
 
 
-Overfull \hbox (20.35783pt too wide) in paragraph at lines 37--52
+Overfull \hbox (20.35783pt too wide) in paragraph at lines 36--51
 \/cmr/m/n/10 (\OML/cmm/m/it/10 i; j\/cmr/m/n/10 )$
  []
 
 
-Overfull \hbox (19.80228pt too wide) in paragraph at lines 37--52
+Overfull \hbox (19.80228pt too wide) in paragraph at lines 36--51
 \/cmr/m/n/10 (\OML/cmm/m/it/10 j; i\/cmr/m/n/10 )$
  []
 
 
-Overfull \hbox (20.35783pt too wide) in paragraph at lines 37--52
+Overfull \hbox (20.35783pt too wide) in paragraph at lines 36--51
 \/cmr/m/n/10 (\OML/cmm/m/it/10 i; j\/cmr/m/n/10 )$
  []
 
 
-Overfull \hbox (19.80228pt too wide) in paragraph at lines 37--52
+Overfull \hbox (19.80228pt too wide) in paragraph at lines 36--51
 \/cmr/m/n/10 (\OML/cmm/m/it/10 j; i\/cmr/m/n/10 )$
  []
 
 
-Overfull \hbox (5.00002pt too wide) in paragraph at lines 37--52
+Overfull \hbox (5.00002pt too wide) in paragraph at lines 36--51
 \/cmr/m/n/10 o
  []
 
 
-Overfull \hbox (5.00002pt too wide) in paragraph at lines 37--52
+Overfull \hbox (5.00002pt too wide) in paragraph at lines 36--51
 \/cmr/m/n/10 o
  []
 
 
-Overfull \hbox (5.00002pt too wide) in paragraph at lines 37--52
+Overfull \hbox (5.00002pt too wide) in paragraph at lines 36--51
 \/cmr/m/n/10 a
  []
 
 
-Overfull \hbox (9.05386pt too wide) in paragraph at lines 37--52
+Overfull \hbox (9.05386pt too wide) in paragraph at lines 36--51
 \OML/cmm/m/it/10 u[]$
  []
 
 
-Overfull \hbox (3.06665pt too wide) in paragraph at lines 37--52
+Overfull \hbox (3.06665pt too wide) in paragraph at lines 36--51
 \OT1/cmr/m/it/10 i
  []
 
 
-Overfull \hbox (4.44444pt too wide) in paragraph at lines 37--52
+Overfull \hbox (4.44444pt too wide) in paragraph at lines 36--51
 \/cmr/m/n/10 e
  []
 
 
-Overfull \hbox (2.77779pt too wide) in paragraph at lines 37--52
+Overfull \hbox (2.77779pt too wide) in paragraph at lines 36--51
 \/cmr/m/n/10 
  []
 
 
-Overfull \hbox (6.66669pt too wide) in paragraph at lines 37--52
+Overfull \hbox (6.66669pt too wide) in paragraph at lines 36--51
 \OMS/cmsy/m/n/10 2
  []
 
 
-Overfull \hbox (92.45763pt too wide) in paragraph at lines 37--52
+Overfull \hbox (92.45763pt too wide) in paragraph at lines 36--51
 \OML/cmm/m/it/10 V [] [][] [] [][] 
  []
 
 
-Overfull \hbox (64.67116pt too wide) in paragraph at lines 37--52
+Overfull \hbox (64.67116pt too wide) in paragraph at lines 36--51
 [] [] []  \/cmr/m/n/10 =
  []
 
 
-Overfull \hbox (28.53928pt too wide) in paragraph at lines 37--52
+Overfull \hbox (28.53928pt too wide) in paragraph at lines 36--51
 \/cmr/m/n/10 1\OMS/cmsy/m/n/10 8 \OML/cmm/m/it/10 h \OMS/cmsy/m/n/10 2
  []
 
 
-Overfull \hbox (8.05556pt too wide) in paragraph at lines 37--52
+Overfull \hbox (8.05556pt too wide) in paragraph at lines 36--51
 \OML/cmm/m/it/10 V[] 
  []
 
 
-Overfull \hbox (66.8008pt too wide) in paragraph at lines 37--52
+Overfull \hbox (66.8008pt too wide) in paragraph at lines 36--51
 [] [] []  \/cmr/m/n/10 =
  []
 
 
-Overfull \hbox (28.53928pt too wide) in paragraph at lines 37--52
+Overfull \hbox (28.53928pt too wide) in paragraph at lines 36--51
 \/cmr/m/n/10 1\OMS/cmsy/m/n/10 8 \OML/cmm/m/it/10 h \OMS/cmsy/m/n/10 2
  []
 
 
-Overfull \hbox (8.05556pt too wide) in paragraph at lines 37--52
+Overfull \hbox (8.05556pt too wide) in paragraph at lines 36--51
 \OML/cmm/m/it/10 V[] 
  []
 
 
-Overfull \hbox (16.83167pt too wide) in paragraph at lines 37--52
+Overfull \hbox (16.83167pt too wide) in paragraph at lines 36--51
 \OML/cmm/m/it/10 u[] \OMS/cmsy/m/n/10  
  []
 
 
-Overfull \hbox (17.71594pt too wide) in paragraph at lines 37--52
+Overfull \hbox (17.71594pt too wide) in paragraph at lines 36--51
 \OML/cmm/m/it/10 u[] \/cmr/m/n/10 +
  []
 
 
-Overfull \hbox (37.2464pt too wide) in paragraph at lines 37--52
+Overfull \hbox (37.2464pt too wide) in paragraph at lines 36--51
 \OML/cmm/m/it/10 n x[]  \OMS/cmsy/m/n/10 
  []
 
 
-Overfull \hbox (13.78015pt too wide) in paragraph at lines 37--52
+Overfull \hbox (13.78015pt too wide) in paragraph at lines 36--51
 \OML/cmm/m/it/10 n \OMS/cmsy/m/n/10  
  []
 
 
-Overfull \hbox (35.35773pt too wide) in paragraph at lines 37--52
+Overfull \hbox (35.35773pt too wide) in paragraph at lines 36--51
 \/cmr/m/n/10 1\OMS/cmsy/m/n/10 8 \OML/cmm/m/it/10 i; j \OMS/cmsy/m/n/10 2
  []
 
 
-Overfull \hbox (15.83336pt too wide) in paragraph at lines 37--52
+Overfull \hbox (15.83336pt too wide) in paragraph at lines 36--51
 \OML/cmm/m/it/10 V \OMS/cmsy/m/n/10  
  []
 
 
-Overfull \hbox (33.4451pt too wide) in paragraph at lines 37--52
+Overfull \hbox (33.4451pt too wide) in paragraph at lines 36--51
 \OMS/cmsy/m/n/10 f\/cmr/m/n/10 1\OMS/cmsy/m/n/10 g\OML/cmm/m/it/10 ; i \OMS/cms
 y/m/n/10 6\/cmr/m/n/10 =
  []
 
 
-Overfull \hbox (4.69049pt too wide) in paragraph at lines 37--52
+Overfull \hbox (4.69049pt too wide) in paragraph at lines 36--51
 \OML/cmm/m/it/10 j[] 
  []
 
 
-Overfull \hbox (15.55553pt too wide) in paragraph at lines 37--52
+Overfull \hbox (15.55553pt too wide) in paragraph at lines 36--51
 \/cmr/m/n/10 0 \OMS/cmsy/m/n/10 
  []
 
 
-Overfull \hbox (22.38708pt too wide) in paragraph at lines 37--52
+Overfull \hbox (22.38708pt too wide) in paragraph at lines 36--51
 \OML/cmm/m/it/10 u[]  \OMS/cmsy/m/n/10 
  []
 
 
-Overfull \hbox (13.78015pt too wide) in paragraph at lines 37--52
+Overfull \hbox (13.78015pt too wide) in paragraph at lines 36--51
 \OML/cmm/m/it/10 n \OMS/cmsy/m/n/10  
  []
 
 
-Overfull \hbox (26.22282pt too wide) in paragraph at lines 37--52
+Overfull \hbox (26.22282pt too wide) in paragraph at lines 36--51
 \/cmr/m/n/10 2\OMS/cmsy/m/n/10 8 \OML/cmm/m/it/10 i \OMS/cmsy/m/n/10 2
  []
 
 
-Overfull \hbox (15.83336pt too wide) in paragraph at lines 37--52
+Overfull \hbox (15.83336pt too wide) in paragraph at lines 36--51
 \OML/cmm/m/it/10 V \OMS/cmsy/m/n/10  
  []
 
 
-Overfull \hbox (15.00005pt too wide) in paragraph at lines 37--52
+Overfull \hbox (15.00005pt too wide) in paragraph at lines 36--51
 \OMS/cmsy/m/n/10 f\/cmr/m/n/10 1\OMS/cmsy/m/n/10 g[] 
  []
 
 
-Overfull \hbox (4.44444pt too wide) in paragraph at lines 37--52
+Overfull \hbox (4.44444pt too wide) in paragraph at lines 36--51
 \/cmr/m/n/10 e
  []
 
 
-Overfull \hbox (5.00002pt too wide) in paragraph at lines 37--52
+Overfull \hbox (5.00002pt too wide) in paragraph at lines 36--51
 \/cmr/m/n/10 a
  []
 
 
-Overfull \hbox (5.00002pt too wide) in paragraph at lines 37--52
+Overfull \hbox (5.00002pt too wide) in paragraph at lines 36--51
 \/cmr/m/n/10 a
  []
 
 
-Overfull \hbox (5.00002pt too wide) in paragraph at lines 37--52
+Overfull \hbox (5.00002pt too wide) in paragraph at lines 36--51
 \/cmr/m/n/10 o
  []
 
 
-Overfull \hbox (5.55557pt too wide) in paragraph at lines 37--52
+Overfull \hbox (5.55557pt too wide) in paragraph at lines 36--51
 \/cmr/m/n/10 u
  []
 
 
-Overfull \hbox (5.00002pt too wide) in paragraph at lines 37--52
+Overfull \hbox (5.00002pt too wide) in paragraph at lines 36--51
 \/cmr/m/n/10 o
  []
 
 ! Undefined control sequence.
-l.53 \subsection
+l.52 \subsection
                 {Formulazione basata sul flusso}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -4733,14 +4731,14 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.55 \begin{align}
+l.54 \begin{align}
                   
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
 ! Misplaced alignment tab character &.
-l.56 &
+l.55 &
        min\underset{i\in V}\sum{\underset{j\in V}\sum{c_{i,j}\; x_{i,j}}} \\...
 I can't figure out why you would want to use a tab mark
 here. If you just want an ampersand, the remedy is
@@ -4753,7 +4751,7 @@ Missing character: There is no m in font nullfont!
 Missing character: There is no i in font nullfont!
 Missing character: There is no n in font nullfont!
 ! Undefined control sequence.
-l.56 & min\underset
+l.55 & min\underset
                    {i\in V}\sum{\underset{j\in V}\sum{c_{i,j}\; x_{i,j}}} \\...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -4765,13 +4763,13 @@ Missing character: There is no i in font nullfont!
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.56 & min\underset{i\in
+l.55 & min\underset{i\in
                          V}\sum{\underset{j\in V}\sum{c_{i,j}\; x_{i,j}}} \\...
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
 ! Extra }, or forgotten $.
-l.56 & min\underset{i\in V}
+l.55 & min\underset{i\in V}
                            \sum{\underset{j\in V}\sum{c_{i,j}\; x_{i,j}}} \\...
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -4780,7 +4778,7 @@ the way to recover is to insert both the forgotten and the
 deleted material, e.g., by typing `I$}'.
 
 ! Undefined control sequence.
-l.56 & min\underset{i\in V}\sum{\underset
+l.55 & min\underset{i\in V}\sum{\underset
                                          {j\in V}\sum{c_{i,j}\; x_{i,j}}} \\...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -4791,7 +4789,7 @@ and I'll forget about whatever was undefined.
 ! Undefined control sequence.
 <recently read> \notag 
                        
-l.56 ...{j\in V}\sum{c_{i,j}\; x_{i,j}}} \\ \notag
+l.55 ...{j\in V}\sum{c_{i,j}\; x_{i,j}}} \\ \notag
                                                    \\
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -4802,7 +4800,7 @@ and I'll forget about whatever was undefined.
 ! Misplaced alignment tab character &.
 <recently read> &
                  
-l.57 &
+l.56 &
        \underset{i\in V}\sum{x_{ih}}\;=\;1 & \forall\;h\in V \\ \notag\\
 I can't figure out why you would want to use a tab mark
 here. If you just want an ampersand, the remedy is
@@ -4812,7 +4810,7 @@ you're probably due for more error messages, and you
 might try typing `S' now just to see what is salvageable.
 
 ! Undefined control sequence.
-l.57 & \underset
+l.56 & \underset
                 {i\in V}\sum{x_{ih}}\;=\;1 & \forall\;h\in V \\ \notag\\
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -4821,7 +4819,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 ! Misplaced alignment tab character &.
-l.57 & \underset{i\in V}\sum{x_{ih}}\;=\;1 &
+l.56 & \underset{i\in V}\sum{x_{ih}}\;=\;1 &
                                              \forall\;h\in V \\ \notag\\
 I can't figure out why you would want to use a tab mark
 here. If you just want an ampersand, the remedy is
@@ -4833,7 +4831,49 @@ might try typing `S' now just to see what is salvageable.
 ! Undefined control sequence.
 <recently read> \notag 
                        
-l.57 ...{x_{ih}}\;=\;1 & \forall\;h\in V \\ \notag
+l.56 ...{x_{ih}}\;=\;1 & \forall\;h\in V \\ \notag
+                                                  \\
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Misplaced alignment tab character &.
+<recently read> &
+                 
+l.57 &
+       \underset{j\in V}\sum{x_{hj}}\;=\;1 & \forall\;h\in V \\ \notag\\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Undefined control sequence.
+l.57 & \underset
+                {j\in V}\sum{x_{hj}}\;=\;1 & \forall\;h\in V \\ \notag\\
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Misplaced alignment tab character &.
+l.57 & \underset{j\in V}\sum{x_{hj}}\;=\;1 &
+                                             \forall\;h\in V \\ \notag\\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Undefined control sequence.
+<recently read> \notag 
+                       
+l.57 ...{x_{hj}}\;=\;1 & \forall\;h\in V \\ \notag
                                                   \\
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -4845,7 +4885,7 @@ and I'll forget about whatever was undefined.
 <recently read> &
                  
 l.58 &
-       \underset{j\in V}\sum{x_{hj}}\;=\;1 & \forall\;h\in V \\ \notag\\
+       \underset{j\in V}\sum{y_{1,j}}\;=\;1\\ \notag\\
 I can't figure out why you would want to use a tab mark
 here. If you just want an ampersand, the remedy is
 simple: Just type `I\&' now. But if some right brace
@@ -4855,27 +4895,17 @@ might try typing `S' now just to see what is salvageable.
 
 ! Undefined control sequence.
 l.58 & \underset
-                {j\in V}\sum{x_{hj}}\;=\;1 & \forall\;h\in V \\ \notag\\
+                {j\in V}\sum{y_{1,j}}\;=\;1\\ \notag\\
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-! Misplaced alignment tab character &.
-l.58 & \underset{j\in V}\sum{x_{hj}}\;=\;1 &
-                                             \forall\;h\in V \\ \notag\\
-I can't figure out why you would want to use a tab mark
-here. If you just want an ampersand, the remedy is
-simple: Just type `I\&' now. But if some right brace
-up above has ended a previous alignment prematurely,
-you're probably due for more error messages, and you
-might try typing `S' now just to see what is salvageable.
-
 ! Undefined control sequence.
 <recently read> \notag 
                        
-l.58 ...{x_{hj}}\;=\;1 & \forall\;h\in V \\ \notag
+l.58 ...derset{j\in V}\sum{y_{1,j}}\;=\;1\\ \notag
                                                   \\
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -4887,38 +4917,6 @@ and I'll forget about whatever was undefined.
 <recently read> &
                  
 l.59 &
-       \underset{j\in V}\sum{y_{1,j}}\;=\;1\\ \notag\\
-I can't figure out why you would want to use a tab mark
-here. If you just want an ampersand, the remedy is
-simple: Just type `I\&' now. But if some right brace
-up above has ended a previous alignment prematurely,
-you're probably due for more error messages, and you
-might try typing `S' now just to see what is salvageable.
-
-! Undefined control sequence.
-l.59 & \underset
-                {j\in V}\sum{y_{1,j}}\;=\;1\\ \notag\\
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-! Undefined control sequence.
-<recently read> \notag 
-                       
-l.59 ...derset{j\in V}\sum{y_{1,j}}\;=\;1\\ \notag
-                                                  \\
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-! Misplaced alignment tab character &.
-<recently read> &
-                 
-l.60 &
        \underset{j\in V}\sum{y_{h,j}}\;=\;\underset{i\in V}\sum{y_{i,h}}\;-1...
 I can't figure out why you would want to use a tab mark
 here. If you just want an ampersand, the remedy is
@@ -4928,7 +4926,7 @@ you're probably due for more error messages, and you
 might try typing `S' now just to see what is salvageable.
 
 ! Undefined control sequence.
-l.60 & \underset
+l.59 & \underset
                 {j\in V}\sum{y_{h,j}}\;=\;\underset{i\in V}\sum{y_{i,h}}\;-1...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -4937,7 +4935,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 ! Undefined control sequence.
-l.60 ...nderset{j\in V}\sum{y_{h,j}}\;=\;\underset
+l.59 ...nderset{j\in V}\sum{y_{h,j}}\;=\;\underset
                                                   {i\in V}\sum{y_{i,h}}\;-1 ...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -4946,7 +4944,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 ! Misplaced alignment tab character &.
-l.60 ...}\;=\;\underset{i\in V}\sum{y_{i,h}}\;-1 &
+l.59 ...}\;=\;\underset{i\in V}\sum{y_{i,h}}\;-1 &
                                                    \forall\;h\in V-\{1\}\\ \...
 I can't figure out why you would want to use a tab mark
 here. If you just want an ampersand, the remedy is
@@ -4958,7 +4956,7 @@ might try typing `S' now just to see what is salvageable.
 ! Undefined control sequence.
 <recently read> \notag 
                        
-l.60 ...i,h}}\;-1 & \forall\;h\in V-\{1\}\\ \notag
+l.59 ...i,h}}\;-1 & \forall\;h\in V-\{1\}\\ \notag
                                                   \\
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -4969,7 +4967,7 @@ and I'll forget about whatever was undefined.
 ! Misplaced alignment tab character &.
 <recently read> &
                  
-l.61 &
+l.60 &
        y_{i,j}\leq\;(n-1)\;x_{i,j} & \forall\;i,j\in V, i\neq j\\ \notag
 I can't figure out why you would want to use a tab mark
 here. If you just want an ampersand, the remedy is
@@ -4979,7 +4977,7 @@ you're probably due for more error messages, and you
 might try typing `S' now just to see what is salvageable.
 
 ! Misplaced alignment tab character &.
-l.61 & y_{i,j}\leq\;(n-1)\;x_{i,j} &
+l.60 & y_{i,j}\leq\;(n-1)\;x_{i,j} &
                                      \forall\;i,j\in V, i\neq j\\ \notag
 I can't figure out why you would want to use a tab mark
 here. If you just want an ampersand, the remedy is
@@ -4991,7 +4989,7 @@ might try typing `S' now just to see what is salvageable.
 ! Undefined control sequence.
 <recently read> \notag 
                        
-l.61 ...i,j} & \forall\;i,j\in V, i\neq j\\ \notag
+l.60 ...i,j} & \forall\;i,j\in V, i\neq j\\ \notag
                                                   
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -5006,7 +5004,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.62 \end{align}
+l.61 \end{align}
                 
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -5015,7 +5013,7 @@ or  <return>  to continue without it.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.62 \end{align}
+l.61 \end{align}
                 
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -5026,7 +5024,7 @@ my insertion and my current dilemma will both disappear.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.62 \end{align}
+l.61 \end{align}
                 
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -5145,179 +5143,179 @@ Missing character: There is no c in font nullfont!
 Missing character: There is no o in font nullfont!
 Missing character: There is no n in font nullfont!
 
-Overfull \hbox (20.0pt too wide) in paragraph at lines 53--64
+Overfull \hbox (20.0pt too wide) in paragraph at lines 52--63
 []
  []
 
 
-Overfull \hbox (14.32066pt too wide) in paragraph at lines 53--64
+Overfull \hbox (14.32066pt too wide) in paragraph at lines 52--63
 \OML/cmm/m/it/10 y[]$
  []
 
 
-Overfull \hbox (14.00064pt too wide) in paragraph at lines 53--64
+Overfull \hbox (14.00064pt too wide) in paragraph at lines 52--63
 \OML/cmm/m/it/10 i \OMS/cmsy/m/n/10 6\/cmr/m/n/10 =
  []
 
 
-Overfull \hbox (4.69049pt too wide) in paragraph at lines 53--64
+Overfull \hbox (4.69049pt too wide) in paragraph at lines 52--63
 \OML/cmm/m/it/10 j$
  []
 
 
-Overfull \hbox (4.44444pt too wide) in paragraph at lines 53--64
+Overfull \hbox (4.44444pt too wide) in paragraph at lines 52--63
 \/cmr/m/n/10 e
  []
 
 
-Overfull \hbox (15.13312pt too wide) in paragraph at lines 53--64
+Overfull \hbox (15.13312pt too wide) in paragraph at lines 52--63
 \OML/cmm/m/it/10 x[]$
  []
 
 
-Overfull \hbox (4.44444pt too wide) in paragraph at lines 53--64
+Overfull \hbox (4.44444pt too wide) in paragraph at lines 52--63
 \/cmr/m/n/10 e
  []
 
 
-Overfull \hbox (2.77779pt too wide) in paragraph at lines 53--64
+Overfull \hbox (2.77779pt too wide) in paragraph at lines 52--63
 \/cmr/m/n/10 
  []
 
 
-Overfull \hbox (6.66669pt too wide) in paragraph at lines 53--64
+Overfull \hbox (6.66669pt too wide) in paragraph at lines 52--63
 \OMS/cmsy/m/n/10 2
  []
 
 
-Overfull \hbox (92.45763pt too wide) in paragraph at lines 53--64
+Overfull \hbox (92.45763pt too wide) in paragraph at lines 52--63
 \OML/cmm/m/it/10 V [] [][] 
  []
 
 
-Overfull \hbox (64.67116pt too wide) in paragraph at lines 53--64
+Overfull \hbox (64.67116pt too wide) in paragraph at lines 52--63
 [] [] []  \/cmr/m/n/10 =
  []
 
 
-Overfull \hbox (28.53928pt too wide) in paragraph at lines 53--64
+Overfull \hbox (28.53928pt too wide) in paragraph at lines 52--63
 \/cmr/m/n/10 1\OMS/cmsy/m/n/10 8 \OML/cmm/m/it/10 h \OMS/cmsy/m/n/10 2
  []
 
 
-Overfull \hbox (8.05556pt too wide) in paragraph at lines 53--64
+Overfull \hbox (8.05556pt too wide) in paragraph at lines 52--63
 \OML/cmm/m/it/10 V[] 
  []
 
 
-Overfull \hbox (66.8008pt too wide) in paragraph at lines 53--64
+Overfull \hbox (66.8008pt too wide) in paragraph at lines 52--63
 [] [] []  \/cmr/m/n/10 =
  []
 
 
-Overfull \hbox (28.53928pt too wide) in paragraph at lines 53--64
+Overfull \hbox (28.53928pt too wide) in paragraph at lines 52--63
 \/cmr/m/n/10 1\OMS/cmsy/m/n/10 8 \OML/cmm/m/it/10 h \OMS/cmsy/m/n/10 2
  []
 
 
-Overfull \hbox (8.05556pt too wide) in paragraph at lines 53--64
+Overfull \hbox (8.05556pt too wide) in paragraph at lines 52--63
 \OML/cmm/m/it/10 V[] 
  []
 
 
-Overfull \hbox (67.66772pt too wide) in paragraph at lines 53--64
+Overfull \hbox (67.66772pt too wide) in paragraph at lines 52--63
 [] [] []  \/cmr/m/n/10 =
  []
 
 
-Overfull \hbox (5.00002pt too wide) in paragraph at lines 53--64
+Overfull \hbox (5.00002pt too wide) in paragraph at lines 52--63
 \/cmr/m/n/10 1[] 
  []
 
 
-Overfull \hbox (68.36334pt too wide) in paragraph at lines 53--64
+Overfull \hbox (68.36334pt too wide) in paragraph at lines 52--63
 [] [] []  \/cmr/m/n/10 =
  []
 
 
-Overfull \hbox (63.456pt too wide) in paragraph at lines 53--64
+Overfull \hbox (63.456pt too wide) in paragraph at lines 52--63
 [] [] []  \OMS/cmsy/m/n/10  
  []
 
 
-Overfull \hbox (28.53928pt too wide) in paragraph at lines 53--64
+Overfull \hbox (28.53928pt too wide) in paragraph at lines 52--63
 \/cmr/m/n/10 1\OMS/cmsy/m/n/10 8 \OML/cmm/m/it/10 h \OMS/cmsy/m/n/10 2
  []
 
 
-Overfull \hbox (15.83336pt too wide) in paragraph at lines 53--64
+Overfull \hbox (15.83336pt too wide) in paragraph at lines 52--63
 \OML/cmm/m/it/10 V \OMS/cmsy/m/n/10  
  []
 
 
-Overfull \hbox (15.00005pt too wide) in paragraph at lines 53--64
+Overfull \hbox (15.00005pt too wide) in paragraph at lines 52--63
 \OMS/cmsy/m/n/10 f\/cmr/m/n/10 1\OMS/cmsy/m/n/10 g[] 
  []
 
 
-Overfull \hbox (24.87617pt too wide) in paragraph at lines 53--64
+Overfull \hbox (24.87617pt too wide) in paragraph at lines 52--63
 \OML/cmm/m/it/10 y[] \OMS/cmsy/m/n/10 
  []
 
 
-Overfull \hbox (17.66905pt too wide) in paragraph at lines 53--64
+Overfull \hbox (17.66905pt too wide) in paragraph at lines 52--63
 \/cmr/m/n/10 (\OML/cmm/m/it/10 n \OMS/cmsy/m/n/10  
  []
 
 
-Overfull \hbox (57.15746pt too wide) in paragraph at lines 53--64
+Overfull \hbox (57.15746pt too wide) in paragraph at lines 52--63
 \/cmr/m/n/10 1) \OML/cmm/m/it/10 x[]\OMS/cmsy/m/n/10 8 \OML/cmm/m/it/10 i; j \O
 MS/cmsy/m/n/10 2
  []
 
 
-Overfull \hbox (24.83394pt too wide) in paragraph at lines 53--64
+Overfull \hbox (24.83394pt too wide) in paragraph at lines 52--63
 \OML/cmm/m/it/10 V; i \OMS/cmsy/m/n/10 6\/cmr/m/n/10 =
  []
 
 
-Overfull \hbox (4.69049pt too wide) in paragraph at lines 53--64
+Overfull \hbox (4.69049pt too wide) in paragraph at lines 52--63
 \OML/cmm/m/it/10 j[] 
  []
 
 
-Overfull \hbox (5.00002pt too wide) in paragraph at lines 53--64
+Overfull \hbox (5.00002pt too wide) in paragraph at lines 52--63
 \/cmr/m/n/10 o
  []
 
 
-Overfull \hbox (4.44444pt too wide) in paragraph at lines 53--64
+Overfull \hbox (4.44444pt too wide) in paragraph at lines 52--63
 \/cmr/m/n/10 e
  []
 
 
-Overfull \hbox (26.57764pt too wide) in paragraph at lines 53--64
+Overfull \hbox (26.57764pt too wide) in paragraph at lines 52--63
 \OT1/cmr/m/it/10 (3.11)
  []
 
 
-Overfull \hbox (24.87617pt too wide) in paragraph at lines 65--65
+Overfull \hbox (24.87617pt too wide) in paragraph at lines 64--64
  \OML/cmm/m/it/10 y[] \OMS/cmsy/m/n/10  
  []
 
 
-Overfull \hbox (17.66905pt too wide) in paragraph at lines 65--65
+Overfull \hbox (17.66905pt too wide) in paragraph at lines 64--64
  \/cmr/m/n/10 (\OML/cmm/m/it/10 n \OMS/cmsy/m/n/10   
  []
 
 
-Overfull \hbox (63.02222pt too wide) in paragraph at lines 65--65
+Overfull \hbox (63.02222pt too wide) in paragraph at lines 64--64
  \/cmr/m/n/10 2) \OML/cmm/m/it/10 x[]     \OMS/cmsy/m/n/10 8 \OML/cmm/m/it/10 i
  \OMS/cmsy/m/n/10 6\/cmr/m/n/10 = 
  []
 
 
-Overfull \hbox (4.69049pt too wide) in paragraph at lines 65--65
+Overfull \hbox (4.69049pt too wide) in paragraph at lines 64--64
  \OML/cmm/m/it/10 j$ 
  []
 
@@ -5528,27 +5526,27 @@ Missing character: There is no l in font nullfont!
 Missing character: There is no o in font nullfont!
 Missing character: There is no : in font nullfont!
 
-Overfull \hbox (3.44513pt too wide) in paragraph at lines 67--69
+Overfull \hbox (3.44513pt too wide) in paragraph at lines 66--68
       $\OML/cmm/m/it/10 i$
  []
 
 
-Overfull \hbox (4.69049pt too wide) in paragraph at lines 67--69
+Overfull \hbox (4.69049pt too wide) in paragraph at lines 66--68
 \OML/cmm/m/it/10 j$
  []
 
 
-Overfull \hbox (4.44444pt too wide) in paragraph at lines 67--69
+Overfull \hbox (4.44444pt too wide) in paragraph at lines 66--68
 \/cmr/m/n/10 e
  []
 
 
-Overfull \hbox (15.13312pt too wide) in paragraph at lines 67--69
+Overfull \hbox (15.13312pt too wide) in paragraph at lines 66--68
 \OML/cmm/m/it/10 x[]$
  []
 
 
-Overfull \hbox (14.70256pt too wide) in paragraph at lines 67--69
+Overfull \hbox (14.70256pt too wide) in paragraph at lines 66--68
 \OML/cmm/m/it/10 x[]$
  []
 
@@ -5556,32 +5554,32 @@ Missing character: There is no c in font nullfont!
 Missing character: There is no o in font nullfont!
 Missing character: There is no n in font nullfont!
 
-Overfull \hbox (22.91092pt too wide) in paragraph at lines 70--71
+Overfull \hbox (22.91092pt too wide) in paragraph at lines 69--70
  \OML/cmm/m/it/10 x[] \/cmr/m/n/10 + 
  []
 
 
-Overfull \hbox (25.25807pt too wide) in paragraph at lines 70--71
+Overfull \hbox (25.25807pt too wide) in paragraph at lines 69--70
  \OML/cmm/m/it/10 x[] \OMS/cmsy/m/n/10  
  []
 
 
-Overfull \hbox (43.69086pt too wide) in paragraph at lines 70--71
+Overfull \hbox (43.69086pt too wide) in paragraph at lines 69--70
  \/cmr/m/n/10 1    \OMS/cmsy/m/n/10 8\OML/cmm/m/it/10 i; j \OMS/cmsy/m/n/10 2 
  []
 
 
-Overfull \hbox (8.05556pt too wide) in paragraph at lines 70--71
+Overfull \hbox (8.05556pt too wide) in paragraph at lines 69--70
  \OML/cmm/m/it/10 V$ 
  []
 
 
-Overfull \hbox (14.00064pt too wide) in paragraph at lines 70--71
+Overfull \hbox (14.00064pt too wide) in paragraph at lines 69--70
  \OML/cmm/m/it/10 i < 
  []
 
 
-Overfull \hbox (4.69049pt too wide) in paragraph at lines 70--71
+Overfull \hbox (4.69049pt too wide) in paragraph at lines 69--70
  \OML/cmm/m/it/10 j$ 
  []
 
@@ -5593,7 +5591,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.71 \end{center}
+l.70 \end{center}
                  
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -5603,7 +5601,7 @@ or  <return>  to continue without it.
 ! Undefined control sequence.
 <write> \newlabel{strutture_cplex}{{}{\thepage 
                                                }}
-l.71 \end{center}
+l.70 \end{center}
                  
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -5615,7 +5613,7 @@ and I'll forget about whatever was undefined.
 ! Undefined control sequence.
 <write> \newlabel{Indici_matrice}{{}{\thepage 
                                               }}
-l.71 \end{center}
+l.70 \end{center}
                  
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -5626,7 +5624,7 @@ and I'll forget about whatever was undefined.
 \newlabel{Indici_matrice}{{}{}}
 ]
 ! Undefined control sequence.
-l.73 \section
+l.72 \section
              {Loop}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -5639,7 +5637,7 @@ Missing character: There is no o in font nullfont!
 Missing character: There is no o in font nullfont!
 Missing character: There is no p in font nullfont!
 ! Undefined control sequence.
-l.74 \subsection
+l.73 \subsection
                 {Formulazione di Benders}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -6247,14 +6245,14 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.79 \begin{align}
+l.78 \begin{align}
                   
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
 ! Misplaced alignment tab character &.
-l.80 &
+l.79 &
       \underset{e\in E(S)}\sum{x_{e}} \leq \mid S\mid - 1\;\forall\;S\unders...
 I can't figure out why you would want to use a tab mark
 here. If you just want an ampersand, the remedy is
@@ -6264,7 +6262,7 @@ you're probably due for more error messages, and you
 might try typing `S' now just to see what is salvageable.
 
 ! Undefined control sequence.
-l.80 &\underset
+l.79 &\underset
                {e\in E(S)}\sum{x_{e}} \leq \mid S\mid - 1\;\forall\;S\unders...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -6276,13 +6274,13 @@ Missing character: There is no e in font nullfont!
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.80 &\underset{e\in
+l.79 &\underset{e\in
                      E(S)}\sum{x_{e}} \leq \mid S\mid - 1\;\forall\;S\unders...
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
 ! Extra }, or forgotten $.
-l.80 &\underset{e\in E(S)}
+l.79 &\underset{e\in E(S)}
                           \sum{x_{e}} \leq \mid S\mid - 1\;\forall\;S\unders...
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -6291,7 +6289,7 @@ the way to recover is to insert both the forgotten and the
 deleted material, e.g., by typing `I$}'.
 
 ! Undefined control sequence.
-l.80 ...} \leq \mid S\mid - 1\;\forall\;S\underset
+l.79 ...} \leq \mid S\mid - 1\;\forall\;S\underset
                                                   {\neq}{\subset}V\; : \; \m...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -6306,7 +6304,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.81 \end{align}
+l.80 \end{align}
                 
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -6315,7 +6313,7 @@ or  <return>  to continue without it.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.81 \end{align}
+l.80 \end{align}
                 
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -6326,7 +6324,7 @@ my insertion and my current dilemma will both disappear.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.81 \end{align}
+l.80 \end{align}
                 
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -6359,14 +6357,14 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.83 \begin{align}
+l.82 \begin{align}
                   
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
 ! Misplaced alignment tab character &.
-l.84 &
+l.83 &
       \underset{e\in \delta(S)}\sum{x_{e}}\geq 2\;\forall\;S\underset{\neq}{...
 I can't figure out why you would want to use a tab mark
 here. If you just want an ampersand, the remedy is
@@ -6376,7 +6374,7 @@ you're probably due for more error messages, and you
 might try typing `S' now just to see what is salvageable.
 
 ! Undefined control sequence.
-l.84 &\underset
+l.83 &\underset
                {e\in \delta(S)}\sum{x_{e}}\geq 2\;\forall\;S\underset{\neq}{...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -6388,13 +6386,13 @@ Missing character: There is no e in font nullfont!
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.84 &\underset{e\in
+l.83 &\underset{e\in
                      \delta(S)}\sum{x_{e}}\geq 2\;\forall\;S\underset{\neq}{...
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
 ! Extra }, or forgotten $.
-l.84 &\underset{e\in \delta(S)}
+l.83 &\underset{e\in \delta(S)}
                                \sum{x_{e}}\geq 2\;\forall\;S\underset{\neq}{...
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -6403,7 +6401,7 @@ the way to recover is to insert both the forgotten and the
 deleted material, e.g., by typing `I$}'.
 
 ! Undefined control sequence.
-l.84 ...(S)}\sum{x_{e}}\geq 2\;\forall\;S\underset
+l.83 ...(S)}\sum{x_{e}}\geq 2\;\forall\;S\underset
                                                   {\neq}{\subset}V\; : \; \m...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -6418,7 +6416,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.85 \end{align}
+l.84 \end{align}
                 
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -6427,7 +6425,7 @@ or  <return>  to continue without it.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.85 \end{align}
+l.84 \end{align}
                 
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -6438,7 +6436,7 @@ my insertion and my current dilemma will both disappear.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.85 \end{align}
+l.84 \end{align}
                 
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -6759,7 +6757,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.89 \begin{algorithm}
+l.88 \begin{algorithm}
                       [H]
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -6769,8 +6767,8 @@ Missing character: There is no [ in font nullfont!
 Missing character: There is no H in font nullfont!
 Missing character: There is no ] in font nullfont!
 ! Undefined control sequence.
-l.90 \DontPrintSemicolon
-                        
+l.89 \DontPrintSemicolon
+                        \footnotesize
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -6778,7 +6776,16 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 ! Undefined control sequence.
-l.91 \KwIn
+l.89 \DontPrintSemicolon\footnotesize
+                                     
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.90 \KwIn
            {$\mathtt{model}$= Modello TSP simmetrico senza vincoli di Subtou...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -6840,7 +6847,7 @@ Missing character: There is no i in font nullfont!
 Missing character: There is no o in font nullfont!
 Missing character: There is no n in font nullfont!
 ! Undefined control sequence.
-l.92 \KwOut
+l.91 \KwOut
             {$\mathtt{x}$= soluzione intera senza subtour}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -6877,7 +6884,7 @@ Missing character: There is no o in font nullfont!
 Missing character: There is no u in font nullfont!
 Missing character: There is no r in font nullfont!
 ! Undefined control sequence.
-l.93 \BlankLine
+l.92 \BlankLine
                
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -6900,7 +6907,7 @@ Missing character: There is no ) in font nullfont!
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.94  $\mathtt{x} \gets$ solve(model)\;
+l.93  $\mathtt{x} \gets$ solve(model)\;
                                        
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
@@ -6912,7 +6919,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.95  $\mathtt{ncomps}
+l.94  $\mathtt{ncomps}
                        \gets$ comps(x)\;
 You're in trouble here.  Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
@@ -6926,7 +6933,7 @@ Missing character: There is no s in font nullfont!
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.95  $\mathtt{ncomps} \gets
+l.94  $\mathtt{ncomps} \gets
                             $ comps(x)\;
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
@@ -6942,13 +6949,13 @@ Missing character: There is no ) in font nullfont!
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.95  $\mathtt{ncomps} \gets$ comps(x)\;
+l.94  $\mathtt{ncomps} \gets$ comps(x)\;
                                         
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
 ! Undefined control sequence.
-l.96  \BlankLine
+l.95  \BlankLine
                 
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -6957,7 +6964,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 ! Undefined control sequence.
-l.97  \While
+l.96  \While
             {$\mathtt{ncomps} \geq 2$}{
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -6968,7 +6975,7 @@ and I'll forget about whatever was undefined.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.97  \While{$
+l.96  \While{$
               \mathtt{ncomps} \geq 2$}{
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -6983,7 +6990,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.97  \While{$\mathtt{ncomps}
+l.96  \While{$\mathtt{ncomps}
                               \geq 2$}{
 You're in trouble here.  Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
@@ -6997,13 +7004,13 @@ Missing character: There is no s in font nullfont!
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.97  \While{$\mathtt{ncomps} \geq
+l.96  \While{$\mathtt{ncomps} \geq
                                    2$}{
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
 ! Extra }, or forgotten \endgroup.
-l.97  \While{$\mathtt{ncomps} \geq 2$}
+l.96  \While{$\mathtt{ncomps} \geq 2$}
                                       {
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -7022,7 +7029,7 @@ Missing character: There is no i in font nullfont!
 ! Undefined control sequence.
 <recently read> \underset 
                           
-l.98   Aggiungi $\underset
+l.97   Aggiungi $\underset
                           {e\in \delta(S_k)}\sum{x_{e}}\leq \mid S_k\mid - 1...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -7051,13 +7058,13 @@ Missing character: There is no a in font nullfont!
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.98 ... - 1\;\forall$ componente connessa $S_k$\;
+l.97 ... - 1\;\forall$ componente connessa $S_k$\;
                                                   
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
 ! Undefined control sequence.
-l.99   \BlankLine
+l.98   \BlankLine
                  
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -7066,8 +7073,8 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 ! Undefined control sequence.
-l.100   \If
-           {$\mathtt{ncomps} \geq 2$}{
+l.99   \If
+          {$\mathtt{ncomps} \geq 2$}{
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -7077,8 +7084,8 @@ and I'll forget about whatever was undefined.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.100   \If{$
-             \mathtt{ncomps} \geq 2$}{
+l.99   \If{$
+            \mathtt{ncomps} \geq 2$}{
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
 With luck, this will get me unwedged. But if you
@@ -7092,8 +7099,8 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.100   \If{$\mathtt{ncomps}
-                             \geq 2$}{
+l.99   \If{$\mathtt{ncomps}
+                            \geq 2$}{
 You're in trouble here.  Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
@@ -7106,10 +7113,19 @@ Missing character: There is no s in font nullfont!
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.100   \If{$\mathtt{ncomps} \geq
-                                  2$}{
+l.99   \If{$\mathtt{ncomps} \geq
+                                 2$}{
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
+
+! Undefined control sequence.
+l.100     \BlankLine
+                    
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
 
 Missing character: There is no s in font nullfont!
 Missing character: There is no o in font nullfont!
@@ -7126,8 +7142,8 @@ Missing character: There is no ) in font nullfont!
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.101    $\mathtt{x} \gets$ solve(model)\;
-                                          
+l.101     $\mathtt{x} \gets$ solve(model)\;
+                                           
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
@@ -7138,8 +7154,8 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.102    $\mathtt{ncomps}
-                          \gets$ comps(x)\;
+l.102     $\mathtt{ncomps}
+                           \gets$ comps(x)\;
 You're in trouble here.  Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
@@ -7152,8 +7168,8 @@ Missing character: There is no s in font nullfont!
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.102    $\mathtt{ncomps} \gets
-                               $ comps(x)\;
+l.102     $\mathtt{ncomps} \gets
+                                $ comps(x)\;
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
@@ -7168,8 +7184,8 @@ Missing character: There is no ) in font nullfont!
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.102    $\mathtt{ncomps} \gets$ comps(x)\;
-                                           
+l.102     $\mathtt{ncomps} \gets$ comps(x)\;
+                                            
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
@@ -7239,170 +7255,170 @@ really didn't forget anything, try typing `2' now; then
 my insertion and my current dilemma will both disappear.
 
 
-Overfull \hbox (20.0pt too wide) in paragraph at lines 73--107
+Overfull \hbox (20.0pt too wide) in paragraph at lines 72--107
 []
  []
 
 
-Overfull \hbox (5.00002pt too wide) in paragraph at lines 73--107
+Overfull \hbox (5.00002pt too wide) in paragraph at lines 72--107
 \/cmr/m/n/10 o
  []
 
 
-Overfull \hbox (6.66669pt too wide) in paragraph at lines 73--107
+Overfull \hbox (6.66669pt too wide) in paragraph at lines 72--107
 \OMS/cmsy/m/n/10 2
  []
 
 
-Overfull \hbox (59.67595pt too wide) in paragraph at lines 73--107
+Overfull \hbox (59.67595pt too wide) in paragraph at lines 72--107
 \OML/cmm/m/it/10 E\/cmr/m/n/10 (\OML/cmm/m/it/10 S\/cmr/m/n/10 ) [] [] \OMS/cms
 y/m/n/10 j
  []
 
 
-Overfull \hbox (12.26381pt too wide) in paragraph at lines 73--107
+Overfull \hbox (12.26381pt too wide) in paragraph at lines 72--107
 \OML/cmm/m/it/10 S \OMS/cmsy/m/n/10 j
  []
 
 
-Overfull \hbox (62.54149pt too wide) in paragraph at lines 73--107
+Overfull \hbox (62.54149pt too wide) in paragraph at lines 72--107
 \OMS/cmsy/m/n/10  \/cmr/m/n/10 1 \OMS/cmsy/m/n/10 8 \OML/cmm/m/it/10 S[][]V  \/
 cmr/m/n/10 :
  []
 
 
-Overfull \hbox (2.77779pt too wide) in paragraph at lines 73--107
+Overfull \hbox (2.77779pt too wide) in paragraph at lines 72--107
 \OMS/cmsy/m/n/10 j
  []
 
 
-Overfull \hbox (20.04161pt too wide) in paragraph at lines 73--107
+Overfull \hbox (20.04161pt too wide) in paragraph at lines 72--107
 \OML/cmm/m/it/10 S \OMS/cmsy/m/n/10 j
  []
 
 
-Overfull \hbox (5.00002pt too wide) in paragraph at lines 73--107
+Overfull \hbox (5.00002pt too wide) in paragraph at lines 72--107
 \/cmr/m/n/10 2$
  []
 
 
-Overfull \hbox (6.66669pt too wide) in paragraph at lines 73--107
+Overfull \hbox (6.66669pt too wide) in paragraph at lines 72--107
 \OMS/cmsy/m/n/10 2
  []
 
 
-Overfull \hbox (53.76276pt too wide) in paragraph at lines 73--107
+Overfull \hbox (53.76276pt too wide) in paragraph at lines 72--107
 \OML/cmm/m/it/10 \/cmr/m/n/10 (\OML/cmm/m/it/10 S\/cmr/m/n/10 ) [] [] \OMS/cms
 y/m/n/10 
  []
 
 
-Overfull \hbox (54.76369pt too wide) in paragraph at lines 73--107
+Overfull \hbox (54.76369pt too wide) in paragraph at lines 72--107
 \/cmr/m/n/10 2 \OMS/cmsy/m/n/10 8 \OML/cmm/m/it/10 S[][]V  \/cmr/m/n/10 :
  []
 
 
-Overfull \hbox (2.77779pt too wide) in paragraph at lines 73--107
+Overfull \hbox (2.77779pt too wide) in paragraph at lines 72--107
 \OMS/cmsy/m/n/10 j
  []
 
 
-Overfull \hbox (20.04161pt too wide) in paragraph at lines 73--107
+Overfull \hbox (20.04161pt too wide) in paragraph at lines 72--107
 \OML/cmm/m/it/10 S \OMS/cmsy/m/n/10 j
  []
 
 
-Overfull \hbox (5.00002pt too wide) in paragraph at lines 73--107
+Overfull \hbox (5.00002pt too wide) in paragraph at lines 72--107
 \/cmr/m/n/10 2$
  []
 
 
-Overfull \hbox (2.77779pt too wide) in paragraph at lines 73--107
+Overfull \hbox (2.77779pt too wide) in paragraph at lines 72--107
 \/cmr/m/n/10 
  []
 
 
-Overfull \hbox (5.00002pt too wide) in paragraph at lines 73--107
+Overfull \hbox (5.00002pt too wide) in paragraph at lines 72--107
 \/cmr/m/n/10 a
  []
 
 
-Overfull \hbox (5.55557pt too wide) in paragraph at lines 73--107
+Overfull \hbox (5.55557pt too wide) in paragraph at lines 72--107
 \/cmr/m/n/10 u
  []
 
 
-Overfull \hbox (26.24977pt too wide) in paragraph at lines 73--107
+Overfull \hbox (26.24977pt too wide) in paragraph at lines 72--107
 []$
  []
 
 
-Overfull \hbox (5.24995pt too wide) in paragraph at lines 73--107
+Overfull \hbox (5.24995pt too wide) in paragraph at lines 72--107
 \OT1/cmtt/m/n/10 x$
  []
 
 
-Overfull \hbox (18.02768pt too wide) in paragraph at lines 73--107
+Overfull \hbox (18.02768pt too wide) in paragraph at lines 72--107
 \OT1/cmtt/m/n/10 x \OMS/cmsy/m/n/10  $
  []
 
 
-Overfull \hbox (10.00002pt too wide) in paragraph at lines 73--107
+Overfull \hbox (10.00002pt too wide) in paragraph at lines 72--107
 \OMS/cmsy/m/n/10  $
  []
 
 
-Overfull \hbox (7.7778pt too wide) in paragraph at lines 73--107
+Overfull \hbox (7.7778pt too wide) in paragraph at lines 72--107
 \OMS/cmsy/m/n/10 
  []
 
 
-Overfull \hbox (5.00002pt too wide) in paragraph at lines 73--107
+Overfull \hbox (5.00002pt too wide) in paragraph at lines 72--107
 \/cmr/m/n/10 2$
  []
 
 
-Overfull \hbox (77.76271pt too wide) in paragraph at lines 73--107
+Overfull \hbox (77.76271pt too wide) in paragraph at lines 72--107
 [] [] [] \OMS/cmsy/m/n/10 j
  []
 
 
-Overfull \hbox (16.6076pt too wide) in paragraph at lines 73--107
+Overfull \hbox (16.6076pt too wide) in paragraph at lines 72--107
 \OML/cmm/m/it/10 S[] \OMS/cmsy/m/n/10 j
  []
 
 
-Overfull \hbox (21.1111pt too wide) in paragraph at lines 73--107
+Overfull \hbox (21.1111pt too wide) in paragraph at lines 72--107
 \OMS/cmsy/m/n/10  \/cmr/m/n/10 1 \OMS/cmsy/m/n/10 8$
  []
 
 
-Overfull \hbox (13.82982pt too wide) in paragraph at lines 73--107
+Overfull \hbox (13.82982pt too wide) in paragraph at lines 72--107
 \OML/cmm/m/it/10 S[]$$ []$
  []
 
 
-Overfull \hbox (7.7778pt too wide) in paragraph at lines 73--107
+Overfull \hbox (7.7778pt too wide) in paragraph at lines 72--107
 \OMS/cmsy/m/n/10 
  []
 
 
-Overfull \hbox (5.00002pt too wide) in paragraph at lines 73--107
+Overfull \hbox (5.00002pt too wide) in paragraph at lines 72--107
 \/cmr/m/n/10 2$
  []
 
 
-Overfull \hbox (18.02768pt too wide) in paragraph at lines 73--107
+Overfull \hbox (18.02768pt too wide) in paragraph at lines 72--107
 \OT1/cmtt/m/n/10 x \OMS/cmsy/m/n/10  $
  []
 
 
-Overfull \hbox (10.00002pt too wide) in paragraph at lines 73--107
+Overfull \hbox (10.00002pt too wide) in paragraph at lines 72--107
 \OMS/cmsy/m/n/10  $
  []
 
 
-Overfull \hbox (30.4257pt too wide) in paragraph at lines 73--107
+Overfull \hbox (30.4257pt too wide) in paragraph at lines 72--107
 []$ 
  []
 
@@ -14793,7 +14809,16 @@ Missing character: There is no H in font nullfont!
 Missing character: There is no ] in font nullfont!
 ! Undefined control sequence.
 l.155 \DontPrintSemicolon
-                         
+                         \footnotesize
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.155 \DontPrintSemicolon\footnotesize
+                                      
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -14851,46 +14876,73 @@ Missing character: There is no t in font nullfont!
 Missing character: There is no o in font nullfont!
 Missing character: There is no u in font nullfont!
 Missing character: There is no r in font nullfont!
-! Missing $ inserted.
-<inserted text> 
-                $
-l.156 ...TSP simmetrico senza vincoli di Subtour\;
-                                                             Elimination\;
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-
-! LaTeX Error: \mathtt allowed only in math mode.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.157 $\mathtt{deadline}
-                        $= time limit complessivo dell'algoritmo\;
-You're in trouble here.  Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-Missing character: There is no d in font nullfont!
-Missing character: There is no e in font nullfont!
-Missing character: There is no a in font nullfont!
-Missing character: There is no d in font nullfont!
+Missing character: There is no E in font nullfont!
 Missing character: There is no l in font nullfont!
 Missing character: There is no i in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no i in font nullfont!
 Missing character: There is no n in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no = in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no m in font nullfont!
 Missing character: There is no e in font nullfont!
-
-! LaTeX Error: \mathtt allowed only in math mode.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.158 $\mathtt{percentage}
-                          $= percentuale di fissagio degli archi\;
-You're in trouble here.  Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
+Missing character: There is no l in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no v in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no ' in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no g in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no = in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no y in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no v in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no e in font nullfont!
 Missing character: There is no p in font nullfont!
 Missing character: There is no e in font nullfont!
 Missing character: There is no r in font nullfont!
@@ -14898,18 +14950,58 @@ Missing character: There is no c in font nullfont!
 Missing character: There is no e in font nullfont!
 Missing character: There is no n in font nullfont!
 Missing character: There is no t in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no f in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no s in font nullfont!
 Missing character: There is no a in font nullfont!
 Missing character: There is no g in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no d in font nullfont!
 Missing character: There is no e in font nullfont!
-! Extra }, or forgotten $.
-l.159 }
-       
-I've deleted a group-closing symbol because it seems to be
-spurious, as in `$x}$'. But perhaps the } is legitimate and
-you forgot something else, as in `\hbox{$x}'. In such cases
-the way to recover is to insert both the forgotten and the
-deleted material, e.g., by typing `I$}'.
-
+Missing character: There is no g in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no = in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no ' in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no z in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no p in font nullfont!
 ! Undefined control sequence.
 l.160 \KwOut
              {$\mathtt{x}$= soluzione intera senza subtour}
@@ -14919,57 +15011,107 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
+Missing character: There is no = in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no z in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no z in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no b in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no r in font nullfont!
+! Undefined control sequence.
+l.161 \BlankLine
+                
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.162 $\mathtt{n \gets}0$\;
+                           
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Undefined control sequence.
+l.163 \BlankLine
+                
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.164 \While
+            {$expired_time < deadline$}{
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
 ! Missing } inserted.
 <inserted text> 
                 }
-l.160 \KwOut {$
-               \mathtt{x}$= soluzione intera senza subtour}
+l.164 \While{$
+              expired_time < deadline$}{
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
 With luck, this will get me unwedged. But if you
 really didn't forget anything, try typing `2' now; then
 my insertion and my current dilemma will both disappear.
 
-
-! LaTeX Error: \mathtt allowed only in math mode.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.160 \KwOut {$\mathtt{x}
-                         $= soluzione intera senza subtour}
-You're in trouble here.  Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
+Missing character: There is no e in font nullfont!
 Missing character: There is no x in font nullfont!
-! Extra }, or forgotten $.
-l.160 ...thtt{x}$= soluzione intera senza subtour}
-                                                  
+Missing character: There is no p in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no d in font nullfont!
+! Missing $ inserted.
+<inserted text> 
+                $
+l.164 \While{$expired_
+                      time < deadline$}{
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Extra }, or forgotten \endgroup.
+l.164 \While{$expired_time < deadline$}
+                                       {
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
 you forgot something else, as in `\hbox{$x}'. In such cases
 the way to recover is to insert both the forgotten and the
 deleted material, e.g., by typing `I$}'.
 
-
-! LaTeX Error: \mathtt allowed only in math mode.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.161 $\mathtt{n}
-                 =0$\;
-You're in trouble here.  Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-Missing character: There is no n in font nullfont!
-Missing character: There is no = in font nullfont!
-Missing character: There is no 0 in font nullfont!
 ! Undefined control sequence.
-l.162 \BlankLine
-                
+l.165  \BlankLine
+                 \BlankLine
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -14977,42 +15119,8 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 ! Undefined control sequence.
-l.163 \While
-            {$(n < num_iterations)$}{
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-! Missing } inserted.
-<inserted text> 
-                }
-l.163 \While{$
-              (n < num_iterations)$}{
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-Missing character: There is no ( in font nullfont!
-Missing character: There is no n in font nullfont!
-Missing character: There is no < in font nullfont!
-Missing character: There is no n in font nullfont!
-Missing character: There is no u in font nullfont!
-Missing character: There is no m in font nullfont!
-! Missing $ inserted.
-<inserted text> 
-                $
-l.163 \While{$(n < num_
-                       iterations)$}{
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Undefined control sequence.
-l.164 \BlankLine
-                
+l.165  \BlankLine\BlankLine
+                           
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -15022,8 +15130,8 @@ and I'll forget about whatever was undefined.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.165 $setTimeLimit(deadline/num\_iterations)$\;
-                                                
+l.166  $\mathtt{setTimeLimit()}$\;
+                                  
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
@@ -15034,8 +15142,8 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.166 $\mathtt{x}
-                  \gets solve(model)$\;
+l.167  $\mathtt{x \gets solve(}
+                               model\mathtt{)}$\;
 You're in trouble here.  Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
@@ -15043,22 +15151,44 @@ Missing character: There is no x in font nullfont!
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.166 $\mathtt{x} \gets
-                        solve(model)$\;
+l.167  $\mathtt{x \gets solve(}
+                               model\mathtt{)}$\;
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
+
+! Extra }, or forgotten $.
+\select@group ...pandafter \non@alpherr \fi #1{#4}
+                                                  }
+l.167  $\mathtt{x \gets solve(}
+                               model\mathtt{)}$\;
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Extra }, or forgotten $.
+\select@group ...andafter \non@alpherr \fi #1{#4}}
+                                                  
+l.167  $\mathtt{x \gets solve(}
+                               model\mathtt{)}$\;
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
 
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.166 $\mathtt{x} \gets solve(model)$\;
-                                       
+l.167  $\mathtt{x \gets solve(}model\mathtt{)}$\;
+                                                 
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
 ! Undefined control sequence.
-l.167 \BlankLine
-                
+l.168  \BlankLine
+                 \BlankLine
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -15066,8 +15196,17 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 ! Undefined control sequence.
-l.168 \For
-          {$\mathtt{j} \gets \;0,...,num\_nodi-1$}{
+l.168  \BlankLine\BlankLine
+                           
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.169  \For
+           {$\mathtt{j \gets}0$ \KwTo $num\_nodi-1$}{
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -15077,8 +15216,8 @@ and I'll forget about whatever was undefined.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.168 \For{$
-            \mathtt{j} \gets \;0,...,num\_nodi-1$}{
+l.169  \For{$
+             \mathtt{j \gets}0$ \KwTo $num\_nodi-1$}{
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
 With luck, this will get me unwedged. But if you
@@ -15092,8 +15231,8 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.168 \For{$\mathtt{j}
-                       \gets \;0,...,num\_nodi-1$}{
+l.169  \For{$\mathtt{j \gets}
+                             0$ \KwTo $num\_nodi-1$}{
 You're in trouble here.  Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
@@ -15101,22 +15240,53 @@ Missing character: There is no j in font nullfont!
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.168 \For{$\mathtt{j} \gets
-                             \;0,...,num\_nodi-1$}{
+l.169  \For{$\mathtt{j \gets}
+                             0$ \KwTo $num\_nodi-1$}{
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
+
+! Extra }, or forgotten $.
+\select@group ...pandafter \non@alpherr \fi #1{#4}
+                                                  }
+l.169  \For{$\mathtt{j \gets}
+                             0$ \KwTo $num\_nodi-1$}{
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Extra }, or forgotten $.
+\select@group ...andafter \non@alpherr \fi #1{#4}}
+                                                  
+l.169  \For{$\mathtt{j \gets}
+                             0$ \KwTo $num\_nodi-1$}{
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Undefined control sequence.
+l.169  \For{$\mathtt{j \gets}0$ \KwTo
+                                      $num\_nodi-1$}{
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
 
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.169 $k \gets random(0,1)$\;
-                             
+l.170    $k \gets random(0,1)$\;
+                                
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
 ! Undefined control sequence.
-l.170 \BlankLine
-                
+l.171    \BlankLine
+                   \BlankLine
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -15124,8 +15294,17 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 ! Undefined control sequence.
-l.171 \If
-         {$(100k \leq percentuale)$}{
+l.171    \BlankLine\BlankLine
+                             
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.172    \If
+            {$  100*k \leq percentage[n\;mod\;leght(percentage)]  $}{
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -15135,55 +15314,47 @@ and I'll forget about whatever was undefined.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.171 \If{$
-           (100k \leq percentuale)$}{
+l.172    \If{$
+                100*k \leq percentage[n\;mod\;leght(percentage)]  $}{
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
 With luck, this will get me unwedged. But if you
 really didn't forget anything, try typing `2' now; then
 my insertion and my current dilemma will both disappear.
 
-Missing character: There is no ( in font nullfont!
 Missing character: There is no 1 in font nullfont!
 Missing character: There is no 0 in font nullfont!
 Missing character: There is no 0 in font nullfont!
+Missing character: There is no * in font nullfont!
 Missing character: There is no k in font nullfont!
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.171 \If{$(100k \leq
-                      percentuale)$}{
+l.172    \If{$  100*k \leq
+                           percentage[n\;mod\;leght(percentage)]  $}{
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.172 $Add\;\;x\_best[j]\;\;to\;\;S$\;
-                                      
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Extra }, or forgotten $.
-l.173 }
-       
-I've deleted a group-closing symbol because it seems to be
-spurious, as in `$x}$'. But perhaps the } is legitimate and
-you forgot something else, as in `\hbox{$x}'. In such cases
-the way to recover is to insert both the forgotten and the
-deleted material, e.g., by typing `I$}'.
-
-! Extra }, or forgotten $.
-l.174 }
-       
-I've deleted a group-closing symbol because it seems to be
-spurious, as in `$x}$'. But perhaps the } is legitimate and
-you forgot something else, as in `\hbox{$x}'. In such cases
-the way to recover is to insert both the forgotten and the
-deleted material, e.g., by typing `I$}'.
 
 ! Undefined control sequence.
-l.175 \BlankLine
+l.173      \BlankLine
+                     
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.176    \BlankLine
+                   
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.178 \BlankLine
                 
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -15192,7 +15363,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 ! Undefined control sequence.
-l.176 \ForAll
+l.179 \ForAll
              {$x_{i,j} \in S$}{
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -15200,36 +15371,25 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-! Missing } inserted.
-<inserted text> 
-                }
-l.176 \ForAll{$
-               x_{i,j} \in S$}{
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-Missing character: There is no x in font nullfont!
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.176 \ForAll{$x_
-                 {i,j} \in S$}{
+l.180 $\mathtt{x_{i,j} \gets}1$\;
+                                 
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.177 $x_{i,j}=1$\;
-                   
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
+! Undefined control sequence.
+l.181 \BlankLine
+                
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
 
 ! Extra }, or forgotten $.
-l.178 }
+l.182 }
        
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -15237,11 +15397,77 @@ you forgot something else, as in `\hbox{$x}'. In such cases
 the way to recover is to insert both the forgotten and the
 deleted material, e.g., by typing `I$}'.
 
+! Undefined control sequence.
+l.183 \BlankLine
+                
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+! LaTeX Error: \mathtt allowed only in math mode.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.184 $\mathtt{n \gets}
+                       n+1$\;
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
 Missing character: There is no n in font nullfont!
-Missing character: There is no + in font nullfont!
-Missing character: There is no + in font nullfont!
+! Missing $ inserted.
+<inserted text> 
+                $
+l.184 $\mathtt{n \gets}
+                       n+1$\;
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
 ! Extra }, or forgotten $.
-l.180 }
+\select@group ...pandafter \non@alpherr \fi #1{#4}
+                                                  }
+l.184 $\mathtt{n \gets}
+                       n+1$\;
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Extra }, or forgotten $.
+\select@group ...andafter \non@alpherr \fi #1{#4}}
+                                                  
+l.184 $\mathtt{n \gets}
+                       n+1$\;
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.184 $\mathtt{n \gets}n+1$\;
+                             
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Undefined control sequence.
+l.185 \BlankLine
+                
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Extra }, or forgotten $.
+l.186 }
        
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -15256,7 +15482,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.181 \caption
+l.187 \caption
               {Hard Fixing}
 You're in trouble here.  Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
@@ -15268,7 +15494,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.182 \end{algorithm}
+l.188 \end{algorithm}
                      
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -15277,7 +15503,7 @@ or  <return>  to continue without it.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.182 \end{algorithm}
+l.188 \end{algorithm}
                      
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -15288,7 +15514,62 @@ my insertion and my current dilemma will both disappear.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.182 \end{algorithm}
+l.188 \end{algorithm}
+                     
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.188 \end{algorithm}
+                     
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.188 \end{algorithm}
+                     
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.188 \end{algorithm}
+                     
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.188 \end{algorithm}
+                     
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.188 \end{algorithm}
                      
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -15297,114 +15578,143 @@ really didn't forget anything, try typing `2' now; then
 my insertion and my current dilemma will both disappear.
 
 
-Overfull \hbox (20.0pt too wide) in paragraph at lines 154--183
+Overfull \hbox (20.0pt too wide) in paragraph at lines 154--189
 []
  []
 
 
-Overfull \hbox (26.24977pt too wide) in paragraph at lines 154--183
+Overfull \hbox (26.24977pt too wide) in paragraph at lines 154--189
 []$
  []
 
 
-Overfull \hbox (66.55885pt too wide) in paragraph at lines 154--183
-\OML/cmm/m/it/10 Elimination $$\/cmr/m/n/10 =
+Overfull \hbox (41.99963pt too wide) in paragraph at lines 154--189
+[]$
  []
 
 
-Overfull \hbox (170.14958pt too wide) in paragraph at lines 154--183
-\OML/cmm/m/it/10 timelimitcomplessivodell[]algoritmo $$\/cmr/m/n/10 =
+Overfull \hbox (52.49954pt too wide) in paragraph at lines 154--189
+[]$
  []
 
 
-Overfull \hbox (153.8509pt too wide) in paragraph at lines 154--183
-\OML/cmm/m/it/10 percentualedifissagiodegliarchi []$$\/cmr/m/n/10 =
+Overfull \hbox (35.71852pt too wide) in paragraph at lines 154--189
+[]$
  []
 
 
-Overfull \hbox (132.44731pt too wide) in paragraph at lines 154--183
-\OML/cmm/m/it/10 soluzioneinterasenzasubtour$$ []$
+Overfull \hbox (5.24995pt too wide) in paragraph at lines 154--189
+\OT1/cmtt/m/n/10 x$
  []
 
 
-Overfull \hbox (48.15414pt too wide) in paragraph at lines 154--183
-[]\OML/cmm/m/it/10 terations\/cmr/m/n/10 )$
+Overfull \hbox (56.76329pt too wide) in paragraph at lines 154--189
+[]\/cmr/m/n/10 0$$ []$$[]\OML/cmm/m/it/10 ime <
  []
 
 
-Overfull \hbox (181.23602pt too wide) in paragraph at lines 154--183
-\OML/cmm/m/it/10 setTimeLimit\/cmr/m/n/10 (\OML/cmm/m/it/10 deadline=num[]itera
-tions\/cmr/m/n/10 )$$ $
+Overfull \hbox (37.6362pt too wide) in paragraph at lines 154--189
+\OML/cmm/m/it/10 deadline$
  []
 
 
-Overfull \hbox (10.00002pt too wide) in paragraph at lines 154--183
+Overfull \hbox (73.55496pt too wide) in paragraph at lines 154--189
+[]$$ $
+ []
+
+
+Overfull \hbox (10.00002pt too wide) in paragraph at lines 154--189
 \OMS/cmsy/m/n/10  
  []
 
 
-Overfull \hbox (59.80215pt too wide) in paragraph at lines 154--183
-\OML/cmm/m/it/10 solve\/cmr/m/n/10 (\OML/cmm/m/it/10 model\/cmr/m/n/10 )$$ []$
+Overfull \hbox (59.80215pt too wide) in paragraph at lines 154--189
+\OML/cmm/m/it/10 solve\/cmr/m/n/10 (\OML/cmm/m/it/10 model[]$$ []$
  []
 
 
-Overfull \hbox (10.00002pt too wide) in paragraph at lines 154--183
+Overfull \hbox (10.00002pt too wide) in paragraph at lines 154--189
 \OMS/cmsy/m/n/10  
  []
 
 
-Overfull \hbox (70.00664pt too wide) in paragraph at lines 154--183
-\/cmr/m/n/10 0\OML/cmm/m/it/10 ; :::; num[]nodi \OMS/cmsy/m/n/10  
+Overfull \hbox (5.00002pt too wide) in paragraph at lines 154--189
+\/cmr/m/n/10 0$
  []
 
 
-Overfull \hbox (5.00002pt too wide) in paragraph at lines 154--183
+Overfull \hbox (47.78444pt too wide) in paragraph at lines 154--189
+\OML/cmm/m/it/10 num[]nodi \OMS/cmsy/m/n/10  
+ []
+
+
+Overfull \hbox (5.00002pt too wide) in paragraph at lines 154--189
 \/cmr/m/n/10 1$
  []
 
 
-Overfull \hbox (18.29857pt too wide) in paragraph at lines 154--183
+Overfull \hbox (18.29857pt too wide) in paragraph at lines 154--189
 \OML/cmm/m/it/10 k \OMS/cmsy/m/n/10  
  []
 
 
-Overfull \hbox (59.90979pt too wide) in paragraph at lines 154--183
+Overfull \hbox (59.90979pt too wide) in paragraph at lines 154--189
 \OML/cmm/m/it/10 random\/cmr/m/n/10 (0\OML/cmm/m/it/10 ; \/cmr/m/n/10 1)$$ []$
  []
 
 
-Overfull \hbox (7.7778pt too wide) in paragraph at lines 154--183
+Overfull \hbox (7.7778pt too wide) in paragraph at lines 154--189
 \OMS/cmsy/m/n/10 
  []
 
 
-Overfull \hbox (55.81038pt too wide) in paragraph at lines 154--183
-\OML/cmm/m/it/10 percentuale\/cmr/m/n/10 )$
+Overfull \hbox (162.35095pt too wide) in paragraph at lines 154--189
+\OML/cmm/m/it/10 percentage\/cmr/m/n/10 [\OML/cmm/m/it/10 n mod leght\/cmr/m/n/
+10 (\OML/cmm/m/it/10 percentage\/cmr/m/n/10 )]$
  []
 
 
-Overfull \hbox (104.59048pt too wide) in paragraph at lines 154--183
-\OML/cmm/m/it/10 Add  x[]best\/cmr/m/n/10 [\OML/cmm/m/it/10 j\/cmr/m/n/10 ]  \O
-ML/cmm/m/it/10 to  S$$ []$$[] \OMS/cmsy/m/n/10 2
+Overfull \hbox (160.50179pt too wide) in paragraph at lines 154--189
+\OML/cmm/m/it/10 Aggiungi  []  to  S where S \/cmr/m/n/10 =
  []
 
 
-Overfull \hbox (6.70831pt too wide) in paragraph at lines 154--183
+Overfull \hbox (63.47981pt too wide) in paragraph at lines 154--189
+\OMS/cmsy/m/n/10 f\OML/cmm/m/it/10 edges to fix\OMS/cmsy/m/n/10 g$
+ []
+
+
+Overfull \hbox (24.57751pt too wide) in paragraph at lines 154--189
+\OML/cmm/m/it/10 x[] \OMS/cmsy/m/n/10 2
+ []
+
+
+Overfull \hbox (6.70831pt too wide) in paragraph at lines 154--189
 \OML/cmm/m/it/10 S$
  []
 
 
-Overfull \hbox (25.68863pt too wide) in paragraph at lines 154--183
-\OML/cmm/m/it/10 x[] \/cmr/m/n/10 =
+Overfull \hbox (36.118pt too wide) in paragraph at lines 154--189
+[]\/cmr/m/n/10 1$$ $
  []
 
 
-Overfull \hbox (66.51633pt too wide) in paragraph at lines 154--183
-\/cmr/m/n/10 1$$ $$ []$ 
+Overfull \hbox (10.00002pt too wide) in paragraph at lines 154--189
+\OMS/cmsy/m/n/10  
+ []
+
+
+Overfull \hbox (13.78015pt too wide) in paragraph at lines 154--189
+\OML/cmm/m/it/10 n \/cmr/m/n/10 +
+ []
+
+
+Overfull \hbox (63.73862pt too wide) in paragraph at lines 154--189
+\/cmr/m/n/10 1$$ []$ 
  []
 
 ! Undefined control sequence.
-l.184 \subsection
+l.190 \subsection
                  {Soft Fixing}\label{soft fixing}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -15592,7 +15902,7 @@ Missing character: There is no [ in font nullfont!
 ! Undefined control sequence.
 <write> ...: Citation `\@citeb ' on page \thepage 
                                                   \space undefined\on@line .
-l.185 ...goritmica euristica\cite{local_branching}
+l.191 ...goritmica euristica\cite{local_branching}
                                                   .\\
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -15601,7 +15911,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 
-LaTeX Warning: Citation `local_branching' on page  undefined on input line 185.
+LaTeX Warning: Citation `local_branching' on page  undefined on input line 191.
 
 
 Missing character: There is no ] in font nullfont!
@@ -15833,62 +16143,62 @@ Missing character: There is no i in font nullfont!
 Missing character: There is no n in font nullfont!
 Missing character: There is no : in font nullfont!
 
-Overfull \hbox (20.0pt too wide) in paragraph at lines 184--188
+Overfull \hbox (20.0pt too wide) in paragraph at lines 190--194
 []
  []
 
 
-Overfull \hbox (16.49991pt too wide) in paragraph at lines 184--188
+Overfull \hbox (16.49991pt too wide) in paragraph at lines 190--194
 \OT1/cmr/bx/n/10 Lo-
  []
 
 
-Overfull \hbox (13.89574pt too wide) in paragraph at lines 184--188
+Overfull \hbox (13.89574pt too wide) in paragraph at lines 190--194
 \OT1/cmr/bx/n/10 cal
  []
 
 
-Overfull \hbox (39.9095pt too wide) in paragraph at lines 184--188
+Overfull \hbox (39.9095pt too wide) in paragraph at lines 190--194
 \OT1/cmr/bx/n/10 Branch-
  []
 
 
-Overfull \hbox (15.33325pt too wide) in paragraph at lines 184--188
+Overfull \hbox (15.33325pt too wide) in paragraph at lines 190--194
 \OT1/cmr/bx/n/10 ing
  []
 
 
-Overfull \hbox (31.2012pt too wide) in paragraph at lines 184--188
+Overfull \hbox (31.2012pt too wide) in paragraph at lines 190--194
 \OT1/cmr/bx/n/10 Math-
  []
 
 
-Overfull \hbox (45.90393pt too wide) in paragraph at lines 184--188
+Overfull \hbox (45.90393pt too wide) in paragraph at lines 190--194
 \OT1/cmr/bx/n/10 Heuristic
  []
 
 
-Overfull \hbox (5.43053pt too wide) in paragraph at lines 184--188
+Overfull \hbox (5.43053pt too wide) in paragraph at lines 190--194
 [] 
  []
 
 
-Overfull \hbox (4.44444pt too wide) in paragraph at lines 184--188
+Overfull \hbox (4.44444pt too wide) in paragraph at lines 190--194
 \/cmr/m/n/10 e
  []
 
 
-Overfull \hbox (13.3pt too wide) in paragraph at lines 184--188
+Overfull \hbox (13.3pt too wide) in paragraph at lines 190--194
 \OML/cmm/m/it/10 x[]$
  []
 
 
-Overfull \hbox (13.3pt too wide) in paragraph at lines 184--188
+Overfull \hbox (13.3pt too wide) in paragraph at lines 190--194
 \OML/cmm/m/it/10 x[]$ 
  []
 
 ! Undefined control sequence.
-l.188 $$\underset
+l.194 $$\underset
                  {e\in E\; : \; {x_e}^{H}=1}\sum{x_e}\;\geq\; 0.9\;n$$
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -15897,7 +16207,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 
-Overfull \hbox (142.88629pt too wide) detected at line 188
+Overfull \hbox (142.88629pt too wide) detected at line 194
 [] [] []  \OMS/cmsy/m/n/10   \/cmr/m/n/10 0\OML/cmm/m/it/10 :\/cmr/m/n/10 9 \O
 ML/cmm/m/it/10 n
  []
@@ -16294,42 +16604,42 @@ Missing character: There is no t in font nullfont!
 Missing character: There is no e in font nullfont!
 Missing character: There is no : in font nullfont!
 
-Overfull \hbox (13.3pt too wide) in paragraph at lines 188--192
+Overfull \hbox (13.3pt too wide) in paragraph at lines 194--198
                 $\OML/cmm/m/it/10 x[]$
  []
 
 
-Overfull \hbox (6.38885pt too wide) in paragraph at lines 188--192
+Overfull \hbox (6.38885pt too wide) in paragraph at lines 194--198
 \OT1/cmr/bx/n/10 n
  []
 
 
-Overfull \hbox (5.00002pt too wide) in paragraph at lines 188--192
+Overfull \hbox (5.00002pt too wide) in paragraph at lines 194--198
 \/cmr/m/n/10 a
  []
 
 
-Overfull \hbox (13.3pt too wide) in paragraph at lines 188--192
+Overfull \hbox (13.3pt too wide) in paragraph at lines 194--198
 \OML/cmm/m/it/10 x[]$
  []
 
 
-Overfull \hbox (5.00002pt too wide) in paragraph at lines 188--192
+Overfull \hbox (5.00002pt too wide) in paragraph at lines 194--198
 \/cmr/m/n/10 a
  []
 
 
-Overfull \hbox (5.00002pt too wide) in paragraph at lines 188--192
+Overfull \hbox (5.00002pt too wide) in paragraph at lines 194--198
 \/cmr/m/n/10 a
  []
 
 
-Overfull \hbox (4.44444pt too wide) in paragraph at lines 188--192
+Overfull \hbox (4.44444pt too wide) in paragraph at lines 194--198
 \/cmr/m/n/10 e
  []
 
 ! Undefined control sequence.
-l.192 $$\underset
+l.198 $$\underset
                  {e\in E\; : \; {x_e}^{H}=1}\sum{x_e}\;\geq\; n-k$$
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -16338,7 +16648,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 
-Overfull \hbox (140.62941pt too wide) detected at line 192
+Overfull \hbox (140.62941pt too wide) detected at line 198
 [] [] []  \OMS/cmsy/m/n/10   \OML/cmm/m/it/10 n \OMS/cmsy/m/n/10   \OML/cmm/m/
 it/10 k
  []
@@ -17584,7 +17894,7 @@ Missing character: There is no a in font nullfont!
 ! Undefined control sequence.
 <write> ...ning: Reference `opt' on page \thepage 
                                                   \space undefined\on@line .
-l.198 ...istanza k da $x^H$ (vedi Figura \ref{opt}
+l.204 ...istanza k da $x^H$ (vedi Figura \ref{opt}
                                                   ).\\
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -17593,7 +17903,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 
-LaTeX Warning: Reference `opt' on page  undefined on input line 198.
+LaTeX Warning: Reference `opt' on page  undefined on input line 204.
 
 Missing character: There is no ) in font nullfont!
 Missing character: There is no . in font nullfont!
@@ -17604,7 +17914,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.199 \begin{figure}
+l.205 \begin{figure}
                     [h]
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -17614,82 +17924,82 @@ Missing character: There is no [ in font nullfont!
 Missing character: There is no h in font nullfont!
 Missing character: There is no ] in font nullfont!
 
-Overfull \hbox (5.00002pt too wide) in paragraph at lines 192--200
+Overfull \hbox (5.00002pt too wide) in paragraph at lines 198--206
        \/cmr/m/n/10 a
  []
 
 
-Overfull \hbox (12.77771pt too wide) in paragraph at lines 192--200
+Overfull \hbox (12.77771pt too wide) in paragraph at lines 198--206
 \OT1/cmr/bx/n/10 lo-
  []
 
 
-Overfull \hbox (13.89574pt too wide) in paragraph at lines 192--200
+Overfull \hbox (13.89574pt too wide) in paragraph at lines 198--206
 \OT1/cmr/bx/n/10 cal
  []
 
 
-Overfull \hbox (38.11784pt too wide) in paragraph at lines 192--200
+Overfull \hbox (38.11784pt too wide) in paragraph at lines 198--206
 \OT1/cmr/bx/n/10 branch-
  []
 
 
-Overfull \hbox (15.33325pt too wide) in paragraph at lines 192--200
+Overfull \hbox (15.33325pt too wide) in paragraph at lines 198--206
 \OT1/cmr/bx/n/10 ing
  []
 
 
-Overfull \hbox (4.44444pt too wide) in paragraph at lines 192--200
+Overfull \hbox (4.44444pt too wide) in paragraph at lines 198--206
 \/cmr/m/n/10 e
  []
 
 
-Overfull \hbox (5.55557pt too wide) in paragraph at lines 192--200
+Overfull \hbox (5.55557pt too wide) in paragraph at lines 198--206
 \/cmr/m/n/10 u
  []
 
 
-Overfull \hbox (5.55557pt too wide) in paragraph at lines 192--200
+Overfull \hbox (5.55557pt too wide) in paragraph at lines 198--206
 \/cmr/m/n/10 u
  []
 
 
-Overfull \hbox (4.44444pt too wide) in paragraph at lines 192--200
+Overfull \hbox (4.44444pt too wide) in paragraph at lines 198--206
 \/cmr/m/n/10 e
  []
 
 
-Overfull \hbox (13.3pt too wide) in paragraph at lines 192--200
+Overfull \hbox (13.3pt too wide) in paragraph at lines 198--206
 \OML/cmm/m/it/10 x[]$
  []
 
 
-Overfull \hbox (13.29865pt too wide) in paragraph at lines 192--200
+Overfull \hbox (13.29865pt too wide) in paragraph at lines 198--206
 \OML/cmm/m/it/10 k \OMS/cmsy/m/n/10  
  []
 
 
-Overfull \hbox (13.4896pt too wide) in paragraph at lines 192--200
+Overfull \hbox (13.4896pt too wide) in paragraph at lines 198--206
 \OML/cmm/m/it/10 opt$
  []
 
 
-Overfull \hbox (13.3pt too wide) in paragraph at lines 192--200
+Overfull \hbox (13.3pt too wide) in paragraph at lines 198--206
 \OML/cmm/m/it/10 x[]$
  []
 
 
-Overfull \hbox (13.3pt too wide) in paragraph at lines 192--200
+Overfull \hbox (13.3pt too wide) in paragraph at lines 198--206
 \OML/cmm/m/it/10 x[]$
  []
 
 
-Overfull \hbox (10.86105pt too wide) in paragraph at lines 192--200
+Overfull \hbox (10.86105pt too wide) in paragraph at lines 198--206
 [] 
  []
 
 ! Undefined control sequence.
-l.201   \includegraphics
+l.207   \includegraphics
                         [scale=0.38]{Images/opt}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -17726,14 +18036,14 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.202   \caption
+l.208   \caption
                 {\footnotesize{Spazio delle soluzioni e distanza di Hamming....
 
 You're in trouble here.  Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 ! Undefined control sequence.
-l.202   \caption{\footnotesize
+l.208   \caption{\footnotesize
                               {Spazio delle soluzioni e distanza di Hamming....
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -17787,7 +18097,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.204 \end{figure}
+l.210 \end{figure}
                   
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -18211,14 +18521,14 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.207 \begin{align}
+l.213 \begin{align}
                    
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
 ! Misplaced alignment tab character &.
-l.208 &
+l.214 &
         min \{ c^T x:\;\;Ax=b,\;x\in\{0,1\}^n\} \\ \notag \\
 I can't figure out why you would want to use a tab mark
 here. If you just want an ampersand, the remedy is
@@ -18231,18 +18541,18 @@ Missing character: There is no m in font nullfont!
 Missing character: There is no i in font nullfont!
 Missing character: There is no n in font nullfont!
 LaTeX Font Info:    Trying to load font information for OMS+cmr on input line 2
-08.
+14.
 (D:\Programs\Miktex\tex/latex/base\omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 208.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 214.
 Missing character: There is no c in font nullfont!
 
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.208 & min \{ c^
+l.214 & min \{ c^
                  T x:\;\;Ax=b,\;x\in\{0,1\}^n\} \\ \notag \\
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
@@ -18250,7 +18560,7 @@ you left one out. Proceed, with fingers crossed.
 ! Undefined control sequence.
 <recently read> \notag 
                        
-l.208 ...^T x:\;\;Ax=b,\;x\in\{0,1\}^n\} \\ \notag
+l.214 ...^T x:\;\;Ax=b,\;x\in\{0,1\}^n\} \\ \notag
                                                    \\
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -18261,7 +18571,7 @@ and I'll forget about whatever was undefined.
 ! Misplaced alignment tab character &.
 <recently read> &
                  
-l.209 &
+l.215 &
         \underset{j\in E:{x_j}^H=0}\sum{x_j}\;+ \underset{j\in E:{x_j}^H=1}\...
 I can't figure out why you would want to use a tab mark
 here. If you just want an ampersand, the remedy is
@@ -18271,7 +18581,7 @@ you're probably due for more error messages, and you
 might try typing `S' now just to see what is salvageable.
 
 ! Undefined control sequence.
-l.209 & \underset
+l.215 & \underset
                  {j\in E:{x_j}^H=0}\sum{x_j}\;+ \underset{j\in E:{x_j}^H=1}\...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -18280,7 +18590,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 ! Undefined control sequence.
-l.209 ...t{j\in E:{x_j}^H=0}\sum{x_j}\;+ \underset
+l.215 ...t{j\in E:{x_j}^H=0}\sum{x_j}\;+ \underset
                                                   {j\in E:{x_j}^H=1}\sum{1-x...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -18295,7 +18605,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.210 \end{align}
+l.216 \end{align}
                  
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -18304,7 +18614,7 @@ or  <return>  to continue without it.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.210 \end{align}
+l.216 \end{align}
                  
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -18498,7 +18808,7 @@ Missing character: There is no a in font nullfont!
 ! Undefined control sequence.
 <write> ...Reference `local_exe' on page \thepage 
                                                   \space undefined\on@line .
-l.211 ...le. Nella \textbf{Figura \ref{local_exe}}
+l.217 ...le. Nella \textbf{Figura \ref{local_exe}}
                                                    seguito viene riportato u...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -18507,7 +18817,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 
-LaTeX Warning: Reference `local_exe' on page  undefined on input line 211.
+LaTeX Warning: Reference `local_exe' on page  undefined on input line 217.
 
 Missing character: There is no s in font nullfont!
 Missing character: There is no e in font nullfont!
@@ -18655,7 +18965,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.212 \begin{figure}
+l.218 \begin{figure}
                     [h]
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -18665,118 +18975,118 @@ Missing character: There is no [ in font nullfont!
 Missing character: There is no h in font nullfont!
 Missing character: There is no ] in font nullfont!
 
-Overfull \hbox (6.06941pt too wide) in paragraph at lines 205--213
+Overfull \hbox (6.06941pt too wide) in paragraph at lines 211--219
               \OT1/cmr/bx/n/10 k
  []
 
 
-Overfull \hbox (10.92252pt too wide) in paragraph at lines 205--213
+Overfull \hbox (10.92252pt too wide) in paragraph at lines 211--219
 \OML/cmm/m/it/10 n[]$
  []
 
 
-Overfull \hbox (13.3pt too wide) in paragraph at lines 205--213
+Overfull \hbox (13.3pt too wide) in paragraph at lines 211--219
 \OML/cmm/m/it/10 x[]$
  []
 
 
-Overfull \hbox (13.3pt too wide) in paragraph at lines 205--213
+Overfull \hbox (13.3pt too wide) in paragraph at lines 211--219
 \OML/cmm/m/it/10 x[]$ 
  []
 
 
-Overfull \hbox (5.00002pt too wide) in paragraph at lines 205--213
+Overfull \hbox (5.00002pt too wide) in paragraph at lines 211--219
 \/cmr/m/n/10 o
  []
 
 
-Overfull \hbox (13.3pt too wide) in paragraph at lines 205--213
+Overfull \hbox (13.3pt too wide) in paragraph at lines 211--219
 \OML/cmm/m/it/10 x[]$
  []
 
 
-Overfull \hbox (5.00002pt too wide) in paragraph at lines 205--213
+Overfull \hbox (5.00002pt too wide) in paragraph at lines 211--219
 \OMS/cmsy/m/n/10 f
  []
 
 
-Overfull \hbox (17.57042pt too wide) in paragraph at lines 205--213
+Overfull \hbox (17.57042pt too wide) in paragraph at lines 211--219
 []\OML/cmm/m/it/10 x \/cmr/m/n/10 :
  []
 
 
-Overfull \hbox (23.7708pt too wide) in paragraph at lines 205--213
+Overfull \hbox (23.7708pt too wide) in paragraph at lines 211--219
 \OML/cmm/m/it/10 Ax \/cmr/m/n/10 =
  []
 
 
-Overfull \hbox (26.67345pt too wide) in paragraph at lines 205--213
+Overfull \hbox (26.67345pt too wide) in paragraph at lines 211--219
 \OML/cmm/m/it/10 b;  x \OMS/cmsy/m/n/10 2
  []
 
 
-Overfull \hbox (34.88782pt too wide) in paragraph at lines 205--213
+Overfull \hbox (34.88782pt too wide) in paragraph at lines 211--219
 \OMS/cmsy/m/n/10 f\/cmr/m/n/10 0\OML/cmm/m/it/10 ; \/cmr/m/n/10 1\OMS/cmsy/m/n/
 10 g[]g[] 
  []
 
 
-Overfull \hbox (103.4241pt too wide) in paragraph at lines 205--213
+Overfull \hbox (103.4241pt too wide) in paragraph at lines 211--219
 [] [] []  \/cmr/m/n/10 +
  []
 
 
-Overfull \hbox (120.64626pt too wide) in paragraph at lines 205--213
+Overfull \hbox (120.64626pt too wide) in paragraph at lines 211--219
 [] [] [] \/cmr/m/n/10 =
  []
 
 
-Overfull \hbox (7.7778pt too wide) in paragraph at lines 205--213
+Overfull \hbox (7.7778pt too wide) in paragraph at lines 211--219
 \OMS/cmsy/m/n/10 
  []
 
 
-Overfull \hbox (7.67015pt too wide) in paragraph at lines 205--213
+Overfull \hbox (7.67015pt too wide) in paragraph at lines 211--219
 \OML/cmm/m/it/10 R$
  []
 
 
-Overfull \hbox (29.38873pt too wide) in paragraph at lines 205--213
+Overfull \hbox (29.38873pt too wide) in paragraph at lines 211--219
 \OT1/cmr/bx/n/10 (3.15)
  []
 
 
-Overfull \hbox (5.71527pt too wide) in paragraph at lines 205--213
+Overfull \hbox (5.71527pt too wide) in paragraph at lines 211--219
 \OML/cmm/m/it/10 x$
  []
 
 
-Overfull \hbox (13.3pt too wide) in paragraph at lines 205--213
+Overfull \hbox (13.3pt too wide) in paragraph at lines 211--219
 \OML/cmm/m/it/10 x[]$
  []
 
 
-Overfull \hbox (4.44444pt too wide) in paragraph at lines 205--213
+Overfull \hbox (4.44444pt too wide) in paragraph at lines 211--219
 \/cmr/m/n/10 e
  []
 
 
-Overfull \hbox (5.55557pt too wide) in paragraph at lines 205--213
+Overfull \hbox (5.55557pt too wide) in paragraph at lines 211--219
 \/cmr/m/n/10 u
  []
 
 
-Overfull \hbox (32.89565pt too wide) in paragraph at lines 205--213
+Overfull \hbox (32.89565pt too wide) in paragraph at lines 211--219
 \OT1/cmr/bx/n/10 Figura
  []
 
 
-Overfull \hbox (10.86105pt too wide) in paragraph at lines 205--213
+Overfull \hbox (10.86105pt too wide) in paragraph at lines 211--219
 []
  []
 
 ! Undefined control sequence.
-l.214   \includegraphics
+l.220   \includegraphics
                         [scale=0.38]{Images/local_exe}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -18811,13 +19121,13 @@ Missing character: There is no l in font nullfont!
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.214   \includegraphics[scale=0.38]{Images/local_
+l.220   \includegraphics[scale=0.38]{Images/local_
                                                   exe}
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
 ! Extra }, or forgotten $.
-l.214 ...udegraphics[scale=0.38]{Images/local_exe}
+l.220 ...udegraphics[scale=0.38]{Images/local_exe}
                                                   
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -18832,14 +19142,14 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.215   \caption
+l.221   \caption
                 {\footnotesize{Esempio di esecuzione dell'algoritmo nello sp...
 
 You're in trouble here.  Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 ! Undefined control sequence.
-l.215   \caption{\footnotesize
+l.221   \caption{\footnotesize
                               {Esempio di esecuzione dell'algoritmo nello sp...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -18854,7 +19164,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.216 \end{center}
+l.222 \end{center}
                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
@@ -18866,7 +19176,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.216 \end{center}
+l.222 \end{center}
                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
@@ -18878,7 +19188,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.216 \end{center}
+l.222 \end{center}
                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
@@ -18886,7 +19196,7 @@ If that doesn't work, type  X <return>  to quit.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.216 \end{center}
+l.222 \end{center}
                   
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -18897,7 +19207,7 @@ my insertion and my current dilemma will both disappear.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.216 \end{center}
+l.222 \end{center}
                   
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -18912,14 +19222,14 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.217 \end{figure}
+l.223 \end{figure}
                   
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
 ! Undefined control sequence.
-l.218 \subsection
+l.224 \subsection
                  {Patching algorithm}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -19469,7 +19779,7 @@ Missing character: There is no a in font nullfont!
 ! Undefined control sequence.
 <write> ... Reference `patching' on page \thepage 
                                                   \space undefined\on@line .
-l.220 ... $\{a', b\}$) (vedi figura \ref{patching}
+l.226 ... $\{a', b\}$) (vedi figura \ref{patching}
                                                   ).
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -19478,7 +19788,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 
-LaTeX Warning: Reference `patching' on page  undefined on input line 220.
+LaTeX Warning: Reference `patching' on page  undefined on input line 226.
 
 Missing character: There is no ) in font nullfont!
 Missing character: There is no . in font nullfont!
@@ -19489,7 +19799,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.221 \begin{figure}
+l.227 \begin{figure}
                     [h]
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -19499,62 +19809,62 @@ Missing character: There is no [ in font nullfont!
 Missing character: There is no h in font nullfont!
 Missing character: There is no ] in font nullfont!
 
-Overfull \hbox (288.9385pt too wide) in paragraph at lines 214--222
+Overfull \hbox (288.9385pt too wide) in paragraph at lines 220--228
 []\OML/cmm/m/it/10 xe[][]$
  []
 
 
-Overfull \hbox (5.00002pt too wide) in paragraph at lines 214--222
+Overfull \hbox (5.00002pt too wide) in paragraph at lines 220--228
 \/cmr/m/n/10 o
  []
 
 
-Overfull \hbox (5.55557pt too wide) in paragraph at lines 214--222
+Overfull \hbox (5.55557pt too wide) in paragraph at lines 220--228
 \/cmr/m/n/10 u
  []
 
 
-Overfull \hbox (4.44444pt too wide) in paragraph at lines 214--222
+Overfull \hbox (4.44444pt too wide) in paragraph at lines 220--228
 \/cmr/m/n/10 e
  []
 
 
-Overfull \hbox (27.82178pt too wide) in paragraph at lines 214--222
+Overfull \hbox (27.82178pt too wide) in paragraph at lines 220--228
 \OMS/cmsy/m/n/10 f\OML/cmm/m/it/10 a; a[]\OMS/cmsy/m/n/10 g$
  []
 
 
-Overfull \hbox (25.83331pt too wide) in paragraph at lines 214--222
+Overfull \hbox (25.83331pt too wide) in paragraph at lines 220--228
 \OMS/cmsy/m/n/10 f\OML/cmm/m/it/10 b; b[]\OMS/cmsy/m/n/10 g$
  []
 
 
-Overfull \hbox (24.02199pt too wide) in paragraph at lines 214--222
+Overfull \hbox (24.02199pt too wide) in paragraph at lines 220--228
 \OMS/cmsy/m/n/10 f\OML/cmm/m/it/10 a; b\OMS/cmsy/m/n/10 g$
  []
 
 
-Overfull \hbox (29.6331pt too wide) in paragraph at lines 214--222
+Overfull \hbox (29.6331pt too wide) in paragraph at lines 220--228
 \OMS/cmsy/m/n/10 f\OML/cmm/m/it/10 a[]; b[]\OMS/cmsy/m/n/10 g$
  []
 
 
-Overfull \hbox (26.82755pt too wide) in paragraph at lines 214--222
+Overfull \hbox (26.82755pt too wide) in paragraph at lines 220--228
 \OMS/cmsy/m/n/10 f\OML/cmm/m/it/10 a; b[]\OMS/cmsy/m/n/10 g$
  []
 
 
-Overfull \hbox (26.82755pt too wide) in paragraph at lines 214--222
+Overfull \hbox (26.82755pt too wide) in paragraph at lines 220--228
 \OMS/cmsy/m/n/10 f\OML/cmm/m/it/10 a[]; b\OMS/cmsy/m/n/10 g$
  []
 
 
-Overfull \hbox (10.86105pt too wide) in paragraph at lines 214--222
+Overfull \hbox (10.86105pt too wide) in paragraph at lines 220--228
 [] 
  []
 
 ! Undefined control sequence.
-l.223   \includegraphics
+l.229   \includegraphics
                         [scale=0.38]{Images/patching}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -19596,13 +19906,13 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.224   \caption
+l.230   \caption
                 {\footnotesize{Esempio di patching}} \label{patching}
 You're in trouble here.  Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 ! Undefined control sequence.
-l.224   \caption{\footnotesize
+l.230   \caption{\footnotesize
                               {Esempio di patching}} \label{patching}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -19634,7 +19944,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.226 \end{figure}
+l.232 \end{figure}
                   
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -20172,6 +20482,733 @@ Missing character: There is no o in font nullfont!
 Missing character: There is no d in font nullfont!
 Missing character: There is no i in font nullfont!
 Missing character: There is no . in font nullfont!
+
+Overfull \hbox (5.55557pt too wide) in paragraph at lines 233--241
+         \/cmr/m/n/10 u
+ []
+
+
+Overfull \hbox (5.55557pt too wide) in paragraph at lines 233--241
+\/cmr/m/n/10 u
+ []
+
+
+Overfull \hbox (4.44444pt too wide) in paragraph at lines 233--241
+\/cmr/m/n/10 e
+ []
+
+
+Overfull \hbox (4.44444pt too wide) in paragraph at lines 233--241
+\/cmr/m/n/10 e
+ []
+
+
+Overfull \hbox (75.67155pt too wide) in paragraph at lines 233--241
+\OML/cmm/m/it/10 min []  \/cmr/m/n/10 (\OML/cmm/m/it/10 a; b\/cmr/m/n/10 )  =
+ []
+
+
+Overfull \hbox (23.16455pt too wide) in paragraph at lines 233--241
+\OML/cmm/m/it/10 c[] \/cmr/m/n/10 +
+ []
+
+
+Overfull \hbox (23.16455pt too wide) in paragraph at lines 233--241
+\OML/cmm/m/it/10 c[] \OMS/cmsy/m/n/10  
+ []
+
+
+Overfull \hbox (23.98553pt too wide) in paragraph at lines 233--241
+\OML/cmm/m/it/10 c[] \OMS/cmsy/m/n/10  
+ []
+
+
+Overfull \hbox (14.56577pt too wide) in paragraph at lines 233--241
+\OML/cmm/m/it/10 c[][] 
+ []
+
+
+Overfull \hbox (49.0496pt too wide) in paragraph at lines 233--241
+\/cmr/m/n/10 [] (\OML/cmm/m/it/10 a; b\/cmr/m/n/10 )  =
+ []
+
+
+Overfull \hbox (20.45967pt too wide) in paragraph at lines 233--241
+\OML/cmm/m/it/10 c[] \/cmr/m/n/10 +
+ []
+
+
+Overfull \hbox (25.86943pt too wide) in paragraph at lines 233--241
+\OML/cmm/m/it/10 c[] \OMS/cmsy/m/n/10  
+ []
+
+
+Overfull \hbox (23.98553pt too wide) in paragraph at lines 233--241
+\OML/cmm/m/it/10 c[] \OMS/cmsy/m/n/10  
+ []
+
+
+Overfull \hbox (14.56577pt too wide) in paragraph at lines 233--241
+\OML/cmm/m/it/10 c[][] 
+ []
+
+
+Overfull \hbox (31.79964pt too wide) in paragraph at lines 233--241
+\OMS/cmsy/m/n/10 8 \OML/cmm/m/it/10 a; b \OMS/cmsy/m/n/10 2
+ []
+
+
+Overfull \hbox (13.61105pt too wide) in paragraph at lines 233--241
+\OML/cmm/m/it/10 V \/cmr/m/n/10 :
+ []
+
+
+Overfull \hbox (46.60538pt too wide) in paragraph at lines 233--241
+\OML/cmm/m/it/10 comp\/cmr/m/n/10 (\OML/cmm/m/it/10 a\/cmr/m/n/10 ) \OMS/cmsy/m
+/n/10 6\/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (35.05563pt too wide) in paragraph at lines 233--241
+\OML/cmm/m/it/10 comp\/cmr/m/n/10 (\OML/cmm/m/it/10 b\/cmr/m/n/10 )$ 
+ []
+
+
+Overfull \hbox (5.00002pt too wide) in paragraph at lines 233--241
+\/cmr/m/n/10 o
+ []
+
+
+Overfull \hbox (4.44444pt too wide) in paragraph at lines 233--241
+\/cmr/m/n/10 e
+ []
+
+
+Overfull \hbox (4.44444pt too wide) in paragraph at lines 233--241
+\/cmr/m/n/10 e
+ []
+
+
+Overfull \hbox (4.44444pt too wide) in paragraph at lines 233--241
+\/cmr/m/n/10 e
+ []
+
+
+Overfull \hbox (26.17183pt too wide) in paragraph at lines 233--241
+\OML/cmm/m/it/10 O\/cmr/m/n/10 (\OML/cmm/m/it/10 n[]\/cmr/m/n/10 )$
+ []
+
+
+Overfull \hbox (6.00235pt too wide) in paragraph at lines 233--241
+\OML/cmm/m/it/10 n$
+ []
+
+
+Overfull \hbox (4.44444pt too wide) in paragraph at lines 233--241
+\/cmr/m/n/10 e
+ []
+
+
+! LaTeX Error: Environment algorithm undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.242 \begin{algorithm}
+                       [H]
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+Missing character: There is no [ in font nullfont!
+Missing character: There is no H in font nullfont!
+Missing character: There is no ] in font nullfont!
+! Undefined control sequence.
+l.243 \DontPrintSemicolon
+                         \footnotesize
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.243 \DontPrintSemicolon\footnotesize
+                                      
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.244 \KwIn
+            {$\mathtt{x}$= soluzione di un problema di TSP con più componen...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no = in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no z in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no b in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no T in font nullfont!
+Missing character: There is no S in font nullfont!
+Missing character: There is no P in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no e in font nullfont!
+! Undefined control sequence.
+l.245 \KwOut
+             {$\mathtt{y}$= soluzione intera formata da un'unica componente ...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no = in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no z in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no f in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no ' in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no a in font nullfont!
+! Undefined control sequence.
+l.246 \BlankLine
+                
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.247 ...ro componenti connesse della soluzione$\;
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Undefined control sequence.
+l.248 \BlankLine
+                
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no m in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no c in font nullfont!
+! Missing $ inserted.
+<inserted text> 
+                $
+l.249 $mathtt{c_
+                1\gets}\{0,...,0\}$\;
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Extra }, or forgotten $.
+l.249 $mathtt{c_1\gets}
+                       \{0,...,0\}$\;
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.249 $mathtt{c_1\gets}\{0,...,0\}$\;
+                                     
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Undefined control sequence.
+l.250 \While
+            {$n_comps > 1$}{
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.250 \While{$
+              n_comps > 1$}{
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+Missing character: There is no n in font nullfont!
+! Missing $ inserted.
+<inserted text> 
+                $
+l.250 \While{$n_
+                comps > 1$}{
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Undefined control sequence.
+l.251 \BlankLine
+                
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.252 ...t{c_1 \gets first_subtour(}x\mathtt{)}$\;
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Undefined control sequence.
+l.253 \BlankLine
+                
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+! LaTeX Error: \mathtt allowed only in math mode.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.254 $\mathtt{c_2 \gets nearest_subtour(}
+                                          c_1\mathtt{)}$\;
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no c in font nullfont!
+! Missing $ inserted.
+<inserted text> 
+                $
+l.254 $\mathtt{c_2 \gets nearest_subtour(}
+                                          c_1\mathtt{)}$\;
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Extra }, or forgotten $.
+\select@group ...pandafter \non@alpherr \fi #1{#4}
+                                                  }
+l.254 $\mathtt{c_2 \gets nearest_subtour(}
+                                          c_1\mathtt{)}$\;
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Extra }, or forgotten $.
+\select@group ...andafter \non@alpherr \fi #1{#4}}
+                                                  
+l.254 $\mathtt{c_2 \gets nearest_subtour(}
+                                          c_1\mathtt{)}$\;
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.254 ...2 \gets nearest_subtour(}c_1\mathtt{)}$\;
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Undefined control sequence.
+l.255 \BlankLine
+                
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+! LaTeX Error: \mathtt allowed only in math mode.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.256 $\mathtt{merge_component(}
+                                c_1,c_2\mathtt{)}$\;
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no m in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no g in font nullfont!
+Missing character: There is no e in font nullfont!
+! Missing $ inserted.
+<inserted text> 
+                $
+l.256 $\mathtt{merge_component(}
+                                c_1,c_2\mathtt{)}$\;
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Extra }, or forgotten $.
+\select@group ...pandafter \non@alpherr \fi #1{#4}
+                                                  }
+l.256 $\mathtt{merge_component(}
+                                c_1,c_2\mathtt{)}$\;
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Extra }, or forgotten $.
+\select@group ...andafter \non@alpherr \fi #1{#4}}
+                                                  
+l.256 $\mathtt{merge_component(}
+                                c_1,c_2\mathtt{)}$\;
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.256 ...htt{merge_component(}c_1,c_2\mathtt{)}$\;
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Undefined control sequence.
+l.257 \BlankLine
+                
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+! LaTeX Error: \mathtt allowed only in math mode.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.258 $\mathtt{update(}
+                       n\_comps\mathtt{)}$\;
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no u in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no ( in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no s in font nullfont!
+
+! LaTeX Error: \mathtt allowed only in math mode.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.258 $\mathtt{update(}n\_comps\mathtt{)}
+                                         $\;
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no ) in font nullfont!
+! Extra }, or forgotten $.
+l.259 }
+       
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+
+! LaTeX Error: \mathtt allowed only in math mode.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.260 $\mathtt{y \gets}
+                        c_1$\;
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no y in font nullfont!
+! Missing $ inserted.
+<inserted text> 
+                $
+l.260 $\mathtt{y \gets}
+                        c_1$\;
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Extra }, or forgotten $.
+\select@group ...pandafter \non@alpherr \fi #1{#4}
+                                                  }
+l.260 $\mathtt{y \gets}
+                        c_1$\;
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Extra }, or forgotten $.
+\select@group ...andafter \non@alpherr \fi #1{#4}}
+                                                  
+l.260 $\mathtt{y \gets}
+                        c_1$\;
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.260 $\mathtt{y \gets} c_1$\;
+                              
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+! LaTeX Error: \caption outside float.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.261 \caption
+              {Patching}
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: \begin{document} ended by \end{algorithm}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.262 \end{algorithm}
+                     
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.262 \end{algorithm}
+                     
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.262 \end{algorithm}
+                     
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.262 \end{algorithm}
+                     
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.262 \end{algorithm}
+                     
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.262 \end{algorithm}
+                     
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.262 \end{algorithm}
+                     
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.262 \end{algorithm}
+                     
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.262 \end{algorithm}
+                     
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
 )
 ! Emergency stop.
 <*> ./AlgoritmiCPLEX.tex
@@ -20180,10 +21217,10 @@ Missing character: There is no . in font nullfont!
 
  
 Here is how much of TeX's memory you used:
- 71 strings out of 492452
- 964 string characters out of 3134016
- 70473 words of memory out of 3000000
- 4520 multiletter control sequences out of 15000+200000
+ 70 strings out of 492452
+ 952 string characters out of 3134016
+ 71636 words of memory out of 3000000
+ 4519 multiletter control sequences out of 15000+200000
  4798 words of font info for 19 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  18i,7n,18p,1744b,144s stack positions out of 5000i,500n,10000p,200000b,50000s

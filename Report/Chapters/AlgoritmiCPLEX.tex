@@ -16,8 +16,7 @@ Le strutture utilizzate da CPLEX sono due (vedi Figura \ref{strutture_cplex}):
 
 \begin{figure}[h] 
 \begin{center} 
-  % Requires \usepackage{graphicx} 
-  \includegraphics[scale=0.5]{Images/cplex_structs}\\ 
+  \includegraphics[scale=0.7]{Images/cplex_structs}\\ 
   \caption{\footnotesize{Strutture CPLEX}}
   \label{strutture_cplex} 
 \end{center} 
@@ -28,7 +27,7 @@ Per convenzione è stato deciso di etichettare i rami $(i,j)$ dell'istanza rispe
 In questa figura le celle $(i,j)$ bianche, sono quelle effettivamente utilizzate per indicare un arco secondo la convenzione. Il numero all'interno di queste caselle rappresenta invece l'ordine in cui queste variabili vengono inserite nel modello e quindi gli indici associati da CPLEX per accedere alla soluzione.\\Il modello così strutturato richiede però l'inserimento di un esponenziale numero di vincoli per l'eliminazione dei sub-tour, vengono quindi ora descritti altri modelli che ovvino a questo problema.
 \begin{figure}[h] 
 \begin{center} 
-  \includegraphics[scale=0.5]{Images/indices_matrix}\\ 
+  \includegraphics[scale=0.6]{Images/indices_matrix}\\ 
   \caption{\footnotesize{Indici della matrice}}
   \label{Indici_matrice} 
 \end{center} 
@@ -36,7 +35,7 @@ In questa figura le celle $(i,j)$ bianche, sono quelle effettivamente utilizzate
 
 \section{Modelli compatti}
 I modelli compatti del Travelling Salesman Problem, sono formulazioni il cui numero di variabili e di vincoli è polinomiale nella taglia dell'istanza. In particolare, in quelle analizzate in seguito, sono entrambi $O(n^2)$, con \textit{n = numero di nodi}.\\
-I modelli compatti sono però applicabili solo a grafi orientati. Per poterli sfruttare per la risoluzione del TSP simmetrico, è necessario per ogni ramo dell'istanza $(i,j)$, inserire nel modello i corrispondenti rami orientati in entrambe le direzioni $(i,j)$ e $(j,i)$. Questo comporta un significativo rallentamento nella computazione della soluzione, in quanto l'algoritmo, ogni volta che scarta un ramo $(i,j)$ dalla soluzione ottima, verifica se il corrispondente $(j,i)$ potrebbe invece appartenerle. Questo non può però essere possibile, essendo i due rami in realtà lo stesso nella nostra istanza iniziale.\\ 
+I modelli compatti sono però applicabili solo a grafi orientati. Per poterli sfruttare per la risoluzione del TSP simmetrico, è necessario per ogni ramo dell'istanza $(i,j)$, inserire nel modello i corrispondenti rami orientati in entrambe le direzioni $(i,j)$ e $(j,i)$. Questo comporta un significativo rallentamento nella computazione della soluzione, in quanto l'algoritmo, ogni volta che scarta un ramo $(i,j)$ dalla soluzione ottima, verifica se il corrispondente $(j,i)$ potrebbe invece appartenerle. Questo non può però essere possibile, essendo i due rami in realtà lo stesso nella nostra istanza iniziale.
 \subsection{Formulazione sequenziale}
 Miller, Tucker e Zemlin, nella loro formulazione del modello, hanno introdotto una nuova variabile $u_i$ per ogni nodo \textit{i} e imposto che, nella soluzione ottima, il suo valore  rispettasse dei nuovi vincoli. Questi servivano a garantire che venisse seguito un ordine di percorrenza di tutti i nodi. In questo modo hanno eliminato la creazione di sub-tour, mantenendo il numero di vincoli e di variabili polinomiale. Nello specifico il loro modello è così strutturato:
 \begin{align}
@@ -88,7 +87,7 @@ Viene risolto il problema e nel caso in cui ci sia più di una componente connes
 ciclo generato.\\
 \begin{algorithm}[H]
 \DontPrintSemicolon
-\KwIn {$\mathtt{model}$= Modello TSP simmetrico senza vincoli di Subtour Elimination}
+\KwIn {$\mathtt{model}$= Modello TSP simmetrico senza vincoli di Subtour Elimination\newline}
 \KwOut {$\mathtt{x}$= soluzione intera senza subtour}
 \BlankLine 
  $\mathtt{x} \gets$ solve(model)\;
@@ -98,8 +97,9 @@ ciclo generato.\\
   Aggiungi $\underset{e\in \delta(S_k)}\sum{x_{e}}\leq \mid S_k\mid - 1\;\forall$ componente connessa $S_k$\;
   \BlankLine  
   \If{$\mathtt{ncomps} \geq 2$}{
-   $\mathtt{x} \gets$ solve(model)\;
-   $\mathtt{ncomps} \gets$ comps(x)\;
+    \BlankLine
+    $\mathtt{x} \gets$ solve(model)\;
+    $\mathtt{ncomps} \gets$ comps(x)\;
   }
  }
  \caption{LOOP}
@@ -153,31 +153,36 @@ Di seguito viene inoltre riportato lo pseudocodice dell'algoritmo appena descrit
 
 \begin{algorithm}[H]
 \DontPrintSemicolon
-\KwIn {$\mathtt{model}$= Modello TSP simmetrico senza vincoli di Subtour\;           Elimination\;
-$\mathtt{deadline}$= time limit complessivo dell'algoritmo\;
-$\mathtt{percentage}$= percentuale di fissagio degli archi\;
-}
+\KwIn {$\mathtt{model}$= Modello TSP simmetrico senza vincoli di Subtour Elimination \newline
+$\mathtt{deadline}$= time limit complessivo dell'algoritmo\newline
+$\mathtt{percentage}$= array con i valori delle percentuali di fissagio degli archi\newline
+$\mathtt{num_nodi}$= numero di nodi dell'istanza tsp\newline}
 \KwOut {$\mathtt{x}$= soluzione intera senza subtour}
 \BlankLine
-$\mathtt{n}=0$\;
+$\mathtt{n \gets}0$\;
 \BlankLine
-\While{$(n < num_iterations)$}{
-\BlankLine
-$setTimeLimit(deadline/num\_iterations)$\;
-$\mathtt{x} \gets solve(model)$\;
-\BlankLine
-\For{$\mathtt{j} \gets \;0,...,num\_nodi-1$}{
-$k \gets random(0,1)$\;
-\BlankLine
-\If{$(100k \leq percentuale)$}{
-$Add\;\;x\_best[j]\;\;to\;\;S$\;
-}
+\While{$expired\_time < deadline$}{
+ \BlankLine\BlankLine
+ $\mathtt{setTimeLimit()}$\;
+ $\mathtt{x \gets solve(}model\mathtt{)}$\;
+ \BlankLine\BlankLine
+ \For{$\mathtt{j \gets}0$ \KwTo $num\_nodi-1$}{
+   $k \gets random(0,1)$\;
+   \BlankLine\BlankLine
+   \If{$  100*k \leq percentage[n\;mod\;leght(percentage)]  $}{
+     \BlankLine
+     $Aggiungi \;\;\mathtt{x\_best[j]}\;\;to\;\;S\;where\;S=\{edges\;to\;fix\}$
+   }
+   \BlankLine
 }
 \BlankLine
 \ForAll{$x_{i,j} \in S$}{
-$x_{i,j}=1$\;
+$\mathtt{x_{i,j} \gets}1$\;
+\BlankLine
 }
-$n++$\;
+\BlankLine
+$\mathtt{n \gets}n+1$\;
+\BlankLine
 }
 \caption{Hard Fixing}
 \end{algorithm}
@@ -233,3 +238,26 @@ $min \begin{cases}
 \forall \; a,b \in V : comp(a)\neq comp(b)$
 \\\\L'operazione di fusione di due componenti connesse può essere ripetuta finché la soluzione non diventa ammissibile, approssimativamente dimezzando ad ogni iterazione il numero di componenti presenti. In questo modo, al termine, è possibile restituire una soluzione accettabile ma senza garanzie di essere ottima.\\
 Complessivamente il costo di quest'algoritmo è $O(n^2)$, dove $n$ è il numero di nodi.
+
+\begin{algorithm}[H]
+\DontPrintSemicolon
+\KwIn {$\mathtt{x}$= soluzione di un problema di TSP con più componenti connesse\newline}
+\KwOut {$\mathtt{y}$= soluzione intera formata da un'unica componente connessa}
+\BlankLine
+$\mathtt{n\_comps \gets} numero componenti connesse della soluzione$\;
+\BlankLine
+$\mathtt{c_1\gets}\{0,...,0\}$\;
+\BlankLine
+\While{$n\_comps > 1$}{
+\BlankLine
+$\mathtt{c_1 \gets first\_subtour(}x\mathtt{)}$\;
+\BlankLine
+$\mathtt{c_2 \gets nearest\_subtour(}c_1\mathtt{)}$\;
+\BlankLine
+$\mathtt{merge\_component(}c_1,c_2\mathtt{)}$\;
+\BlankLine
+$\mathtt{update(}n\_comps\mathtt{)}$\;
+}
+$\mathtt{y \gets} c_1$\;
+\caption{Patching}
+\end{algorithm}
