@@ -36,10 +36,11 @@
 \BOOKMARK [2][-]{subsection.Alph2.2.2}{Calcolo della soluzione}{section.Alph2.2}% 36
 \BOOKMARK [2][-]{subsection.Alph2.2.3}{Lazy constraints}{section.Alph2.2}% 37
 \BOOKMARK [2][-]{subsection.Alph2.2.4}{Lazy Constraint Callback}{section.Alph2.2}% 38
-\BOOKMARK [2][-]{subsection.Alph2.2.5}{Lazy Constraint Callback General}{section.Alph2.2}% 39
-\BOOKMARK [2][-]{subsection.Alph2.2.6}{Algoritmi Euristici}{section.Alph2.2}% 40
-\BOOKMARK [1][-]{section.Alph2.3}{Parametri}{appendix.Alph2}% 41
-\BOOKMARK [1][-]{section.Alph2.4}{Costanti utili}{appendix.Alph2}% 42
-\BOOKMARK [0][-]{appendix.Alph3}{Gnuplot}{}% 43
-\BOOKMARK [0][-]{appendix.Alph4}{Performance profile in python}{}% 44
-\BOOKMARK [0][-]{figure.caption.63}{Bibliografia}{}% 45
+\BOOKMARK [2][-]{subsection.Alph2.2.5}{Heuristic Callback}{section.Alph2.2}% 39
+\BOOKMARK [2][-]{subsection.Alph2.2.6}{Lazy Constraint Callback General}{section.Alph2.2}% 40
+\BOOKMARK [2][-]{subsection.Alph2.2.7}{Algoritmi Euristici}{section.Alph2.2}% 41
+\BOOKMARK [1][-]{section.Alph2.3}{Parametri}{appendix.Alph2}% 42
+\BOOKMARK [1][-]{section.Alph2.4}{Costanti utili}{appendix.Alph2}% 43
+\BOOKMARK [0][-]{appendix.Alph3}{Gnuplot}{}% 44
+\BOOKMARK [0][-]{appendix.Alph4}{Performance profile in python}{}% 45
+\BOOKMARK [0][-]{figure.caption.65}{Bibliografia}{}% 46

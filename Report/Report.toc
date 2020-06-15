@@ -38,10 +38,11 @@
 \contentsline {subsection}{\numberline {B.2.2}Calcolo della soluzione}{37}{subsection.Alph2.2.2}% 
 \contentsline {subsection}{\numberline {B.2.3}Lazy constraints}{38}{subsection.Alph2.2.3}% 
 \contentsline {subsection}{\numberline {B.2.4}Lazy Constraint Callback}{39}{subsection.Alph2.2.4}% 
-\contentsline {subsection}{\numberline {B.2.5}Lazy Constraint Callback General}{41}{subsection.Alph2.2.5}% 
-\contentsline {subsection}{\numberline {B.2.6}Algoritmi Euristici}{42}{subsection.Alph2.2.6}% 
+\contentsline {subsection}{\numberline {B.2.5}Heuristic Callback}{41}{subsection.Alph2.2.5}% 
+\contentsline {subsection}{\numberline {B.2.6}Lazy Constraint Callback General}{41}{subsection.Alph2.2.6}% 
+\contentsline {subsection}{\numberline {B.2.7}Algoritmi Euristici}{43}{subsection.Alph2.2.7}% 
 \contentsline {section}{\numberline {B.3}Parametri}{43}{section.Alph2.3}% 
 \contentsline {section}{\numberline {B.4}Costanti utili}{43}{section.Alph2.4}% 
 \contentsline {chapter}{\numberline {C}Gnuplot}{49}{appendix.Alph3}% 
 \contentsline {chapter}{\numberline {D}Performance profile in python}{51}{appendix.Alph4}% 
-\contentsline {chapter}{Bibliografia}{52}{figure.caption.63}% 
+\contentsline {chapter}{Bibliografia}{52}{figure.caption.65}% 
