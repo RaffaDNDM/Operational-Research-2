@@ -14,17 +14,23 @@ E.~D. Dolan and J.J. Mor{\'e}.
 \newblock Benchmarking optimization software with performance profiles.
 \newblock {\em Mathematical Programming}, 91(2):201--213, 2002.
 
-\bibitem{local_branching}
-Lodi Fischetti, M.
-\newblock A. local branching. math. program.
-\newblock {\em Ser. B}, 98:23–47, 2003.
-
 \bibitem{VNS}
 P.~Hansen, N.~Mladenovic, J.~Brimberg, J.~A.~Moreno Pèrez, M.~Gendreau, and
   J.~Potvin.
 \newblock Variable neighborhood search.
 \newblock In {\em Handbook of Metaheuristics}, pages 61--86, Londra, 2010.
   Springer.
+
+\bibitem{local_branching}
+A.~Lodi M.~Fischetti.
+\newblock Local branching.
+\newblock {\em Ser. B}, 98:23–47, 2003.
+
+\bibitem{hybrid_VNS}
+Anup~Dewanji Samrat~Hore, Aditya~Chatterjee.
+\newblock Improving variable neighborhood search to solve the traveling
+  salesman problem.
+\newblock volume~98, pages 83--91, India, 2018. Elsevier.
 
 \bibitem{Tabu}
 E.~Taillard, A.~Hertz, and D.~de~Werra.

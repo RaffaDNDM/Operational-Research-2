@@ -1,15 +1,5 @@
-﻿  heuristic.c
+﻿  tsp.c
 C:\Users\User\github\Operational-Research-2\TSP\TSP\heuristic.h(86,36): warning C4224: utilizzata estensione non standard: il parametro formale 'tsp_instance' era stato precedentemente definito come un tipo
-C:\Users\User\github\Operational-Research-2\TSP\TSP\heuristic.c(786,18): warning C4244: 'funzione': conversione da 'time_t' a 'unsigned int'. Possibile perdita di dati.
-C:\Users\User\github\Operational-Research-2\TSP\TSP\heuristic.c(956,1): warning C4244: 'inizializzazione': conversione da 'double' a 'int'. Possibile perdita di dati.
-C:\Users\User\github\Operational-Research-2\TSP\TSP\heuristic.c(957,1): warning C4244: 'inizializzazione': conversione da 'double' a 'int'. Possibile perdita di dati.
-C:\Users\User\github\Operational-Research-2\TSP\TSP\heuristic.c(1317,40): warning C4244: 'funzione': conversione da 'double' a 'int'. Possibile perdita di dati.
-C:\Users\User\github\Operational-Research-2\TSP\TSP\heuristic.c(1602,51): warning C4047: 'funzione': 'void *(*)(void *)' differisce da 'void (*)(void *)' nei livelli di riferimento indiretto
-C:\Users\User\github\Operational-Research-2\TSP\TSP\heuristic.c(1602,51): warning C4022: 'pthread_create': errore di corrispondenza del puntatore per il parametro effettivo 3
-  tsp.c
-C:\Users\User\github\Operational-Research-2\TSP\TSP\heuristic.h(86,36): warning C4224: utilizzata estensione non standard: il parametro formale 'tsp_instance' era stato precedentemente definito come un tipo
-C:\Users\User\github\Operational-Research-2\TSP\TSP\tsp.c(42,1): warning C4267: 'inizializzazione': conversione da 'size_t' a 'int'. Possibile perdita di dati.
-C:\Users\User\github\Operational-Research-2\TSP\TSP\tsp.c(153,9): warning C4101: 'title': variabile locale senza riferimenti
-  Generazione del codice in corso...
-C:\Users\User\github\Operational-Research-2\TSP\TSP\heuristic.c(200): warning C4716: 'computeSolution': deve restituire un valore
+C:\Users\User\github\Operational-Research-2\TSP\TSP\tsp.c(39,1): warning C4267: 'inizializzazione': conversione da 'size_t' a 'int'. Possibile perdita di dati.
+C:\Users\User\github\Operational-Research-2\TSP\TSP\tsp.c(150,9): warning C4101: 'title': variabile locale senza riferimenti
   TSP.vcxproj -> C:\Users\User\github\Operational-Research-2\TSP\x64\Debug\TSP.exe

@@ -17,7 +17,7 @@
 #define TIME_SCALE 1000
 
 //Set the use of lazy constraint
-#define LAZY_CONSTRAINTS 1
+//#define LAZY_CONSTRAINTS 1
 
 
 //Use metaheuristic pre-solution in LOOP

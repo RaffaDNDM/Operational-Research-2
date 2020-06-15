@@ -25,7 +25,7 @@ colors = ['r', 'b', 'y', 'g', 'm', 'c']
 
 class CmdLineParser(object):
 	def __init__(self):
-		self.parser = OptionParser(usage='usage: python2 perfprof.py [options] cvsfile.csv outputfile.pdf')
+		self.parser = OptionParser(usage='usage: python2 perfprof.py [options] cvsfile.csv outputfile.pdf')#outputfile.pdf
 		# default options
 		self.parser.add_option("-D", "--delimiter", dest="delimiter", default=None, help="delimiter for input files")
 		self.parser.add_option("-M", "--maxratio", dest="maxratio", default=4, type=int, help="maxratio for perf. profile")

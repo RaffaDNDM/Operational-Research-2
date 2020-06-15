@@ -14,10 +14,7 @@
 int main(int argc, char** argv)
 {
 	tsp_instance tsp_in;
-	/*
-	FILE* pipe = _popen(PERF_PROF_PY, "w");
-	_pclose(pipe);
-	*/
+	
 	parse_cmd(argv, argc, &tsp_in);
 
 	while (tsp_in.alg < 0)
@@ -249,8 +246,8 @@ void manage_input(tsp_instance* tsp_in)
 			//dealloc_inst(tsp_in);
 		}
 	}
-	/*
+	
 	FILE* pipe = _popen(PERF_PROF_PY, "w");
 	_pclose(pipe);
-	*/
+	
 }

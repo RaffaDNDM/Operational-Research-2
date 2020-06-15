@@ -518,8 +518,55 @@ CPXcutcallbackaddlocal(env, cbdata, wherefrom, nnz, const_term,
 &{taglio}\\
 \end{tabular}
 \end{table}
-\subsubsection{Lazy Constraint Callback General}
-Per evitare che alcune procedure interne a CPLEX vengano disattivate non momento dell'istallazione di una callback, è possibile utilizzarla con una diversa modalità rispetto a quella descritta nella sezione precedente, detta \textit{general}. Per quest'operazione viene invocata la seguente funzione, che si occupa anche di specificare il contesto in cui invocare la callback:
+\subsubsection{Heuristic Callback}
+Per poter suggerire a CPLEX una soluzione del problema in esame calcolata dall'utente, è necessario utilizzare un particolare tipo di callback, detta \textit{heuristic callback}. Questa, dopo essere stata installata, verrà invocata ad ogni nodo dell'albero del branch and cut.\\
+Per installare la callback viene utilizzata la seguente funzione:
+\begin{center}
+\begin{tabular}{c}
+\begin{lstlisting}[linewidth=382pt, basicstyle=\footnotesize\sffamily,]    
+CPXsetheuristiccallbackfunc(env, heuristiccallback, cbhandle);
+\end{lstlisting}
+\end{tabular}
+\begin{table}[h]
+\centering
+\begin{tabular}{rl}
+\textbf{env:} & {puntatore di tipo CPXENVptr ad una struttura ENV}\\
+\textbf{heuristiccallback:} & {puntatore all'heuristic callback scritta dall'utente}\\
+\textbf{cbhandle:} & {puntatore a dati privati dell'utente}\\
+\end{tabular}
+\end{table}
+La callback dell'utente deve avere la dichiarazione specificata di seguito:
+\begin{center}
+\begin{tabular}{c}
+\begin{lstlisting}[linewidth=382pt, basicstyle=\footnotesize\sffamily,] 
+ int callback (CPXCENVptr env, void *cbdata, int wherefrom, void *cbhandle, double *objval_p,
+               double *x, int *checkfeas_p,int *useraction_p);
+\end{lstlisting}
+\end{tabular}
+\begin{table}[h]
+\centering
+\begin{tabular}{rl}
+\textbf{env:} & {puntatore di tipo CPXENVptr ad una struttura ENV}\\
+\textbf{cbdata:} & {puntatore che contiene specifiche informazioni per la}\\
+&{callback}\\
+\textbf{wherefrom:} & {contiene in che punto dell'ottimizzazione è stata} \\ 
+&{invocata la callback}\\
+\textbf{cbhandle:} & {puntatore a dati privati dell'utente}\\
+\textbf{objval\_p:} & {puntatore ad una variabile che in ingresso contiene il valore della funzione}\\
+&{ obiettivo del problema e in uscita il valore della funzione obiettivo trovata nella }\\
+&{funzione stessa, se esiste}\\
+\textbf{x:} & {vettore che in ingresso contiene una soluzione valida per il problema }\\
+&{e in uscita i valori della soluzione trovata nella funzione, se presente}\\
+\textbf{checkfeas\_p:} & {puntatore che specifica se CPLEX deve verificare la soluzione }\\
+&{trovata oppure no}\\
+\textbf{useraction\_p:} & {puntatore ad un intero che specifica a CPLEX come proseguire la computazione al termine della callback dell'utente, scelto tra:}\\
+&{\textit{CPX\_CALLBACK\_DEFAULT}: nessuna soluzione trovata}\\
+&{\textit{CPX\_CALLBACK\_FAIL}: uscire dall'ottimizzazione}\\
+&{\textbf{CPX\_CALLBACK\_SET}}: usare la soluzione fornita dall'utente\\
+\end{tabular}
+\end{table}
+\subsubsection{Lazy Constraint Callback General}% cambiare titolo da Lazy Constraint Callback General a general callback
+Per evitare che alcune procedure interne a CPLEX vengano disattivate nel momento dell'installazione di una callback, è possibile utilizzarla con una diversa modalità rispetto a quella descritta nella sezione precedente, detta \textit{general}. Per quest'operazione viene invocata la seguente funzione, che si occupa anche di specificare il contesto in cui invocare la callback:
 \begin{center}
 \begin{tabular}{c}
 \begin{lstlisting}[linewidth=382pt, basicstyle=\footnotesize\sffamily,]    
@@ -540,9 +587,13 @@ CPXcallbacksetfunc (env, lp, contextmask, callback, userhandle);
 &{alla callback}\\
 \end{tabular}
 \end{table}
-In questo caso come \textbf{contextmask} è necessario passare la macro\\ 
-\textbf{CPX\_CALLBACKCONTEXT\_CANDIDATE}, che specifica di invocare la callback nel momento in cui viene trovata una nuova soluzione intera possibile.\\
-La callback deve avere questa dichiarazione:
+Il parametro \textbf{contextmask} può variare a seconda dello scopo della callback creata. Alcuni possibili valori sono:
+\begin{itemize}
+\item{\textbf{CPX\_CALLBACKCONTEXT\_CANDIDATE}:\\la callback verrà invocata quando viene trovata da CPLEX una nuova soluzione possibile che l'utente avrà la possibilità di rifiutare;}
+\item{\textbf{CPX\_CALLBACKCONTEXT\_LOCAL\_PROGRESS}: \\la callback verrà invocata nel momento in cui un thread effettua un progresso, non ancora noto globalmente, nella soluzione del problema. In questo contesto l'utente può suggerire a CPLEX una soluzione da cui proseguire la computazione (analogamente alle heuristic callback).}\\
+\end{itemize}
+L'utente può specificare più contesti con una sola installazione, è sufficiente separare le macro desiderate con l'operatore or bitwise ('|').\\
+La user-callback implementata deve avere questa dichiarazione:
 \begin{center}
 \begin{tabular}{c}
 \begin{lstlisting}[linewidth=382pt, basicstyle=\footnotesize\sffamily,]    
@@ -561,7 +612,8 @@ in cui
 \textbf{cbhandle:} & {argomento passato alla callback nell'istallazione}\\
 \end{tabular}
 \end{table}
-\\Al suo interno, per poter accedere alla soluzione candidata e al suo costo, deve essere presente la seguente chiamata, che è specifica per questo contesto:
+L'utente può installare una sola user-callback, ma al suo interno può distinguere il contesto in cui è stata invocata grazie al parametro \textbf{contextid}.\\
+Per poter accedere alla soluzione candidata e al suo costo, deve essere presente la seguente chiamata, che è specifica per il contesto \textbf{CPX\_CALLBACKCONTEXT\_CANDIDATE}:
 \begin{center}
 \begin{tabular}{c}
 \begin{lstlisting}[linewidth=385pt, basicstyle=\footnotesize\sffamily,]    
@@ -607,6 +659,39 @@ CPXcallbackrejectcandidate(context, rcnt, nnz, const_term,
 \textbf{rmatval:} & {coefficienti non nulli delle colonne specificate}\\
 \end{tabular}
 \end{table}
+Per suggerire a CPLEX la soluzione da cui proseguire nella computazione dev'essere utilizzata la funzione:
+\begin{center}
+\begin{tabular}{c}
+\begin{lstlisting}[linewidth=365pt, basicstyle=\footnotesize\sffamily,]    
+CPXcallbackpostheursoln (context, cnt, ind, val, obj, strat);
+\end{lstlisting}
+\end{tabular}
+\end{center}
+\begin{table}[h]
+\centering
+\begin{tabular}{rl}
+\textbf{contex:} & {contesto, come passato alla callback scritta}\\
+&{dall'utente}\\
+\textbf{cnt:} & {numero di elementi nei vettori ind e val}\\
+\textbf{ind:} & {vettore di indici non nulli dei valori della soluzione}\\
+\textbf{val:} & {vettore di valori non nulli della soluzione, possono essere NaN}\\
+&{nel caso in cui la soluzione sia parziale}\\
+\textbf{obj:} & {costo della nuova soluzione}\\
+\textbf{strat:} & {strategia con cui CPLEX deve completare la nuova soluzione,,}\\
+&{ nel caso sia parziale, scelta tra}\\
+&{\textit{CPXCALLBACKSOLUTION\_NOCHECK} affinchè CPLEX}\\ 
+&{non controlli l'attuabilità della soluzione (che deve essere completa) }\\
+&{\textit{CPXCALLBACKSOLUTION\_CHECKFEAS} affinchè CPLEX}\\
+&{ controlli solamente se la soluzione è attuabile (la soluzione proposta }\\
+&{deve essere completa)}\\
+&{\textit{CPXCALLBACKSOLUTION\_PROPAGATE} affinchè CPLEX }\\
+&{cerchi di completare la soluzione attraverso la propagazione del bound}\\
+&{\textit{CPXCALLBACKSOLUTION\_SOLVE} affinchè CPLEX}\\ 
+&{fissi le variabili specificate nella soluzione e cerchi di risolvere il risultante }\\
+&{problema ridotto}\\
+\end{tabular}
+\end{table}
+CPLEX utilizzerà la soluzione proposta dall'utente solo nel caso in cui questa abbia costo inferiore all'incumbent. 
 \subsubsection{Algoritmi Euristici}
 Per poter impostare una variabile $x_{i,j}$ ad una valore fissato è necessario rendere i suoi lower e upper bound alla quantità voluta. Per cambiare questi parametri viene utilizzata la seguente funzione: 
 \begin{center}
