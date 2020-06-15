@@ -83,7 +83,13 @@ void min_extra_mileage(tsp_instance* tsp_in, int count, int* visited_nodes, int*
 
 void greedy_refinement(tsp_instance* tsp_in, int* visited_nodes, double * cost);
 
-void vns(tsp_instance* tsp_instance, int* visited_nodes, double* best_cost, double deadline);
+//void vns(tsp_instance* tsp_instance, int* visited_nodes, double* best_cost, double deadline);
+
+void hybrid_vns(tsp_instance* tsp_in, int* visited_nodes, double* best_cost, double deadline);
+
+int min_kopt_sequence(tsp_instance* tsp_in, int* kopt_visited_nodes, double* kopt_cost, int k);
+
+int new_random_sol(tsp_instance* tsp_in, int* local_min_visited_nodes, double* local_cost);
 
 void update_solution(int* visited_nodes, double* sol, int num_nodes);
 

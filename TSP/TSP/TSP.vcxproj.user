@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LocalDebuggerCommandArguments>-dir my_short_inst -alg /1/2/3 -v 70 -dead 20 -np</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>-f all_instances/bier127.tsp -alg 8 -v 70 -np -dead 60</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LocalDebuggerCommandArguments>-dir compact_instances -alg /6 -v 70 -np -dead 1200</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>-f all_instances/att48.tsp -alg 8 -v 70 -np -dead 20</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
 </Project>

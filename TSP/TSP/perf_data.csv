@@ -1,2 +1,2 @@
-1, MTZ
-compact_instances/lin105.tsp, 1200.239000
+3, Loop, Branch& CutGeneral, Branch&Cut
+compact_instances/lin105.tsp, 1.702000, 0.423000, 0.398000
