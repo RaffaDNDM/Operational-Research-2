@@ -3,9 +3,6 @@
 \bibitem{concorde}
 \url{http://www.math.uwaterloo.ca/tsp/concorde/index.html}.
 
-\bibitem{cook}
-\url{http://www.math.uwaterloo.ca/tsp/}.
-
 \bibitem{monnalisa}
 \url{http://www.math.uwaterloo.ca/tsp/data/ml/monalisa.html}.
 
@@ -14,12 +11,17 @@ E.~D. Dolan and J.J. Mor{\'e}.
 \newblock Benchmarking optimization software with performance profiles.
 \newblock {\em Mathematical Programming}, 91(2):201--213, 2002.
 
+\bibitem{TSP}
+Matteo Fischetti.
+\newblock Alcuni problemi np-difficili.
+\newblock In {\em Lezioni di Ricerca Operativa}, pages 183--185. Kindle Direct
+  Publishing, 2018.
+
 \bibitem{VNS}
 P.~Hansen, N.~Mladenovic, J.~Brimberg, J.~A.~Moreno Pèrez, M.~Gendreau, and
   J.~Potvin.
 \newblock Variable neighborhood search.
-\newblock In {\em Handbook of Metaheuristics}, pages 61--86, Londra, 2010.
-  Springer.
+\newblock In {\em Handbook of Metaheuristics}, pages 61--86. Springer, 2010.
 
 \bibitem{local_branching}
 A.~Lodi M.~Fischetti.
@@ -30,7 +32,7 @@ A.~Lodi M.~Fischetti.
 Anup~Dewanji Samrat~Hore, Aditya~Chatterjee.
 \newblock Improving variable neighborhood search to solve the traveling
   salesman problem.
-\newblock volume~98, pages 83--91, India, 2018. Elsevier.
+\newblock volume~98, pages 83--91. Elsevier, 2018.
 
 \bibitem{Tabu}
 E.~Taillard, A.~Hertz, and D.~de~Werra.

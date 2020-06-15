@@ -1,4 +1,6 @@
-\documentclass[a4paper, 12pt, twoside, openright]{book}
+\documentclass[a4paper, openright, twosides]{book}
+\usepackage{geometry}
+\geometry{hmargin={3cm,3cm},vmargin={3cm,3cm}}
 \usepackage[english,italian]{babel}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
@@ -170,11 +172,14 @@
 
 \mainmatter
 \input{Chapters/Introduzione.tex}
-\input{Chapters/Istanze.tex}
 \input{Chapters/AlgoritmiCPLEX.tex}
 \input{Chapters/Euristici.tex}
 \input{Chapters/Performance.tex}
-\input{Chapters/Appendice.tex}
+\appendix
+\input{Chapters/TSPLIB.tex}
+\input{Chapters/CPLEX_func.tex}
+\input{Chapters/Gnuplot.tex}
+\input{Chapters/Performance_python.tex}
 %Bibliografia
 \addcontentsline{toc}{chapter}{Bibliografia}
 \bibliographystyle{plain}

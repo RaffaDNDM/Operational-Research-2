@@ -1,5 +1,8 @@
-\chapter{Istanze e soluzioni del problema}
-\section{Istanze}
+\chapter{TSPlib}
+Un'istanza di tale problema viene definita normalmente da un grafo, per cui ad ogni nodo viene associata un numero intero (Ex. $\Pi = \{1,2,3,..,n\}$). \\
+Una soluzione del problema è una sequenza di nodi che corrisponde ad una permutazione dell'istanza (es. $S = \{x_1,x_2,...,x_n\}$ tale che $x_i=x_j\;\;x_i \in \Pi\;\forall\;x_i\in S\;\wedge\; x_i!=x_j\;\forall\;i\neq j$). Poichè in questa variante non esiste alcuna origine, ogni tour può essere descritto da due versi di percorrenza e l'origine può essere un nodo qualsiasi del grafo.\\
+La rappresentazione di tali istanze è stata svolta attraverso l'utilizzo del programma Gnuplot. Per avere dettagli riguardanti il suo utilizzo vedi Sezione \ref{gnuplot}.
+
 Le istanze del problema, analizzate durante il corso, sono punti dello spazio 2D, identificati quindi da due coordinate ($x$,$y$).
 Per generare istanza enormi del problema, si utilizza un approccio particolare in cui viene definito un insieme di punti a partire da un'immagine già esistente.\\
 La vicinanza dei punti generati dipende dalla scala di grigi all'interno dell'immagine (es. generazione di punti a partire dal dipinto della Gioconda\cite{monnalisa}).\\
@@ -27,7 +30,3 @@ indice_nodo  coordinata_x  coordinata_y
 \item{\textbf{EOF}\\
 decreta la fine del file}
 \end{itemize}
-
-\section{Soluzioni}
-Una soluzione del problema è una sequenza di nodi che corrisponde ad una permutazione dell'istanza (es. $S = \{x_1,x_2,...,x_n\}$ tale che $x_i=x_j\;\;x_i \in \Pi\;\forall\;x_i\in S\;\wedge\; x_i!=x_j\;\forall\;i\neq j$). Poichè in questa variante non esiste alcuna origine, ogni tour può essere descritto da due versi di percorrenza e l'origine può essere un nodo qualsiasi del grafo.\\
-La rappresentazione di tali istanze è stata svolta attraverso l'utilizzo del programma Gnuplot. Per avere dettagli riguardanti il suo utilizzo vedi Sezione \ref{gnuplot}.

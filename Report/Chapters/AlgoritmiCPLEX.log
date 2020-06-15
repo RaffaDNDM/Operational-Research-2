@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2020.1.11)  14 JUN 2020 20:48
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2020.1.11)  15 JUN 2020 11:04
 entering extended mode
 **./AlgoritmiCPLEX.tex
 (AlgoritmiCPLEX.tex
@@ -6768,16 +6768,7 @@ Missing character: There is no H in font nullfont!
 Missing character: There is no ] in font nullfont!
 ! Undefined control sequence.
 l.89 \DontPrintSemicolon
-                        \footnotesize
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-! Undefined control sequence.
-l.89 \DontPrintSemicolon\footnotesize
-                                     
+                        
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -14809,16 +14800,7 @@ Missing character: There is no H in font nullfont!
 Missing character: There is no ] in font nullfont!
 ! Undefined control sequence.
 l.155 \DontPrintSemicolon
-                         \footnotesize
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-! Undefined control sequence.
-l.155 \DontPrintSemicolon\footnotesize
-                                      
+                         
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -15067,7 +15049,7 @@ and I'll forget about whatever was undefined.
 
 ! Undefined control sequence.
 l.164 \While
-            {$expired_time < deadline$}{
+            {$expired\_time < deadline$}{
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -15078,7 +15060,7 @@ and I'll forget about whatever was undefined.
 <inserted text> 
                 }
 l.164 \While{$
-              expired_time < deadline$}{
+              expired\_time < deadline$}{
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
 With luck, this will get me unwedged. But if you
@@ -15092,17 +15074,24 @@ Missing character: There is no i in font nullfont!
 Missing character: There is no r in font nullfont!
 Missing character: There is no e in font nullfont!
 Missing character: There is no d in font nullfont!
-! Missing $ inserted.
-<inserted text> 
-                $
-l.164 \While{$expired_
-                      time < deadline$}{
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Extra }, or forgotten \endgroup.
-l.164 \While{$expired_time < deadline$}
-                                       {
+Missing character: There is no t in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no < in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no e in font nullfont!
+! Extra }, or forgotten $.
+<recently read> }
+                 
+l.164 \While{$expired\_time < deadline$}
+                                        {
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
 you forgot something else, as in `\hbox{$x}'. In such cases
@@ -15127,14 +15116,43 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-! Missing $ inserted.
+! Missing } inserted.
 <inserted text> 
-                $
-l.166  $\mathtt{setTimeLimit()}$\;
-                                  
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
+                }
+l.166  $
+        \mathtt{setTimeLimit()}$\;
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
 
+
+! LaTeX Error: \mathtt allowed only in math mode.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.166  $\mathtt{setTimeLimit()}
+                               $\;
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no s in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no T in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no L in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no ( in font nullfont!
+Missing character: There is no ) in font nullfont!
 
 ! LaTeX Error: \mathtt allowed only in math mode.
 
@@ -15566,17 +15584,6 @@ With luck, this will get me unwedged. But if you
 really didn't forget anything, try typing `2' now; then
 my insertion and my current dilemma will both disappear.
 
-! Missing } inserted.
-<inserted text> 
-                }
-l.188 \end{algorithm}
-                     
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
 
 Overfull \hbox (20.0pt too wide) in paragraph at lines 154--189
 []
@@ -15608,17 +15615,12 @@ Overfull \hbox (5.24995pt too wide) in paragraph at lines 154--189
  []
 
 
-Overfull \hbox (56.76329pt too wide) in paragraph at lines 154--189
-[]\/cmr/m/n/10 0$$ []$$[]\OML/cmm/m/it/10 ime <
+Overfull \hbox (25.8054pt too wide) in paragraph at lines 154--189
+[]\/cmr/m/n/10 0$$ []$[]
  []
 
 
-Overfull \hbox (37.6362pt too wide) in paragraph at lines 154--189
-\OML/cmm/m/it/10 deadline$
- []
-
-
-Overfull \hbox (73.55496pt too wide) in paragraph at lines 154--189
+Overfull \hbox (2.77771pt too wide) in paragraph at lines 154--189
 []$$ $
  []
 
@@ -20626,16 +20628,7 @@ Missing character: There is no H in font nullfont!
 Missing character: There is no ] in font nullfont!
 ! Undefined control sequence.
 l.243 \DontPrintSemicolon
-                         \footnotesize
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-! Undefined control sequence.
-l.243 \DontPrintSemicolon\footnotesize
-                                      
+                         
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -20787,24 +20780,43 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-Missing character: There is no m in font nullfont!
-Missing character: There is no a in font nullfont!
-Missing character: There is no t in font nullfont!
-Missing character: There is no h in font nullfont!
-Missing character: There is no t in font nullfont!
-Missing character: There is no t in font nullfont!
+
+! LaTeX Error: \mathtt allowed only in math mode.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.249 $\mathtt{c_1\gets}
+                        \{0,...,0\}$\;
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
 Missing character: There is no c in font nullfont!
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.249 $mathtt{c_
-                1\gets}\{0,...,0\}$\;
+l.249 $\mathtt{c_1\gets}
+                        \{0,...,0\}$\;
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
 ! Extra }, or forgotten $.
-l.249 $mathtt{c_1\gets}
-                       \{0,...,0\}$\;
+\select@group ...pandafter \non@alpherr \fi #1{#4}
+                                                  }
+l.249 $\mathtt{c_1\gets}
+                        \{0,...,0\}$\;
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Extra }, or forgotten $.
+\select@group ...andafter \non@alpherr \fi #1{#4}}
+                                                  
+l.249 $\mathtt{c_1\gets}
+                        \{0,...,0\}$\;
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
 you forgot something else, as in `\hbox{$x}'. In such cases
@@ -20814,14 +20826,23 @@ deleted material, e.g., by typing `I$}'.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.249 $mathtt{c_1\gets}\{0,...,0\}$\;
-                                     
+l.249 $\mathtt{c_1\gets}\{0,...,0\}$\;
+                                      
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
 ! Undefined control sequence.
-l.250 \While
-            {$n_comps > 1$}{
+l.250 \BlankLine
+                
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.251 \While
+            {$n\_comps > 1$}{
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -20831,8 +20852,8 @@ and I'll forget about whatever was undefined.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.250 \While{$
-              n_comps > 1$}{
+l.251 \While{$
+              n\_comps > 1$}{
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
 With luck, this will get me unwedged. But if you
@@ -20840,16 +20861,26 @@ really didn't forget anything, try typing `2' now; then
 my insertion and my current dilemma will both disappear.
 
 Missing character: There is no n in font nullfont!
-! Missing $ inserted.
-<inserted text> 
-                $
-l.250 \While{$n_
-                comps > 1$}{
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
+Missing character: There is no c in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no > in font nullfont!
+Missing character: There is no 1 in font nullfont!
+! Extra }, or forgotten $.
+<recently read> }
+                 
+l.251 \While{$n\_comps > 1$}
+                            {
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
 
 ! Undefined control sequence.
-l.251 \BlankLine
+l.252 \BlankLine
                 
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -20857,22 +20888,16 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-! Missing $ inserted.
+! Missing } inserted.
 <inserted text> 
-                $
-l.252 ...t{c_1 \gets first_subtour(}x\mathtt{)}$\;
-                                                  
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Undefined control sequence.
-l.253 \BlankLine
-                
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
+                }
+l.253 $
+       \mathtt{c_1 \gets first\_subtour(}x\mathtt{)}$\;
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
 
 
 ! LaTeX Error: \mathtt allowed only in math mode.
@@ -20881,8 +20906,8 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.254 $\mathtt{c_2 \gets nearest_subtour(}
-                                          c_1\mathtt{)}$\;
+l.253 $\mathtt{c_1 \gets first\_subtour(}
+                                         x\mathtt{)}$\;
 You're in trouble here.  Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
@@ -20890,16 +20915,16 @@ Missing character: There is no c in font nullfont!
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.254 $\mathtt{c_2 \gets nearest_subtour(}
-                                          c_1\mathtt{)}$\;
+l.253 $\mathtt{c_1 \gets first\_subtour(}
+                                         x\mathtt{)}$\;
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
 ! Extra }, or forgotten $.
 \select@group ...pandafter \non@alpherr \fi #1{#4}
                                                   }
-l.254 $\mathtt{c_2 \gets nearest_subtour(}
-                                          c_1\mathtt{)}$\;
+l.253 $\mathtt{c_1 \gets first\_subtour(}
+                                         x\mathtt{)}$\;
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
 you forgot something else, as in `\hbox{$x}'. In such cases
@@ -20909,8 +20934,8 @@ deleted material, e.g., by typing `I$}'.
 ! Extra }, or forgotten $.
 \select@group ...andafter \non@alpherr \fi #1{#4}}
                                                   
-l.254 $\mathtt{c_2 \gets nearest_subtour(}
-                                          c_1\mathtt{)}$\;
+l.253 $\mathtt{c_1 \gets first\_subtour(}
+                                         x\mathtt{)}$\;
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
 you forgot something else, as in `\hbox{$x}'. In such cases
@@ -20920,13 +20945,13 @@ deleted material, e.g., by typing `I$}'.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.254 ...2 \gets nearest_subtour(}c_1\mathtt{)}$\;
+l.253 ...{c_1 \gets first\_subtour(}x\mathtt{)}$\;
                                                   
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
 ! Undefined control sequence.
-l.255 \BlankLine
+l.254 \BlankLine
                 
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -20941,8 +20966,68 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.256 $\mathtt{merge_component(}
-                                c_1,c_2\mathtt{)}$\;
+l.255 $\mathtt{c_2 \gets nearest\_subtour(}
+                                           c_1\mathtt{)}$\;
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no c in font nullfont!
+! Missing $ inserted.
+<inserted text> 
+                $
+l.255 $\mathtt{c_2 \gets nearest\_subtour(}
+                                           c_1\mathtt{)}$\;
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Extra }, or forgotten $.
+\select@group ...pandafter \non@alpherr \fi #1{#4}
+                                                  }
+l.255 $\mathtt{c_2 \gets nearest\_subtour(}
+                                           c_1\mathtt{)}$\;
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Extra }, or forgotten $.
+\select@group ...andafter \non@alpherr \fi #1{#4}}
+                                                  
+l.255 $\mathtt{c_2 \gets nearest\_subtour(}
+                                           c_1\mathtt{)}$\;
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.255 ... \gets nearest\_subtour(}c_1\mathtt{)}$\;
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Undefined control sequence.
+l.256 \BlankLine
+                
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+! LaTeX Error: \mathtt allowed only in math mode.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.257 $\mathtt{merge\_component(}
+                                 c_1,c_2\mathtt{)}$\;
 You're in trouble here.  Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
@@ -20951,46 +21036,35 @@ Missing character: There is no e in font nullfont!
 Missing character: There is no r in font nullfont!
 Missing character: There is no g in font nullfont!
 Missing character: There is no e in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no ( in font nullfont!
+Missing character: There is no c in font nullfont!
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.256 $\mathtt{merge_component(}
-                                c_1,c_2\mathtt{)}$\;
+l.257 $\mathtt{merge\_component(}c_
+                                   1,c_2\mathtt{)}$\;
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
-! Extra }, or forgotten $.
-\select@group ...pandafter \non@alpherr \fi #1{#4}
-                                                  }
-l.256 $\mathtt{merge_component(}
-                                c_1,c_2\mathtt{)}$\;
-I've deleted a group-closing symbol because it seems to be
-spurious, as in `$x}$'. But perhaps the } is legitimate and
-you forgot something else, as in `\hbox{$x}'. In such cases
-the way to recover is to insert both the forgotten and the
-deleted material, e.g., by typing `I$}'.
-
-! Extra }, or forgotten $.
-\select@group ...andafter \non@alpherr \fi #1{#4}}
-                                                  
-l.256 $\mathtt{merge_component(}
-                                c_1,c_2\mathtt{)}$\;
-I've deleted a group-closing symbol because it seems to be
-spurious, as in `$x}$'. But perhaps the } is legitimate and
-you forgot something else, as in `\hbox{$x}'. In such cases
-the way to recover is to insert both the forgotten and the
-deleted material, e.g., by typing `I$}'.
-
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.256 ...htt{merge_component(}c_1,c_2\mathtt{)}$\;
+l.257 ...tt{merge\_component(}c_1,c_2\mathtt{)}$\;
                                                   
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
 ! Undefined control sequence.
-l.257 \BlankLine
+l.258 \BlankLine
                 
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -21005,7 +21079,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.258 $\mathtt{update(}
+l.259 $\mathtt{update(}
                        n\_comps\mathtt{)}$\;
 You're in trouble here.  Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
@@ -21030,14 +21104,14 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.258 $\mathtt{update(}n\_comps\mathtt{)}
+l.259 $\mathtt{update(}n\_comps\mathtt{)}
                                          $\;
 You're in trouble here.  Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 Missing character: There is no ) in font nullfont!
 ! Extra }, or forgotten $.
-l.259 }
+l.260 }
        
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -21052,7 +21126,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.260 $\mathtt{y \gets}
+l.261 $\mathtt{y \gets}
                         c_1$\;
 You're in trouble here.  Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
@@ -21061,7 +21135,7 @@ Missing character: There is no y in font nullfont!
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.260 $\mathtt{y \gets}
+l.261 $\mathtt{y \gets}
                         c_1$\;
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
@@ -21069,7 +21143,7 @@ you left one out. Proceed, with fingers crossed.
 ! Extra }, or forgotten $.
 \select@group ...pandafter \non@alpherr \fi #1{#4}
                                                   }
-l.260 $\mathtt{y \gets}
+l.261 $\mathtt{y \gets}
                         c_1$\;
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -21080,7 +21154,7 @@ deleted material, e.g., by typing `I$}'.
 ! Extra }, or forgotten $.
 \select@group ...andafter \non@alpherr \fi #1{#4}}
                                                   
-l.260 $\mathtt{y \gets}
+l.261 $\mathtt{y \gets}
                         c_1$\;
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -21091,7 +21165,7 @@ deleted material, e.g., by typing `I$}'.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.260 $\mathtt{y \gets} c_1$\;
+l.261 $\mathtt{y \gets} c_1$\;
                               
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
@@ -21103,7 +21177,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.261 \caption
+l.262 \caption
               {Patching}
 You're in trouble here.  Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
@@ -21115,7 +21189,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.262 \end{algorithm}
+l.263 \end{algorithm}
                      
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -21124,7 +21198,7 @@ or  <return>  to continue without it.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.262 \end{algorithm}
+l.263 \end{algorithm}
                      
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -21135,7 +21209,7 @@ my insertion and my current dilemma will both disappear.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.262 \end{algorithm}
+l.263 \end{algorithm}
                      
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -21146,7 +21220,7 @@ my insertion and my current dilemma will both disappear.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.262 \end{algorithm}
+l.263 \end{algorithm}
                      
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -21157,7 +21231,7 @@ my insertion and my current dilemma will both disappear.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.262 \end{algorithm}
+l.263 \end{algorithm}
                      
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -21168,7 +21242,7 @@ my insertion and my current dilemma will both disappear.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.262 \end{algorithm}
+l.263 \end{algorithm}
                      
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -21179,7 +21253,7 @@ my insertion and my current dilemma will both disappear.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.262 \end{algorithm}
+l.263 \end{algorithm}
                      
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -21190,7 +21264,7 @@ my insertion and my current dilemma will both disappear.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.262 \end{algorithm}
+l.263 \end{algorithm}
                      
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -21201,7 +21275,18 @@ my insertion and my current dilemma will both disappear.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.262 \end{algorithm}
+l.263 \end{algorithm}
+                     
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.263 \end{algorithm}
                      
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -21218,8 +21303,8 @@ my insertion and my current dilemma will both disappear.
  
 Here is how much of TeX's memory you used:
  70 strings out of 492452
- 952 string characters out of 3134016
- 71636 words of memory out of 3000000
+ 954 string characters out of 3134016
+ 71590 words of memory out of 3000000
  4519 multiletter control sequences out of 15000+200000
  4798 words of font info for 19 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191

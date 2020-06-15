@@ -1,9 +1,43 @@
-\appendix
-\chapter{CPLEX}
+\chapter{ILOG CPLEX}
 In questa sezione verranno approfondite alcune funzioni di CPLEX necessarie ad implementare gli algoritmi descritti nei capitoli precedenti.
 
-\subsection{Funzioni}
-\subsubsection{Costruzione e modifica del modello}
+\section{Funzionamento}
+Per poter utilizzare gli algoritmi di risoluzione forniti da CPLEX è necessario costruire il modello matematico del problema, legato all'istanza precedentemente descritta.\\
+CPLEX ha due meccanismi di acquisizione dell'istanza:
+\begin{enumerate}
+\item{\textbf{modalità interattiva:}\\
+in cui il modello viene letto da un file precedentemente generato (\textit{model.lp})}
+\item{\textbf{creazione nel programma:}\\
+il modello viene creato attraverso le API del linguaggio usato per la scrittura del programma}
+\end{enumerate}
+
+Le strutture utilizzate da CPLEX sono due (vedi Figura \ref{strutture_cplex}):
+\begin{itemize}
+\item{\textbf{ENV (enviroment):} contiene i parametri necessari all'esecuzione e al salvataggio dei risultati}
+\item{\textbf{LP:} contiene il modello che viene analizzato da CPLEX durante la computazione del problema di ottimizzazione}
+\end{itemize}
+
+\begin{figure}[h] 
+\begin{center} 
+  \includegraphics[scale=0.7]{Images/cplex_structs}\\ 
+  \caption{\footnotesize{Strutture CPLEX}}
+  \label{strutture_cplex} 
+\end{center} 
+\end{figure}
+
+Ad ogni ENV è possibile associare più LP, in modo da poter risolvere in parallelo più problemi di ottimizzazione, ma nel nostro caso ne sarà sufficiente solo uno.\\
+Per convenzione è stato deciso di etichettare i rami $(i,j)$ dell'istanza rispettando la proprietà $i<j$. In Figura \ref{Indici_matrice} è riportato lo schema degli indici che vengono utilizzati per etichettare le variabili.\\
+In questa figura le celle $(i,j)$ bianche, sono quelle effettivamente utilizzate per indicare un arco secondo la convenzione. Il numero all'interno di queste caselle rappresenta invece l'ordine in cui queste variabili vengono inserite nel modello e quindi gli indici associati da CPLEX per accedere alla soluzione.\\Il modello così strutturato richiede però l'inserimento di un esponenziale numero di vincoli per l'eliminazione dei sub-tour, vengono quindi ora descritti altri modelli che ovvino a questo problema.
+\begin{figure}[h] 
+\begin{center} 
+  \includegraphics[scale=0.6]{Images/indices_matrix}\\ 
+  \caption{\footnotesize{Indici della matrice}}
+  \label{Indici_matrice} 
+\end{center} 
+\end{figure}
+
+\section{Funzioni}
+\subsection{Costruzione e modifica del modello}
 Per poter costruire il modello da analizzare, come prima cosa, è necessario creare un puntatore alle due strutture dati utilizzate da CPLEX.
 \lstinputlisting[caption={\footnotesize{modelTSP.txt}}, style=code, firstnumber=1, firstline=27, lastline=29, label=tsp_model, language=c]{Source/modelTSP.txt}
 La funzione alla riga 2 alloca la memoria necessaria e riempie la struttura con valori di default. Nel caso in cui non termini con successo memorizza un codice d'errore in \textit{\&error}.\\
@@ -185,7 +219,7 @@ CPXdelrows( CPXCENVptr env, CPXLPptr lp, int begin, int end );
 \end{tabular}
 \end{table}
 \vspace{6cm} 
-\subsubsection{Calcolo della soluzione}
+\subsection{Calcolo della soluzione}
 Per ottenere la soluzione ottima del problema di ottimizzazione del problema correlato al modello definito in cplex, vengono utilizzate due fasi:
 \begin{itemize}
 \item{\textbf{Risoluzione del problema di ottimizzazione}\\
@@ -275,7 +309,7 @@ dove \textbf{bestinteger} è il valore restituito dalla funzione \textbf{CPXgeto
 \end{itemize}
 
 
-\subsubsection{Lazy constraints}
+\subsection{Lazy constraints}
 Nel caso in cui si voglia sfruttare la possibilità di verificare se è stato rispettato un vincolo, solo al termine della computazione della soluzione, è necessario inserire un "lazy constraint". Per fare ciò viene utilizzata la seguente funzione:
 \begin{center}
 \begin{tabular}{c}
@@ -320,7 +354,7 @@ In modo analogo alle due funzioni precedentemente descritte per l'aggiunta di ri
   \label{lazy_constraints} 
 \end{center} 
 \end{figure}
-\subsubsection{Lazy Constraint Callback}
+\subsection{Lazy Constraint Callback}
 Per poter utilizzare una lazy constraint callback, precedentemente implementata, all'interno del programma, prima di tutto è necessario installarla. Questo viene fatto attraverso la seguente funzione:
 \begin{center}
 \begin{tabular}{c}
@@ -518,54 +552,8 @@ CPXcutcallbackaddlocal(env, cbdata, wherefrom, nnz, const_term,
 &{taglio}\\
 \end{tabular}
 \end{table}
-\subsubsection{Heuristic Callback}
-Per poter suggerire a CPLEX una soluzione del problema in esame calcolata dall'utente, è necessario utilizzare un particolare tipo di callback, detta \textit{heuristic callback}. Questa, dopo essere stata installata, verrà invocata ad ogni nodo dell'albero del branch and cut.\\
-Per installare la callback viene utilizzata la seguente funzione:
-\begin{center}
-\begin{tabular}{c}
-\begin{lstlisting}[linewidth=382pt, basicstyle=\footnotesize\sffamily,]    
-CPXsetheuristiccallbackfunc(env, heuristiccallback, cbhandle);
-\end{lstlisting}
-\end{tabular}
-\begin{table}[h]
-\centering
-\begin{tabular}{rl}
-\textbf{env:} & {puntatore di tipo CPXENVptr ad una struttura ENV}\\
-\textbf{heuristiccallback:} & {puntatore all'heuristic callback scritta dall'utente}\\
-\textbf{cbhandle:} & {puntatore a dati privati dell'utente}\\
-\end{tabular}
-\end{table}
-La callback dell'utente deve avere la dichiarazione specificata di seguito:
-\begin{center}
-\begin{tabular}{c}
-\begin{lstlisting}[linewidth=382pt, basicstyle=\footnotesize\sffamily,] 
- int callback (CPXCENVptr env, void *cbdata, int wherefrom, void *cbhandle, double *objval_p,
-               double *x, int *checkfeas_p,int *useraction_p);
-\end{lstlisting}
-\end{tabular}
-\begin{table}[h]
-\centering
-\begin{tabular}{rl}
-\textbf{env:} & {puntatore di tipo CPXENVptr ad una struttura ENV}\\
-\textbf{cbdata:} & {puntatore che contiene specifiche informazioni per la}\\
-&{callback}\\
-\textbf{wherefrom:} & {contiene in che punto dell'ottimizzazione è stata} \\ 
-&{invocata la callback}\\
-\textbf{cbhandle:} & {puntatore a dati privati dell'utente}\\
-\textbf{objval\_p:} & {puntatore ad una variabile che in ingresso contiene il valore della funzione}\\
-&{ obiettivo del problema e in uscita il valore della funzione obiettivo trovata nella }\\
-&{funzione stessa, se esiste}\\
-\textbf{x:} & {vettore che in ingresso contiene una soluzione valida per il problema }\\
-&{e in uscita i valori della soluzione trovata nella funzione, se presente}\\
-\textbf{checkfeas\_p:} & {puntatore che specifica se CPLEX deve verificare la soluzione }\\
-&{trovata oppure no}\\
-\textbf{useraction\_p:} & {puntatore ad un intero che specifica a CPLEX come proseguire la computazione al termine della callback dell'utente, scelto tra:}\\
-&{\textit{CPX\_CALLBACK\_DEFAULT}: nessuna soluzione trovata}\\
-&{\textit{CPX\_CALLBACK\_FAIL}: uscire dall'ottimizzazione}\\
-&{\textbf{CPX\_CALLBACK\_SET}}: usare la soluzione fornita dall'utente\\
-\end{tabular}
-\end{table}
-\subsubsection{Lazy Constraint Callback General}% cambiare titolo da Lazy Constraint Callback General a general callback
+
+\subsection{Lazy Constraint Callback General}% cambiare titolo da Lazy Constraint Callback General a general callback
 Per evitare che alcune procedure interne a CPLEX vengano disattivate nel momento dell'installazione di una callback, è possibile utilizzarla con una diversa modalità rispetto a quella descritta nella sezione precedente, detta \textit{general}. Per quest'operazione viene invocata la seguente funzione, che si occupa anche di specificare il contesto in cui invocare la callback:
 \begin{center}
 \begin{tabular}{c}
@@ -692,7 +680,8 @@ CPXcallbackpostheursoln (context, cnt, ind, val, obj, strat);
 \end{tabular}
 \end{table}
 CPLEX utilizzerà la soluzione proposta dall'utente solo nel caso in cui questa abbia costo inferiore all'incumbent. 
-\subsubsection{Algoritmi Euristici}
+
+\subsection{Algoritmi Euristici}
 Per poter impostare una variabile $x_{i,j}$ ad una valore fissato è necessario rendere i suoi lower e upper bound alla quantità voluta. Per cambiare questi parametri viene utilizzata la seguente funzione: 
 \begin{center}
 \begin{tabular}{c}
@@ -717,7 +706,7 @@ CPXchgbds(env, lp, num_bouds, indices, which_bound, values);
 \textbf{values:} & {vettore con i nuovi valori}\\
 \end{tabular}
 \end{table}
-\subsection{Parametri}\label{param}
+\section{Parametri}\label{param}
 Con le seguenti funzioni è possibile modificare i parametri di impostazione di CPLEX, altrimenti impostati ai valori di default.
 Nel caso in cui si tratti di parametri di tipo INT è necessario invocare:\\
 \begin{center}
@@ -780,7 +769,7 @@ In entrambe le funzioni:
 \end{tabular}
 \caption{Parametri.}\label{param_table}
 \end{table}
-\subsection{Costanti utili}
+\section{Costanti utili}
 Di seguito sono riportate alcune macro utili di CPLEX, insieme ai loro corrispondenti valori:
 \begin{table}[h]
 \footnotesize\centering
@@ -797,109 +786,3 @@ Di seguito sono riportate alcune macro utili di CPLEX, insieme ai loro corrispon
 \hline
 \end{tabular}
 \end{table}
-
-\section{Gnuplot}\label{gnuplot}
-Una volta ottenuta la soluzione del problema di ottimizzazione, viene disegnato il grafo per facilitare all'utente la comprensione della sua correttezza. Per fare ciò viene utilizzato Gnuplot, un programma di tipo command-driven.\\
-Per poterlo utilizzare all'interno del proprio programma esistono due metodi:
-\begin{itemize}
-\item{Collegare la libreria ed invocare le sue funzioni all'interno del nostro programma}
-\item{Collegare l'eseguibile interattivo al proprio programma. In questo caso i comandi deve essere passati all'eseguibile attraverso un file di testo e l'utilizzo di un pipe.}\\
-\end{itemize}
-In questa trattazione è stato scelto il secondo metodo. All'interno del file è possibile specificare a Gnuplot le caratteristiche grafiche che deve aver il grafo. Di seguito viene riportato un esempio di tale file.\\
-
-\lstinputlisting[caption={\footnotesize{style.txt}}, style=code, firstnumber=1, firstline=1, lastline=12, label=style_example]{Source/style_example.txt}
-
-Nell'esempio sopra riportato, nella prima parte viene definito lo stile, il colore delle linee e la tipologia di punti, che verrano in seguito visualizzati all'interno del grafico prodotto.\\In seguito viene effettuato il plot del grafo in una finestra, utilizzando il primo e secondo valore di ciascuna riga del file \textbf{solution.dat} come coordinate mentre il terzo valore viene utilizzato come etichetta.\\\\
-Il file \textbf{solution.dat} contiene le informazioni relative alla soluzione del grafico in cui ciascuna riga ha la seguente forma:
-\begin{center}
-\begin{tabular}{c}
-\begin{lstlisting}[linewidth=290pt,basicstyle=\footnotesize\sffamily,]     
-coordinata_x   coordinata_y   posizione_in_tour
-\end{lstlisting}
-\end{tabular}
-\end{center}
-\textbf{coordinata\_x} rappresenta la coordinata x del nodo;\\
-\textbf{posizione\_in\_tour} rappresenta la coordinata y del nodo;\\
-\textbf{posizione\_in\_tour} rappresenta l'ordine del nodo all'interno del tour, assunto come nodo di origine il nodo 1.\\\\
-Il grafico viene generato dal comando \textbf{plot}, leggendo tutte le righe non vuote e disegnando un punto nella posizione \textbf{(coordinata\_x,coordinata\_y)} del grafico 2D. In seguito viene tracciata una linea solo tra coppie di punti, legati a righe consecutive non vuote all'interno di \textbf{solution.dat}.\\\\
-Attraverso le istruzioni riportate nelle righe 10-12 di \textbf{style.txt}, viene invece salvato il grafico appena generato nell'immagine \textbf{solution.png}.\\\\
-Di seguito vengono riportate le varie fasi necessarie alla definizione di un pipe e al passaggio di questo al programma GNUplot:
-\begin{itemize}
-\item{\textbf{Definizione del pipe}
-\lstinputlisting[style=code, firstnumber=1, firstline=1, lastline=1, label=style_example language=C]{Source/gnuplotC.txt}
-dove \textbf{GNUPLOT\_EXE} è una stringa composta dal percorso completo dell'eseguibile di GNUplot, seguita dall'argomento \textbf{-persistent} (es. \textit{"D:/Programs/GNUplot/bin/gnuplot -persistent"}).
-}
-\item{\textbf{Passaggio delle istruzioni a GNUplot}
-\lstinputlisting[style=code, firstnumber=2, firstline=2, lastline=10, label=style_example, language=C]{Source/gnuplotC.txt}
-viene passata una riga alla volta, del file \textbf{style.txt}, a GNUplot mediante il pipe precedentemente creato.
-}
-\item{\textbf{Chiusura del pipe}
-\lstinputlisting[style=code, firstnumber=11, firstline=11, lastline=11, label=style_example, language=C]{Source/gnuplotC.txt}
-}
-\end{itemize}
-
-\section{perprof.py}\label{perf_profile_py}
-Il programma utilizzato per la creazione del performance profile dei diversi algoritmo è perprof.py\cite{salvagnin_perf}. Di seuito vengono riportati i principali argomenti da linea di comando che possono essere utilizzati:
-
-\begin{table}[h]
-\begin{tabular}{|r|l|}
-\hline
-\textbf{-D delimiter} & {spefica che delimiter verrà usato come separatore tra le}\\
-& {parole in una riga}\\
-\hline
-\textbf{-M value} & {imposta value come il massimo valore di ratio (asse x)}\\
-\hline
-\textbf{-S value} & {value rappresenta la quantità che viene sommata a}\\
-& {ciascun tempo di esecuzione prima del confronto.}\\
-& {Questo parametro è utile per non enfatizzare troppo}\\
-& {le differenze di pochi ms tra gli algoritmi.}\\
-\hline
-\textbf{-L} & {stampa in scala logaritmica}\\
-\hline
-\textbf{-T value} & {nel file passato al programma, il TIME LIMIT=value}\\
-\hline
-\textbf{-P "title"} & {title è il titolo del plot}\\
-\hline
-\textbf{-X value} & {nome dell'asse x (default='Time Ratio')}\\
-\hline
-\textbf{-B} & {plot in bianco e nero}\\
-\hline
-\end{tabular}
-\end{table}
-Di seguito viene riportato un esempio dell'esecuzione del programma, del suo input e del suo output:
-\begin{itemize}
-\item{\textbf{comando}
-\begin{center}
-\begin{tabular}{c}
-\begin{lstlisting}[linewidth=330pt, basicstyle=\footnotesize\sffamily,] 
-python perfprof.py -D , -T 3600 -S 2 -M 20 esempio.csv
-             out.pdf -P "all instances, shift 2 sec.s"
-\end{lstlisting}
-\end{tabular}
-\end{center}
-}
-\item{\textbf{file di input con i dati}\\
-Viene riportato parte del contenuto di esempio.csv .
-\begin{center}
-\begin{tabular}{c}
-\begin{lstlisting}[linewidth=240pt, basicstyle=\footnotesize\sffamily,] 
-3, Alg1, Alg2, Alg3
-model_1.lp, 2.696693, 3.272468, 2.434147
-model_2.lp, 0.407689, 1.631921, 1.198957
-model_3.lp, 0.333669, 0.432553, 0.966638
-\end{lstlisting}
-\end{tabular}
-\end{center}
-La prima riga deve necessariamente contenere in ordine il numero di algoritmi analizzati e i loro nomi. Nelle righe seguenti viene riportato invece il nome del file lp e i tempi di esecuzione elencati secondo la sequenza di algoritmi specificata all'inizio.
-Ogni campo di ciascuna riga deve essere separato dal delimitatore specificato all'avvio del programma attraverso l'opzione -D.
-}
-\item{\textbf{immagine di output}\\
-Il grafico viene restituito nel file out.pdf specificato da line di comando chiamando il programma.
-\begin{figure}[h] 
-\begin{center} 
-  % Requires \usepackage{graphicx} 
-  \includegraphics[scale=0.6]{Images/profile_out}\\ 
-\end{center} 
-\end{figure}
-}
-\end{itemize}

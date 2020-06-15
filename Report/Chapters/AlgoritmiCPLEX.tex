@@ -1,37 +1,4 @@
-\chapter{Risoluzione del problema tramite CPLEX}
-Per poter utilizzare gli algoritmi di risoluzione forniti da CPLEX è necessario costruire il modello matematico del problema, legato all'istanza precedentemente descritta.\\
-CPLEX ha due meccanismi di acquisizione dell'istanza:
-\begin{enumerate}
-\item{\textbf{modalità interattiva:}\\
-in cui il modello viene letto da un file precedentemente generato (\textit{model.lp})}
-\item{\textbf{creazione nel programma:}\\
-il modello viene creato attraverso le API del linguaggio usato per la scrittura del programma}
-\end{enumerate}
-
-Le strutture utilizzate da CPLEX sono due (vedi Figura \ref{strutture_cplex}):
-\begin{itemize}
-\item{\textbf{ENV (enviroment):} contiene i parametri necessari all'esecuzione e al salvataggio dei risultati}
-\item{\textbf{LP:} contiene il modello che viene analizzato da CPLEX durante la computazione del problema di ottimizzazione}
-\end{itemize}
-
-\begin{figure}[h] 
-\begin{center} 
-  \includegraphics[scale=0.7]{Images/cplex_structs}\\ 
-  \caption{\footnotesize{Strutture CPLEX}}
-  \label{strutture_cplex} 
-\end{center} 
-\end{figure}
-
-Ad ogni ENV è possibile associare più LP, in modo da poter risolvere in parallelo più problemi di ottimizzazione, ma nel nostro caso ne sarà sufficiente solo uno.\\
-Per convenzione è stato deciso di etichettare i rami $(i,j)$ dell'istanza rispettando la proprietà $i<j$. In Figura \ref{Indici_matrice} è riportato lo schema degli indici che vengono utilizzati per etichettare le variabili.\\
-In questa figura le celle $(i,j)$ bianche, sono quelle effettivamente utilizzate per indicare un arco secondo la convenzione. Il numero all'interno di queste caselle rappresenta invece l'ordine in cui queste variabili vengono inserite nel modello e quindi gli indici associati da CPLEX per accedere alla soluzione.\\Il modello così strutturato richiede però l'inserimento di un esponenziale numero di vincoli per l'eliminazione dei sub-tour, vengono quindi ora descritti altri modelli che ovvino a questo problema.
-\begin{figure}[h] 
-\begin{center} 
-  \includegraphics[scale=0.6]{Images/indices_matrix}\\ 
-  \caption{\footnotesize{Indici della matrice}}
-  \label{Indici_matrice} 
-\end{center} 
-\end{figure}  
+\chapter{Risoluzione del problema tramite CPLEX}\label{CPLEX}  
 
 \section{Modelli compatti}
 I modelli compatti del Travelling Salesman Problem, sono formulazioni il cui numero di variabili e di vincoli è polinomiale nella taglia dell'istanza. In particolare, in quelle analizzate in seguito, sono entrambi $O(n^2)$, con \textit{n = numero di nodi}.\\

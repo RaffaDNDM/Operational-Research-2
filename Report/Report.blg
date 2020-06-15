@@ -1,21 +1,12 @@
-This is BibTeX, Version 0.99d (MiKTeX 2.9.7440 64-bit)
-Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
-The top-level auxiliary file: Report.aux
-Reallocating 'name_of_file' (item size: 1) to 6 items.
+This is BibTeX, Version 0.99dThe top-level auxiliary file: Report.aux
 The style file: plain.bst
-Reallocating 'name_of_file' (item size: 1) to 16 items.
 Database file #1: Chapters/biblio.bib
 Warning--to sort, need author or key in concorde
-Warning--to sort, need author or key in cook
 Warning--to sort, need author or key in monnalisa
 Warning--empty author in concorde
 Warning--empty title in concorde
 Warning--empty booktitle in concorde
 Warning--empty year in concorde
-Warning--empty author in cook
-Warning--empty title in cook
-Warning--empty booktitle in cook
-Warning--empty year in cook
 Warning--empty author in monnalisa
 Warning--empty title in monnalisa
 Warning--empty booktitle in monnalisa
@@ -23,45 +14,4 @@ Warning--empty year in monnalisa
 Warning--empty booktitle in hybrid_VNS
 Warning--empty journal in Tabu
 Warning--empty year in Tabu
-You've used 8 entries,
-            2118 wiz_defined-function locations,
-            540 strings with 4844 characters,
-and the built_in function-call counts, 2377 in all, are:
-= -- 216
-> -- 81
-< -- 3
-+ -- 35
-- -- 26
-* -- 177
-:= -- 350
-add.period$ -- 19
-call.type$ -- 8
-change.case$ -- 34
-chr.to.int$ -- 0
-cite$ -- 26
-duplicate$ -- 112
-empty$ -- 222
-format.name$ -- 26
-if$ -- 515
-int.to.chr$ -- 0
-int.to.str$ -- 8
-missing$ -- 8
-newline$ -- 36
-num.names$ -- 10
-pop$ -- 68
-preamble$ -- 1
-purify$ -- 29
-quote$ -- 0
-skip$ -- 73
-stack$ -- 0
-substring$ -- 123
-swap$ -- 21
-text.length$ -- 3
-text.prefix$ -- 0
-top$ -- 0
-type$ -- 32
-warning$ -- 18
-while$ -- 16
-width$ -- 9
-write$ -- 72
-(There were 18 warnings)
+(There were 13 warnings)
