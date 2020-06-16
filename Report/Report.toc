@@ -29,7 +29,8 @@
 \contentsline {section}{\numberline {4.1}Performance variabilty}{27}{section.4.1}% 
 \contentsline {section}{\numberline {4.2}Analisi tabulare}{28}{section.4.2}% 
 \contentsline {section}{\numberline {4.3}Performance profiling}{28}{section.4.3}% 
-\contentsline {section}{\numberline {4.4}Analisi degli algoritmi sviluppati}{28}{section.4.4}% 
+\contentsline {section}{\numberline {4.4}Analisi degli algoritmi sviluppati}{29}{section.4.4}% 
+\contentsline {subsection}{\numberline {4.4.1}Modelli compatti}{29}{subsection.4.4.1}% 
 \contentsline {chapter}{\numberline {A}TSPlib}{31}{appendix.Alph1}% 
 \contentsline {chapter}{\numberline {B}ILOG CPLEX}{33}{appendix.Alph2}% 
 \contentsline {section}{\numberline {B.1}Funzionamento}{33}{section.Alph2.1}% 
@@ -45,4 +46,4 @@
 \contentsline {section}{\numberline {B.4}Costanti utili}{43}{section.Alph2.4}% 
 \contentsline {chapter}{\numberline {C}Gnuplot}{49}{appendix.Alph3}% 
 \contentsline {chapter}{\numberline {D}Performance profile in python}{51}{appendix.Alph4}% 
-\contentsline {chapter}{Bibliografia}{52}{figure.caption.65}% 
+\contentsline {chapter}{Bibliografia}{52}{figure.caption.66}% 

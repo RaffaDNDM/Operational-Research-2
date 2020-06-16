@@ -1,0 +1,1 @@
+python perfprof.py -D ',' -T 1200 -S 2 -M 35 compatti.csv ../Images/pp_compact.pdf -P "Algoritmi compatti"

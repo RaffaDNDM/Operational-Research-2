@@ -47,11 +47,10 @@ Solitamente viene impostato un TIME LIMIT uguale per tutti gli algoritmi. Questo
 Questo metodo prevede la classificazione dei tempi di esecuzione degli algoritmi in base al numero percentuale di successi, rispetto a un fattore moltiplicativo (ratio) del tempo di esecuzione (vedi Figura \ref{perf_profile}).\\
 L'andamento del performance profile di un algoritmo è monotono crescente. Il valore assunto per ogni ratio dagli algoritmi all'interno del grafico è la percentuale del numero di istanze che l'algoritmo risolve con quel fattore rispetto all'ottimo di quel caso.\\
 Spesso questi grafici vengono rappresentati in scala logaritmica per notare al meglio le differenze ed avere una migliore raffigurazione, più semplice da essere analizzata visivamente.
-
 \begin{figure}[h] 
 \begin{center} 
   % Requires \usepackage{graphicx} 
-  \includegraphics[scale=0.4]{Images/perf_profile}\\ 
+  \includegraphics[scale=0.3]{Images/perf_profile} 
   \caption{\footnotesize{Performance profile di due algoritmi.}}
   \label{perf_profile} 
 \end{center} 
@@ -60,3 +59,39 @@ Spesso questi grafici vengono rappresentati in scala logaritmica per notare al m
 Per creare il performance profile degli algoritmi implementati, è stato utilizzato il programma python riportato nella Sezione \ref{perf_profile_py}. 
 
 \section{Analisi degli algoritmi sviluppati}
+\subsection{Modelli compatti}
+\begin{center}
+\begin{multicols}{3}
+\begin{itemize}
+\item{att48.tsp}
+\item{berlin52.tsp}
+\item{burma14.tsp}
+\item{eil101.tsp}
+\item{eil51.tsp}
+\item{eil76.tsp}
+\item{gr96.tsp}
+\item{kroA100.tsp}
+\item{kroB100.tsp}
+\item{kroB150.tsp}
+\item{kroC100.tsp}
+\item{kroD100.tsp}
+\item{kroE100.tsp}
+\item{pr124.tsp}
+\item{pr136.tsp}
+\item{pr76.tsp}
+\item{rat99.tsp}
+\item{rd100.tsp}
+\item{st70.tsp}
+\item{ulysses16.tsp}
+\end{itemize}
+\end{multicols}
+\end{center}
+
+\begin{figure}[h] 
+\begin{center} 
+  % Requires \usepackage{graphicx} 
+  \includegraphics[scale=0.7]{Images/pp_compact}\\ 
+  \caption{\footnotesize{Performance profile degli algoritmi compatti.}}
+  \label{perf_profile} 
+\end{center} 
+\end{figure}
