@@ -1,20 +1,19 @@
 ﻿  heuristic.c
-D:\github\OperationalResearch2\TSP\TSP\heuristic.c(370,19): warning C4244: 'function': conversion from 'time_t' to 'unsigned int', possible loss of data
-D:\github\OperationalResearch2\TSP\TSP\heuristic.c(493,19): warning C4244: 'function': conversion from 'time_t' to 'unsigned int', possible loss of data
-D:\github\OperationalResearch2\TSP\TSP\heuristic.c(804,18): warning C4244: 'function': conversion from 'time_t' to 'unsigned int', possible loss of data
-D:\github\OperationalResearch2\TSP\TSP\heuristic.c(816,1): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-D:\github\OperationalResearch2\TSP\TSP\heuristic.c(1059,1): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-D:\github\OperationalResearch2\TSP\TSP\heuristic.c(1060,1): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-D:\github\OperationalResearch2\TSP\TSP\heuristic.c(1420,40): warning C4244: 'function': conversion from 'double' to 'int', possible loss of data
-D:\github\OperationalResearch2\TSP\TSP\heuristic.c(1698,51): warning C4047: 'function': 'void *(*)(void *)' differs in levels of indirection from 'void (*)(void *)'
-D:\github\OperationalResearch2\TSP\TSP\heuristic.c(1698,51): warning C4022: 'pthread_create': pointer mismatch for actual parameter 3
+D:\github\OperationalResearch2\TSP\TSP\heuristic.c(366,19): warning C4244: 'function': conversion from 'time_t' to 'unsigned int', possible loss of data
+D:\github\OperationalResearch2\TSP\TSP\heuristic.c(489,19): warning C4244: 'function': conversion from 'time_t' to 'unsigned int', possible loss of data
+D:\github\OperationalResearch2\TSP\TSP\heuristic.c(800,18): warning C4244: 'function': conversion from 'time_t' to 'unsigned int', possible loss of data
+D:\github\OperationalResearch2\TSP\TSP\heuristic.c(812,1): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+D:\github\OperationalResearch2\TSP\TSP\heuristic.c(1055,1): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+D:\github\OperationalResearch2\TSP\TSP\heuristic.c(1056,1): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+D:\github\OperationalResearch2\TSP\TSP\heuristic.c(1416,40): warning C4244: 'function': conversion from 'double' to 'int', possible loss of data
+D:\github\OperationalResearch2\TSP\TSP\heuristic.c(1694,51): warning C4047: 'function': 'void *(*)(void *)' differs in levels of indirection from 'void (*)(void *)'
+D:\github\OperationalResearch2\TSP\TSP\heuristic.c(1694,51): warning C4022: 'pthread_create': pointer mismatch for actual parameter 3
   tsp.c
 D:\github\OperationalResearch2\TSP\TSP\tsp.c(39,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
 D:\github\OperationalResearch2\TSP\TSP\tsp.c(150,9): warning C4101: 'title': unreferenced local variable
   Generating code
-D:\github\OperationalResearch2\TSP\TSP\heuristic.c(204): warning C4716: 'computeSolution': must return a value
-  3 of 60 functions ( 5.0%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    2 functions had inline decision re-evaluated but remain unchanged
+  5 of 60 functions ( 8.3%) were compiled, the rest were copied from previous compilation.
+    1 functions were new in current compilation
+    3 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   TSP.vcxproj -> D:\github\OperationalResearch2\TSP\x64\Release\TSP.exe

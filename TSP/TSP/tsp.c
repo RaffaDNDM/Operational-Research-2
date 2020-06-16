@@ -196,13 +196,14 @@ void manage_input(tsp_instance* tsp_in)
 						//dealloc_inst(tsp_in);
 
 						#ifdef PERF_PROF_ON
-						/*
-						if (tsp_in.integerDist)
-							fprintf(perf_data, ", %d", tsp_in->bestCostI);
-						else
-							fprintf(perf_data, ", %lf", tsp_in->bestCostI);
-						*/
-						fprintf(perf_data, ", %lf", tsp_in->execution_time);
+							#ifdef PRINT_COST
+								if (tsp_in->integerDist)
+									fprintf(perf_data, ", %d", tsp_in->bestCostI);
+								else
+									fprintf(perf_data, ", %.2lf", tsp_in->bestCostD);
+							#else
+								fprintf(perf_data, ", %.2lf", tsp_in->execution_time);
+							#endif
 						#endif
 					}
 				}

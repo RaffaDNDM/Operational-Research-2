@@ -183,20 +183,3 @@ void plot(tsp_instance* tsp_in, int* succ, int* comp, int* n_comps)
 	_pclose(pipe);
 	fclose(f);
 }
-
-void cost_plot_definition(tsp_instance* tsp_in)
-{
-	static int i = 0;
-	i++;
-	FILE* f = fopen(PLOT_HEURISTIC_DAT, "a");
-
-	if (i == 1) fprintf(f, "\n\n");
-	fprintf(f, "%d ", tsp_in->num_nodes);
-
-	if (tsp_in->integerDist)
-		fprintf(f, "%.2lf ", tsp_in->bestCostI);
-	else
-		fprintf(f, "%.2lf \n", tsp_in->bestCostD);
-
-	fclose(f);
-}

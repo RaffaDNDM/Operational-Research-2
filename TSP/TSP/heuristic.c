@@ -106,7 +106,6 @@ void heuristic_solver(tsp_instance* tsp_in)
 	time_t end = clock();
 	tsp_in->execution_time = ((double)(end - start) / (double)CLOCKS_PER_SEC);
 	print_cost(tsp_in);
-	cost_plot_definition(tsp_in);
 	printf("%sExecution time:%s %.3lf seconds\n", GREEN, WHITE, tsp_in->execution_time);
 	printf("%s%s%s", RED, LINE, WHITE);
 
@@ -211,17 +210,14 @@ void nearest_neighborhood(tsp_instance* tsp_in, int* visited_nodes, double* best
 
 	(*best_cost) = 0.0;
 
-	if (tsp_in->alg == 11)
-	{
+	#ifdef MULTI_START
 		visited_nodes[0] = first_node;
 		nodes[visited_nodes[0]] = 1;
 		//i = first_node;//aggiunto
-	}
-	else
-	{
+	#elif
 		visited_nodes[0] = 0;
 		nodes[0] = 1;
-	}
+	#endif
 
 	int count = 1;
 
