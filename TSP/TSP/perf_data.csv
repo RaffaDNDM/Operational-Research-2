@@ -1,2 +1,3 @@
-3, Loop, Branch& CutGeneral, Branch&Cut
-compact_instances/lin105.tsp, 1.702000, 0.423000, 0.398000
+1, MTZ
+compact_instances/pr136.tsp, 1200.275000
+compact_instances/ulysses22.tsp, 1200.080000

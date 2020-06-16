@@ -1,11 +1,11 @@
 ﻿  heuristic.c
-D:\github\OperationalResearch2\TSP\TSP\heuristic.c(908,18): warning C4244: 'function': conversion from 'time_t' to 'unsigned int', possible loss of data
-D:\github\OperationalResearch2\TSP\TSP\heuristic.c(920,1): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-D:\github\OperationalResearch2\TSP\TSP\heuristic.c(1182,1): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-D:\github\OperationalResearch2\TSP\TSP\heuristic.c(1183,1): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-D:\github\OperationalResearch2\TSP\TSP\heuristic.c(1543,40): warning C4244: 'function': conversion from 'double' to 'int', possible loss of data
-D:\github\OperationalResearch2\TSP\TSP\heuristic.c(1821,51): warning C4047: 'function': 'void *(*)(void *)' differs in levels of indirection from 'void (*)(void *)'
-D:\github\OperationalResearch2\TSP\TSP\heuristic.c(1821,51): warning C4022: 'pthread_create': pointer mismatch for actual parameter 3
-D:\github\OperationalResearch2\TSP\TSP\heuristic.c(200): warning C4716: 'computeSolution': must return a value
-D:\github\OperationalResearch2\TSP\TSP\heuristic.c(1139): warning C4716: 'new_random_sol': must return a value
-  TSP.vcxproj -> D:\github\OperationalResearch2\TSP\x64\Debug\TSP.exe
+C:\Users\User\github\Operational-Research-2\TSP\TSP\heuristic.c(908,18): warning C4244: 'funzione': conversione da 'time_t' a 'unsigned int'. Possibile perdita di dati.
+C:\Users\User\github\Operational-Research-2\TSP\TSP\heuristic.c(920,1): warning C4244: 'inizializzazione': conversione da 'double' a 'int'. Possibile perdita di dati.
+C:\Users\User\github\Operational-Research-2\TSP\TSP\heuristic.c(1271,1): warning C4244: 'inizializzazione': conversione da 'double' a 'int'. Possibile perdita di dati.
+C:\Users\User\github\Operational-Research-2\TSP\TSP\heuristic.c(1272,1): warning C4244: 'inizializzazione': conversione da 'double' a 'int'. Possibile perdita di dati.
+C:\Users\User\github\Operational-Research-2\TSP\TSP\heuristic.c(1632,40): warning C4244: 'funzione': conversione da 'double' a 'int'. Possibile perdita di dati.
+C:\Users\User\github\Operational-Research-2\TSP\TSP\heuristic.c(1910,51): warning C4047: 'funzione': 'void *(*)(void *)' differisce da 'void (*)(void *)' nei livelli di riferimento indiretto
+C:\Users\User\github\Operational-Research-2\TSP\TSP\heuristic.c(1910,51): warning C4022: 'pthread_create': errore di corrispondenza del puntatore per il parametro effettivo 3
+C:\Users\User\github\Operational-Research-2\TSP\TSP\heuristic.c(200): warning C4716: 'computeSolution': deve restituire un valore
+C:\Users\User\github\Operational-Research-2\TSP\TSP\heuristic.c(1228): warning C4716: 'new_random_sol': deve restituire un valore
+  TSP.vcxproj -> C:\Users\User\github\Operational-Research-2\TSP\x64\Debug\TSP.exe

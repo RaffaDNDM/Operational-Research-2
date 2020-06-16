@@ -1,1 +1,2 @@
-compact_instances/lin105.tsp
+compact_instances/pr136.tsp
+compact_instances/ulysses22.tsp

@@ -921,11 +921,10 @@ void hybrid_vns(tsp_instance* tsp_in, int* visited_nodes, double* best_cost, dou
 
 	while (remaining_time > 0)
 	{
-		time_t start = clock();
-
 		int k = 1;
-		for (; k <= max_k; k++)
-		{	
+		for (; k <= max_k && remaining_time > 0; k++)
+		{
+			time_t start = clock();
 			//printf("    k: %d\n", k);
 			int* kopt_visited_nodes = (int*) calloc((size_t)tsp_in->num_nodes, sizeof(int));
 			double kopt_cost = local_min_cost;
@@ -937,19 +936,7 @@ void hybrid_vns(tsp_instance* tsp_in, int* visited_nodes, double* best_cost, dou
 
 			if (min_kopt_sequence(tsp_in, kopt_visited_nodes, &kopt_cost, k))
 			{
-				printf("wrong_cost: %.2lf    ", kopt_cost);
-
-				double cost = 0.0;
-				for (i = 0; i < tsp_in->num_nodes; i++)
-				{
-					double tmp;
-					dist(kopt_visited_nodes[i], kopt_visited_nodes[(i + 1) % tsp_in->num_nodes], tsp_in, &tmp);
-					cost += tmp;
-				}
-
-				printf("true_cost: %.2lf    ", cost);
 				greedy_refinement(tsp_in, kopt_visited_nodes, &kopt_cost);
-				printf("greedy_cost: %.2lf", kopt_cost);
 				
 				if (kopt_cost < (*best_cost))
 				{
@@ -962,24 +949,31 @@ void hybrid_vns(tsp_instance* tsp_in, int* visited_nodes, double* best_cost, dou
 						local_min_visited_nodes[i] = kopt_visited_nodes[i];
 					}
 
+
+					time_t end = clock();
+					remaining_time = remaining_time - ((double)(end - start) / CLOCKS_PER_SEC);
+					
+					#ifndef MULTI_START
+						printf("\r%sRemaining time : %s%.2lf  %.2lf ", CYAN, WHITE, remaining_time, *best_cost);
+					#endif
+
 					free(kopt_visited_nodes);
 					break;
 				}
 			}
 
+			time_t end = clock();
+			remaining_time = remaining_time - ((double)(end - start) / CLOCKS_PER_SEC);
+
+			#ifndef MULTI_START
+				printf("\r%sRemaining time : %s%.2lf  %.2lf ", CYAN, WHITE, remaining_time, *best_cost);
+			#endif
 			free(kopt_visited_nodes);
 		}
 
 
 		if (k > max_k)
 			new_random_sol(tsp_in, local_min_visited_nodes, &local_min_cost);
-
-		time_t end = clock();
-		remaining_time = remaining_time - ((double)(end - start) / CLOCKS_PER_SEC);
-		#ifndef MULTI_START
-		char* s = (k > max_k) ? "M_K" : "L_K";
-		printf("%sRemaining time : %s%.2lf  %s      \n", CYAN, WHITE, remaining_time, s);	
-		#endif
 	}
 	printf("\n");
 	free(local_min_visited_nodes);
@@ -996,13 +990,7 @@ int min_kopt_sequence(tsp_instance* tsp_in, int* kopt_visited_nodes, double* kop
 		int first = i;
 		int second = (i + k) % tsp_in->num_nodes;
 		double delta = 0.0;
-
-		if (i > second)
-		{
-			first = second;
-			second = i;
-		}
-
+	
 		if (tsp_in->integerDist)
 		{
 			int num_changes = 2;
@@ -1074,17 +1062,8 @@ int new_random_sol(tsp_instance* tsp_in, int* local_min_visited_nodes, double* l
 {
 	int first = rand() % tsp_in->num_nodes;
 	
-	int second = first;
-		
-	while(second==first)
-		second = rand() % tsp_in->num_nodes;
-
-	if (first > second)
-	{
-		int tmp = first;
-		first = second;
-		second = tmp;
-	}
+	int k = rand() % (tsp_in->num_nodes - 2);
+	int second = (first + k) % tsp_in->num_nodes;
 
 	double delta = 0.0;
 	if (tsp_in->integerDist)
@@ -1097,7 +1076,7 @@ int new_random_sol(tsp_instance* tsp_in, int* local_min_visited_nodes, double* l
 		dist(local_min_visited_nodes[(first - 1 + tsp_in->num_nodes) % tsp_in->num_nodes], local_min_visited_nodes[second], tsp_in, &c_new[0]);
 		dist(local_min_visited_nodes[first], local_min_visited_nodes[(second + 1) % tsp_in->num_nodes], tsp_in, &c_new[1]);
 		
-		if ((second-first) > 2 && (second-first)<(tsp_in->num_nodes-2))
+		if (k > 2)
 		{
 			dist(local_min_visited_nodes[first], local_min_visited_nodes[(first + 1) % tsp_in->num_nodes], tsp_in, &c_old[2]);
 			dist(local_min_visited_nodes[second], local_min_visited_nodes[(second - 1 + tsp_in->num_nodes) % tsp_in->num_nodes], tsp_in, &c_old[3]);
@@ -1121,7 +1100,7 @@ int new_random_sol(tsp_instance* tsp_in, int* local_min_visited_nodes, double* l
 		dist(local_min_visited_nodes[(first - 1 + tsp_in->num_nodes) % tsp_in->num_nodes], local_min_visited_nodes[second], tsp_in, &c_new[0]);
 		dist(local_min_visited_nodes[first], local_min_visited_nodes[(second + 1) % tsp_in->num_nodes], tsp_in, &c_new[1]);
 
-		if ((second - first) > 2 && (second - first) < (tsp_in->num_nodes - 2))
+		if(k > 2)
 		{
 			dist(local_min_visited_nodes[first], local_min_visited_nodes[(first + 1) % tsp_in->num_nodes], tsp_in, &c_old[2]);
 			dist(local_min_visited_nodes[second], local_min_visited_nodes[(second - 1 + tsp_in->num_nodes) % tsp_in->num_nodes], tsp_in, &c_old[3]);
