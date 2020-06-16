@@ -90,6 +90,5 @@ void plot(tsp_instance* tsp_in, int* succ, int* comp, int* n_comps);
 
 void cost_plot_definition(tsp_instance* tsp_in);
 
-void cost_plot();
 
 #endif

@@ -50,9 +50,10 @@ typedef struct
 	int start_list; // 0
 } tabu_list_params;
 
+#define GRASP
 #define MAX_LOCAL_MINS 200
 #define MAX_NUM_ITERATIONS 1000
-#define CONSTRUCTION_TYPE 1	// 0 = nearest neighborhood algorithm, 1 = insertion algorithm
+#define CONSTRUCTION_TYPE 0	// 0 = nearest neighborhood algorithm, 1 = insertion algorithm
 #define REACTIVE //define for use the reactive tabu search
 #define MAX_NUM_EPOCHS 100
 
@@ -68,7 +69,7 @@ void heuristic_solver(tsp_instance* tsp_in);
 	@brief Insertion algorithm.
 	@param tsp_in reference to tsp instance structure
 */
-void insertion(tsp_instance* tsp_in, int* visited_nodes, double* best_cost, int seed);
+void insertion(tsp_instance* tsp_in, int* visited_nodes, double* best_cost, int seed, int first_node);
 
 /**
 	@brief Nearest neighborhood algorithm.

@@ -107,7 +107,7 @@ void heuristic_solver(tsp_instance* tsp_in)
 	tsp_in->execution_time = ((double)(end - start) / (double)CLOCKS_PER_SEC);
 	print_cost(tsp_in);
 	cost_plot_definition(tsp_in);
-	printf("%sExecution time:%s %.3lf seconds\n",GREEN, WHITE, tsp_in->execution_time);
+	printf("%sExecution time:%s %.3lf seconds\n", GREEN, WHITE, tsp_in->execution_time);
 	printf("%s%s%s", RED, LINE, WHITE);
 
 	int* comp = (int*)calloc(tsp_in->num_nodes, sizeof(int));
@@ -143,10 +143,11 @@ void* computeSolution(void* param)
 	time_t start = clock();
 	double remaining_time = args->tsp_in->deadline -( (double)(start - args->start) / (double) CLOCKS_PER_SEC );
 
+	srand(args->seed);
 	if (!CONSTRUCTION_TYPE)
-		nearest_neighborhood(args->tsp_in, visited_nodes, &best_cost, args->seed, -1);
+		nearest_neighborhood(args->tsp_in, visited_nodes, &best_cost, args->seed, rand() % args->tsp_in->num_nodes);
 	else
-		insertion(args->tsp_in, visited_nodes, &best_cost, args->seed);
+		insertion(args->tsp_in, visited_nodes, &best_cost, args->seed, rand() % args->tsp_in->num_nodes);
 
 	greedy_refinement(args->tsp_in, visited_nodes, &best_cost);
 
@@ -259,15 +260,39 @@ void nearest_neighborhood(tsp_instance* tsp_in, int* visited_nodes, double* best
 
 		i = best-1;
 	}
-
 }
 
-void insertion(tsp_instance* tsp_in, int* visited_nodes, double* best_cost, int seed)
+void insertion(tsp_instance* tsp_in, int* visited_nodes, double* best_cost, int seed, int first_node)
 {
-	double max_dist = -1;
+	double max_dist = 0.0;
 	int indices[2];
-	int i = 0;
+	
+	#ifdef MULTI_START
+	indices[0] = first_node;
+	int j = 0;
+	for (; j < tsp_in->num_nodes; j++)
+	{
+		double c;
+		if (j != first_node)
+		{
+			if (tsp_in->integerDist)
+			{
+				int x;
+				dist(first_node, j, tsp_in, &x);
+				c = (double)x;
+			}
+			else
+				dist(first_node, j, tsp_in, &c);
 
+			if (c > max_dist)
+			{
+				max_dist = c;
+				indices[1] = j;
+			}
+		}
+	}
+	#else
+	int i = 0;
 	for (; i < tsp_in->num_nodes; i++)
 	{
 		int j = i + 1;
@@ -292,6 +317,7 @@ void insertion(tsp_instance* tsp_in, int* visited_nodes, double* best_cost, int 
 			}
 		}
 	}
+	#endif
 
 	int* node1 = (int *) calloc((size_t) tsp_in->num_nodes, sizeof(int));
 	int* node2 = (int *) calloc((size_t) tsp_in->num_nodes, sizeof(int));

@@ -14,7 +14,7 @@
 int main(int argc, char** argv)
 {
 	tsp_instance tsp_in;
-	/*
+	
 	parse_cmd(argv, argc, &tsp_in);
 	
 	while (tsp_in.alg < 0)
@@ -42,8 +42,6 @@ int main(int argc, char** argv)
 	}
 
 	manage_input(&tsp_in);
-	*/
-	cost_plot(&tsp_in);
 
 	return 0;
 }

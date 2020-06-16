@@ -200,29 +200,3 @@ void cost_plot_definition(tsp_instance* tsp_in)
 
 	fclose(f);
 }
-
-void cost_plot()
-{
-	//print cost evolution
-	FILE* pipe = _popen(GNUPLOT_EXE, "w");
-	FILE* f = fopen(HEURISTIC_STYLE, "r");
-
-	char line[LINE_SIZE];
-	while (fgets(line, LINE_SIZE, f) != NULL)
-	{
-		if (strcmp(line, "LINE\n") == 0)
-		{
-			_pclose(pipe);
-			printf("Type something to continue and create the image");
-			gets(line, LINE_SIZE);
-			printf("%s%s%s\n", RED, LINE, WHITE);
-			pipe = _popen(GNUPLOT_EXE, "w");
-			continue;
-		}
-
-		fprintf(pipe, "%s ", line);
-	}
-
-	_pclose(pipe);
-	fclose(f);
-}
