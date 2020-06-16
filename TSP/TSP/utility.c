@@ -183,3 +183,46 @@ void plot(tsp_instance* tsp_in, int* succ, int* comp, int* n_comps)
 	_pclose(pipe);
 	fclose(f);
 }
+
+void cost_plot_definition(tsp_instance* tsp_in)
+{
+	static int i = 0;
+	i++;
+	FILE* f = fopen(PLOT_HEURISTIC_DAT, "a");
+
+	if (i == 1) fprintf(f, "\n\n");
+	fprintf(f, "%d ", tsp_in->num_nodes);
+
+	if (tsp_in->integerDist)
+		fprintf(f, "%.2lf ", tsp_in->bestCostI);
+	else
+		fprintf(f, "%.2lf \n", tsp_in->bestCostD);
+
+	fclose(f);
+}
+
+void cost_plot()
+{
+	//print cost evolution
+	FILE* pipe = _popen(GNUPLOT_EXE, "w");
+	FILE* f = fopen(HEURISTIC_STYLE, "r");
+
+	char line[LINE_SIZE];
+	while (fgets(line, LINE_SIZE, f) != NULL)
+	{
+		if (strcmp(line, "LINE\n") == 0)
+		{
+			_pclose(pipe);
+			printf("Type something to continue and create the image");
+			gets(line, LINE_SIZE);
+			printf("%s%s%s\n", RED, LINE, WHITE);
+			pipe = _popen(GNUPLOT_EXE, "w");
+			continue;
+		}
+
+		fprintf(pipe, "%s ", line);
+	}
+
+	_pclose(pipe);
+	fclose(f);
+}

@@ -16,10 +16,10 @@
 
 #define HAVE_STRUCT_TIMESPEC
 #include <pthread.h>
-//#define MULTI_START //Comment or not if you want multistart or not
+#define MULTI_START //Comment or not if you want multistart or not
 
 #define STEP_SEED 100
-#define NUM_MULTI_START 8 //Number of threads in multi start and for construction in Genetic
+#define NUM_MULTI_START 12 //Number of threads in multi start and for construction in Genetic
 #define POPULATION_SIZE 12000 //Size of the population
 #define NUM_WORST_MEMBERS 2000 //Size of the buffer with indices of worst members in the population
 
@@ -50,10 +50,9 @@ typedef struct
 	int start_list; // 0
 } tabu_list_params;
 
-//#define GRASP
 #define MAX_LOCAL_MINS 200
 #define MAX_NUM_ITERATIONS 1000
-#define CONSTRUCTION_TYPE 0	// 0 = nearest neighborhood algorithm, 1 = insertion algorithm
+#define CONSTRUCTION_TYPE 1	// 0 = nearest neighborhood algorithm, 1 = insertion algorithm
 #define REACTIVE //define for use the reactive tabu search
 #define MAX_NUM_EPOCHS 100
 
@@ -120,7 +119,8 @@ void update_worst(double* fitnesses, int* worst_members);
 int check_tabu_list(int** tabu_list, int tenure, int node1, int node2);
 
 // return the delta_min
-double move2opt_for_tabu_search(tsp_instance* tsp_in, int* succ, int** tabu_list, int* tenure, tabu_list_params* params); 
+double move2opt_for_tabu_search(tsp_instance* tsp_in, int* succ, int** tabu_list, int* tenure, tabu_list_params* params);
+
 
 #endif
 

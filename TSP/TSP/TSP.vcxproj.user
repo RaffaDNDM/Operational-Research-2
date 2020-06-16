@@ -5,7 +5,7 @@
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LocalDebuggerCommandArguments>-f all_instances/bier127.tsp -alg 8 -v 70 -dead 30</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>-dir construction -alg /8 -v 70 -np</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
 </Project>

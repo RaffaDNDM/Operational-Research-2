@@ -29,6 +29,8 @@
 #define GP_CPLEX_STYLE "styleCPLEX.txt" //name of the style file for the cplex solution needed by Gnuplot
 #define LP_FILENAME "model.lp" //name fo the file that conteins the cplex model
 #define GNUPLOT_EXE "%GNUPLOT%/bin/gnuplot.exe -persistent" //path of  where is gnuplot.exe
+#define PLOT_HEURISTIC_DAT "plot_cost.dat"
+#define HEURISTIC_STYLE "styleHEURISTIC.txt"
 
 #define CAST_PRECISION 0.4999999999 //quantity to add to correctly approximate double into int
 
@@ -85,5 +87,9 @@ void define_tour(tsp_instance* tsp_in, double* x, int* succ, int* comp, int* n_c
 	@param n_comps number of components
 */
 void plot(tsp_instance* tsp_in, int* succ, int* comp, int* n_comps);
+
+void cost_plot_definition(tsp_instance* tsp_in);
+
+void cost_plot();
 
 #endif

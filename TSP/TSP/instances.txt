@@ -1,2 +1,13 @@
-compact_instances/pr136.tsp
-compact_instances/ulysses22.tsp
+construction/00280.tsp
+construction/00493.tsp
+construction/00532.tsp
+construction/00535.tsp
+construction/00657.tsp
+construction/01000.tsp
+construction/01291.tsp
+construction/01400.tsp
+construction/01577.tsp
+construction/01655.tsp
+construction/02103.tsp
+construction/03795.tsp
+construction/04461.tsp

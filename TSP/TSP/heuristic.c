@@ -106,6 +106,7 @@ void heuristic_solver(tsp_instance* tsp_in)
 	time_t end = clock();
 	tsp_in->execution_time = ((double)(end - start) / (double)CLOCKS_PER_SEC);
 	print_cost(tsp_in);
+	cost_plot_definition(tsp_in);
 	printf("%sExecution time:%s %.3lf seconds\n",GREEN, WHITE, tsp_in->execution_time);
 	printf("%s%s%s", RED, LINE, WHITE);
 
@@ -152,6 +153,7 @@ void* computeSolution(void* param)
 	time_t end_first_generation = clock();
 	remaining_time = remaining_time - ((double)(end_first_generation-start)/(double)CLOCKS_PER_SEC);
 
+	#ifndef MULTI_START
 	switch (args->tsp_in->alg)
 	{
 		case 8:
@@ -170,7 +172,8 @@ void* computeSolution(void* param)
 			break;
 		}
 	}
-
+	#endif
+	
 	pthread_mutex_lock(&mutex);
 	printf("%sCost:%s %.2lf\n",GREEN, WHITE, best_cost);
 
@@ -330,17 +333,6 @@ void insertion(tsp_instance* tsp_in, int* visited_nodes, double* best_cost, int 
 			dist(node1[k_best], node2[k_best], tsp_in, &(costs[k_best]));
 			dist(node1[count], node2[count], tsp_in, &(costs[count]));
 		}
-		/*
-		int* succ_nodes = calloc((size_t)tsp_in->num_nodes, sizeof(int));
-		succ_construction(visited_nodes, succ_nodes, tsp_in->num_nodes);
-		update_solution(visited_nodes, tsp_in, tsp_in->num_nodes);
-		int* comp = calloc((size_t)tsp_in->num_nodes, sizeof(int));
-		int s;
-		for (s = 0; s < tsp_in->num_nodes; s++)
-			comp[s] = 1;
-		int n_comps = 1;
-		plot(tsp_in, succ_nodes, comp, &n_comps);
-		*/
 	}
 }
 
@@ -780,128 +772,6 @@ void greedy_refinement(tsp_instance* tsp_in, int* visited_nodes, double* best_co
 
 	free(succ);
 }
-/*
-void vns(tsp_instance* tsp_in, int* visited_nodes, double *best_cost, double deadline)
-{
-	srand(time(NULL));
-
-	printf("COST: %lf\n\n", *best_cost);
-	double remaining_time = deadline;
-
-	int* local_min_visited_nodes = (int*)calloc((size_t)tsp_in->num_nodes, sizeof(int));
-
-	int i = 0;
-	for (; i < tsp_in->num_nodes; i++)
-		local_min_visited_nodes[i] = visited_nodes[i];
-
-	double local_min_cost = (*best_cost);
-	int num_local_minima = 0;
-	int num_iterations = 0;
-	int max_k = tsp_in->num_nodes / 2;
-
-	while(remaining_time > 0)
-	{
-		time_t start = clock();
-
-		int k = 1;
-
-		for (; k < max_k; k++)
-		{
-			int* kopt_visited_nodes = (int*)calloc((size_t)tsp_in->num_nodes, sizeof(int));
-			double kopt_cost = local_min_cost;
-
-			for (i = 0; i < tsp_in->num_nodes; i++)
-			{
-				kopt_visited_nodes[i] = local_min_visited_nodes[i];
-			}
-
-			srand(num_iterations *10);
-			int t = rand() % tsp_in->num_nodes;
-			num_iterations++;
-			printf("\rK: %2d  ", k);
-
-			int j = 1;
-			for (; j <= k; j++)
-			{
-				int next_index = (t + j) % tsp_in->num_nodes;
-				int temp = kopt_visited_nodes[next_index];
-				kopt_visited_nodes[next_index] = kopt_visited_nodes[t];
-				kopt_visited_nodes[t] = temp;
-
-				if (tsp_in->integerDist)
-				{
-					int c_old[4], c_new[4];
-
-					dist(kopt_visited_nodes[(t - 1 + tsp_in->num_nodes) % tsp_in->num_nodes], kopt_visited_nodes[next_index], tsp_in, &c_old[0]);
-					dist(kopt_visited_nodes[next_index], kopt_visited_nodes[(t + 1) % tsp_in->num_nodes], tsp_in, &c_old[1]);
-					dist(kopt_visited_nodes[t], kopt_visited_nodes[(next_index + 1) % tsp_in->num_nodes], tsp_in, &c_old[2]);
-					dist(kopt_visited_nodes[t], kopt_visited_nodes[(next_index - 1 + tsp_in->num_nodes) % tsp_in->num_nodes], tsp_in, &c_old[3]);
-					dist(kopt_visited_nodes[(t - 1 + tsp_in->num_nodes) % tsp_in->num_nodes], kopt_visited_nodes[t], tsp_in, &c_new[0]);
-					dist(kopt_visited_nodes[t], kopt_visited_nodes[(t + 1) % tsp_in->num_nodes], tsp_in, &c_new[1]);
-					dist(kopt_visited_nodes[next_index], kopt_visited_nodes[(next_index + 1) % tsp_in->num_nodes], tsp_in, &c_new[2]);
-					dist(kopt_visited_nodes[next_index], kopt_visited_nodes[(next_index - 1 + tsp_in->num_nodes) % tsp_in->num_nodes], tsp_in, &c_new[3]);
-
-					for (i = 0; i < 4; i++)
-						kopt_cost += (double)(c_new[i] - c_old[i]);
-				}
-				else
-				{
-					double c_old[4], c_new[4];
-
-					dist(kopt_visited_nodes[(t - 1 + tsp_in->num_nodes) % tsp_in->num_nodes], kopt_visited_nodes[next_index], tsp_in, &c_old[0]);
-					dist(kopt_visited_nodes[next_index], kopt_visited_nodes[(t + 1) % tsp_in->num_nodes], tsp_in, &c_old[1]);
-					dist(kopt_visited_nodes[t], kopt_visited_nodes[(next_index + 1) % tsp_in->num_nodes], tsp_in, &c_old[2]);
-					dist(kopt_visited_nodes[t], kopt_visited_nodes[(next_index - 1 + tsp_in->num_nodes) % tsp_in->num_nodes], tsp_in, &c_old[3]);
-					dist(kopt_visited_nodes[(t - 1 + tsp_in->num_nodes) % tsp_in->num_nodes], kopt_visited_nodes[t], tsp_in, &c_new[0]);
-					dist(kopt_visited_nodes[t], kopt_visited_nodes[(t + 1) % tsp_in->num_nodes], tsp_in, &c_new[1]);
-					dist(kopt_visited_nodes[next_index], kopt_visited_nodes[(next_index + 1) % tsp_in->num_nodes], tsp_in, &c_new[2]);
-					dist(kopt_visited_nodes[next_index], kopt_visited_nodes[(next_index - 1 + tsp_in->num_nodes) % tsp_in->num_nodes], tsp_in, &c_new[3]);
-
-					for (i = 0; i < 4; i++)
-						kopt_cost += (c_new[i] - c_old[i]);
-				}
-			}
-
-			greedy_refinement(tsp_in, kopt_visited_nodes, &kopt_cost);
-
-			if (local_min_cost!=kopt_cost)//abs(local_min_cost - result_kopt_cost)>1e-10
-			{
-				num_local_minima++;
-				local_min_cost = kopt_cost;
-
-				for (i = 0; i < tsp_in->num_nodes; i++)
-				{
-					local_min_visited_nodes[i] = kopt_visited_nodes[i];
-				}
-
-				if (local_min_cost < (*best_cost))
-				{
-					(*best_cost) = local_min_cost;
-					for (i = 0; i < tsp_in->num_nodes; i++)
-					{
-						visited_nodes[i] = kopt_visited_nodes[i];
-					}
-				}
-
-				free(kopt_visited_nodes);
-				break;
-			}
-
-			free(kopt_visited_nodes);
-		}
-
-		time_t end = clock();
-		remaining_time = remaining_time - ((double)(end - start) / CLOCKS_PER_SEC);
-
-		#ifndef MULTI_START
-			printf("%sRemaining time : %s%.2lf   local_minima:%d    num_iterations:%d", CYAN, WHITE, remaining_time, num_local_minima, num_iterations);
-		#endif 
-
-	}
-	printf("\n");
-	free(local_min_visited_nodes);
-}
-*/
 
 void hybrid_vns(tsp_instance* tsp_in, int* visited_nodes, double* best_cost, double deadline)
 {
@@ -1155,17 +1025,15 @@ void tabu_search(tsp_instance* tsp_in, int* visited_nodes, double* best_cost, do
 		printf("%sStarting cost :%s%.2lf\n",RED, WHITE, *best_cost);
 	#endif 
 
-	/*greedy_refinement(tsp_in, visited_nodes, best_cost); //prima di iniziare l'algoritmo devo essere sicura di trovarmi in un minimo locale
-
 	#ifndef MULTI_START
 	if (tsp_in->verbose > 50)
 		printf("%sCost after first greedy :%s %.2lf\n",GREEN, WHITE, *best_cost);
 	#endif 
-	*/
+	
 	int min_tenure = ceil(tsp_in->num_nodes / 10.0);
 	int max_tenure = ceil(tsp_in->num_nodes / 5.0);
 
-	int** tabu_list = (int**)calloc((size_t)2, sizeof(int*));//[tabu_list[0][i], tabu_list[1][i]]
+	int** tabu_list = (int**)calloc((size_t)2, sizeof(int*));
 	tabu_list[0] = (int*)calloc((size_t)max_tenure, sizeof(int));
 	tabu_list[1] = (int*)calloc((size_t)max_tenure, sizeof(int));
 
