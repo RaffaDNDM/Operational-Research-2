@@ -1,19 +1,15 @@
 ﻿  heuristic.c
-D:\github\OperationalResearch2\TSP\TSP\heuristic.c(366,19): warning C4244: 'function': conversion from 'time_t' to 'unsigned int', possible loss of data
-D:\github\OperationalResearch2\TSP\TSP\heuristic.c(489,19): warning C4244: 'function': conversion from 'time_t' to 'unsigned int', possible loss of data
 D:\github\OperationalResearch2\TSP\TSP\heuristic.c(800,18): warning C4244: 'function': conversion from 'time_t' to 'unsigned int', possible loss of data
 D:\github\OperationalResearch2\TSP\TSP\heuristic.c(812,1): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
 D:\github\OperationalResearch2\TSP\TSP\heuristic.c(1055,1): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
 D:\github\OperationalResearch2\TSP\TSP\heuristic.c(1056,1): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
 D:\github\OperationalResearch2\TSP\TSP\heuristic.c(1416,40): warning C4244: 'function': conversion from 'double' to 'int', possible loss of data
-D:\github\OperationalResearch2\TSP\TSP\heuristic.c(1694,51): warning C4047: 'function': 'void *(*)(void *)' differs in levels of indirection from 'void (*)(void *)'
-D:\github\OperationalResearch2\TSP\TSP\heuristic.c(1694,51): warning C4022: 'pthread_create': pointer mismatch for actual parameter 3
-  tsp.c
-D:\github\OperationalResearch2\TSP\TSP\tsp.c(39,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-D:\github\OperationalResearch2\TSP\TSP\tsp.c(150,9): warning C4101: 'title': unreferenced local variable
+D:\github\OperationalResearch2\TSP\TSP\heuristic.c(1703,51): warning C4047: 'function': 'void *(*)(void *)' differs in levels of indirection from 'void (*)(void *)'
+D:\github\OperationalResearch2\TSP\TSP\heuristic.c(1703,51): warning C4022: 'pthread_create': pointer mismatch for actual parameter 3
   Generating code
-  5 of 60 functions ( 8.3%) were compiled, the rest were copied from previous compilation.
-    1 functions were new in current compilation
-    3 functions had inline decision re-evaluated but remain unchanged
+D:\github\OperationalResearch2\TSP\TSP\heuristic.c(203): warning C4716: 'computeSolution': must return a value
+  22 of 69 functions (31.9%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    14 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   TSP.vcxproj -> D:\github\OperationalResearch2\TSP\x64\Release\TSP.exe

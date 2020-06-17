@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2020.1.11)  16 JUN 2020 13:11
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2020.1.11)  17 JUN 2020 23:50
 entering extended mode
 **./Report.tex
 (Report.tex
@@ -1002,6 +1002,15 @@ LaTeX Warning: Unused global option(s):
 LaTeX Warning: Label `perf_profile' multiply defined.
 
 
+LaTeX Warning: Label `perf_profile' multiply defined.
+
+
+LaTeX Warning: Label `perf_profile' multiply defined.
+
+
+LaTeX Warning: Label `perf_profile' multiply defined.
+
+
 LaTeX Warning: Label `style_example' multiply defined.
 
 
@@ -1126,7 +1135,7 @@ LaTeX Info: Redefining \nameref on input line 96.
 \@outlinefile=\write3
 \openout3 = `Report.out'.
 
-<Images/UNIPD.png, id=191, 80.7486pt x 80.7486pt>
+<Images/UNIPD.png, id=219, 80.7486pt x 80.7486pt>
 File: Images/UNIPD.png Graphic file (type png)
 <use Images/UNIPD.png>
 Package pdftex.def Info: Images/UNIPD.png  used on input line 104.
@@ -1182,13 +1191,13 @@ Underfull \hbox (badness 10000) in paragraph at lines 41--45
  []
 
 [4] [5]
-<Images/albero_decisionale.png, id=355, 444.66125pt x 339.2675pt>
+<Images/albero_decisionale.png, id=390, 444.66125pt x 339.2675pt>
 File: Images/albero_decisionale.png Graphic file (type png)
 <use Images/albero_decisionale.png>
 Package pdftex.def Info: Images/albero_decisionale.png  used on input line 89.
 (pdftex.def)             Requested size: 311.26074pt x 237.48563pt.
  [6 <./Images/albero_decisionale.png>]
-<Images/x_best.png, id=365, 717.68124pt x 479.7925pt>
+<Images/x_best.png, id=400, 717.68124pt x 479.7925pt>
 File: Images/x_best.png Graphic file (type png)
 <use Images/x_best.png>
 Package pdftex.def Info: Images/x_best.png  used on input line 115.
@@ -1209,18 +1218,18 @@ Underfull \hbox (badness 10000) in paragraph at lines 158--161
 Underfull \vbox (badness 1715) has occurred while \output is active []
 
  [8 <./Images/x_best.png>]
-<Images/opt.png, id=396, 770.88pt x 620.3175pt>
+<Images/opt.png, id=431, 770.88pt x 620.3175pt>
 File: Images/opt.png Graphic file (type png)
 <use Images/opt.png>
 Package pdftex.def Info: Images/opt.png  used on input line 174.
 (pdftex.def)             Requested size: 292.93744pt x 235.7231pt.
  [9 <./Images/opt.png>]
-<Images/local_exe.png, id=405, 814.04124pt x 540.0175pt>
+<Images/local_exe.png, id=440, 814.04124pt x 540.0175pt>
 File: Images/local_exe.png Graphic file (type png)
 <use Images/local_exe.png>
 Package pdftex.def Info: Images/local_exe.png  used on input line 187.
 (pdftex.def)             Requested size: 309.33888pt x 205.20877pt.
-<Images/patching.png, id=407, 762.85pt x 496.85625pt>
+<Images/patching.png, id=442, 762.85pt x 496.85625pt>
 File: Images/patching.png Graphic file (type png)
 <use Images/patching.png>
 Package pdftex.def Info: Images/patching.png  used on input line 196.
@@ -1243,84 +1252,83 @@ png>] [12
 
 ]
 Capitolo 3.
-<Images/nearest_neighborhood.png, id=438, 891.33pt x 499.8675pt>
+<Images/nearest_neighborhood.png, id=473, 891.33pt x 499.8675pt>
 File: Images/nearest_neighborhood.png Graphic file (type png)
 <use Images/nearest_neighborhood.png>
-Package pdftex.def Info: Images/nearest_neighborhood.png  used on input line 28
+Package pdftex.def Info: Images/nearest_neighborhood.png  used on input line 27
 .
 (pdftex.def)             Requested size: 356.52568pt x 199.94345pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 19--32
+Underfull \hbox (badness 10000) in paragraph at lines 19--31
 
  []
 
 [13]
-Underfull \hbox (badness 10000) in paragraph at lines 47--50
+Underfull \hbox (badness 10000) in paragraph at lines 44--47
 
  []
 
-<Images/partial_cycle.png, id=446, 835.12pt x 437.635pt>
+<Images/partial_cycle.png, id=481, 835.12pt x 437.635pt>
 File: Images/partial_cycle.png Graphic file (type png)
 <use Images/partial_cycle.png>
-Package pdftex.def Info: Images/partial_cycle.png  used on input line 54.
+Package pdftex.def Info: Images/partial_cycle.png  used on input line 50.
 (pdftex.def)             Requested size: 250.53793pt x 131.2915pt.
-[14 <./Images/nearest_neighborhood.png>]
-<Images/insertion.png, id=454, 816.04875pt x 605.26125pt>
+<Images/insertion.png, id=482, 816.04875pt x 605.26125pt>
 File: Images/insertion.png Graphic file (type png)
 <use Images/insertion.png>
-Package pdftex.def Info: Images/insertion.png  used on input line 61.
+Package pdftex.def Info: Images/insertion.png  used on input line 57.
 (pdftex.def)             Requested size: 326.41371pt x 242.1002pt.
-<Images/triangle_property.png, id=458, 730.73pt x 328.22626pt>
+
+Underfull \vbox (badness 6445) has occurred while \output is active []
+
+ [14 <./Images/nearest_neighborhood.png>]
+
+LaTeX Warning: Reference `Construction_perf' on page 15 undefined on input line
+ 69.
+
+[15 <./Images/partial_cycle.png> <./Images/insertion.png>]
+<Images/triangle_property.png, id=502, 730.73pt x 328.22626pt>
 File: Images/triangle_property.png Graphic file (type png)
 <use Images/triangle_property.png>
-Package pdftex.def Info: Images/triangle_property.png  used on input line 72.
+Package pdftex.def Info: Images/triangle_property.png  used on input line 78.
 (pdftex.def)             Requested size: 365.3641pt x 164.11272pt.
- [15 <./Images/partial_cycle.png> <./Images/insertion.png>]
-<Images/swap.png, id=467, 774.895pt x 630.355pt>
+<Images/swap.png, id=503, 774.895pt x 630.355pt>
 File: Images/swap.png Graphic file (type png)
 <use Images/swap.png>
-Package pdftex.def Info: Images/swap.png  used on input line 81.
+Package pdftex.def Info: Images/swap.png  used on input line 87.
 (pdftex.def)             Requested size: 309.95251pt x 252.13753pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 86--87
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [16 <./Images/triangle_property.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 92--93
 
  []
 
-<Images/two_optimality.png, id=470, 941.5175pt x 570.13pt>
+<Images/two_optimality.png, id=512, 941.5175pt x 570.13pt>
 File: Images/two_optimality.png Graphic file (type png)
 <use Images/two_optimality.png>
-Package pdftex.def Info: Images/two_optimality.png  used on input line 92.
+Package pdftex.def Info: Images/two_optimality.png  used on input line 98.
 (pdftex.def)             Requested size: 376.60033pt x 228.04796pt.
-[16 <./Images/triangle_property.png> <./Images/swap.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 97--99
-
- []
-
-<Images/3_swap.png, id=481, 1051.93pt x 453.695pt>
+[17 <./Images/swap.png> <./Images/two_optimality.png>]
+<Images/3_swap.png, id=523, 1051.93pt x 453.695pt>
 File: Images/3_swap.png Graphic file (type png)
 <use Images/3_swap.png>
-Package pdftex.def Info: Images/3_swap.png  used on input line 104.
+Package pdftex.def Info: Images/3_swap.png  used on input line 111.
 (pdftex.def)             Requested size: 368.18102pt x 158.79562pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [17 <./Images/two_optimality.png>]
-<Images/multistart.png, id=490, 814.04124pt x 540.0175pt>
+<Images/multistart.png, id=526, 814.04124pt x 540.0175pt>
 File: Images/multistart.png Graphic file (type png)
 <use Images/multistart.png>
-Package pdftex.def Info: Images/multistart.png  used on input line 117.
+Package pdftex.def Info: Images/multistart.png  used on input line 128.
 (pdftex.def)             Requested size: 407.01962pt x 270.00809pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
  [18 <./Images/3_swap.png>]
-<Images/VNS.png, id=499, 986.68625pt x 567.11874pt>
+<Images/VNS.png, id=537, 986.68625pt x 567.11874pt>
 File: Images/VNS.png Graphic file (type png)
 <use Images/VNS.png>
-Package pdftex.def Info: Images/VNS.png  used on input line 127.
+Package pdftex.def Info: Images/VNS.png  used on input line 142.
 (pdftex.def)             Requested size: 394.66751pt x 226.84348pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 124--131
+Underfull \hbox (badness 10000) in paragraph at lines 139--146
 
  []
 
@@ -1328,30 +1336,30 @@ Underfull \hbox (badness 10000) in paragraph at lines 124--131
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [19 <./Images/multistart.png>]
-<Images/k_opt_move.png, id=509, 948.54375pt x 467.7475pt>
+<Images/k_opt_move.png, id=547, 948.54375pt x 467.7475pt>
 File: Images/k_opt_move.png Graphic file (type png)
 <use Images/k_opt_move.png>
-Package pdftex.def Info: Images/k_opt_move.png  used on input line 151.
+Package pdftex.def Info: Images/k_opt_move.png  used on input line 166.
 (pdftex.def)             Requested size: 379.41077pt x 187.09567pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [20 <./Images/VNS.png>]
-<Images/tenure.png, id=525, 964.60374pt x 335.2525pt>
+<Images/tenure.png, id=563, 964.60374pt x 335.2525pt>
 File: Images/tenure.png Graphic file (type png)
 <use Images/tenure.png>
-Package pdftex.def Info: Images/tenure.png  used on input line 162.
+Package pdftex.def Info: Images/tenure.png  used on input line 177.
 (pdftex.def)             Requested size: 337.61636pt x 117.34013pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 167--202
+Underfull \hbox (badness 10000) in paragraph at lines 182--217
 
  []
 
 [21 <./Images/k_opt_move.png> <./Images/tenure.png>]
-<Images/simulated_anneling.png, id=536, 891.33pt x 437.635pt>
+<Images/simulated_anneling.png, id=574, 891.33pt x 437.635pt>
 File: Images/simulated_anneling.png Graphic file (type png)
 <use Images/simulated_anneling.png>
-Package pdftex.def Info: Images/simulated_anneling.png  used on input line 207.
+Package pdftex.def Info: Images/simulated_anneling.png  used on input line 222.
 
 (pdftex.def)             Requested size: 383.26443pt x 188.17938pt.
 
@@ -1359,28 +1367,28 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [22]
 [23 <./Images/simulated_anneling.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 227--229
+Underfull \hbox (badness 10000) in paragraph at lines 242--244
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 256--283
+Underfull \hbox (badness 10000) in paragraph at lines 271--298
 
  []
 
-<Images/crossover.png, id=560, 1003.75pt x 369.38pt>
+<Images/crossover.png, id=598, 1003.75pt x 369.38pt>
 File: Images/crossover.png Graphic file (type png)
 <use Images/crossover.png>
-Package pdftex.def Info: Images/crossover.png  used on input line 287.
+Package pdftex.def Info: Images/crossover.png  used on input line 302.
 (pdftex.def)             Requested size: 371.38168pt x 136.66846pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [24]
-<Images/mutation.png, id=576, 952.55875pt x 172.645pt>
+<Images/mutation.png, id=614, 952.55875pt x 172.645pt>
 File: Images/mutation.png Graphic file (type png)
 <use Images/mutation.png>
-Package pdftex.def Info: Images/mutation.png  used on input line 320.
+Package pdftex.def Info: Images/mutation.png  used on input line 335.
 (pdftex.def)             Requested size: 381.01675pt x 69.05676pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -1391,39 +1399,61 @@ Capitolo 4.
 [27
 
 ]
-<Images/perf_profile.png, id=623, 871.255pt x 529.98pt>
+<Images/perf_profile.png, id=661, 871.255pt x 529.98pt>
 File: Images/perf_profile.png Graphic file (type png)
 <use Images/perf_profile.png>
 Package pdftex.def Info: Images/perf_profile.png  used on input line 53.
 (pdftex.def)             Requested size: 261.37851pt x 158.99521pt.
  [28 <./Images/perf_profile.png>]
-<Images/pp_compact.pdf, id=633, 462.52798pt x 346.89601pt>
+<Images/pp_exact.pdf, id=671, 462.52798pt x 346.89601pt>
+File: Images/pp_exact.pdf Graphic file (type pdf)
+<use Images/pp_exact.pdf>
+Package pdftex.def Info: Images/pp_exact.pdf  used on input line 127.
+(pdftex.def)             Requested size: 370.02287pt x 277.51718pt.
+ [29 <./Images/pp_exact.pdf>]
+<Images/pp_compact.pdf, id=720, 462.52798pt x 346.89601pt>
 File: Images/pp_compact.pdf Graphic file (type pdf)
 <use Images/pp_compact.pdf>
-Package pdftex.def Info: Images/pp_compact.pdf  used on input line 93.
-(pdftex.def)             Requested size: 323.76736pt x 242.82555pt.
-) (Chapters/TSPLIB.tex [29 <./Images/pp_compact.pdf>] [30
+Package pdftex.def Info: Images/pp_compact.pdf  used on input line 164.
+(pdftex.def)             Requested size: 370.02287pt x 277.51718pt.
+ [30 <./Images/pp_compact.pdf>]
+<Images/pp_construction.pdf, id=767, 462.52798pt x 346.89601pt>
+File: Images/pp_construction.pdf Graphic file (type pdf)
+<use Images/pp_construction.pdf>
+Package pdftex.def Info: Images/pp_construction.pdf  used on input line 220.
+(pdftex.def)             Requested size: 370.02287pt x 277.51718pt.
+<Images/pp_heuristic.pdf, id=768, 462.52798pt x 346.89601pt>
+File: Images/pp_heuristic.pdf Graphic file (type pdf)
+<use Images/pp_heuristic.pdf>
+Package pdftex.def Info: Images/pp_heuristic.pdf  used on input line 257.
+(pdftex.def)             Requested size: 370.02287pt x 277.51718pt.
 
-]
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+) (Chapters/TSPlib.tex [31 <./Images/pp_construction.pdf>] [32 <./Images/pp_heu
+ristic.pdf>]
 Appendice A.
 LaTeX Font Info:    Trying to load font information for T1+cmss on input line 1
 1.
 (D:\Programs\Miktex\tex/latex/base\t1cmss.fd
 File: t1cmss.fd 2014/09/29 v2.5h Standard LaTeX font definitions
-) (Source/esempio.tsp) [31])
-(Chapters/CPLEX_func.tex [32]
+) (Source/esempio.tsp) [33
+
+])
+(Chapters/CPLEX_func.tex [34]
 Appendice B.
-<Images/cplex_structs.png, id=714, 272.01625pt x 191.71625pt>
+<Images/cplex_structs.png, id=897, 272.01625pt x 191.71625pt>
 File: Images/cplex_structs.png Graphic file (type png)
 <use Images/cplex_structs.png>
 Package pdftex.def Info: Images/cplex_structs.png  used on input line 22.
 (pdftex.def)             Requested size: 190.41006pt x 134.20045pt.
-<Images/indices_matrix.png, id=716, 293.095pt x 282.05376pt>
+<Images/indices_matrix.png, id=899, 293.095pt x 282.05376pt>
 File: Images/indices_matrix.png Graphic file (type png)
 <use Images/indices_matrix.png>
 Package pdftex.def Info: Images/indices_matrix.png  used on input line 33.
 (pdftex.def)             Requested size: 175.85834pt x 169.23355pt.
-[33
+[35
 
  <./Images/cplex_structs.png>]
 (D:\Programs\Miktex\tex/latex/listings\lstlang1.sty
@@ -1443,7 +1473,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 93--95
 
  []
 
-[34 <./Images/indices_matrix.png>]
+[36 <./Images/indices_matrix.png>]
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
@@ -1458,7 +1488,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 156--157
 
  []
 
-[35]
+[37]
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
@@ -1474,7 +1504,7 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [36]
+ [38]
 Underfull \hbox (badness 10000) in paragraph at lines 225--226
 
  []
@@ -1493,7 +1523,7 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[37]
+[39]
 Underfull \hbox (badness 10000) in paragraph at lines 281--283
 
  []
@@ -1513,11 +1543,11 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[38]
+[40]
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<Images/lazy_constraints.png, id=787, 338.26375pt x 147.55125pt>
+<Images/lazy_constraints.png, id=970, 338.26375pt x 147.55125pt>
 File: Images/lazy_constraints.png Graphic file (type png)
 <use Images/lazy_constraints.png>
 Package pdftex.def Info: Images/lazy_constraints.png  used on input line 352.
@@ -1533,7 +1563,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 375--377
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[39 <./Images/lazy_constraints.png>]
+[41 <./Images/lazy_constraints.png>]
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
@@ -1555,7 +1585,7 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[40]
+[42]
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
@@ -1591,7 +1621,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 631--632
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[41]
+[43]
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
@@ -1605,7 +1635,7 @@ spe-ci-fi-ca per il con-te-sto \T1/cmr/bx/n/10 CPX_CALLBACKCONTEXT_CANDIDATE\T1
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[42]
+[44]
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
@@ -1632,7 +1662,7 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[43] [44] [45] [46] [47] [48]
+[45] [46] [47] [48] [49] [50]
 Appendice C.
 
 Underfull \hbox (badness 10000) in paragraph at lines 6--7
@@ -1664,10 +1694,10 @@ Underfull \hbox (badness 10000) in paragraph at lines 21--28
 
  []
 
-[49
+[51
 
 ] (Source/gnuplotC.txt) (Source/gnuplotC.txt) (Source/gnuplotC.txt))
-(Chapters/Performance_python.tex [50]
+(Chapters/Performance_python.tex [52]
 Appendice D.
 
 Overfull \hbox (0.68759pt too wide) in paragraph at lines 2--3
@@ -1675,16 +1705,16 @@ Overfull \hbox (0.68759pt too wide) in paragraph at lines 2--3
 ce pro-fi-le dei di-ver-si al-go-rit-mo è perprof.py[[]].
  []
 
-<Images/profile_out.png, id=950, 500.46976pt x 401.70074pt>
+<Images/profile_out.png, id=1133, 500.46976pt x 401.70074pt>
 File: Images/profile_out.png Graphic file (type png)
 <use Images/profile_out.png>
 Package pdftex.def Info: Images/profile_out.png  used on input line 61.
 (pdftex.def)             Requested size: 300.28416pt x 241.0223pt.
-[51
+[53
 
-]) (Report.bbl [52 <./Images/profile_out.png>])
+]) (Report.bbl [54 <./Images/profile_out.png>])
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 190.
- [53
+ [55
 
 ]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 190.
@@ -1692,7 +1722,7 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 190.
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 190.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 190.
 Package rerunfilecheck Info: File `Report.out' has not changed.
-(rerunfilecheck)             Checksum: 4CCAE674AA36B22D32B682B33149FB7B;3276.
+(rerunfilecheck)             Checksum: DD92B03C3F449157B4EEE7532603CD8A;3811.
 
 
 LaTeX Warning: There were undefined references.
@@ -1702,10 +1732,10 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 27630 strings out of 492452
- 491147 string characters out of 3134016
- 801466 words of memory out of 3000000
- 31195 multiletter control sequences out of 15000+200000
+ 27673 strings out of 492452
+ 492127 string characters out of 3134016
+ 801842 words of memory out of 3000000
+ 31223 multiletter control sequences out of 15000+200000
  560577 words of font info for 81 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  50i,20n,67p,1760b,1578s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -1746,9 +1776,9 @@ ams/Miktex/fonts/type1/public/amsfonts/cm/cmsy5.pfb><D:/Programs/Miktex/fonts/t
 ype1/public/amsfonts/cm/cmsy7.pfb><D:/Programs/Miktex/fonts/type1/public/amsfon
 ts/cm/cmsy8.pfb><D:/Programs/Miktex/fonts/type1/public/amsfonts/cm/cmtt10.pfb><
 D:/Programs/Miktex/fonts/type1/public/amsfonts/cm/cmtt8.pfb>
-Output written on Report.pdf (57 pages, 1340097 bytes).
+Output written on Report.pdf (59 pages, 1399738 bytes).
 PDF statistics:
- 1868 PDF objects out of 2073 (max. 8388607)
- 421 named destinations out of 1000 (max. 500000)
- 507 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 2052 PDF objects out of 2073 (max. 8388607)
+ 433 named destinations out of 1000 (max. 500000)
+ 578 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -16,7 +16,7 @@
 
 #define HAVE_STRUCT_TIMESPEC
 #include <pthread.h>
-#define MULTI_START //Comment or not if you want multistart or not
+//#define MULTI_START //Comment or not if you want multistart or not
 
 #define STEP_SEED 100
 #define NUM_MULTI_START 12 //Number of threads in multi start and for construction in Genetic
@@ -50,7 +50,7 @@ typedef struct
 	int start_list; // 0
 } tabu_list_params;
 
-#define GRASP
+//#define GRASP
 #define MAX_LOCAL_MINS 200
 #define MAX_NUM_ITERATIONS 1000
 #define CONSTRUCTION_TYPE 0	// 0 = nearest neighborhood algorithm, 1 = insertion algorithm

@@ -214,7 +214,7 @@ void nearest_neighborhood(tsp_instance* tsp_in, int* visited_nodes, double* best
 		visited_nodes[0] = first_node;
 		nodes[visited_nodes[0]] = 1;
 		//i = first_node;//aggiunto
-	#elif
+	#else
 		visited_nodes[0] = 0;
 		nodes[0] = 1;
 	#endif
@@ -1077,7 +1077,7 @@ void tabu_search(tsp_instance* tsp_in, int* visited_nodes, double* best_cost, do
 	remaining_time = remaining_time - ((double)(end - start) / CLOCKS_PER_SEC);
 
 	int num_iteration = 0;
-	for (; num_iteration < MAX_NUM_ITERATIONS && remaining_time > 0; num_iteration++)
+	for (; remaining_time > 0; num_iteration++)
 	{
 		start = clock();
 
@@ -1096,7 +1096,7 @@ void tabu_search(tsp_instance* tsp_in, int* visited_nodes, double* best_cost, do
 
 			#ifndef MULTI_START
 			if (tsp_in->verbose > 50)
-				printf("%sfind local minimum with cost : %s%.2lf\n",GREEN, WHITE, actual_cost);
+				printf("\r%sfind local minimum: %s%.2lf",GREEN, WHITE, actual_cost);
 			#endif 
 
 		}//terminato il greedy devo riampliare la tabu list fino al massimo
@@ -1104,7 +1104,7 @@ void tabu_search(tsp_instance* tsp_in, int* visited_nodes, double* best_cost, do
 		{
 			#ifndef MULTI_START
 			if (tsp_in->verbose > 50)
-				printf("%sUpdate cost :%s %.2lf\n", BLUE, WHITE, actual_cost);
+				printf("\r%sUpdate cost :%s %.2lf      ", BLUE, WHITE, actual_cost);
 			#endif
 		}
 	
@@ -1125,7 +1125,7 @@ void tabu_search(tsp_instance* tsp_in, int* visited_nodes, double* best_cost, do
 		remaining_time = remaining_time - ((double)(end - start) / CLOCKS_PER_SEC);
 
 #ifndef MULTI_START
-		printf("/r%sRemaining time : %s%.2lf", CYAN, WHITE, remaining_time);
+		printf("%sRemaining time : %s%.2lf", CYAN, WHITE, remaining_time);
 #endif 
 
 	}
@@ -1445,19 +1445,25 @@ void simulated_annealing(tsp_instance* tsp_in, int* visited_nodes, double* best_
 	
 	//formula for the decrease of the temperature: t = (alpha)^i * t_start + t_min
 
-	for (outer_iteration = 0; t - t_min > 0.1 && remaining_time > 0.0 ; outer_iteration++)
+	for (outer_iteration = 0; remaining_time > 0.0 ; outer_iteration++)
 	{
 		int i;
 		int increase_accepted = 0;
 
 #ifndef MULTI_START
 
-		printf("%stemperature :%s %.2lf   ", BLUE, WHITE, t);
+		printf("\r%sT :%s %.2lf  %sRemaining_time :%s %.2lf ", BLUE, WHITE, t, CYAN, WHITE, remaining_time);
 
 #endif 
 
 		for (i=0; !increase_accepted; i++)
 		{
+#ifndef MULTI_START
+
+			printf("\r%sT :%s %.2lf  %sRemaining_time :%s %.2lf ", BLUE, WHITE, t, CYAN, WHITE, remaining_time);
+
+#endif 
+
 			srand( (outer_iteration+1) * (i+1) * 100);
 
 			time_t start_inner_iteration = clock();
@@ -1522,7 +1528,7 @@ void simulated_annealing(tsp_instance* tsp_in, int* visited_nodes, double* best_
 
 				#ifndef MULTI_START
 
-					printf("%simprovement cost:%s %.2lf\n", GREEN, WHITE, new_cost);
+					printf("				%simprovement cost:%s %.2lf", GREEN, WHITE, new_cost);
 
 				#endif 
 
@@ -1582,11 +1588,9 @@ void simulated_annealing(tsp_instance* tsp_in, int* visited_nodes, double* best_
 
 					#ifndef MULTI_START
 
-						printf("%snew worst cost:%s   %.2lf\n", BLUE, WHITE, new_cost);
+						printf("%snew worst cost:%s   %.2lf", BLUE, WHITE, new_cost);
 
 					#endif 
-
-					
 
 					int temp = new_visited_nodes[index_node1];
 					new_visited_nodes[index_node1] = new_visited_nodes[index_node2];
@@ -1603,10 +1607,15 @@ void simulated_annealing(tsp_instance* tsp_in, int* visited_nodes, double* best_
 
 			remaining_time = remaining_time - ((double)(end_inner_iteration - start_inner_iteration) / CLOCKS_PER_SEC);
 
-			if (remaining_time < 0)
+			if (remaining_time <= 0.0 )
 				break;
 		}
 		t = ((pow(alpha, outer_iteration+1) )* t_max) + t_min;
+		if ((t - t_min) < 0.1)
+		{
+			t = t_max;
+			outer_iteration = 0;
+		}
 	}
 }
 void genetic_solver(tsp_instance* tsp_in)

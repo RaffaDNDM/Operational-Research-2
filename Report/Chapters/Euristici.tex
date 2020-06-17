@@ -1,5 +1,5 @@
 \chapter{Algoritmi euristici}\label{HEURISTIC}
-In questo capitolo verranno trattati algoritmi euristici che non fanno uso di CPLEX. La necessità di non utilizzare CPLEX si ha per istanze con un numero elevato di nodi (10000-20000 nodi).\\
+In questo capitolo verranno trattati algoritmi euristici che non fanno uso di CPLEX. La necessità di non utilizzare CPLEX si ha per istanze con un elevato numero di nodi.\\
 Per queste istanze la risoluzione del tableau attraverso CPLEX diventerebbe molto un'operazione molto onerosa per via dell'alto numero di variabili che verrano create e su cui verrà svolto il calcolo.\\
 Attraverso gli algoritmi euristici, viene computata un'approssimazione della soluzione ottima e spesso però può essere sfruttata inizialmente dal risolutore CPLEX. Ad esempio questo può essere aggiunta prima della computazione, utilizzando la funzione \textit{CPXaddmipstarts()}, o ,se già definita, può essere modificata tramite \textit{CPXchgmipstarts()}.\\
 Un algoritmo euristico, affinchè funzioni al meglio, deve essere composto da due fasi che si alternino:
@@ -8,21 +8,20 @@ Un algoritmo euristico, affinchè funzioni al meglio, deve essere composto da du
 In questa fase la soluzione corrente viene migliorata fino al raggiungimento di un ottimo (locale o globale) nello spazio delle soluzioni.
 }
 \item{\textbf{Diversificazione}\\
-Fase in cui la soluzioni viene perturbata con una politica predefinita affinchè si allontani da un ottimo locale nello spazio delle soluzioni.
+Fase in cui la soluzione viene perturbata con una politica predefinita affinchè si allontani da un ottimo locale nello spazio delle soluzioni.
 }
 \end{itemize}
 
 
-\section{Euristici di costruzione}
-Questa prima tipologia di algoritmi euristici è necessaria per la computazione di una prima soluzione ammissibile del problema.
+\section{Algoritmi di costruzione}\label{construction_alg}
+Questa tipologia di algoritmi euristici è fondamentale per la computazione di una prima soluzione ammissibile del problema.
 \subsection{Nearest Neighborhood}
-Questo algoritmo è basato su un approccio di tipo greedy.
-L'algoritmo sceglie un nodo generico tra quelli che compongono il grafo. In seguito, iterativamente seleziona degli archi del grafo secondo il criterio enunciato nella seguente parte.\\
-All'iterazione i-esima, vengono analizzati i costi degli archi che hanno un estremo pari al nodo selezionato all'iterazione i-1.\\
-Viene selezionato l'arco che tra questi ha costo minore e il nuovo nodo raggiunto viene impostato come punto di partenza per analizzare i costi degli archi all'iterazione successiva (vedi Figura \ref{nearest_neighborhood}). All'ultima iterazione viene scelto l'arco che collega l'ultimo nodo visitato al nodo scelto inizialmente.\\
-Il problema di questo algoritmo è che in ogni iterazione viene selezionato esclusivamente il vertice più vicino a quello scelto precedentemente, senza però prevedere la futura evoluzione del ciclo, creato dall'algoritmo.\\
-Come in Figura \ref{nearest_neighborhood}, la scelta dell'arco di costo minimo non implica che in seguito venga generata la soluzione ottima. Scegliendo un nodo iniziale differente, viene generato un tour differente.\\
-Definito \textbf{n} come il numero di nodi presenti nel grafo, si avranno quindi n soluzioni differenti, ottenute ciascuna attraverso n iterazioni dell'algoritmo. In seguito tra queste possibli soluzioni, verrà selezionata quella di costo minore.\\
+Questo algoritmo è basato su un approccio di tipo greedy. L'algoritmo sceglie inizialmente un nodo generico tra quelli che compongono il grafo ed in seguito seleziona iterativamente degli archi del grafo, secondo il criterio enunciato nella seguente sezione.\\
+In ciascuna iterazione vengono analizzati gli archi uscenti dal nodo selezionato all'iterazione precedente e viene aggiunto il ramo collega l'estremo più vicino. Il nuovo nodo raggiunto verrà impostato come punto di partenza nell'analisi dei costi dell'iterazione successiva (vedi Figura \ref{nearest_neighborhood}).
+All'ultima iterazione viene selezionato invece l'arco che collega l'ultimo nodo visitato al nodo scelto randomicamente all'inizio dell'algoritmo.\\
+Il problema di questo algoritmo è che in ogni iterazione viene selezionato esclusivamente il vertice più vicino a quello scelto precedentemente, senza però cercare di prevedere e migliorare la futura evoluzione del costo del tour, creato dall'algoritmo.\\
+Come in Figura \ref{nearest_neighborhood}, la scelta dell'arco di costo minimo non implica che in seguito venga generata la soluzione ottima. La scelta del nodo iniziale è fondamentale in quanto una perturbazione della partenza genera un tour differente.\\
+Definito \textbf{n} come il numero di nodi presenti nel grafo, si avranno quindi n soluzioni differenti, ottenute ciascuna attraverso l'applicazione dell'algoritmo partendo da una diversa scelta iniziale. In seguito tra queste possibli soluzioni, verrà selezionata quella di costo minore.\\
 \begin{figure}[H] 
 \begin{center} 
   \includegraphics[scale=0.4]{Images/nearest_neighborhood}\\ 
@@ -30,25 +29,22 @@ Definito \textbf{n} come il numero di nodi presenti nel grafo, si avranno quindi
   \label{nearest_neighborhood} 
 \end{center} 
 \end{figure}
-Per migliorare l'algoritmo viene aggiunta una scelta aleatoria, utilizzando il metodo Greedy Adaptive Search Procedure (GASP). Ad ogni iterazione, invece di selezionare l'arco di costo minimo, vengono messi in evidenza i tre archi con costo minore e ne viene selezionato casualmente uno tra questi.\\
-Un'implementazione alternativa invece fa uso sia del metodo standard che del metodo GASP. In questo caso la scelta casuale non viene fatta su ogni iterazione ma con una certa periodicità fissata inizialmente.
 
 \subsection{Heuristic Insertion}
-L'algoritmo seguente usa un approcco simile al precedente ma prevede la selezione di un ciclo iniziale a cui apportare modifiche, per ottenere una soluzione iniziale ammissibile del problema. Per definire il ciclo di partenza vengono utilizzati diversi metodi. Di seguito sono riportati i due più utilizzati:
+L'algoritmo seguente usa un approcco simile al precedente ma prevede inizialmente la selezione di un ciclo a cui apportare modifiche, per ottenere una soluzione iniziale ammissibile del problema. Per definire il ciclo di partenza vengono utilizzati diversi metodi. Di seguito sono riportati i due più utilizzati:
 \begin{itemize}
 \item{\textbf{Selezione di due nodi}\\
-Vengono scelti i due nodi più lontani tra loro nel grafo o due nodi casuali e  sono selezionati i due archi orientati che li collegano.
+Vengono scelti i due nodi più lontani tra loro nel grafo, o due nodi casuali, e vegonono collegati mediante i due possibili archi orientati.
 }
 \item{\textbf{Inizializzazione geometrica}\\
-Nel caso in cui i nodi siano punti 2D, può essere calcolata la convex-hull e utilizzarla come ciclo iniziale. 
+Nel caso in cui i nodi del grafo appartengano ad uno spazio bidimensionale, ne viene calcolata la convex-hull e questa viene utilizzata come ciclo di partenza.
 }
 \end{itemize}
-In seguito a tale operazione, questa soluzione viene modificata iterativamente. Per ogni coppia di nodo non appartenente al ciclo \textbf{C}, restituito dall'iterazione precedente, viene calcolato l'extramileage $\Delta_h$ come segue:
+Questa prima soluzione viene modificata iterativamente e per ogni coppia di nodi non appartenenti al ciclo \textbf{C}, restituito dall'iterazione precedente, viene calcolato l'extramileage $\Delta_h$ come segue:
 $$\Delta_h = \underset{(a,b)\in C}{min} c_{ah}+c_{hb}-c_{ay}$$
-con $c_ij$ costo dell'arco che collega i a j (vedi Figura \ref{partial_cycle}).\\
-Alla fine di ciascuna iterazione viene aggiunto nel grafo il nodo \textbf{k} che minimizza l'\textbf{extramileage} (vedi Figura \ref{insertion}):\\
+con $c_{ij}=$ costo dell'arco che collega i a j (vedi Figura \ref{partial_cycle}).\\
+Alla fine di ciascuna iterazione viene aggiunto nel grafo il nodo \textbf{k} che minimizza l'\textbf{extra-mileage} (vedi Figura \ref{insertion}):\\
 $$k = arg\underset{h}{min}\Delta_{h}$$
-Un modo per aggiungere aleatorietà a questo algoritmo può essere quello di sfruttare l'approccio GASP nella selezione del minimo extramileage. Il nodo da aggiungere in un'iterazione al grafo, viene selezionato in modo casuale tra i tre con $\Delta$ minore.
 \begin{figure}[H] 
 \begin{center} 
   \includegraphics[scale=0.3]{Images/partial_cycle}\\ 
@@ -63,10 +59,20 @@ Un modo per aggiungere aleatorietà a questo algoritmo può essere quello di sfr
   \label{insertion}
 \end{center}
 \end{figure}
+
+\subsection{GRASP}
+Il metodo Greedy Adaptive Search Procedure (GASP) è un approccio algoritmico che permette di aggiungere una componente aleatoria alla computazione deterministica del minimo di un insieme di valori.\\
+Ad ogni iterazione dei due precedenti algoritmi di costruzione, invece di selezionare l'arco di costo minimo o l'extra-mileage minimo, vengono memorizzati i rami di costo minore e le scelte con extra-mileage minore.\\
+Tra le possibili mosse salvate, ne viene scelta randomicamente una. Nel programma sviluppato, oltre ai precedenti algoritmi di costruzione, ne sono state impplementate anche delle varianti che fanno uso del GRASP. In questo caso sono state memorizzate le tre scelte migliori in ogni iterazione.\\
+Tali varianti permettono di modificare aleatoriamente l'evoluzione del tour, in modo da evitare che, nelle ultime iterazioni dell'algoritmo, le scelte possibili siano legate esclusivamente ad elevati incrementi della funzione obiettivo.\\
+Ciò evita ad esempio che nel Nearest Neighborhood possano esserci numerose scelte come l'ultima effettuata in Figura \ref{nearest_neighborhood}.\\
+Nella Sezione \ref{Construction_perf}, vengono confrontati tramite performance profile, gli algoritmi precedentemente nominati.
+
 \section{Algoritmi di raffinamento}
-Una volta ottenuto una prima soluzione è necessario migliorarla per avvicinarsi il più possibile all'ottimo. Gli algoritmi utilizzati con questo scopo sono detti \textit{di raffinamento}. Nel capitolo precedente sono già stati descritti due procedimenti di questo tipo, l'Hard Fixing e il Soft Fixing (vedi sottosezioni \ref{hard fixing} e \ref{soft fixing}). In questa sezione verranno invece analizzati algoritmi di raffinamento che non utilizzino funzioni messe a disposizione da CPLEX.
-\subsection{Algoritmo di 2 ottimalità}
-Nelle soluzioni restituite dagli algoritmi euristici di costruzione sono spesso presenti incroci tra rami che colleghino coppie di nodi appartenenti al circuito. La loro presenza implica sempre la non ottimalità della soluzione, in quanto per le proprietà dei triangoli esisterà sempre una soluzione che eviti l'incrocio e che sia di costo minore (vedi figura \ref{cross}). 
+Una volta ottenuta una prima soluzione è necessario migliorarla per avvicinarsi il più possibile all'ottimo. Gli algoritmi utilizzati con questo scopo sono detti \textit{algoritmi di raffinamento}. Nel capitolo precedente sono già stati descritti due procedimenti di questo tipo, l'Hard Fixing e il Soft Fixing (vedi sottosezioni \ref{hard fixing} e \ref{soft fixing}). In questa sezione verranno invece analizzati algoritmi di raffinamento che non utilizzino funzioni messe a disposizione da CPLEX.
+
+\subsection{Algoritmo di 2-ottimalità}
+Nelle soluzioni restituite dagli algoritmi euristici di costruzione sono spesso presenti incroci tra coppie di rami. La loro presenza implica che la soluzione non è ottima, in quanto per le proprietà dei triangoli esisterà sempre una tour che eviti l'incrocio e che sia di costo minore (vedi Figura \ref{cross}). 
 \begin{figure}[H] 
 \begin{center} 
   \includegraphics[scale=0.5]{Images/triangle_property}
@@ -74,8 +80,8 @@ Nelle soluzioni restituite dagli algoritmi euristici di costruzione sono spesso 
   \label{cross}
 \end{center}
 \end{figure}
-Il procedimento qui descritto si pone l'obiettivo di trovare questa soluzione. Poichè la soluzione che trova si differenzia dalla precedente sempre solo per due rami (quelli che nella prima formavano l'incrocio) viene detto algoritmo di 2 ottimalità.\\
-Nell'implementazione del procedimento non è necessario cercare tutti gli incroci della soluzioni per eliminarli, ma è sufficiente analizzare tutte le coppie di rami presenti e verificare se, scambiandole con un'altra coppia ammissibile, si verifica un miglioramento.
+L'algoritmo di 2-ottimilità prende il nome dalla modalità utilizzata iterativamente per modificare la soluzione ricevuta in ingresso. In ogni iterazione viene individuato un incrocio tra due rami, appartenenti al tour. Gli estremi di tali archi vengono collegati in maniera differente. Complessivamente per ogni incrocio, viene effettutato uno scambio tra coppie di rami (2-opt move) in modo da ridurre ulteriormente il costo della soluzione restituita.\\
+Nell'implementare tale algoritmo non è necessario individuare ciascun incrocio della soluzione di partenza ma è sufficiente analizzare tutte le coppie di rami presenti e verificare se, scambiandole con un'altra coppia ammissibile, si verifichi un miglioramento della funzione obiettivo.
 \begin{figure}[H] 
 \begin{center} 
   \includegraphics[scale=0.4]{Images/swap}\\ 
@@ -83,10 +89,10 @@ Nell'implementazione del procedimento non è necessario cercare tutti gli incroc
   \label{swap}
 \end{center}
 \end{figure}
-Riferendosi alla figura \ref{swap}, questo viene così calcolato:\\
- $$\Delta = (c_{ac} + c_{bd}) - (c_{ad} + c_{bc})$$
- Solo nel caso in cui risulti $\Delta < 0$ la sostituzione viene memorizzata.\\
-In questo modo ogni nuova soluzione appartiene all'intorno di 2 ottimalità, della soluzione precedente, nello spazio delle soluzioni. Aggiornando iterativamente la soluzione si raggiunge un ottimo locale, ovvero in cui non sono possibili miglioramenti nel costo della soluzione, modificando una sola coppia di rami. Questo spostamento è rappresentato in Figura \ref{two_optimality}. 
+Riferendosi alla figura \ref{swap}, un possibile miglioramento viene calcolato come segue:\\
+$$\Delta = (c_{ac} + c_{bd}) - (c_{ad} + c_{bc})$$
+e solo nel caso in cui $\Delta$ sia negativo, la sostituzione viene effettuata.\\
+Applicando una 2-opt move al circuito attuale, viene generato un tour appartenente all'intorno di 2-ottimalità della precedente soluzione. Ripetendo iterativamente tale procedimento si raggiunge un ottimo locale, in cui non esistono più possibili miglioramenti della funzione obiettivo. Questo processo è rappresentato in Figura \ref{two_optimality}. 
 \begin{figure}[H] 
 \begin{center} 
   \includegraphics[scale=0.4]{Images/two_optimality}\\ 
@@ -94,11 +100,12 @@ In questo modo ogni nuova soluzione appartiene all'intorno di 2 ottimalità, del
   \label{two_optimality}
 \end{center}
 \end{figure}
-Un analogo procedimento viene utilizzato anche nell'algoritmo Soft Fixing, in cui però la dimensione dell'intorno in cui cercare la nuova soluzione può variare (vedi Figura \ref{local_exe}).\\
-Poichè il calcolo del $\Delta$ avviene in tempo costante e deve essere fatto per ogni coppia di rami, il tempo complessivo per la computazione è $O(n^2)$, con $n$ nodi nell'istanza del problema.\\
-
+Poichè il calcolo del $\Delta$ avviene in tempo costante e deve essere fatto per ogni coppia di rami, il tempo complessivo per la computazione è $O(n^2)$, con $n$ nodi dell'istanza del problema.\\
+Un procedimento analogo a tale algoritmo viene utilizzato anche nel Soft Fixing, in cui però la dimensione dell'intorno in cui cercare la nuova soluzione varia (vedi Figura \ref{local_exe}).\\
+Nel programma sviluppato, è stata utilizzata questo algoritmo per rimuovere gli incroci all'interno del tour.
+ 
 \subsection{Algoritmo di 3 ottimalità}
-L'algoritmo di 3 ottimalità è analogo a quello analizzato nella sezione precedente, ma considera intorni di 3 ottimalità, nello spazio delle soluzioni, per aggiornare il circuito corrente. In questo caso, quindi, due soluzioni si differenziano per 3 rami, che devono essere scelti con particolare attenzione essendo in maggior numero le possibilità di scelta (vedi Figura \ref{three_optimality}).
+L'algoritmo di 3 ottimalità è analogo a quello analizzato nella sezione precedente, ma considera intorni di grandezza maggiore. In questo caso, quindi, due soluzioni nell'intorno differiscono per 3 rami. In Figura \ref{three_optimality} viene riportata la rappresentazione delle possibili 3-opt move.
 \begin{figure}[H] 
 \begin{center} 
   \includegraphics[scale=0.35]{Images/3_swap}
@@ -106,20 +113,28 @@ L'algoritmo di 3 ottimalità è analogo a quello analizzato nella sezione preced
   \label{three_optimality}
 \end{center}
 \end{figure}
-Rimanendo comunque in quantità costante, l'algoritmo impiega in tutto $O(n^3)$ (con $n$ numero di nodi) per trovare un ottimo locale, essendo $O(n^3)$ il numero di terne di rami esistenti. Su istante con un alto numero di nodi, questo tempo computazione può essere troppo elevato per il calcolo di una soluzione. 
+L'algoritmo impiega in tutto $O(n^3)$ (con $n$ numero di nodi) per trovare un ottimo locale, essendo $O(n^3)$ il numero di terne di rami esistenti e poichè il numero di possibili scambi di 3 ottimalità è costante. Su istanze con un elevato numero di nodi, il tempo di calcolo risulterebbe essere troppo lungo per il calcolo di una soluzione.\\
+All'interno del programma sviluppato, non è stata implementato tale algoritmo.
+
 \section{Meta-euristici}
-Gli algoritmi di raffinamento appena visti si occupano di migliorare il più possibile una soluzione già calcolata attraverso meccanismi di local serch. In questo modo, dopo un determinato numero di iterazioni, viene raggiunto un ottimo locale. Le metodologie che vengono descritte in questa sezione cercano di aggiornare questa soluzione allontanandola dall'ottimo locale e convogliandola in un ottimo globale, se possibile. Possono quindi essere descritti come algoritmi euristici per progettare altri euristici, per definizione non sono quindi in grado di garantire il raggiungimento dell'ottimo globale.\\
-Questi procedimenti sono più generali di quelli descritti fin'ora, applicabili anche ad istanze di problemi diversi e non solo del commesso viaggiatore. 
+Gli algoritmi di raffinamento appena visti si occupano di migliorare il più possibile una soluzione già calcolata attraverso meccanismi di local search. In questo modo, dopo un determinato numero di iterazioni, viene raggiunto un ottimo locale.\\
+Gli algoritmi descritti in questa sezione perturbano la soluzione allontanandola dall'attuale ottimo locale e cercando di avvicinarsi il più possibile all'ottimo globale.\\
+Questi metodi rappresentano approcci più generali di quelli descritti precedentemente e sono plasmabili e applicabili anche a problemi dfferenti rispetto al TSP. Tali tecniche infatti permettono essenzialmente di espolarare lo spazio delle soluzioni, evitando di stazionare in minimi o massimi locali con valori della funzione obiettivo molto lontani dall'ottimo globale.
+
 \subsection{Multi-start}
-Un primo e intuitivo approccio per allontanarsi da un ottimo locale è quello descritto  dalla politica multi-starting: applicare l'algoritmo di raffinamento scelto a diverse soluzioni iniziali. In questo modo si raggiungono ottimi locali diversi (come mostrato in Figura \ref{multi_starting})e viene restituita la soluzione corrispondente al costo minore. 
+Un primo e intuitivo approccio per allontanarsi da un ottimo locale è quello descritto dalla politica multi-start. Questa consiste nel definire diverse soluzioni attraverso un algoritmo di costruzione tra quelli descritti, ad esempio, nella Sezione \ref{construction_alg}. A ciascuno di esse viene poi applicato un algoritmo di raffinazione e viene scelta solo quella con costo migliore tra tutte le soluzioni generate. In questo modo vengono analizzati diversi ottimi locali nello spazio delle soluzioni (vedi Figura \ref{multi_start}. 
 \begin{figure}[H] 
 \begin{center} 
   \includegraphics[scale=0.5]{Images/multistart}\\ 
   \caption{\footnotesize{Due possibile esecuzioni di un algoritmo di raffinamento con partenze da due soluzioni diverse.}}
-  \label{multi_starting}
+  \label{multi_start}
 \end{center}
 \end{figure}
-Un aspetto negativo di questo approccio, però, è il fatto che ogni volta che viene selezionata una soluzione di partenza diversa si perdono le informazioni ottenute dalla computazione precedente che ha già raggiunto un ottimo locale.
+Un lato negativo di tale approccio consiste nel fatto che ogni volta che viene scelta una nuova soluzione di partenza, vengono perse le informazioni relative alla sequenza ottenuta utilizzando un altro tour iniziale.\\
+La soluzione implementata all'interno del programma è basata sul multithreading. Infatti viene generato un numero di soluzioni pari al numero di thread specificati.\\
+Ciascun thread genera parallelamente agli altri una nuova soluzione e solo al termine della computazione, la confronta con la migliore. Nel caso in cui il costo della soluzione trovata sia inferiore a questa, la aggiorna. \\
+Nella Sezione \ref{construction_perf} viene analizzato il costo ottenuto dalla nostra implementazione, utilizzando 12 thread e modificando l'algoritmo di costruzione utilizzato.
+
 \subsection{Variable Neighborhood Search}
 Una volta ottenuta una soluzione corrispondente ad un ottimo locale nella funzione di costo si può cercare di migliorarla analizzando i suoi intorni di ottimalità di raggio crescente. Questo però non garantisce un effettivo cambiamento della soluzione. Il Variable Neighborhood Search (VNS) è un algoritmo che sfrutta questa ricerca. Nel caso non si verifichi un aggiornamento della soluzione prevede che vengano scelti un certi numero di rami randomici da sostituire con altri non appartenenti alla soluzione, in maniera casuale \cite{VNS}. In questo modo si impone un aggiornamento con una crescita del costo, nella speranza che nel nuovo intorno selezionato sia possibile trovare una soluzione che si allontani dall'iniziale ottimo locale (Figura \ref{VNS_img}).\\
  \begin{figure}[H] 
@@ -155,7 +170,7 @@ $\mathtt{t \gets RANDOM(}\{1,...,n\}\mathtt{)}$\;
 \end{figure}
 
 \subsection{Tabu search}%inserire nostra implementazione delle mosse vietate
-L'approccio Tabu search fu ideato da Fred W. Glover \cite{Tabu}. Data una soluzione in un ottimo locale dello spazio delle soluzioni, l'idea di Glover permette di aggiornarla anche con una di costo più elevato (generalmente si cerca di minimizzare questo peggioramento). Per evitare che all'iterazione successiva si ritorni nella soluzione di partenza, viene creata una lista di "mosse vietate" , detta Tabu list, che impedisca di raggiungere nuovamente l'ottimo locale. In questo modo la soluzione aumenta di costo per un certo numero di iterazioni, finchè non ricomincia a diminuire per raggiungere un nuovo minimo locale o globale. Nel caso in cui si incontri una soluzione che migliori l'incumbent senza rispettare tutti i vincoli presenti nella Tabu list, l'algoritmo aggiorna ugualmente la soluzione corrente. Questo meccanismo viene detto \textit{Aspiration criterion}.\\ 
+L'approccio Tabu search fu ideato da Fred W. Glover \cite{Tabu}. Data una soluzione in un ottimo locale dello spazio delle soluzioni, l'idea di Glover permette di aggiornarla anche con una di costo più elevato (generalmente si cerca di minimizzare questo peggioramento). Per evitare che all'iterazione successiva si ritorni nella soluzione di partenza, viene creata una lista di "mosse vietate", detta Tabu list, che impedisca di raggiungere nuovamente l'ottimo locale. In questo modo la soluzione aumenta di costo per un certo numero di iterazioni, finchè non ricomincia a diminuire per raggiungere un nuovo minimo locale o globale. Nel caso in cui si incontri una soluzione che migliori l'incumbent senza rispettare tutti i vincoli presenti nella Tabu list, l'algoritmo aggiorna ugualmente la soluzione corrente. Questo meccanismo viene detto \textit{Aspiration criterion}.\\ 
 Aumentando costantemente di dimensione la lista Tabu si rischia, ad un certo punto, che non sia più possibile aggiornare la soluzione. Per evitare ciò generalmente viene scelta una capienza massima (detta \textit{tenure}) della lista, una volta raggiunta la lista viene aggiornata rispettando la politica FIFO (first in first out). Per far si che l'algoritmo oscilli tra la fase di diversificazione e quella di intensificazione, la tenure viene fatta variare durante le diverse iterazioni tra due valori (massimo e minimo) (vedi Figura \ref{tenure}). Nelle iterazioni in cui è massima si verifica la diversificazione, in quelle in cui è minima l'intensificazione. Se viene applicata questa scelta implementativa l'algoritmo è chiamato \textit{Reactive Tabu Search}.
  \begin{figure}[H] 
 \begin{center} 

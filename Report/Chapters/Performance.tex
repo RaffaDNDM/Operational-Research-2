@@ -59,7 +59,78 @@ Spesso questi grafici vengono rappresentati in scala logaritmica per notare al m
 Per creare il performance profile degli algoritmi implementati, è stato utilizzato il programma python riportato nella Sezione \ref{perf_profile_py}. 
 
 \section{Analisi degli algoritmi sviluppati}
-\subsection{Modelli compatti}
+\subsection{Algoritmi esatti}
+\subsubsection{Modelli simmetrici}
+\begin{center}
+\begin{multicols}{4}
+\begin{itemize}
+\item{a280.tsp}
+\item{ali535.tsp}
+\item{att48.tsp}
+\item{att532.tsp}
+\item{berlin52.tsp}
+\item{bier127.tsp}
+\item{burma14.tsp}
+\item{ch130.tsp}
+\item{ch150.tsp}
+\item{d198.tsp}
+\item{d493.tsp}
+\item{d657.tsp}
+\item{eil51.tsp}
+\item{eil76.tsp}
+\item{eil101.tsp}
+\item{fl417.tsp}
+\item{gil262.tsp}
+\item{gr96.tsp}
+\item{gr137.tsp}
+\item{gr202.tsp}
+\item{gr229.tsp}
+\item{gr431.tsp}
+\item{gr666.tsp}
+\item{kroA100.tsp}
+\item{kroA150.tsp}
+\item{kroA200.tsp}
+\item{kroB100.tsp}
+\item{kroB150.tsp}
+\item{kroB200.tsp}
+\item{kroC100.tsp}
+\item{kroD100.tsp}
+\item{kroE100.tsp}
+\item{lin105.tsp}
+\item{lin318.tsp}
+\item{p654.tsp}
+\item{pcb442.tsp}
+\item{pr76.tsp}
+\item{pr107.tsp}
+\item{pr124.tsp}
+\item{pr136.tsp}
+\item{pr144.tsp}
+\item{pr152.tsp}
+\item{pr226.tsp}
+\item{pr264.tsp}
+\item{pr299.tsp}
+\item{pr439.tsp}
+\item{rat99.tsp}
+\item{rat195.tsp}
+\item{rat575.tsp}
+\item{rat783.tsp}
+\item{rd100.tsp}
+\item{rd400.tsp}
+\item{st70.tsp}
+\end{itemize}
+\end{multicols}
+\end{center}
+
+\begin{figure}[h] 
+\begin{center} 
+  % Requires \usepackage{graphicx} 
+  \includegraphics[scale=0.8]{Images/pp_exact}\\ 
+  \caption{\footnotesize{Performance profile degli algoritmi esatti.}}
+  \label{perf_profile} 
+\end{center} 
+\end{figure}
+
+\subsubsection{Modelli compatti}
 \begin{center}
 \begin{multicols}{3}
 \begin{itemize}
@@ -90,8 +161,101 @@ Per creare il performance profile degli algoritmi implementati, è stato utilizz
 \begin{figure}[h] 
 \begin{center} 
   % Requires \usepackage{graphicx} 
-  \includegraphics[scale=0.7]{Images/pp_compact}\\ 
+  \includegraphics[scale=0.8]{Images/pp_compact}\\ 
   \caption{\footnotesize{Performance profile degli algoritmi compatti.}}
+  \label{perf_profile} 
+\end{center} 
+\end{figure}
+
+\subsection{Algoritmi math-euristici}
+
+\subsection{Algoritmi euristici}
+\subsubsection{Multi-start}\label{construction_perf}
+\begin{center}
+\begin{multicols}{4}
+\begin{itemize}
+\item{a280.tsp}
+\item{ali535.tsp}
+\item{att532.tsp}
+\item{d1291.tsp}
+\item{d1665.tsp}
+\item{d2103.tsp}
+\item{d493.tsp}
+\item{d657.tsp}
+\item{dsj1000.tsp}
+\item{fl1400.tsp}
+\item{fl1577.tsp}
+\item{fl417.tsp}
+\item{gil262.tsp}
+\item{gr431.tsp}
+\item{gr666.tsp}
+\item{lin318.tsp}
+\item{nrw1379.tsp}
+\item{p654.tsp}
+\item{pcb1173.tsp}
+\item{pcb442.tsp}
+\item{pr1002.tsp}
+\item{pr299.tsp}
+\item{pr439.tsp}
+\item{rat575.tsp}
+\item{rat783.tsp}
+\item{rd400.tsp}
+\item{rl1304.tsp}
+\item{rl1323.tsp}
+\item{rl1889.tsp}
+\item{u1060.tsp}
+\item{u1432.tsp}
+\item{u1817.tsp}
+\item{u574.tsp}
+\item{u724.tsp}
+\item{vm1084.tsp}
+\item{vm1748.tsp}
+\end{itemize}
+\end{multicols}
+\end{center}
+
+\begin{figure}[h] 
+\begin{center} 
+  % Requires \usepackage{graphicx} 
+  \includegraphics[scale=0.8]{Images/pp_construction}\\ 
+  \caption{\footnotesize{Confronto dei vari multistart in base all'algoritmo di costruzione.}}
+  \label{perf_profile} 
+\end{center} 
+\end{figure}
+
+\subsubsection{Algoritmi meta-euristici}
+\begin{center}
+\begin{multicols}{3}
+\begin{itemize}
+\item{d1291.tsp}
+\item{d1655.tsp} 
+\item{d2103.tsp} 
+\item{dsj1000.tsp}
+\item{fl1400.tsp} 
+\item{fl1577.tsp} 
+\item{nrw1379.tsp} 
+\item{pcb1173.tsp} 
+\item{pr1002.tsp}
+\item{pr2392.tsp}
+\item{rl1304.tsp}
+\item{rl1323.tsp}
+\item{rl1889.tsp}
+\item{u1060.tsp} 
+\item{u1432.tsp}
+\item{u1817.tsp}
+\item{u2152.tsp}
+\item{u2319.tsp}
+\item{vm1084.tsp}
+\item{vm1748.tsp}
+\end{itemize}
+\end{multicols}
+\end{center}
+
+\begin{figure}[h] 
+\begin{center} 
+  % Requires \usepackage{graphicx} 
+  \includegraphics[scale=0.8]{Images/pp_heuristic}\\ 
+  \caption{\footnotesize{Confronto degli algoritmi meta-euristici sviluppati utilizzando il Nearest Neighborhood come algoritmo di costruzione.}}
   \label{perf_profile} 
 \end{center} 
 \end{figure}
