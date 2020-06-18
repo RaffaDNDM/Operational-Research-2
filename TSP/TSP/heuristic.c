@@ -797,9 +797,10 @@ void greedy_refinement(tsp_instance* tsp_in, int* visited_nodes, double* best_co
 
 void hybrid_vns(tsp_instance* tsp_in, int* visited_nodes, double* best_cost, double deadline)
 {
+	//static int count=0;
 	srand(time(NULL));
 
-	printf("COST: %lf\n\n", *best_cost);
+	printf("COST: %.2lf\n\n", *best_cost);
 	double remaining_time = deadline;
 
 	int* local_min_visited_nodes = (int*)calloc((size_t)tsp_in->num_nodes, sizeof(int));
@@ -813,11 +814,20 @@ void hybrid_vns(tsp_instance* tsp_in, int* visited_nodes, double* best_cost, dou
 
 	while (remaining_time > 0)
 	{
+		//printf("%d %.2lf\n", count, local_min_cost);
+		//count++;
+
+		double** inverse_costs = (double**)calloc((size_t)max_k, sizeof(double*));
+
+		for(i=0; i<max_k; i++)
+			inverse_costs[i] = (double*)calloc((size_t) tsp_in->num_nodes, sizeof(double));
+
+		double inverse_costs_sum = 1.0 / local_min_cost;
+		
 		int k = 1;
 		for (; k <= max_k && remaining_time > 0; k++)
 		{
 			time_t start = clock();
-			//printf("    k: %d\n", k);
 			int* kopt_visited_nodes = (int*) calloc((size_t)tsp_in->num_nodes, sizeof(int));
 			double kopt_cost = local_min_cost;
 
@@ -826,7 +836,7 @@ void hybrid_vns(tsp_instance* tsp_in, int* visited_nodes, double* best_cost, dou
 				kopt_visited_nodes[i] = local_min_visited_nodes[i];
 			}
 
-			if (min_kopt_sequence(tsp_in, kopt_visited_nodes, &kopt_cost, k))
+			if (min_kopt_sequence(tsp_in, kopt_visited_nodes, &kopt_cost, k, inverse_costs, &inverse_costs_sum))
 			{
 				greedy_refinement(tsp_in, kopt_visited_nodes, &kopt_cost);
 				
@@ -841,12 +851,11 @@ void hybrid_vns(tsp_instance* tsp_in, int* visited_nodes, double* best_cost, dou
 						local_min_visited_nodes[i] = kopt_visited_nodes[i];
 					}
 
-
 					time_t end = clock();
-					remaining_time = remaining_time - ((double)(end - start) / CLOCKS_PER_SEC);
-					
+					remaining_time = remaining_time - ((double)(end - start) / (double) CLOCKS_PER_SEC);
+
 					#ifndef MULTI_START
-						printf("\r%sRemaining time : %s%.2lf  %.2lf ", CYAN, WHITE, remaining_time, *best_cost);
+						printf("\r%sRemaining time : %s%.2lf  %.2lf ", CYAN, WHITE, remaining_time, *best_cost);	
 					#endif
 
 					free(kopt_visited_nodes);
@@ -855,7 +864,7 @@ void hybrid_vns(tsp_instance* tsp_in, int* visited_nodes, double* best_cost, dou
 			}
 
 			time_t end = clock();
-			remaining_time = remaining_time - ((double)(end - start) / CLOCKS_PER_SEC);
+			remaining_time = remaining_time - ((double)(end - start) / (double) CLOCKS_PER_SEC);
 
 			#ifndef MULTI_START
 				printf("\r%sRemaining time : %s%.2lf  %.2lf ", CYAN, WHITE, remaining_time, *best_cost);
@@ -863,15 +872,26 @@ void hybrid_vns(tsp_instance* tsp_in, int* visited_nodes, double* best_cost, dou
 			free(kopt_visited_nodes);
 		}
 
+		time_t start = clock();
+		if(remaining_time>0 && k > max_k)
+			new_random_sol(tsp_in, local_min_visited_nodes, &local_min_cost, inverse_costs, &inverse_costs_sum);
 
-		if (k > max_k)
-			new_random_sol(tsp_in, local_min_visited_nodes, &local_min_cost);
+		for (i = 0; i < max_k; i++)
+			free(inverse_costs[i]);
+
+		free(inverse_costs);
+		time_t end = clock();
+		remaining_time = remaining_time - ((double)(end - start) / (double)CLOCKS_PER_SEC);
+		#ifndef MULTI_START
+			printf("\r%sRemaining time : %s%.2lf  %.2lf ", CYAN, WHITE, remaining_time, *best_cost);
+		#endif
+
 	}
 	printf("\n");
 	free(local_min_visited_nodes);
 }
 
-int min_kopt_sequence(tsp_instance* tsp_in, int* kopt_visited_nodes, double* kopt_cost, int k)
+int min_kopt_sequence(tsp_instance* tsp_in, int* kopt_visited_nodes, double* kopt_cost, int k, double** inverse_costs, double* inverse_costs_sum)
 {
 	int i = 0;
 	double best_delta = 0.0;
@@ -930,6 +950,9 @@ int min_kopt_sequence(tsp_instance* tsp_in, int* kopt_visited_nodes, double* kop
 				delta += (c_new[j] - c_old[j]);
 		}
 
+		inverse_costs[k-1][i] = 1.0 / (delta + (*kopt_cost));
+		(*inverse_costs_sum) += inverse_costs[k-1][i];
+
 		if (delta < best_delta)
 		{
 			best_delta = delta;
@@ -950,12 +973,34 @@ int min_kopt_sequence(tsp_instance* tsp_in, int* kopt_visited_nodes, double* kop
 	return 0;
 }
 
-int new_random_sol(tsp_instance* tsp_in, int* local_min_visited_nodes, double* local_cost)
+int new_random_sol(tsp_instance* tsp_in, int* local_min_visited_nodes, double* local_cost, double** inverse_costs, double* inverse_costs_sum)
 {
-	int first = rand() % tsp_in->num_nodes;
-	
-	int k = rand() % (tsp_in->num_nodes - 2);
-	int second = (first + k) % tsp_in->num_nodes;
+	int first=0;
+	int second=0;
+	int k=1;
+
+	double sum = 0.0;
+	int i;
+	int found=0;
+	for (i = 0; i < (ceil(tsp_in->num_nodes / 2)) && !found; i++)
+	{
+		int j = 0;
+		for (; j < tsp_in->num_nodes; j++)
+		{
+			double choice = (double)(rand() % ((int)(((*inverse_costs_sum)/ inverse_costs[i][j])*1000.0)));
+			
+			if (choice<1000.0)
+			{
+				first = j;
+				second = (j + i+1)%tsp_in->num_nodes;
+				k = i+1;
+				found = 1;
+				break;
+			}
+		}
+	}
+
+	//printf("first: %d second: %d\n", first, second);
 
 	double delta = 0.0;
 	if (tsp_in->integerDist)
@@ -977,8 +1022,6 @@ int new_random_sol(tsp_instance* tsp_in, int* local_min_visited_nodes, double* l
 			num_changes = 4;
 		}
 
-
-		int i;
 		for (i = 0; i < num_changes; i++)
 			delta += (double)(c_new[i] - c_old[i]);
 	}
@@ -1001,7 +1044,6 @@ int new_random_sol(tsp_instance* tsp_in, int* local_min_visited_nodes, double* l
 			num_changes = 4;
 		}
 
-		int i;
 		for (i = 0; i < num_changes; i++)
 			delta += (c_new[i] - c_old[i]);
 	}
@@ -1036,20 +1078,19 @@ void succ_construction(int* visited_nodes, int* succ, int num_nodes)//succ deve 
 
 void tabu_search(tsp_instance* tsp_in, int* visited_nodes, double* best_cost, double deadline)
 {
+	static int count = 0;
 	time_t start = clock();
 	double remaining_time = deadline;
 
 	int* succ = (int*)calloc((size_t)tsp_in->num_nodes, sizeof(int));
 	succ_construction(visited_nodes, succ, tsp_in->num_nodes);
 
-	#ifndef MULTI_START
+#ifndef MULTI_START
 	if (tsp_in->verbose > 50)
-		printf("%sStarting cost :%s%.2lf\n",RED, WHITE, *best_cost);
-	#endif 
-
-	#ifndef MULTI_START
-	if (tsp_in->verbose > 50)
-		printf("%sCost after first greedy :%s %.2lf\n",GREEN, WHITE, *best_cost);
+	{		//printf("%sStarting cost :%s%.2lf\n",RED, WHITE, *best_cost);
+		printf("%d %.2lf\n", count, *best_cost);
+		count++;
+	}
 	#endif 
 	
 	int min_tenure = ceil(tsp_in->num_nodes / 10.0);
@@ -1095,19 +1136,27 @@ void tabu_search(tsp_instance* tsp_in, int* visited_nodes, double* best_cost, do
 			greedy_refinement_for_tabu_search(tsp_in, succ, tabu_list, &param, max_tenure, min_tenure, &num_tabu_edges, &actual_cost);
 
 			#ifndef MULTI_START
+			/*
 			if (tsp_in->verbose > 50)
+			{
 				printf("\r%sfind local minimum: %s%.2lf",GREEN, WHITE, actual_cost);
+			}
+			*/
 			#endif 
 
 		}//terminato il greedy devo riampliare la tabu list fino al massimo
 		else
 		{
+			
 			#ifndef MULTI_START
-			if (tsp_in->verbose > 50)
-				printf("\r%sUpdate cost :%s %.2lf      ", BLUE, WHITE, actual_cost);
+			//if (tsp_in->verbose > 50)
+			//	printf("\r%sUpdate cost :%s %.2lf      ", BLUE, WHITE, actual_cost);
 			#endif
+			
 		}
-	
+		printf("%d %.2lf\n", count, actual_cost);
+		count++;
+
 		if (actual_cost < *best_cost)//controllare precisione
 		{
 			*best_cost = actual_cost;
@@ -1125,7 +1174,7 @@ void tabu_search(tsp_instance* tsp_in, int* visited_nodes, double* best_cost, do
 		remaining_time = remaining_time - ((double)(end - start) / CLOCKS_PER_SEC);
 
 #ifndef MULTI_START
-		printf("%sRemaining time : %s%.2lf", CYAN, WHITE, remaining_time);
+		//printf("%sRemaining time : %s%.2lf", CYAN, WHITE, remaining_time);
 #endif 
 
 	}
@@ -1419,11 +1468,12 @@ void greedy_refinement_for_tabu_search(tsp_instance* tsp_in, int* succ, int** ta
 
 void simulated_annealing(tsp_instance* tsp_in, int* visited_nodes, double* best_cost, double deadline)
 {
+	static int count_cost = 0;
 	//visited_nodes contiene la prima soluzione calcolata esternamente alla funzione, best cost il suo costo
 	#ifndef MULTI_START
-
-	printf("%sStarting cost:%s %.2lf\n", RED, WHITE, *best_cost);
-
+	printf("%d %.2lf\n", count_cost, *best_cost);
+	count_cost++;
+	//printf("%sStarting cost:%s %.2lf\n", RED, WHITE, *best_cost);
 	#endif 
 
 	int outer_iteration;
@@ -1452,7 +1502,7 @@ void simulated_annealing(tsp_instance* tsp_in, int* visited_nodes, double* best_
 
 #ifndef MULTI_START
 
-		printf("\r%sT :%s %.2lf  %sRemaining_time :%s %.2lf ", BLUE, WHITE, t, CYAN, WHITE, remaining_time);
+		//printf("\r%sT :%s %.2lf  %sRemaining_time :%s %.2lf ", BLUE, WHITE, t, CYAN, WHITE, remaining_time);
 
 #endif 
 
@@ -1460,7 +1510,7 @@ void simulated_annealing(tsp_instance* tsp_in, int* visited_nodes, double* best_
 		{
 #ifndef MULTI_START
 
-			printf("\r%sT :%s %.2lf  %sRemaining_time :%s %.2lf ", BLUE, WHITE, t, CYAN, WHITE, remaining_time);
+			//printf("\r%sT :%s %.2lf  %sRemaining_time :%s %.2lf ", BLUE, WHITE, t, CYAN, WHITE, remaining_time);
 
 #endif 
 
@@ -1527,9 +1577,8 @@ void simulated_annealing(tsp_instance* tsp_in, int* visited_nodes, double* best_
 				*/
 
 				#ifndef MULTI_START
-
-					printf("				%simprovement cost:%s %.2lf", GREEN, WHITE, new_cost);
-
+				//printf("				%simprovement cost:%s %.2lf", GREEN, WHITE, new_cost);
+				//printf("%d %.2lf\n", count, new_cost);
 				#endif 
 
 				int temp = new_visited_nodes[index_node1];
@@ -1539,6 +1588,12 @@ void simulated_annealing(tsp_instance* tsp_in, int* visited_nodes, double* best_
 				cost = new_cost;
 
 				greedy_refinement(tsp_in, new_visited_nodes, &cost);
+
+				if (count_cost <= 1000)
+				{
+					printf("%d %.2lf\n", count_cost, cost);
+					count_cost++;
+				}
 
 				if (cost < *best_cost)
 				{
@@ -1587,9 +1642,12 @@ void simulated_annealing(tsp_instance* tsp_in, int* visited_nodes, double* best_
 					*/
 
 					#ifndef MULTI_START
-
-						printf("%snew worst cost:%s   %.2lf", BLUE, WHITE, new_cost);
-
+						//printf("%snew worst cost:%s   %.2lf", BLUE, WHITE, new_cost);
+					if (count_cost <= 1000)
+					{
+						printf("%d %.2lf\n", count_cost, cost);
+						count_cost++;
+					}
 					#endif 
 
 					int temp = new_visited_nodes[index_node1];
@@ -1662,14 +1720,12 @@ void genetic_solver(tsp_instance* tsp_in)
 
 	if (tsp_in->integerDist)
 	{
-		int worst = 0;
 		printf("worst cost: INF     ");
 		printf("incumbent: INF     ");
 		printf("average: INF");
 	}
 	else
 	{
-		double worst = 0.0;
 		printf("worst cost: INF     ");
 		printf("incumbent: INF     ");
 		printf("average: INF");
@@ -1800,7 +1856,7 @@ void construction(void* param)
 	pthread_mutex_lock(&mutex);
 
 	*(args->num_instances) += args->num_members;
-	/*printf("\r[%s", GREEN);
+	printf("\r[%s", GREEN);
 
 	i = 0;
 	int update = (((double)*(args->num_instances)) / (double)(POPULATION_SIZE)) * 10.0;
@@ -1814,8 +1870,7 @@ void construction(void* param)
 	}
 
 	printf("%s] %3d %%     ", WHITE, (int)(update * 10.0));
-	*/
-
+	
 	if (args->tsp_in->integerDist)
 	{
 		if (best_cost < args->tsp_in->bestCostI)
@@ -1840,7 +1895,6 @@ void construction(void* param)
 		{
 			args->tsp_in->bestCostD = best_cost;
 			*args->best_index = best_index;
-			printf("[%d] COMPARE %.2lf   wrong: %.2lf", best_index, best_cost, best_wrong_cost);
 		}
 
 		/*
@@ -1869,11 +1923,10 @@ void evolution(tsp_instance* tsp_in, int** members, double* fitnesses, int* best
 	int num_epochs = 0;
 	time_t end = clock();
 	printf("\n%s", LINE);
-	printf("%s[Construction phase]  ", RED);
-	printf("%sbest index:%s %5d\n", GREEN, WHITE, *best_index);
+	printf("incumbent: %.2lf  average: %.2lf\n", tsp_in->bestCostD, *sum_fitnesses/((double) POPULATION_SIZE));
 	int index=0; //first_index of worst_members
 
-	while (num_epochs < 150 && (((double)(end - start) / (double)CLOCKS_PER_SEC)) < tsp_in->deadline)
+	while ((((double)(end - start) / (double)CLOCKS_PER_SEC)) < tsp_in->deadline)
 	{
 		//printf("Sum_fitnesses: %.2lf      \n", (*sum_fitnesses));
 		if (index%NUM_WORST_MEMBERS == 0)
@@ -1893,6 +1946,7 @@ void evolution(tsp_instance* tsp_in, int** members, double* fitnesses, int* best
 			else
 				printf("%s[Crossover]%s      added instances: %d     incumbent: %.2lf    average: %.2lf\n",
 					RED, WHITE, index, tsp_in->bestCostD, *sum_fitnesses / (double)POPULATION_SIZE);
+				//printf("%d %.2lf %.2lf\n", num_epochs-1, tsp_in->bestCostD, *sum_fitnesses / (double)POPULATION_SIZE);
 		}
 		else
 		{
@@ -1904,6 +1958,7 @@ void evolution(tsp_instance* tsp_in, int** members, double* fitnesses, int* best
 			else
 				printf("%s[Mutation]%s       added instances: %d     incumbent: %.2lf    average: %.2lf\n",
 					BLUE, WHITE, index, tsp_in->bestCostD, *sum_fitnesses / (double)POPULATION_SIZE);
+				//printf("%d %.2lf %.2lf\n", num_epochs-1, tsp_in->bestCostD, *sum_fitnesses / (double)POPULATION_SIZE);
 		}
 
 		printf("%sbest index:%s %5d\n", GREEN, WHITE, *best_index);

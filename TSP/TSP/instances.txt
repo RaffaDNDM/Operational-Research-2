@@ -1,5 +1,12 @@
-heuristic_instances/u1817.tsp
-heuristic_instances/u2152.tsp
-heuristic_instances/u2319.tsp
-heuristic_instances/vm1084.tsp
-heuristic_instances/vm1748.tsp
+heuristic_instances/d1291.tsp
+heuristic_instances/d1655.tsp
+heuristic_instances/d2103.tsp
+heuristic_instances/dsj1000.tsp
+heuristic_instances/fl1400.tsp
+heuristic_instances/fl1577.tsp
+heuristic_instances/nrw1379.tsp
+heuristic_instances/pcb1173.tsp
+heuristic_instances/pr1002.tsp
+heuristic_instances/pr2392.tsp
+heuristic_instances/rl1304.tsp
+heuristic_instances/rl1323.tsp

@@ -21,7 +21,7 @@
 #define STEP_SEED 100
 #define NUM_MULTI_START 12 //Number of threads in multi start and for construction in Genetic
 #define POPULATION_SIZE 12000 //Size of the population
-#define NUM_WORST_MEMBERS 2000 //Size of the buffer with indices of worst members in the population
+#define NUM_WORST_MEMBERS 1000 //Size of the buffer with indices of worst members in the population
 
 typedef struct
 {
@@ -87,9 +87,9 @@ void greedy_refinement(tsp_instance* tsp_in, int* visited_nodes, double * cost);
 
 void hybrid_vns(tsp_instance* tsp_in, int* visited_nodes, double* best_cost, double deadline);
 
-int min_kopt_sequence(tsp_instance* tsp_in, int* kopt_visited_nodes, double* kopt_cost, int k);
+int min_kopt_sequence(tsp_instance* tsp_in, int* kopt_visited_nodes, double* kopt_cost, int k, double** inverse_costs, double* inverse_costs_sum);
 
-int new_random_sol(tsp_instance* tsp_in, int* local_min_visited_nodes, double* local_cost);
+int new_random_sol(tsp_instance* tsp_in, int* local_min_visited_nodes, double* local_cost, double** inverse_costs, double* inverse_costs_sum);
 
 void update_solution(int* visited_nodes, double* sol, int num_nodes);
 

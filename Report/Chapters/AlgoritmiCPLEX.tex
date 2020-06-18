@@ -106,9 +106,9 @@ Un primo algoritmo euristico di semplice implementazione si basa sull'impostazio
 Il numero di questi sarà dato da una percentuale fissata del totale. I rami appartenenti alla selezione vengono fissati di modo tale che, in una successiva computazione del problema, appartengano alla soluzione restituita;}
 \end{enumerate} 
 Questi passaggi vengono eseguiti in maniera ciclica per un numero fissato di iterazioni. In questo modo, ad ogni computazione della soluzione, CPLEX dovrà risolvere un problema più semplice di quello originale, essendo molte variabile del modello già selezionate nella \textbf{fase 3} dell'iterazione precedente.\\
-Il time limit nominato nella \textbf{fase 1} è dato da una frazione della deadline complessiva e dipende dal numero di iterazioni totali che si desidera compiere. Ad ogni computazione la soluzione potrà essere solo migliore o uguale alla precedente (nel caso peggiore).\\
+Il time limit nominato \textbf{fase 1} è dato da una frazione della deadline complessiva e dipende dal numero di valori di diverse percentuali che si desidera utilizzare. All'ultima iterazione il time limit viene ricalcolato in base al tempo rimanente affinchè venga sfruttata tutta la deadline disponibile. Ad ogni computazione la soluzione potrà essere solo migliore o uguale alla precedente (nel caso peggiore).\\
 La percentuale scelta del numero di rami da fissare può variare ad ogni iterazione. Generalmente si cerca di avere una percentuale alta nelle prime iterazione, in cui la soluzione non è ancora stata raffinata, e di abbassarla man mano che si procede con l'algoritmo. In questo modo nelle ultime computazione CPLEX avrà un maggior numero di gradi di libertà per trovare la soluzione che più si avvicina all'ottimo. Poichè i rami selezionati nella \textbf{fase 3} sono scelti in maniera casuale, non si corre il rischio di entrare in un ciclo infinito, in cui viene risolto ogni volta la stessa istanza con le stesse variabili fissate. Particolare attenzione deve essere posta al fatto di lasciare nell'insieme dei rami scelti randomicamente solo quelli selezionate all'iterazione immediatamente precedente.\\
-Nella nostra implementazione abbiamo scelto di iterare l'algoritmo per 6 volte, ognuna con una deadline di 10 minuti, e di utilizzare rispettivamente come percentuale i seguenti valori $\lbrace$ 90, 75, 50, 25, 10, 0 $\rbrace$.\\
+Nella nostra implementazione abbiamo scelto di utilizzare come percentuale i seguenti valori $\lbrace$ 90, 75, 50, 25, 10, 0 $\rbrace$.\\
 Di seguito viene inoltre riportato lo pseudocodice dell'algoritmo appena descritto.
 \begin{figure}[h] 
 \begin{center} 
@@ -203,8 +203,14 @@ $min \begin{cases}
 \Delta' \;(a,b)\;=c_{ab} + c_{b'a'} - c_{aa'} - c_{bb'}\\ 
 \end{cases}
 \forall \; a,b \in V : comp(a)\neq comp(b)$
-\\\\L'operazione di fusione di due componenti connesse può essere ripetuta finché la soluzione non diventa ammissibile, approssimativamente dimezzando ad ogni iterazione il numero di componenti presenti. In questo modo, al termine, è possibile restituire una soluzione accettabile ma senza garanzie di essere ottima.\\
-Complessivamente il costo di quest'algoritmo è $O(n^2)$, dove $n$ è il numero di nodi.
+\\\\
+L'operazione di fusione di due componenti connesse può essere ripetuta finché la soluzione non diventa ammissibile. In questo modo, al termine, è possibile restituire una soluzione accettabile, ma senza garanzia che sia ottima.\\
+Nella nostra implementazione è stato scelto di mantenere invariata ad ogni iterazione una delle componenti connesse e di espanderla fondendola a quella più vicina. Grazie a questa scelta viene minimizzato il numero di rami per cui è necessario modificare la struttura dati che li memorizza.\\
+Per poter implementare l'algoritmo è necessario utilizzare due diversi tipi di callback messe a disposizione da CPLEX. La prima appartiene alla tipologia delle lazyconstraintcallback  ed è necessaria per ricevere la soluzione trovata dal programma e rielaborarla. A questa soluzione viene applicato l'algoritmo di patching ed il risultato viene memorizzato all'interno in una struttura dati accessibile anche dalla seconda callback dell'utente. Per garantire che la user-callback sia thread-safe, la struttura dati nominata è stata organizzata di  modo tale che ogni thread accedesse ad una sua specifica porzione.\\
+La seconda callback necessaria è un heuristic callback e permette all'utente di suggerire a CPLEX una soluzione da cui proseguire la computazione. Questa soluzione sarà quella memorizzata nella struttura dati dalla prima callback e verrà utilizzata dal
+programma solo nel caso in cui sia migliore dell'incumbent attuale.\\
+Utilizzando, invece, le generic callback non è necessario implementare due diverse user-callback. è sufficiente invocare la callback in due diversi contesti (uno per ricevere la soluzione di cplex, (CPX\_CALLBACKCONTEXT\_CANDIDATE) e l'altro per suggerire il risultato del patching (CPX\_CALLBACKCONTEXT\_LOCAL\_PROGRESS)). I due diversi casi andranno gestiti dall'interno della funzione stessa.\\
+Complessivamente il costo di quest'algoritmo è $O(n^2)$, dove $n$ è il numero di nodi.(verificare)
 
 \begin{algorithm}[H]
 \DontPrintSemicolon
