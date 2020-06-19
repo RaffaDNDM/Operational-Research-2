@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2020.1.11)  18 JUN 2020 23:10
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2020.1.11)  19 JUN 2020 16:26
 entering extended mode
 **./Report.tex
 (Report.tex
@@ -1420,63 +1420,58 @@ Package pdftex.def Info: Images/perf_profile.png  used on input line 53.
 <Images/pp_exact.pdf, id=671, 462.52798pt x 346.89601pt>
 File: Images/pp_exact.pdf Graphic file (type pdf)
 <use Images/pp_exact.pdf>
-Package pdftex.def Info: Images/pp_exact.pdf  used on input line 127.
+Package pdftex.def Info: Images/pp_exact.pdf  used on input line 126.
 (pdftex.def)             Requested size: 370.02287pt x 277.51718pt.
  [29 <./Images/pp_exact.pdf>]
 <Images/pp_compact.pdf, id=720, 462.52798pt x 346.89601pt>
 File: Images/pp_compact.pdf Graphic file (type pdf)
 <use Images/pp_compact.pdf>
-Package pdftex.def Info: Images/pp_compact.pdf  used on input line 164.
+Package pdftex.def Info: Images/pp_compact.pdf  used on input line 163.
 (pdftex.def)             Requested size: 370.02287pt x 277.51718pt.
  [30 <./Images/pp_compact.pdf>]
 <Images/pp_construction.pdf, id=767, 462.52798pt x 346.89601pt>
 File: Images/pp_construction.pdf Graphic file (type pdf)
 <use Images/pp_construction.pdf>
-Package pdftex.def Info: Images/pp_construction.pdf  used on input line 220.
+Package pdftex.def Info: Images/pp_construction.pdf  used on input line 219.
 (pdftex.def)             Requested size: 370.02287pt x 277.51718pt.
 <Images/pp_heuristic.pdf, id=768, 462.52798pt x 346.89601pt>
 File: Images/pp_heuristic.pdf Graphic file (type pdf)
 <use Images/pp_heuristic.pdf>
-Package pdftex.def Info: Images/pp_heuristic.pdf  used on input line 257.
+Package pdftex.def Info: Images/pp_heuristic.pdf  used on input line 256.
 (pdftex.def)             Requested size: 370.02287pt x 277.51718pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<Images/cost_vns.png, id=769, 520.94624pt x 341.77687pt>
+<Images/cost_vns.png, id=769, 483.30562pt x 350.05782pt>
 File: Images/cost_vns.png Graphic file (type png)
 <use Images/cost_vns.png>
-Package pdftex.def Info: Images/cost_vns.png  used on input line 266.
-(pdftex.def)             Requested size: 416.75757pt x 273.42186pt.
+Package pdftex.def Info: Images/cost_vns.png  used on input line 265.
+(pdftex.def)             Requested size: 338.31163pt x 245.03879pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<Images/cost_tabu.png, id=770, 554.07pt x 365.11406pt>
+<Images/cost_tabu.png, id=770, 485.56406pt x 353.06906pt>
 File: Images/cost_tabu.png Graphic file (type png)
 <use Images/cost_tabu.png>
-Package pdftex.def Info: Images/cost_tabu.png  used on input line 275.
-(pdftex.def)             Requested size: 443.2566pt x 292.09163pt.
-
-Overfull \hbox (16.46526pt too wide) in paragraph at lines 275--275
- [] 
- []
-
+Package pdftex.def Info: Images/cost_tabu.png  used on input line 274.
+(pdftex.def)             Requested size: 339.89252pt x 247.14665pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<Images/cost_sa.png, id=771, 502.87875pt x 344.03531pt>
+<Images/cost_sa.png, id=771, 485.56406pt x 363.60844pt>
 File: Images/cost_sa.png Graphic file (type png)
 <use Images/cost_sa.png>
-Package pdftex.def Info: Images/cost_sa.png  used on input line 284.
-(pdftex.def)             Requested size: 402.30354pt x 275.22862pt.
+Package pdftex.def Info: Images/cost_sa.png  used on input line 283.
+(pdftex.def)             Requested size: 339.89252pt x 254.52417pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<Images/cost_genetic.png, id=772, 432.86719pt x 309.40594pt>
+<Images/cost_genetic.png, id=772, 489.32813pt x 347.79938pt>
 File: Images/cost_genetic.png Graphic file (type png)
 <use Images/cost_genetic.png>
-Package pdftex.def Info: Images/cost_genetic.png  used on input line 293.
-(pdftex.def)             Requested size: 346.2942pt x 247.52509pt.
+Package pdftex.def Info: Images/cost_genetic.png  used on input line 292.
+(pdftex.def)             Requested size: 342.52734pt x 243.4579pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
@@ -1493,12 +1488,12 @@ File: t1cmss.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 ])
 (Chapters/CPLEX_func.tex [36]
 Appendice B.
-<Images/cplex_structs.png, id=917, 272.01625pt x 191.71625pt>
+<Images/cplex_structs.png, id=924, 272.01625pt x 191.71625pt>
 File: Images/cplex_structs.png Graphic file (type png)
 <use Images/cplex_structs.png>
 Package pdftex.def Info: Images/cplex_structs.png  used on input line 22.
 (pdftex.def)             Requested size: 190.41006pt x 134.20045pt.
-<Images/indices_matrix.png, id=919, 293.095pt x 282.05376pt>
+<Images/indices_matrix.png, id=926, 293.095pt x 282.05376pt>
 File: Images/indices_matrix.png Graphic file (type png)
 <use Images/indices_matrix.png>
 Package pdftex.def Info: Images/indices_matrix.png  used on input line 33.
@@ -1597,7 +1592,7 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<Images/lazy_constraints.png, id=990, 338.26375pt x 147.55125pt>
+<Images/lazy_constraints.png, id=997, 338.26375pt x 147.55125pt>
 File: Images/lazy_constraints.png Graphic file (type png)
 <use Images/lazy_constraints.png>
 Package pdftex.def Info: Images/lazy_constraints.png  used on input line 352.
@@ -1755,7 +1750,7 @@ Overfull \hbox (0.68759pt too wide) in paragraph at lines 2--3
 ce pro-fi-le dei di-ver-si al-go-rit-mo è perprof.py[[]].
  []
 
-<Images/profile_out.png, id=1153, 500.46976pt x 401.70074pt>
+<Images/profile_out.png, id=1160, 500.46976pt x 401.70074pt>
 File: Images/profile_out.png Graphic file (type png)
 <use Images/profile_out.png>
 Package pdftex.def Info: Images/profile_out.png  used on input line 61.
@@ -1784,7 +1779,7 @@ LaTeX Warning: There were multiply-defined labels.
 Here is how much of TeX's memory you used:
  27711 strings out of 492452
  492913 string characters out of 3134016
- 802016 words of memory out of 3000000
+ 802019 words of memory out of 3000000
  31251 multiletter control sequences out of 15000+200000
  560577 words of font info for 81 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1826,9 +1821,9 @@ ams/Miktex/fonts/type1/public/amsfonts/cm/cmsy5.pfb><D:/Programs/Miktex/fonts/t
 ype1/public/amsfonts/cm/cmsy7.pfb><D:/Programs/Miktex/fonts/type1/public/amsfon
 ts/cm/cmsy8.pfb><D:/Programs/Miktex/fonts/type1/public/amsfonts/cm/cmtt10.pfb><
 D:/Programs/Miktex/fonts/type1/public/amsfonts/cm/cmtt8.pfb>
-Output written on Report.pdf (61 pages, 1484444 bytes).
+Output written on Report.pdf (61 pages, 1485837 bytes).
 PDF statistics:
- 2074 PDF objects out of 2487 (max. 8388607)
+ 2081 PDF objects out of 2487 (max. 8388607)
  439 named destinations out of 1000 (max. 500000)
  598 words of extra memory for PDF output out of 10000 (max. 10000000)
 

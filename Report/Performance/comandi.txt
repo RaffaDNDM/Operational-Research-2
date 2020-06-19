@@ -1,4 +1,4 @@
 python perfprof.py -D ',' -T 1200 -S 2 -M 35 compact.csv ../Images/pp_compact.pdf -P "Algoritmi compatti" -X "Time ratio"
 python perfprof.py -D ',' -T 1200 -S 2 -M 14 exact.csv ../Images/pp_exact.pdf -P "Algoritmi esatti" -X "Time ratio"
 python perfprof.py -D ',' -M 1.085 construction.csv ../Images/pp_construction.pdf -P "Algoritmi di costruzione" -X "Cost ratio"
-python perfprof.py -D ',' -T 1200 -S 2 -M 1.05 nn_heuristic.csv ../Images/pp_heuristic.pdf -P "Algoritmi meta-euristici" -X "Time ratio"
+python perfprof.py -D ',' -T 1200 -S 2 -M 1.06 nn_heuristic.csv ../Images/pp_heuristic.pdf -P "Algoritmi meta-euristici" -X "Time ratio"

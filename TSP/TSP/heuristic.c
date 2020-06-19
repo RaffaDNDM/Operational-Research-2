@@ -180,8 +180,8 @@ void* computeSolution(void* param)
 	double best_cost = 0.0;
 	int* visited_nodes = (int*)calloc((size_t) args->tsp_in->num_nodes, sizeof(int));
 
-	//time_t start = clock();
-	//double remaining_time = args->tsp_in->deadline -( (double)(start - args->start) / (double) CLOCKS_PER_SEC );
+	time_t start = clock();
+	double remaining_time = args->tsp_in->deadline -( (double)(start - args->start) / (double) CLOCKS_PER_SEC );
 
 	srand(args->seed);
 	if (!CONSTRUCTION_TYPE)
@@ -191,8 +191,8 @@ void* computeSolution(void* param)
 
 	greedy_refinement(args->tsp_in, visited_nodes, &best_cost);
 
-	//time_t end_first_generation = clock();
-	//remaining_time = remaining_time - ((double)(end_first_generation-start)/(double)CLOCKS_PER_SEC);
+	time_t end_first_generation = clock();
+	remaining_time = remaining_time - ((double)(end_first_generation-start)/(double)CLOCKS_PER_SEC);
 
 	#ifndef MULTI_START
 	switch (args->tsp_in->alg)
@@ -1635,7 +1635,7 @@ void simulated_annealing(tsp_instance* tsp_in, int* visited_nodes, double* best_
 
 				if (count_cost <= 1000)
 				{
-					printf("%d %.2lf\n", count_cost, cost);
+					printf("%d; %.2lf\n", count_cost, cost);
 					count_cost++;
 				}
 
@@ -1683,22 +1683,23 @@ void simulated_annealing(tsp_instance* tsp_in, int* visited_nodes, double* best_
 					printf("node1: visited_nodes[%d]=%d     node2: visited_nodes[%d] = %d\n",
 						index_node1, new_visited_nodes[index_node1], index_node2, new_visited_nodes[index_node2]);
 					printf("\033[0m");
-					*/
-
-					#ifndef MULTI_START
-						//printf("%snew worst cost:%s   %.2lf", BLUE, WHITE, new_cost);
-					if (count_cost <= 1000)
-					{
-						printf("%d %.2lf\n", count_cost, cost);
-						count_cost++;
-					}
-					#endif 
+					*/ 
 
 					int temp = new_visited_nodes[index_node1];
 					new_visited_nodes[index_node1] = new_visited_nodes[index_node2];
 					new_visited_nodes[index_node2] = temp;
 
 					cost = new_cost;
+
+					#ifndef MULTI_START
+					//printf("%snew worst cost:%s   %.2lf", BLUE, WHITE, new_cost);
+					if (count_cost <= 1000)
+					{
+						printf("%d; %.2lf\n", count_cost, cost);
+						count_cost++;
+					}
+
+					#endif
 
 					increase_accepted = 1;
 				}

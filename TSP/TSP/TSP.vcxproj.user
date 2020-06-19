@@ -5,7 +5,7 @@
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LocalDebuggerCommandArguments>-dir heuristic_instances -alg /8 -v 70 -np -dead 600</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>-f all_instances/bier127.tsp -alg /10 -v 70 -np </LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
 </Project>

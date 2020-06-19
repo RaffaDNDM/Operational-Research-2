@@ -1,3 +1,5 @@
-heuristic_instances/dsj1000.tsp
-heuristic_instances/fl1400.tsp
-heuristic_instances/fl1577.tsp
+heuristic_instances/u1817.tsp
+heuristic_instances/u2152.tsp
+heuristic_instances/u2319.tsp
+heuristic_instances/vm1084.tsp
+heuristic_instances/vm1748.tsp
