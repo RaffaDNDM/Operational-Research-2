@@ -19,7 +19,7 @@
 //#define MULTI_START //Comment or not if you want multistart or not
 
 #define STEP_SEED 100
-#define NUM_MULTI_START 8 //Number of threads in multi start and for construction in Genetic
+#define NUM_MULTI_START 12 //Number of threads in multi start and for construction in Genetic
 #define POPULATION_SIZE 12000 //Size of the population
 #define NUM_WORST_MEMBERS 1000 //Size of the buffer with indices of worst members in the population
 #define FIXED_TIME_MS
@@ -48,10 +48,10 @@ typedef struct
 typedef struct
 {
 	int end_list;//-1
-	int start_list; // 0
+	int start_list; //0
 } tabu_list_params;
 
-//#define GRASP
+#define GRASP
 #define MAX_LOCAL_MINS 200
 #define MAX_NUM_ITERATIONS 1000
 #define CONSTRUCTION_TYPE 0	// 0 = nearest neighborhood algorithm, 1 = insertion algorithm

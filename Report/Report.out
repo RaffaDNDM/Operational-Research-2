@@ -1,15 +1,15 @@
 \BOOKMARK [0][-]{chapter.1}{Introduzione}{}% 1
 \BOOKMARK [0][-]{chapter.2}{Risoluzione del problema tramite CPLEX}{}% 2
 \BOOKMARK [1][-]{section.2.1}{Modelli compatti}{chapter.2}% 3
-\BOOKMARK [2][-]{subsection.2.1.1}{Formulazione sequenziale}{section.2.1}% 4
-\BOOKMARK [2][-]{subsection.2.1.2}{Formulazione basata sul flusso}{section.2.1}% 5
-\BOOKMARK [1][-]{section.2.2}{Loop}{chapter.2}% 6
-\BOOKMARK [2][-]{subsection.2.2.1}{Formulazione di Benders}{section.2.2}% 7
+\BOOKMARK [2][-]{subsection.2.1.1}{Formulazione di Miller, Tucker e Zemlin}{section.2.1}% 4
+\BOOKMARK [2][-]{subsection.2.1.2}{Formulazione di Gavish e Graves}{section.2.1}% 5
+\BOOKMARK [1][-]{section.2.2}{Algoritmi Esatti}{chapter.2}% 6
+\BOOKMARK [2][-]{subsection.2.2.1}{Loop}{section.2.2}% 7
 \BOOKMARK [2][-]{subsection.2.2.2}{Formulazione con callback}{section.2.2}% 8
-\BOOKMARK [1][-]{section.2.3}{Algoritmi Math-Heuristic}{chapter.2}% 9
-\BOOKMARK [2][-]{subsection.2.3.1}{Hard Fixing}{section.2.3}% 10
-\BOOKMARK [2][-]{subsection.2.3.2}{Soft Fixing}{section.2.3}% 11
-\BOOKMARK [2][-]{subsection.2.3.3}{Patching algorithm}{section.2.3}% 12
+\BOOKMARK [2][-]{subsection.2.2.3}{Patching algorithm}{section.2.2}% 9
+\BOOKMARK [1][-]{section.2.3}{Algoritmi Math-Heuristic}{chapter.2}% 10
+\BOOKMARK [2][-]{subsection.2.3.1}{Hard Fixing}{section.2.3}% 11
+\BOOKMARK [2][-]{subsection.2.3.2}{Soft Fixing}{section.2.3}% 12
 \BOOKMARK [0][-]{chapter.3}{Algoritmi euristici}{}% 13
 \BOOKMARK [1][-]{section.3.1}{Algoritmi di costruzione}{chapter.3}% 14
 \BOOKMARK [2][-]{subsection.3.1.1}{Nearest Neighborhood}{section.3.1}% 15
@@ -45,10 +45,9 @@
 \BOOKMARK [2][-]{subsection.Alph2.2.3}{Lazy constraints}{section.Alph2.2}% 45
 \BOOKMARK [2][-]{subsection.Alph2.2.4}{Lazy Constraint Callback}{section.Alph2.2}% 46
 \BOOKMARK [2][-]{subsection.Alph2.2.5}{Heuristic Callback}{section.Alph2.2}% 47
-\BOOKMARK [2][-]{subsection.Alph2.2.6}{Lazy Constraint Callback General}{section.Alph2.2}% 48
-\BOOKMARK [2][-]{subsection.Alph2.2.7}{Algoritmi Euristici}{section.Alph2.2}% 49
-\BOOKMARK [1][-]{section.Alph2.3}{Parametri}{appendix.Alph2}% 50
-\BOOKMARK [1][-]{section.Alph2.4}{Costanti utili}{appendix.Alph2}% 51
-\BOOKMARK [0][-]{appendix.Alph3}{Gnuplot}{}% 52
-\BOOKMARK [0][-]{appendix.Alph4}{Performance profile in python}{}% 53
-\BOOKMARK [0][-]{figure.caption.73}{Bibliografia}{}% 54
+\BOOKMARK [2][-]{subsection.Alph2.2.6}{Generic Callback}{section.Alph2.2}% 48
+\BOOKMARK [1][-]{section.Alph2.3}{Parametri}{appendix.Alph2}% 49
+\BOOKMARK [1][-]{section.Alph2.4}{Costanti utili}{appendix.Alph2}% 50
+\BOOKMARK [0][-]{appendix.Alph3}{Gnuplot}{}% 51
+\BOOKMARK [0][-]{appendix.Alph4}{Performance profile in python}{}% 52
+\BOOKMARK [0][-]{figure.caption.72}{Bibliografia}{}% 53

@@ -1,5 +1,4 @@
-heuristic_instances/u1817.tsp
-heuristic_instances/u2152.tsp
-heuristic_instances/u2319.tsp
-heuristic_instances/vm1084.tsp
-heuristic_instances/vm1748.tsp
+genetic_instances/pr264.tsp
+genetic_instances/pr299.tsp
+genetic_instances/rd400.tsp
+genetic_instances/u159.tsp

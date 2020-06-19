@@ -1122,19 +1122,15 @@ void succ_construction(int* visited_nodes, int* succ, int num_nodes)//succ deve 
 
 void tabu_search(tsp_instance* tsp_in, int* visited_nodes, double* best_cost, double deadline)
 {
-	static int count = 0;
 	time_t start = clock();
 	double remaining_time = deadline;
 
 	int* succ = (int*)calloc((size_t)tsp_in->num_nodes, sizeof(int));
 	succ_construction(visited_nodes, succ, tsp_in->num_nodes);
 
-#ifndef MULTI_START
-	if (tsp_in->verbose > 50)
-	{		//printf("%sStarting cost :%s%.2lf\n",RED, WHITE, *best_cost);
-		printf("%d %.2lf\n", count, *best_cost);
-		count++;
-	}
+	#ifndef MULTI_START
+	if (tsp_in->verbose > 50)	
+		printf("%sStarting cost :%s%.2lf\n",RED, WHITE, *best_cost);
 	#endif 
 	
 	int min_tenure = ceil(tsp_in->num_nodes / 10.0);
@@ -1180,12 +1176,10 @@ void tabu_search(tsp_instance* tsp_in, int* visited_nodes, double* best_cost, do
 			greedy_refinement_for_tabu_search(tsp_in, succ, tabu_list, &param, max_tenure, min_tenure, &num_tabu_edges, &actual_cost);
 
 			#ifndef MULTI_START
-			/*
 			if (tsp_in->verbose > 50)
 			{
 				printf("\r%sfind local minimum: %s%.2lf",GREEN, WHITE, actual_cost);
 			}
-			*/
 			#endif 
 
 		}//terminato il greedy devo riampliare la tabu list fino al massimo
@@ -1193,13 +1187,11 @@ void tabu_search(tsp_instance* tsp_in, int* visited_nodes, double* best_cost, do
 		{
 			
 			#ifndef MULTI_START
-			//if (tsp_in->verbose > 50)
-			//	printf("\r%sUpdate cost :%s %.2lf      ", BLUE, WHITE, actual_cost);
+			if (tsp_in->verbose > 50)
+				printf("\r%sUpdate cost :%s %.2lf      ", BLUE, WHITE, actual_cost);
 			#endif
 			
 		}
-		printf("%d %.2lf\n", count, actual_cost);
-		count++;
 
 		if (actual_cost < *best_cost)//controllare precisione
 		{
@@ -1217,12 +1209,11 @@ void tabu_search(tsp_instance* tsp_in, int* visited_nodes, double* best_cost, do
 		end = clock();
 		remaining_time = remaining_time - ((double)(end - start) / CLOCKS_PER_SEC);
 
-#ifndef MULTI_START
-		//printf("%sRemaining time : %s%.2lf", CYAN, WHITE, remaining_time);
-#endif 
+		#ifndef MULTI_START
+			printf("%sRemaining time : %s%.2lf", CYAN, WHITE, remaining_time);
+		#endif 
 
 	}
-
 
 	free(succ);
 	free(tabu_list[0]);
@@ -1515,9 +1506,9 @@ void simulated_annealing(tsp_instance* tsp_in, int* visited_nodes, double* best_
 	static int count_cost = 0;
 	//visited_nodes contiene la prima soluzione calcolata esternamente alla funzione, best cost il suo costo
 	#ifndef MULTI_START
-	printf("%d %.2lf\n", count_cost, *best_cost);
+	//printf("%d %.2lf\n", count_cost, *best_cost);
 	count_cost++;
-	//printf("%sStarting cost:%s %.2lf\n", RED, WHITE, *best_cost);
+	printf("%sStarting cost:%s %.2lf\n", RED, WHITE, *best_cost);
 	#endif 
 
 	int outer_iteration;
@@ -1546,17 +1537,15 @@ void simulated_annealing(tsp_instance* tsp_in, int* visited_nodes, double* best_
 
 #ifndef MULTI_START
 
-		//printf("\r%sT :%s %.2lf  %sRemaining_time :%s %.2lf ", BLUE, WHITE, t, CYAN, WHITE, remaining_time);
+		printf("\r%sT :%s %.2lf  %sRemaining_time :%s %.2lf ", BLUE, WHITE, t, CYAN, WHITE, remaining_time);
 
 #endif 
 
 		for (i=0; !increase_accepted; i++)
 		{
-#ifndef MULTI_START
-
-			//printf("\r%sT :%s %.2lf  %sRemaining_time :%s %.2lf ", BLUE, WHITE, t, CYAN, WHITE, remaining_time);
-
-#endif 
+			#ifndef MULTI_START
+				printf("\r%sT :%s %.2lf  %sRemaining_time :%s %.2lf ", BLUE, WHITE, t, CYAN, WHITE, remaining_time);
+			#endif 
 
 			srand( (outer_iteration+1) * (i+1) * 100);
 
@@ -1621,7 +1610,7 @@ void simulated_annealing(tsp_instance* tsp_in, int* visited_nodes, double* best_
 				*/
 
 				#ifndef MULTI_START
-				//printf("				%simprovement cost:%s %.2lf", GREEN, WHITE, new_cost);
+				printf("				%simprovement cost:%s %.2lf", GREEN, WHITE, new_cost);
 				//printf("%d %.2lf\n", count, new_cost);
 				#endif 
 
@@ -1633,11 +1622,13 @@ void simulated_annealing(tsp_instance* tsp_in, int* visited_nodes, double* best_
 
 				greedy_refinement(tsp_in, new_visited_nodes, &cost);
 
+				/*
 				if (count_cost <= 1000)
 				{
-					printf("%d; %.2lf\n", count_cost, cost);
+					//printf("%d; %.2lf\n", count_cost, cost);
 					count_cost++;
 				}
+				*/
 
 				if (cost < *best_cost)
 				{
@@ -1692,13 +1683,13 @@ void simulated_annealing(tsp_instance* tsp_in, int* visited_nodes, double* best_
 					cost = new_cost;
 
 					#ifndef MULTI_START
-					//printf("%snew worst cost:%s   %.2lf", BLUE, WHITE, new_cost);
-					if (count_cost <= 1000)
+					printf("%snew worst cost:%s   %.2lf", BLUE, WHITE, new_cost);
+					/*if (count_cost <= 1000)
 					{
 						printf("%d; %.2lf\n", count_cost, cost);
 						count_cost++;
 					}
-
+					*/
 					#endif
 
 					increase_accepted = 1;
@@ -2012,7 +2003,7 @@ void evolution(tsp_instance* tsp_in, int** members, double* fitnesses, int* best
 		num_epochs++;
 	}
 
-	printf(LINE);
+	printf("\n%s",LINE);
 	tsp_in->execution_time = ((double)(end - start) / (double)CLOCKS_PER_SEC);
 }
 

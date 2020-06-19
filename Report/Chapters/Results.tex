@@ -1,0 +1,11 @@
+\chapter{Risultati}
+\csvreader[
+    longtable={lccc},
+    table head={\caption{Tempi di esecuzione con time limit di 10 minuti.}
+        \toprule
+        & \textbf{MTZ (con lazy constraint)}(s) & \textbf{MTZ}(s) & \textbf{GG}(s) \\ 
+        \midrule
+        \endhead},
+    late after line=\\,
+    late after last line=\\\bottomrule,
+    ]{compact.csv}{1=\file ,2=\mtzL ,3=\mtz ,4=\gg}{\textit{\file} & \mtzL  & \mtz & \gg}

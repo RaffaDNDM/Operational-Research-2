@@ -1,8 +1,8 @@
 \chapter{Gnuplot}\label{gnuplot}
-Una volta ottenuta la soluzione del problema di ottimizzazione, viene disegnato il grafo per facilitare all'utente la comprensione della sua correttezza. Per fare ciò viene utilizzato Gnuplot, un programma di tipo command-driven.\\
+Nella nostra implementazione, una volta ottenuta la soluzione del problema di ottimizzazione, ne viene disegnato il grafo per facilitare all'utente la comprensione della sua correttezza. Per fare ciò viene sfruttato GNUplot, un programma di tipo command-driven.\\
 Per poterlo utilizzare all'interno del proprio programma esistono due metodi:
 \begin{itemize}
-\item{Collegare la libreria ed invocare le sue funzioni all'interno del nostro programma}
+\item{Collegare la libreria ed invocare le sue funzioni all'interno del programma}
 \item{Collegare l'eseguibile interattivo al proprio programma. In questo caso i comandi deve essere passati all'eseguibile attraverso un file di testo e l'utilizzo di un pipe.}\\
 \end{itemize}
 In questa trattazione è stato scelto il secondo metodo. All'interno del file è possibile specificare a Gnuplot le caratteristiche grafiche che deve aver il grafo. Di seguito viene riportato un esempio di tale file.\\
@@ -19,9 +19,9 @@ coordinata_x   coordinata_y   posizione_in_tour
 \end{tabular}
 \end{center}
 \textbf{coordinata\_x} rappresenta la coordinata x del nodo;\\
-\textbf{posizione\_in\_tour} rappresenta la coordinata y del nodo;\\
+\textbf{coordinata\_y} rappresenta la coordinata y del nodo;\\
 \textbf{posizione\_in\_tour} rappresenta l'ordine del nodo all'interno del tour, assunto come nodo di origine il nodo 1.\\\\
-Il grafico viene generato dal comando \textbf{plot}, leggendo tutte le righe non vuote e disegnando un punto nella posizione \textbf{(coordinata\_x,coordinata\_y)} del grafico 2D. In seguito viene tracciata una linea solo tra coppie di punti, legati a righe consecutive non vuote all'interno di \textbf{solution.dat}.\\\\
+Il grafico viene generato dal comando \textbf{plot}, leggendo tutte le righe non vuote e disegnando un punto nella posizione \textbf{(coordinata\_x, coordinata\_y)} del grafico 2D. In seguito viene tracciata una linea solo tra coppie di punti legati a righe consecutive non vuote all'interno di \textbf{solution.dat}.\\\\
 Attraverso le istruzioni riportate nelle righe 10-12 di \textbf{style.txt}, viene invece salvato il grafico appena generato nell'immagine \textbf{solution.png}.\\\\
 Di seguito vengono riportate le varie fasi necessarie alla definizione di un pipe e al passaggio di questo al programma GNUplot:
 \begin{itemize}
