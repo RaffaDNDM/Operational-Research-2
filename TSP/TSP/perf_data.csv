@@ -1,13 +1,2 @@
 1, VNS
-heuristic_instances/d1291.tsp, 55579.70
-heuristic_instances/d1655.tsp, 66661.25
-heuristic_instances/d2103.tsp, 82371.89
-heuristic_instances/dsj1000.tsp, 20252290.51
-heuristic_instances/fl1400.tsp, 21508.98
-heuristic_instances/fl1577.tsp, 24382.62
-heuristic_instances/nrw1379.tsp, 60399.89
-heuristic_instances/pcb1173.tsp, 61446.54
-heuristic_instances/pr1002.tsp, 275153.89
-heuristic_instances/pr2392.tsp, 408313.97
-heuristic_instances/rl1304.tsp, 282035.92
-heuristic_instances/rl1323.tsp, 289177.86
+heuristic_instances/dsj1000.tsp

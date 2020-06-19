@@ -18,11 +18,11 @@ void heuristic_solver(tsp_instance* tsp_in)
 	tsp_in->bestCostD = DBL_MAX;
 	tsp_in->bestCostI = INT_MAX;
 
-	int  num_edges = (tsp_in->num_nodes) * (tsp_in->num_nodes-1) / 2;
-	tsp_in->sol = (double*) calloc((size_t) num_edges, sizeof(double));
-	int* succ = (int*) calloc((size_t)tsp_in->num_nodes, sizeof(int));
+	int  num_edges = (tsp_in->num_nodes) * (tsp_in->num_nodes - 1) / 2;
+	tsp_in->sol = (double*)calloc((size_t)num_edges, sizeof(double));
+	int* succ = (int*)calloc((size_t)tsp_in->num_nodes, sizeof(int));
 
-	printf("%sHeuristic solver%s\n",RED, WHITE);
+	printf("%sHeuristic solver%s\n", RED, WHITE);
 	printf("%s[Construction]%s ", BLUE, WHITE);
 
 	if (!CONSTRUCTION_TYPE)
@@ -39,52 +39,94 @@ void heuristic_solver(tsp_instance* tsp_in)
 
 	switch (tsp_in->alg)
 	{
-		case 8:
-		{
-			printf("VNS\n");
-			break;
-		}
-		case 9:
-		{
-			printf("Tabu search\n");
-			break;
-		}
-		case 10:
-		{
-			printf("Simulated anealling\n");
-			break;
-		}
-		case 11:
-		{
-			printf("Genetic\n");
-			break;
-		}
+	case 8:
+	{
+		printf("VNS\n");
+		break;
+	}
+	case 9:
+	{
+		printf("Tabu search\n");
+		break;
+	}
+	case 10:
+	{
+		printf("Simulated anealling\n");
+		break;
+	}
+	case 11:
+	{
+		printf("Genetic\n");
+		break;
+	}
 	}
 	printf("%s%s%s", RED, LINE, WHITE);
 
+	time_t end_iter = clock();
+	double remaining_time = tsp_in->deadline - ((double)(end_iter - start) / (double)CLOCKS_PER_SEC);
+	printf("\n");
+
 	#ifdef MULTI_START
-		pthread_t threads[NUM_MULTI_START];
-		thread_args param[NUM_MULTI_START];
+		#ifdef FIXED_TIME_MS
+			
+			int count=0;
+			while (remaining_time > 0)
+			{	
+				count++;
+				time_t start_iter = clock();
+				pthread_t threads[NUM_MULTI_START];
+				thread_args param[NUM_MULTI_START];
 
-		int i = 0;
-		for (; i < NUM_MULTI_START; i++)
-		{
-			param[i].tsp_in = tsp_in;
-			param[i].succ = succ;
-			param[i].seed = STEP_SEED*(i+1);
-			param[i].start = start;
+				int i = 0;
+				for (; i < NUM_MULTI_START; i++)
+				{
+					param[i].tsp_in = tsp_in;
+					param[i].succ = succ;
+					param[i].seed = STEP_SEED * (i + 1+count);
+					param[i].start = start;
 
-			pthread_create(&threads[i], NULL, computeSolution, (void*)&param[i]);
-		}
+					pthread_create(&threads[i], NULL, computeSolution, (void*)&param[i]);
+				}
 
-		for (i = 0; i < NUM_MULTI_START; i++)
-		{
-			int rc = pthread_join(threads[i], NULL);
+				for (i = 0; i < NUM_MULTI_START; i++)
+				{
+					int rc = pthread_join(threads[i], NULL);
 
-			if (rc)
-				exit(-1);
-		}
+					if (rc)
+						exit(-1);
+				}
+				time_t end_iter = clock();
+				remaining_time -= ((double)(end_iter - start_iter) / (double)CLOCKS_PER_SEC);
 
+				if(tsp_in->integerDist)
+					printf("\r%sRemaining time : %s%.2lf  %d ", CYAN, WHITE, remaining_time, tsp_in->bestCostI);
+				else
+					printf("\r%sRemaining time : %s%.2lf  %.2lf ", CYAN, WHITE, remaining_time, tsp_in->bestCostD);
+			}
+		#else
+			pthread_t threads[NUM_MULTI_START];
+			thread_args param[NUM_MULTI_START];
+
+			int i = 0;
+			for (; i < NUM_MULTI_START; i++)
+			{
+				param[i].tsp_in = tsp_in;
+				param[i].succ = succ;
+				param[i].seed = STEP_SEED * (i + 1);
+				param[i].start = start;
+
+				pthread_create(&threads[i], NULL, computeSolution, (void*)&param[i]);
+			}
+
+			for (i = 0; i < NUM_MULTI_START; i++)
+			{
+				int rc = pthread_join(threads[i], NULL);
+
+				if (rc)
+					exit(-1);
+			}
+		#endif
+	
 	#else
 		pthread_t thread;
 		thread_args param;
@@ -100,7 +142,6 @@ void heuristic_solver(tsp_instance* tsp_in)
 
 		if (rc)
 			exit(-1);
-
 	#endif
 
 	time_t end = clock();
@@ -139,8 +180,8 @@ void* computeSolution(void* param)
 	double best_cost = 0.0;
 	int* visited_nodes = (int*)calloc((size_t) args->tsp_in->num_nodes, sizeof(int));
 
-	time_t start = clock();
-	double remaining_time = args->tsp_in->deadline -( (double)(start - args->start) / (double) CLOCKS_PER_SEC );
+	//time_t start = clock();
+	//double remaining_time = args->tsp_in->deadline -( (double)(start - args->start) / (double) CLOCKS_PER_SEC );
 
 	srand(args->seed);
 	if (!CONSTRUCTION_TYPE)
@@ -150,8 +191,8 @@ void* computeSolution(void* param)
 
 	greedy_refinement(args->tsp_in, visited_nodes, &best_cost);
 
-	time_t end_first_generation = clock();
-	remaining_time = remaining_time - ((double)(end_first_generation-start)/(double)CLOCKS_PER_SEC);
+	//time_t end_first_generation = clock();
+	//remaining_time = remaining_time - ((double)(end_first_generation-start)/(double)CLOCKS_PER_SEC);
 
 	#ifndef MULTI_START
 	switch (args->tsp_in->alg)
@@ -175,8 +216,11 @@ void* computeSolution(void* param)
 	#endif
 	
 	pthread_mutex_lock(&mutex);
-	printf("%sCost:%s %.2lf\n",GREEN, WHITE, best_cost);
-
+	
+	#ifndef FIXED_TIME_MS
+		printf("%sCost:%s %.2lf\n",GREEN, WHITE, best_cost);
+	#endif
+	
 	if (args->tsp_in->integerDist)
 	{
 		if (((int)best_cost) < args->tsp_in->bestCostI)
