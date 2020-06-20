@@ -571,7 +571,7 @@ La callback dell'utente deve avere la dichiarazione specificata di seguito:
 \end{table}
 
 \subsection{Generic Callback}% cambiare titolo da Lazy Constraint Callback General a general callback
-Per evitare che alcune procedure interne a CPLEX vengano disattivate nel momento dell'installazione di una callback, recentemente ne è stata sviluppata una particolare tipologia, detta \textit{generic}. Questa non si riferisce ad uno specifico uso della callback (come quelle descritte nelle sezioni precedenti), ma può essere invocata in contesti diversi e con diversi scopi.
+Per evitare che alcune procedure interne a CPLEX vengano disattivate nel momento dell'installazione di una callback, recentemente ne è stata sviluppata una particolare tipologia, detta \textit{generic}. Questa non è relativa a una specifica versione di callback, come quelle descritte nelle sezioni precedenti, ma può essere invocata in contesti diversi e con diversi scopi.\\
 Per installare una generic callback viene utilizzata la seguente funzione, in cui  è necessario specificare il contesto in cui invocare la callback:
 \vspace{1 cm}
 \begin{center}

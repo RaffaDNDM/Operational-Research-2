@@ -23,10 +23,10 @@ P.~Hansen, N.~Mladenovic, J.~Brimberg, J.~A.~Moreno Pèrez, M.~Gendreau, and
 \newblock Variable neighborhood search.
 \newblock In {\em Handbook of Metaheuristics}, pages 61--86. Springer, 2010.
 
-\bibitem{local_branching}
-A.~Lodi M.~Fischetti.
-\newblock Local branching.
-\newblock {\em Ser. B}, 98:23–47, 2003.
+\bibitem{SA}
+S.~Liu L.~Fang, P.~Chen.
+\newblock Particle swarm optimization with simulated annealing for tsp.
+\newblock 6:206--210, 2007.
 
 \bibitem{hybrid_VNS}
 Anup~Dewanji Samrat~Hore, Aditya~Chatterjee.

@@ -119,10 +119,11 @@ All'interno del programma sviluppato, non è stata implementato tale algoritmo.
 \section{Meta-euristici}
 Gli algoritmi di raffinamento appena visti si occupano di migliorare il più possibile una soluzione già calcolata attraverso meccanismi di local search. In questo modo, dopo un determinato numero di iterazioni, viene raggiunto un ottimo locale.\\
 Gli algoritmi descritti in questa sezione perturbano la soluzione allontanandola dall'attuale ottimo locale e cercando di avvicinarsi il più possibile all'ottimo globale.\\
-Questi metodi rappresentano approcci più generali di quelli descritti precedentemente e sono plasmabili e applicabili anche a problemi dfferenti rispetto al TSP. Tali tecniche infatti permettono essenzialmente di espolarare lo spazio delle soluzioni, evitando di stazionare in minimi o massimi locali con valori della funzione obiettivo molto lontani dall'ottimo globale.
+Questi metodi rappresentano approcci più generali di quelli descritti precedentemente e sono plasmabili e applicabili anche a problemi differenti rispetto al TSP. Tali tecniche infatti permettono essenzialmente di esplorare lo spazio delle soluzioni, evitando di stazionare in minimi o massimi locali con valori della funzione obiettivo molto lontani dall'ottimo globale.
 
 \subsection{Multi-start}
-Un primo e intuitivo approccio per allontanarsi da un ottimo locale è quello descritto dalla politica multi-start. Questa consiste nel definire diverse soluzioni attraverso un algoritmo di costruzione tra quelli descritti, ad esempio, nella Sezione \ref{construction_alg}. A ciascuno di esse viene poi applicato un algoritmo di raffinazione e viene scelta solo quella con costo migliore tra tutte le soluzioni generate. In questo modo vengono analizzati diversi ottimi locali nello spazio delle soluzioni (vedi Figura \ref{multi_start}. 
+Un primo e intuitivo approccio per allontanarsi da un ottimo locale è quello descritto dalla politica multi-start. Questa consiste nel definire diverse soluzioni attraverso un algoritmo di costruzione tra quelli descritti, ad esempio, nella Sezione \ref{construction_alg}.\\
+A ciascuno di esse viene poi applicato un algoritmo di raffinazione e viene scelta solo quella con costo migliore tra tutte le soluzioni generate. In questo modo vengono analizzati diversi ottimi locali nello spazio delle soluzioni (vedi Figura \ref{multi_start}. 
 \begin{figure}[H] 
 \begin{center} 
   \includegraphics[scale=0.5]{Images/multistart}\\ 
@@ -130,13 +131,13 @@ Un primo e intuitivo approccio per allontanarsi da un ottimo locale è quello de
   \label{multi_start}
 \end{center}
 \end{figure}
-Un lato negativo di tale approccio consiste nel fatto che ogni volta che viene scelta una nuova soluzione di partenza, vengono perse le informazioni relative alla sequenza ottenuta utilizzando un altro tour iniziale.\\
-La soluzione implementata all'interno del programma è basata sul multithreading. Infatti viene generato un numero di soluzioni pari al numero di thread specificati.\\
+Un lato negativo di tale approccio consiste nel fatto che ogni volta che viene scelta una nuova soluzione di partenza, vengono perse le informazioni relative alla sequenza ottenuta utilizzando un altro tour iniziale. La soluzione implementata all'interno del programma è basata sul multithreading. Infatti viene generato un numero di soluzioni pari al numero di thread specificati.\\
 Ciascun thread genera parallelamente agli altri una nuova soluzione e solo al termine della computazione, la confronta con la migliore. Nel caso in cui il costo della soluzione trovata sia inferiore a questa, la aggiorna. \\
 Nella Sezione \ref{construction_perf} viene analizzato il costo ottenuto dalla nostra implementazione, utilizzando 12 thread e modificando l'algoritmo di costruzione utilizzato.
 
 \subsection{Variable Neighborhood Search}
-Una volta ottenuta una soluzione corrispondente ad un ottimo locale nella funzione di costo si può cercare di migliorarla analizzando i suoi intorni di ottimalità di raggio crescente. Questo però non garantisce un effettivo cambiamento della soluzione. Il Variable Neighborhood Search (VNS) è un algoritmo che sfrutta questa ricerca. Nel caso non si verifichi un aggiornamento della soluzione prevede che vengano scelti un certi numero di rami randomici da sostituire con altri non appartenenti alla soluzione, in maniera casuale \cite{VNS}. In questo modo si impone un aggiornamento con una crescita del costo, nella speranza che nel nuovo intorno selezionato sia possibile trovare una soluzione che si allontani dall'iniziale ottimo locale (Figura \ref{VNS_img}).\\
+Il Variable Neighborhood Search (VNS) è un algoritmo che cerca di migliorare l'ottimo locale attuale, ricevuto in input, analizzando intorni di ottimalità di grandezza differente.\\
+Nel caso in cui non si trovi una nuova soluzione, di costo migliore di quella attuale nei vari intorni di grandezza k, l'algoritmo prevede che venga scelto un certo numero di rami in maniera randomica da sostituire con altri archi\cite{VNS}. In questo modo si impone un aggiornamento peggiorativo in termini di costo, nella speranza che nel nuovo intorno selezionato sia possibile trovare una soluzione che si allontani dall'ottimo locale di partenza (vedi Figura \ref{VNS_img}).\\
  \begin{figure}[H] 
 \begin{center} 
   \includegraphics[scale=0.4]{Images/VNS}\\ 
@@ -144,34 +145,58 @@ Una volta ottenuta una soluzione corrispondente ad un ottimo locale nella funzio
   \label{VNS_img}
 \end{center}
 \end{figure}
-L'algoritmo termina allo scadere del tempo a disposizione o dopo un determinato numero di iterazione, restituendo la miglior soluzione trovata fino a quel momento. Utilizzando questo approccio gran parte della soluzione di partenza viene conservata evitando di perdere le informazioni elaborate precedentemente all'utilizzo di VNS.\\
-Per generare nuove istanze che appartengano all'intorno di k-ottimalità di una data soluzione, quest'ultima è stata codificata con un vettore di lunghezza pari al numero di nodi. Ogni cella di tale array contiene l'identificativo di un nodo e leggendo in ordine crescente di indice tale lista, si ottiene la sequenza di percorrenza dei nodi per tale soluzione. La generazione della nuova soluzione k-opt viene creata, scegliendo un indice \textbf{t} casuale dell'array, e permutando iterativamente due nodi nella sequenza, secondo il seguente algoritmo\cite{hybrid_VNS} e la Figura \ref{k_opt_move}.\\
+L'algoritmo termina allo scadere di una deadline, inserita dall'utente, o dopo un determinato numero di iterazioni, restituendo la miglior soluzione trovata fino a quell'istante. Utilizzando questo approccio gran parte della soluzione di partenza viene conservata evitando di perdere le informazioni elaborate precedentemente eseguendo l'algoritmo.\\
+La nostra implementazione dell'algoritmo VNS non è però quella classica ma una variante detta VNS ibrido\cite{hybrid_VNS}. Di seguito viene descritto lo pseudo-codice di tale metodo:\\\\
 \begin{algorithm}[H]
 \DontPrintSemicolon
-\KwIn {$\mathtt{x =\{x_1,x_2,...,x_n\}}$= soluzione di partenza\newline
-$\mathtt{k}$= numero di archi da variare nella soluzione di partenza}
+\KwIn {$\mathtt{x =\{x_1,x_2,...,x_n\}}$= sequenza di visita dei nodi nella soluzione di partenza (ottimo locale)\newline}
 \KwOut {$\mathtt{y}$= nuova soluzione appertenente all'intorno di k-ottimalità di x}
 \BlankLine
-$\mathtt{y}=x$\;
-$\mathtt{t \gets RANDOM(}\{1,...,n\}\mathtt{)}$\;
+\While{$'deadline\;not\;expired'$ $\wedge$ $count<MAX\_COUNT$}{
 \BlankLine
- \For{$j \gets 1$ \KwTo $k-1$}{
+$\mathtt{y\gets} x$\;
+$\mathtt{k\gets}1$\;
+\BlankLine
+ \While{$k\leq \lceil n/2 \rceil$}{
   \BlankLine
-  $\mathtt{swap(}y_t,y_{t+j}\mathtt{)}$;
+  $N_k(y) = \{ (y_1,...,y_{(i+k)mod\;n},...,y_i, ..., y_n)\; :\; 1\leq i\leq n\}$\;
+  \BlankLine
+  \If{$\underset{z\in N_k(y)}{min}\{cost(z)\}<cost(x)$}{
+	 $\mathtt{x\gets} \underset{z\in N_k(y)}{argmin(cost(z)}$\;
+     $\mathtt{y\gets} \underset{z\in N_k(y)}{argmin(cost(z)}$\;
+	 $\mathtt{break}$\;
+     \BlankLine
+  }
+  \BlankLine
+  $\mathtt{k}\gets k+1$\;
+  \BlankLine
  }
- \caption{Generazione di una soluzione randomica k-opt}
+ \If{$k>\lceil n/2 \rceil$ $\wedge$ $!found$}{
+    \BlankLine
+    $\mathtt{y}\gets \mathtt{new\_random\_sol(} y \mathtt{)}$\;
+    \BlankLine
+ }
+  $\mathtt{count}\gets count+1$\;
+}
+ \caption{VNS ibrido}
 \end{algorithm}
-\begin{figure}[H] 
-\begin{center} 
-  \includegraphics[scale=0.4]{Images/k_opt_move}\\ 
-  \caption{\footnotesize{Generazione di una soluzione randomica k-opt.}}
-  \label{k_opt_move}
-\end{center}
-\end{figure}
+Partendo dalla sequenza di visita dei nodi nella soluzione locale, passata in ingresso all'algoritmo, la procedura analizza tutte i circuiti ottenuti invertendo due nodi a distanza k nella sequenza, con $k=1,...,n/2$. Se viene individuata una soluzione con costo inferiore, allora questa viene considerata come il nuovo ottimo locale. Invece se non dovesse esistere alcuno scambio migliorativo, viene scelta in maniera randomica una nuova soluzione dall'insieme:
+$$\biggl\{{y}\cup \bigcup_{k=1}^{\lceil n/2 \rceil}{N_k(y)}\biggr\}$$
+con probabilità pari a:
+$$p=\frac{costo^{-1}(x)}{\underset{z \in {\bigcup_{k=1}^{\lceil n/2 \rceil}{N_k(y)}}}\sum{costo^{-1}(z)}}$$
+Nell'implementazione sono state sviluppate due versioni di questo algoritmo, in base alle probabilità utilizzata nel selezionare due nodi da scambiare: 
+\begin{itemize}
+\item{\textbf{Hybrid VNS}\\
+questa prima soluzione segue la procedura precedentemente descritta e seleziona una nuova sequenza dall'insieme $\{{y}\cup \bigcup_{k=1}^{\lceil n/2 \rceil}{N_k(y)}\}$ e poi vi applica un algoritmo di raffinamento.} 
+\item{\textbf{Hybrid VNS Uniform}\\
+questa variante invece seleziona due nodi della sequenza di visita, secondo una probabilità uniforme, e li scambia. La sequenza risultante, dopo essere stata migliorata mediante un algoritmo di raffinamento, viene utilizzata come nuovo minimo locale.}
+\end{itemize}
+la prima che seleziona uno scambio secondo questa probabilità, e la seconda che invece seleziona due elementi casuali della sequenza e li scambi secondo una distribuzione uniforme.
 
-\subsection{Tabu search}%inserire nostra implementazione delle mosse vietate
-L'approccio Tabu search fu ideato da Fred W. Glover \cite{Tabu}. Data una soluzione in un ottimo locale dello spazio delle soluzioni, l'idea di Glover permette di aggiornarla anche con una di costo più elevato (generalmente si cerca di minimizzare questo peggioramento). Per evitare che all'iterazione successiva si ritorni nella soluzione di partenza, viene creata una lista di "mosse vietate", detta Tabu list, che impedisca di raggiungere nuovamente l'ottimo locale. In questo modo la soluzione aumenta di costo per un certo numero di iterazioni, finchè non ricomincia a diminuire per raggiungere un nuovo minimo locale o globale. Nel caso in cui si incontri una soluzione che migliori l'incumbent senza rispettare tutti i vincoli presenti nella Tabu list, l'algoritmo aggiorna ugualmente la soluzione corrente. Questo meccanismo viene detto \textit{Aspiration criterion}.\\ 
-Aumentando costantemente di dimensione la lista Tabu si rischia, ad un certo punto, che non sia più possibile aggiornare la soluzione. Per evitare ciò generalmente viene scelta una capienza massima (detta \textit{tenure}) della lista, una volta raggiunta la lista viene aggiornata rispettando la politica FIFO (first in first out). Per far si che l'algoritmo oscilli tra la fase di diversificazione e quella di intensificazione, la tenure viene fatta variare durante le diverse iterazioni tra due valori (massimo e minimo) (vedi Figura \ref{tenure}). Nelle iterazioni in cui è massima si verifica la diversificazione, in quelle in cui è minima l'intensificazione. Se viene applicata questa scelta implementativa l'algoritmo è chiamato \textit{Reactive Tabu Search}.
+\subsection{Tabu Search}
+Il metodo Tabu Search fu ideato da Fred W. Glover \cite{Tabu}. Dato un ottimo locale nello spazio delle soluzioni, l'idea di Glover permette di aggiornarla anche con una di costo più elevato, cercando di minimizzarlo. Per evitare che all'iterazione successiva si ritorni nella soluzione di partenza, viene creata una lista di "mosse vietate", detta Tabu List, che impedisca di raggiungere nuovamente lo stesso ottimo locale. In questo modo il costo della soluzione attuale aumenta rispetto all'ottimo locale di partenza per un certo numero di iterazioni, finchè non ricominci a decrescere per raggiungere un nuovo minimo. Nella nostra implementazione la lista viene riempita con i rami che vengono rimossi per creare la nuova soluzione.\\
+Aumentando costantemente di dimensione la lista Tabu si rischia, ad un certo punto, che non sia più possibile modificare il tour presente. Per evitare ciò generalmente viene scelta una capienza massima, detta \textit{tenure}, della lista, una volta raggiunta i rami vengono aggiunti rispettando la politica FIFO (first in first out).\\
+Per aumentare le prestazioni dell'algoritmo è possibile far variare le dimensioni della Tabu List tra due valori. Nella fase di diversificazione la lista viene fatta aumentare fino ad un massimo (nella nostra implementazione 1/5 del numero di nodi dell'istanza da risolvere). Nella fase di intensificazione, per lasciare un maggior numero di gradi di libertà al definizione delle nuove soluzioni, la tenure diminuisce fino ad un valore minimo impostato, che nel nostro caso corrisponde a 1/10 del numero di nodi del grafo (vedi Figura \ref{tenure}). Questo variante dell'algoritmo, implementata anche nel nostro programma, in letteratura è conosciuta con il nome di \textit{Reactive Tabu Search}.
  \begin{figure}[H] 
 \begin{center} 
   \includegraphics[scale=0.35]{Images/tenure}\\ 
@@ -179,7 +204,7 @@ Aumentando costantemente di dimensione la lista Tabu si rischia, ad un certo pun
   \label{tenure}
 \end{center}
 \end{figure}
-Come per l'algoritmo precedente, il criterio di terminazione è dato dallo scadere del tempo a disposizione o dal raggiungimento del numero massimo di iterazioni scelto, restituendo la miglior soluzione trovata fino a quel momento.\\\\
+Come per l'algoritmo precedente, il criterio di terminazione è dato dallo scadere del tempo a disposizione o dal raggiungimento di un numero massimo di iterazioni. La soluzione restituita dall'algoritmo è la migliore individuata  fino a quell'istante.\\\\
 \begin{algorithm}[H]
 \DontPrintSemicolon
 \KwIn{$\mathtt{x}$= soluzione di un'istanza di TSP corrispondente ad un ottimo locale\newline
@@ -216,7 +241,30 @@ $\mathtt{y}= best\_solution()$\;
 \caption{Tabu Search}
 \end{algorithm}
 \subsection{Simulated annealing}
-L'algoritmo simulated annealign, come dice il nome, è ispirato dal processo di temperamento dei metalli, in cui il materiale viene raffreddato molto lentamente e in maniera controllata, affinchè raggiunga la configurazione di minima energia. Analogamente, in questo algoritmo viene scelta una funzione (generalmente esponenziale) che descriva la variazione della "temperatura" $T$. Ad ogni iterazione la soluzione corrente può essere aggiornata con una qualsiasi altra interna all'intorno di 2 ottimalità, di costo minore o maggiore, con una probabilità funzione della variazioni di costo e della temperatura attuale, $f(\Delta costo, T)$. Questo implica che non sia necessario scandire tutto l'intorno, ma che sia sufficiente scegliere in maniera randomica 2 rami da sostituire nella soluzione (Figura \ref{simulated_annealing}).
+L'algoritmo Simulated Annealing, come dice il nome, è ispirato al processo di temperamento dei metalli, in cui un materiale viene raffreddato molto lentamente e in maniera controllata, affinché raggiunga la configurazione di minima energia. Analogamente, nell'algoritmo viene scelta una funzione (generalmente esponenziale) che simula la variazione della "temperatura" $T$. Nella nostra implementazione abbiamo utilizzato la seguente formula \cite{SA}:
+$$T = \alpha^{num\_iteration}* T\_max \;+\; T\_min$$
+dove \textit{T\_max} è la massima temperatura iniziale, \textit{T\_min} è la minima temperatura che può essere raggiunta, \textit{num\_iteration} è il numero di iterazioni eseguite fino a quel momento e \textit{$\alpha$} è un parametro scelto all'inizio dell'esecuzione. Nello sviluppare questo procedimento sono stati utilizzati i seguenti valori:
+\begin{itemize}
+\begin{multicols}{3}
+\item{\textit{T\_max} = 5000}
+\item{\textit{T\_min} = 100}
+\item{\textit{$\alpha$} = 0.99}
+\end{multicols}
+\end{itemize}
+Una volta raggiunta la temperatura minima, nel caso in cui non sia scaduto il tempo a disposizione, $T$ viene impostata nuovamente a \textit{T\_max}, per poter procedere con la computazione.\\ 
+ Ad ogni iterazione la soluzione corrente può essere aggiornata con un'altra qualsiasi  interna all'intorno di 2 ottimalità, di costo minore o maggiore, con una probabilità funzione della variazioni di costo e della temperatura attuale, $f(\Delta costo, T)$. Nel nostro caso la seguente\cite{SA}:
+$$P = 
+\begin{cases}
+1 & se\; \Delta costo \leq \;0\\
+exp(- \frac{\Delta costo}{T}) & se\; \Delta costo \;>\;0\\
+\end{cases}
+$$
+Grazie a questa tecnica per la scelta dell'aggiornamento, non è necessario scandire tutto l'intorno, è sufficiente scegliere in maniera randomica 2 rami. Tali archi verranno sostituiti nella soluzione corrente secondo la funzione di probabilità (Figura \ref{simulated_annealing}).
+ Per poter gestire al meglio i valori della probabilità e evitare che la maggior parte delle volte venissero approssimati a zero, nel nostro algoritmo sono stati riscritti in notazione scientifica, memorizzando solo l'ordine di grandezza e il coefficiente. Una nuova soluzione di costo peggiore viene, quindi, accettata nel caso in cui si verifichino entrambe le seguenti situazioni 
+\begin{itemize}
+\item{venga estratto per un numero di volte pari all'ordine di grandezza, un numero, nell'intervallo [0, 99], inferiore a 10;}
+\item{venga estratto, nell'intervallo [0, 10*(coefficiente della probabilità)], un numero inferiore a 10.}
+\end{itemize} 
  \begin{figure}[H]
 \begin{center} 
   \includegraphics[scale=0.43]{Images/simulated_anneling}
@@ -224,23 +272,57 @@ L'algoritmo simulated annealign, come dice il nome, è ispirato dal processo di 
   \label{simulated_annealing}
 \end{center}
 \end{figure}
- Con il procedere delle iterazioni, l'aggiornamento ad un costo peggiore avviene sempre meno frequentemente, fino ad ottenere solo aggiornamenti con soluzioni più vantaggiose. Esiste un teorema secondo il quale se la temperatura varia in maniera estremamente lenta ed è consentito effettuare un numero di iterazioni estremamente elevato, questo algoritmo garantisce di trovare l'ottimo globale. Concretamente queste ipotesi sono molto difficili da realizzare, ma è statisticamente comunque possibile dichiarare che l'approccio del simulated annealing restituisce una buona soluzione.
-\section{Algoritmo genetico}
-L'algoritmo genetico è legato alla teoria dell'evoluzione di Darwin, con cui condivide numerosi concetti. Da un punto di vista teorico, l'algoritmo definisce in prima battuta una serie di individui, che costituiscono una popolazione.\\
-In seguito, attraverso mutazioni dei singoli soggetti e la riproduzione di questi, si crea una nuova popolazione. Il concetto fondamentale alla base di tale algoritmo è che associando ad un individuo uno score, lo si possa utilizzare per far progredire la specie.\\
-Ad ogni individuo viene associata una fitness, che rappresenta quanto sia forte ed efficiente. Applicando tale concetto al Travelling Salesman Problem, ad ogni individuo $i$ è stata associata una fitness pari a:
+ Con il procedere delle iterazioni, l'aggiornamento ad un costo peggiore avviene sempre meno frequentemente, fino ad ottenere solo aggiornamenti con soluzioni più vantaggiose. Esiste un teorema secondo il quale se la temperatura varia in maniera estremamente lenta ed è consentito effettuare un numero di iterazioni estremamente elevato, questo algoritmo garantisce di trovare l'ottimo globale. Concretamente queste ipotesi sono molto difficili da realizzare, ma è statisticamente comunque possibile dichiarare che l'approccio del Simulated Annealing restituisce una buona soluzione.
+ \begin{algorithm}[H]
+\DontPrintSemicolon
+\KwIn{$\mathtt{x}$=soluzione di un'istanza di TSP corrispondente ad un ottimo locale\newline
+$\mathtt{T_{min}}$=temperatura minima\newline
+$\mathtt{T_{max}}$=temperatura massima\newline
+$\mathtt{deadline}$=time limit complessivo dell'algoritmo\newline
+}
+\KwOut {$\mathtt{y}$= miglior soluzione trovata}
+\BlankLine
+$\mathtt{T} \gets T_{min}$\;
+\BlankLine
+\While{$'deadline\;not\;expired'$}{
+$\mathtt{x' \gets move\_random\_2opt(}x\mathtt{)}$\;
+\BlankLine
+\If{$cost(x') < cost(x)$}{
+  $\mathtt{x'} \gets x$\;
+  $\mathtt{update\_cost()}$\;
+  }
+  \BlankLine
+\Else{
+	$\mathtt{compute\_prob(}cost(x'), T\mathtt{)}$\;
+	\BlankLine
+	\If{$\mathtt{accepted(}x'\mathtt{)}$}{
+		 $\mathtt{x'} \gets x$\;
+ 		 $\mathtt{update\_cost()}$\;
+ 		 $\mathtt{update\_temperature(}T\mathtt{)}$\;
+	} 
+  }
+}
+ \BlankLine
+$\mathtt{y}= best\_solution()$\;
+\caption{Simulated Annealing}
+\end{algorithm}
+\subsection{Algoritmo genetico}
+L'algoritmo genetico è legato alla teoria dell'evoluzione di Darwin, con cui condivide numerosi concetti. Da un punto di vista teorico, l'algoritmo costruisce in prima battuta una serie di individui, che costituiscono una popolazione.\\
+In seguito, attraverso mutazioni dei singoli soggetti e la riproduzione di questi, viene creata una nuova popolazione. Il concetto fondamentale alla base di tale algoritmo è che associando ad un individuo uno punteggio, detto fitness, lo si possa selezionare con una certà probabilità per far evolvere la specie.\\
+Applicando tale concetto al Travelling Salesman Problem, ad ogni individuo $i$ viene associata una fitness pari a:
 $$fitness_i=\frac{1}{costo_i}$$
 dove $costo_i$ rappresenta il valore della funzione obiettivo per l'istanza $i$.\\
-La popolazione iniaziale nell'algoritmo sviluppato, è stata generata utilizzando l'algoritmo nearest neighbour ma utilizzando un diverso nodo di partenza per ciascuno di essi. Ogni individuo della popolazione è stato rappresentato come la sequenza dei nodi, in ordine di visita.\\
-In seguito vengono generati nuovi individui a partire dalla popolazione attuale, utilizzando due tecniche differenti:
+La popolazione iniziale è stata generata utilizzando l'algoritmo nearest neighbour ma utilizzando un diverso nodo di partenza per ciascuno di essi ed applicando anche la variante GRASP. Ogni individuo della popolazione è stato poi rappresentato come la sequenza di visita dei nodi della corrispondente soluzione.\\
+In fase di testing, abbiamo notato che la creazione della popolazione costituisca il vero collo di bottiglia dell'intero algoritmo.\\
+Per ridurre al minimo il carico computazionale di tale fase, questa è stata implementata in multithreading. I risultati sono complessivamente migliorati, anche se questa fase resta ancora un'operazione molto costoso in termini di tempo di calcolo.
+In seguito la fase di evoluzione della popolazione viene effettuata generando nuovi individui a partire dalla popolazione attuale ed utilizzando le seguenti tecniche:
 \begin{itemize}
 \item{\textbf{Crossover}\\
-in questa operazione vengono selezionati randomicamente due individui della popolazione e partire da questi, vengono creati nuovi tour che ereditano dai genitori delle caratteristiche. Nel nostro caso ciascun individuo eredita parte della sequenza di visita di uno dei suoi genitori, e la restante parte viene ereditata dall'altro genitore.}
+in questa operazione vengono selezionati randomicamente due individui della popolazione e a partire da questi, vengono creati nuovi tour che ereditano dai genitori delle caratteristiche. Nel nostro caso ciascun nuovo individuo eredita metà della sequenza di visita da uno dei suoi genitori, e la restante parte viene ereditata dall'altro.}
 \item{\textbf{Mutazione}\\
-in questa fase un certo numero di individui viene selezionato in maniera casuale e da ciascuno di questi, viene generato un nuovo tour attraverso una permutazione casuale della sequenza di partenza.}
+in questa fase un certo numero di individui viene selezionato in maniera casuale e da ciascuno di questi, viene generato un nuovo tour attraverso una sua permutazione casuale.}
 \end{itemize}
-L'utilizzo di tali tecniche iterativamente insieme alla rimozione dellla popolazione degli individui di costo peggiore, permette di ridurre complessivamente il costo medio delle istanze nella popolazione.\\
-Riducendo tale valore medio della funzione obiettivo, si riesce ad ottenere una migliore soluzione con numerose iterazioni. All'interno del programma sviluppato, le precedenti tecniche non sono state applicate contemporaneamente in ogni iterazione ma in istanti differenti, secondo quanto descritto nel seguente algoritmo.\\
+Utilizzando iterativamente tali tecniche e rimuovendo gli individui di costo peggiore dalla popolazione, si riduce complessivamente il costo medio delle istanze nella popolazione e di conseguenza anche il costo della migliore soluzione. All'interno del programma sviluppato, le precedenti tecniche non sono state applicate contemporaneamente in ogni iterazione ma in istanti differenti, secondo quanto descritto nel seguente algoritmo.\\
 
 \begin{algorithm}[H]
 \DontPrintSemicolon
@@ -269,7 +351,7 @@ Riducendo tale valore medio della funzione obiettivo, si riesce ad ottenere una 
  \caption{Evoluzione}
 \end{algorithm}
 La fase di crossover viene applicata più di rado, poichè la generazione di nuovi figli a partire dai genitori richiede molto più tempo della creazione dello stesso numero di individui mediante mutazione.\\
-Gli algoritmi di crossover e mutazione, utilizzati nel programma sviluppato, sono spiegati nella seguente sezione, con le relative illustrazioni.\\\\
+Gli algoritmi di crossover e mutazione, utilizzati nel programma sviluppato, sono descritti e illustrati di seguito.\\\\
 \begin{algorithm}[H]
 \DontPrintSemicolon
 \KwIn {$\mathtt{population}$= popolazione di numerosi tour generati mediante un algoritmo di costruzione\newline
@@ -294,7 +376,7 @@ $\mathtt{y=\{y_1,...,y_n\} \gets RANDOM(}population, p=\frac{fitness_y}{sum\_fit
  	 $\mathtt{best\_cost} \gets min\_cost$\;
      \BlankLine
   }
-\caption{Crossover}
+\caption{Crossover}\label{crossover_pseudo}
 \end{algorithm}
 
 \begin{figure}[H]
@@ -337,10 +419,3 @@ $\mathtt{x=\{x_1,...,x_n\}\gets} RANDOM(population)$\;
   \label{mutation}
 \end{center}
 \end{figure}
-
-\begin{comment}
-\section{Funzione di costo a scalini}
-La funzione obiettivo di un problema può avere, in particolari circostanze, un grafico a scalini, in cui cioè esistano diverse soluzioni dell'istanza con lo stesso costo. In questo caso è consigliabile applicare una politica che utilizzi delle penalità per perturbare la funzione affinché non siano più presenti le zone costanti, che potrebbero causare problemi nell'aggiornamento della soluzione da restituire. Generalmente questa situazione non si verifica con istanze del problema del commesso viaggiatore in cui i costi dipendono dalla distanza euclidea. Nel caso fosse necessario, però, è possibile ammettere che l'algoritmo utilizzato per la risoluzione del problema, restituisca anche soluzioni con più componenti connesse. In questo modo sarebbe possibile scegliere una penalità dipendente dal numero di vincoli violati (ovvero dal numero di subtour presenti) che influenzi il costo della soluzione nel seguente modo:
-$$costo\_totale = costo\_archi + M (num\_subtour -1)$$
-con M variabile molto grande.
-\end{comment}

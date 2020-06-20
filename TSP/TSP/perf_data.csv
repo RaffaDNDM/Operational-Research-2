@@ -1,1 +1,6 @@
-1, Genetic
+1, Simulated Annealing
+genetic_instances/pr226.tsp, 80570.65
+genetic_instances/pr264.tsp, 49203.39
+genetic_instances/pr299.tsp, 48667.16
+genetic_instances/rd400.tsp, 15610.31
+genetic_instances/u159.tsp, 42435.02

@@ -5,9 +5,9 @@
 \BOOKMARK [2][-]{subsection.2.1.2}{Formulazione di Gavish e Graves}{section.2.1}% 5
 \BOOKMARK [1][-]{section.2.2}{Algoritmi Esatti}{chapter.2}% 6
 \BOOKMARK [2][-]{subsection.2.2.1}{Loop}{section.2.2}% 7
-\BOOKMARK [2][-]{subsection.2.2.2}{Formulazione con callback}{section.2.2}% 8
+\BOOKMARK [2][-]{subsection.2.2.2}{Branch \046 Cut}{section.2.2}% 8
 \BOOKMARK [2][-]{subsection.2.2.3}{Patching algorithm}{section.2.2}% 9
-\BOOKMARK [1][-]{section.2.3}{Algoritmi Math-Heuristic}{chapter.2}% 10
+\BOOKMARK [1][-]{section.2.3}{Algoritmi Math-Heuristici}{chapter.2}% 10
 \BOOKMARK [2][-]{subsection.2.3.1}{Hard Fixing}{section.2.3}% 11
 \BOOKMARK [2][-]{subsection.2.3.2}{Soft Fixing}{section.2.3}% 12
 \BOOKMARK [0][-]{chapter.3}{Algoritmi euristici}{}% 13
@@ -21,9 +21,9 @@
 \BOOKMARK [1][-]{section.3.3}{Meta-euristici}{chapter.3}% 21
 \BOOKMARK [2][-]{subsection.3.3.1}{Multi-start}{section.3.3}% 22
 \BOOKMARK [2][-]{subsection.3.3.2}{Variable Neighborhood Search}{section.3.3}% 23
-\BOOKMARK [2][-]{subsection.3.3.3}{Tabu search}{section.3.3}% 24
+\BOOKMARK [2][-]{subsection.3.3.3}{Tabu Search}{section.3.3}% 24
 \BOOKMARK [2][-]{subsection.3.3.4}{Simulated annealing}{section.3.3}% 25
-\BOOKMARK [1][-]{section.3.4}{Algoritmo genetico}{chapter.3}% 26
+\BOOKMARK [2][-]{subsection.3.3.5}{Algoritmo genetico}{section.3.3}% 26
 \BOOKMARK [0][-]{chapter.4}{Performance}{}% 27
 \BOOKMARK [1][-]{section.4.1}{Performance variabilty}{chapter.4}% 28
 \BOOKMARK [1][-]{section.4.2}{Analisi tabulare}{chapter.4}% 29
@@ -50,4 +50,4 @@
 \BOOKMARK [1][-]{section.Alph2.4}{Costanti utili}{appendix.Alph2}% 50
 \BOOKMARK [0][-]{appendix.Alph3}{Gnuplot}{}% 51
 \BOOKMARK [0][-]{appendix.Alph4}{Performance profile in python}{}% 52
-\BOOKMARK [0][-]{figure.caption.72}{Bibliografia}{}% 53
+\BOOKMARK [0][-]{figure.caption.71}{Bibliografia}{}% 53

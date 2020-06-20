@@ -1,3 +1,4 @@
+genetic_instances/pr226.tsp
 genetic_instances/pr264.tsp
 genetic_instances/pr299.tsp
 genetic_instances/rd400.tsp
