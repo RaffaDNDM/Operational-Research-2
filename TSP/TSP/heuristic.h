@@ -19,10 +19,11 @@
 //#define MULTI_START //Comment or not if you want multistart or not
 
 #define STEP_SEED 100
-#define NUM_MULTI_START 8 //Number of threads in multi start and for construction in Genetic
+#define NUM_MULTI_START 12 //Number of threads in multi start and for construction in Genetic
 #define POPULATION_SIZE 12000 //Size of the population
 #define NUM_WORST_MEMBERS 1000 //Size of the buffer with indices of worst members in the population
-//#define FIXED_TIME_MS
+#define FIXED_TIME_MS
+//#define UNIFORM_PROB
 
 typedef struct
 {

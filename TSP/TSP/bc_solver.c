@@ -88,6 +88,7 @@ void bc_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ, int*
 	{
 	case 1:
 	{
+		printf("%sHard fixing%s\n", BLUE, WHITE);
 		time_t start = 0;
 		time_t end = 0;
 
@@ -137,13 +138,13 @@ void bc_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ, int*
 
 				count = 0;
 
-			}
+			}/*
 			else
 			{
 				count++;
 				if (count == 6)
 					break;
-			}
+			}*/
 
 			cplex_change_coeff(tsp_in, env, lp, tsp_in->sol, percentage[i % 5]);
 		}
@@ -152,6 +153,7 @@ void bc_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ, int*
 
 	case 2:
 	{
+		printf("%sSoft fixing%s\n", CYAN, WHITE);
 		tsp_in->bestCostD = CPX_INFBOUND;
 
 		time_t start = 0;
@@ -196,20 +198,20 @@ void bc_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ, int*
 			if (tsp_in->bestCostD - cost > 1e-6)
 			{
 				tsp_in->bestCostD = cost;
-
-				printf("%s-------- Improvement --------%s\n", GREEN, WHITE);
+				
+				printf("%s-------- Improvement --------%s\n", BLUE, WHITE);
 
 				assert(CPXgetmipx(env, lp, tsp_in->sol, 0, tsp_in->num_cols - 1) == 0);
 
 				count = 0;
-			}
+			}/*
 			else
 			{
 				count++;
 				if (count == 10)
 					break;
-			}
-			local_branching(tsp_in, env, lp, tsp_in->sol, freedom[i % 10]);
+			}*/
+			local_branching(tsp_in, env, lp, tsp_in->sol, freedom[i % 9]);
 		}
 	}
 	break;

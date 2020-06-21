@@ -202,7 +202,7 @@ void manage_input(tsp_instance* tsp_in)
 								else
 									fprintf(perf_data, ", %.2lf", tsp_in->bestCostD);
 							#else
-								fprintf(perf_data, ", %.2lf", tsp_in->execution_time);
+								fprintf(perf_data, ", %.3lf", tsp_in->execution_time);
 							#endif
 						#endif
 					}

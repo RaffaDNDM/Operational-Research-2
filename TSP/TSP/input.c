@@ -169,15 +169,14 @@ void parse_cmd(char** argv, int argc, tsp_instance* tsp_in)
 
 	if (tsp_in->heuristic != 0)
 	{
-		if (tsp_in->alg != 2 && tsp_in->alg != 3)
+		if (tsp_in->alg != 2 && tsp_in->alg != 3 && tsp_in->which_alg[1] != 1 && tsp_in->which_alg[2] != 1)
 		{
 			printf("Not valid algorithm for heuristic option\n");
 			exit(1);
 		}
 		else if (tsp_in->which_alg[0] == 1 || tsp_in->which_alg[3] == 1 || tsp_in->which_alg[4] == 1 ||
 			tsp_in->which_alg[5] == 1 || tsp_in->which_alg[6] == 1 || tsp_in->which_alg[7] == 1 ||
-			tsp_in->which_alg[8] == 1 || tsp_in->which_alg[9] == 1 || tsp_in->which_alg[10] == 1 ||
-			tsp_in->which_alg[11] == 1)
+			tsp_in->which_alg[8] == 1 || tsp_in->which_alg[9] == 1 || tsp_in->which_alg[10] == 1 )
 		{
 			printf("The heuristic option will be ignored for algorithms different from 2 and 3\n");
 		}

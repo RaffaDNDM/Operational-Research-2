@@ -22,6 +22,9 @@ void loop_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ, in
 	printf("%sSeed:%s %d\n\n",CYAN, WHITE, tsp_in->seed);
 #endif
 
+
+	CPXsetintparam(env, CPX_PARAM_RANDOMSEED, tsp_in->seed);
+
 	time_t start, start_iter, end_iter, end;
 	start = clock();
 	start_iter = start;

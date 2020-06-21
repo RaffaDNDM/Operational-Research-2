@@ -41,6 +41,7 @@ void cplex_solver(tsp_instance* tsp_in)
 		{
 			time_t start = clock();
 			printf("Loop solver\n\n");
+			tsp_in->seed = SEED;
 			loop_solver(env, lp, tsp_in, succ, comp, &n_comps);
 			time_t end = clock();
 			tsp_in->execution_time = ((double)(end - start) / (double)CLOCKS_PER_SEC);

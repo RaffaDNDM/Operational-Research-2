@@ -861,12 +861,18 @@ void hybrid_vns(tsp_instance* tsp_in, int* visited_nodes, double* best_cost, dou
 		//printf("%d %.2lf\n", count, local_min_cost);
 		//count++;
 
-		double** inverse_costs = (double**)calloc((size_t)max_k, sizeof(double*));
+		double** inverse_costs = NULL;
+		double inverse_costs_sum = 0.0;
+		
+		#ifndef UNIFORM_PROB
+			inverse_costs = (double**)calloc((size_t)max_k, sizeof(double*));
 
-		for(i=0; i<max_k; i++)
-			inverse_costs[i] = (double*)calloc((size_t) tsp_in->num_nodes, sizeof(double));
+			for (i = 0; i < max_k; i++)
+				inverse_costs[i] = (double*)calloc((size_t)tsp_in->num_nodes, sizeof(double));
 
-		double inverse_costs_sum = 1.0 / local_min_cost;
+			inverse_costs_sum = 1.0 / local_min_cost;
+
+		#endif 
 		
 		int k = 1;
 		for (; k <= max_k && remaining_time > 0; k++)
@@ -920,10 +926,13 @@ void hybrid_vns(tsp_instance* tsp_in, int* visited_nodes, double* best_cost, dou
 		if(remaining_time>0 && k > max_k)
 			new_random_sol(tsp_in, local_min_visited_nodes, &local_min_cost, inverse_costs, &inverse_costs_sum);
 
-		for (i = 0; i < max_k; i++)
-			free(inverse_costs[i]);
+		#ifndef UNIFORM_PROB
+			for (i = 0; i < max_k; i++)
+				free(inverse_costs[i]);
 
-		free(inverse_costs);
+			free(inverse_costs);
+		#endif 
+
 		time_t end = clock();
 		remaining_time = remaining_time - ((double)(end - start) / (double)CLOCKS_PER_SEC);
 		#ifndef MULTI_START
@@ -994,8 +1003,10 @@ int min_kopt_sequence(tsp_instance* tsp_in, int* kopt_visited_nodes, double* kop
 				delta += (c_new[j] - c_old[j]);
 		}
 
-		inverse_costs[k-1][i] = 1.0 / (delta + (*kopt_cost));
-		(*inverse_costs_sum) += inverse_costs[k-1][i];
+		#ifndef UNIFORM_PROB
+			inverse_costs[k - 1][i] = 1.0 / (delta + (*kopt_cost));
+			(*inverse_costs_sum) += inverse_costs[k - 1][i];
+		#endif 
 
 		if (delta < best_delta)
 		{
@@ -1019,30 +1030,41 @@ int min_kopt_sequence(tsp_instance* tsp_in, int* kopt_visited_nodes, double* kop
 
 int new_random_sol(tsp_instance* tsp_in, int* local_min_visited_nodes, double* local_cost, double** inverse_costs, double* inverse_costs_sum)
 {
-	int first=0;
-	int second=0;
-	int k=1;
-
-	double sum = 0.0;
+	int first;
+	int k;
+	int second;
 	int i;
-	int found=0;
-	for (i = 0; i < (ceil(tsp_in->num_nodes / 2)) && !found; i++)
-	{
-		int j = 0;
-		for (; j < tsp_in->num_nodes; j++)
+
+	#ifndef UNIFORM_PROB
+		first = 0;
+		second = 0;
+		k = 1;
+
+		int found = 0;
+		for (i = 0; i < (ceil(tsp_in->num_nodes / 2)) && !found; i++)
 		{
-			double choice = (double)(rand() % ((int)(((*inverse_costs_sum)/ inverse_costs[i][j])*1000.0)));
-			
-			if (choice<1000.0)
+			int j = 0;
+			for (; j < tsp_in->num_nodes; j++)
 			{
-				first = j;
-				second = (j + i+1)%tsp_in->num_nodes;
-				k = i+1;
-				found = 1;
-				break;
+				double choice = (double)(rand() % ((int)(((*inverse_costs_sum) / inverse_costs[i][j]) * 1000.0)));
+
+				if (choice < 1000.0)
+				{
+					first = j;
+					second = (j + i + 1) % tsp_in->num_nodes;
+					k = i + 1;
+					found = 1;
+					break;
+				}
 			}
 		}
-	}
+	#else
+		first = rand() % tsp_in->num_nodes;
+
+		//k = ( rand() % (int)  ceil((tsp_in->num_nodes / 2)) ) + 1 ;
+		k = rand() % (tsp_in->num_nodes - 2);
+		second = (first + k) % tsp_in->num_nodes;
+	#endif
 
 	//printf("first: %d second: %d\n", first, second);
 
@@ -1214,6 +1236,8 @@ void tabu_search(tsp_instance* tsp_in, int* visited_nodes, double* best_cost, do
 		#endif 
 
 	}
+
+	printf("\n");
 
 	free(succ);
 	free(tabu_list[0]);
@@ -1503,11 +1527,11 @@ void greedy_refinement_for_tabu_search(tsp_instance* tsp_in, int* succ, int** ta
 
 void simulated_annealing(tsp_instance* tsp_in, int* visited_nodes, double* best_cost, double deadline)
 {
-	static int count_cost = 0;
+	//static int count_cost = 0;
 	//visited_nodes contiene la prima soluzione calcolata esternamente alla funzione, best cost il suo costo
 	#ifndef MULTI_START
 	//printf("%d %.2lf\n", count_cost, *best_cost);
-	count_cost++;
+	//count_cost++;
 	printf("%sStarting cost:%s %.2lf\n", RED, WHITE, *best_cost);
 	#endif 
 
@@ -1697,9 +1721,11 @@ void simulated_annealing(tsp_instance* tsp_in, int* visited_nodes, double* best_
 
 			}
 
-			time_t end_inner_iteration = clock();
+			time_t end_inner_iteration =  clock();
 
-			remaining_time = remaining_time - ((double)(end_inner_iteration - start_inner_iteration) / CLOCKS_PER_SEC);
+			remaining_time = remaining_time - ((double)(end_inner_iteration - start_inner_iteration) /(double) CLOCKS_PER_SEC);
+			//remaining_time = remaining_time - ((double)(end_inner_iteration - start_inner_iteration) / 400.0);
+
 
 			if (remaining_time <= 0.0 )
 				break;

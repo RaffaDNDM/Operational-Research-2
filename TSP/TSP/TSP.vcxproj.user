@@ -5,7 +5,7 @@
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LocalDebuggerCommandArguments>-dir genetic_instances -alg /10 -v 70 -np -dead 600</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>-dir random_inst/bier127.tsp -alg /1 -v 70 -np -dead 600</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
 </Project>

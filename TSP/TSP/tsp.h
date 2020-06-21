@@ -51,7 +51,7 @@
 //Length of the dir string, specified in command line
 #define DIR_SIZE 500
 
-#define PRINT_COST
+//#define PRINT_COST
 
 typedef struct
 {
