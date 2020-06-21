@@ -51,4 +51,4 @@
 \contentsline {chapter}{\numberline {C}Gnuplot}{59}{appendix.Alph3}% 
 \contentsline {chapter}{\numberline {D}Performance profile in python}{61}{appendix.Alph4}% 
 \contentsline {chapter}{\numberline {E}Risultati}{63}{appendix.Alph5}% 
-\contentsline {chapter}{Bibliografia}{68}{table.Alph5.7}% 
+\contentsline {chapter}{Bibliografia}{69}{table.Alph5.8}% 

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2020.1.11)  21 JUN 2020 21:53
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2020.1.11)  21 JUN 2020 23:43
 entering extended mode
 **./Report.tex
 (Report.tex
@@ -1512,12 +1512,12 @@ Package pdftex.def Info: Images/pp_gap.pdf  used on input line 183.
 pdfTeX warning: pdflatex (file ./Images/pp_gap.pdf): PDF inclusion: multiple pd
 fs with page group included in a single page
 >]
-<Images/pp_math-heuristic.pdf, id=875, 462.52798pt x 346.89601pt>
+<Images/pp_math-heuristic.pdf, id=874, 462.52798pt x 346.89601pt>
 File: Images/pp_math-heuristic.pdf Graphic file (type pdf)
 <use Images/pp_math-heuristic.pdf>
 Package pdftex.def Info: Images/pp_math-heuristic.pdf  used on input line 221.
 (pdftex.def)             Requested size: 370.02287pt x 277.51718pt.
-<Images/pp_math-heuristic_zoom.pdf, id=876, 462.52798pt x 346.89601pt>
+<Images/pp_math-heuristic_zoom.pdf, id=875, 462.52798pt x 346.89601pt>
 File: Images/pp_math-heuristic_zoom.pdf Graphic file (type pdf)
 <use Images/pp_math-heuristic_zoom.pdf>
 Package pdftex.def Info: Images/pp_math-heuristic_zoom.pdf  used on input line 
@@ -1531,7 +1531,7 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [34 <./Images/pp_math-heuristic.pdf>]
-<Images/pp_construction.pdf, id=930, 462.52798pt x 346.89601pt>
+<Images/pp_construction.pdf, id=929, 462.52798pt x 346.89601pt>
 File: Images/pp_construction.pdf Graphic file (type pdf)
 <use Images/pp_construction.pdf>
 Package pdftex.def Info: Images/pp_construction.pdf  used on input line 288.
@@ -1541,32 +1541,32 @@ Package pdftex.def Info: Images/pp_construction.pdf  used on input line 288.
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 [35 <./Images/pp_math-heuristic_zoom.pdf>] [36 <./Images/pp_construction.pdf>]
-<Images/pp_heuristic.pdf, id=1041, 462.52798pt x 346.89601pt>
+<Images/pp_heuristic.pdf, id=1040, 462.52798pt x 346.89601pt>
 File: Images/pp_heuristic.pdf Graphic file (type pdf)
 <use Images/pp_heuristic.pdf>
 Package pdftex.def Info: Images/pp_heuristic.pdf  used on input line 354.
 (pdftex.def)             Requested size: 370.02287pt x 277.51718pt.
-<Images/pp_genetic.pdf, id=1042, 462.52798pt x 346.89601pt>
+<Images/pp_genetic.pdf, id=1041, 462.52798pt x 346.89601pt>
 File: Images/pp_genetic.pdf Graphic file (type pdf)
 <use Images/pp_genetic.pdf>
 Package pdftex.def Info: Images/pp_genetic.pdf  used on input line 362.
 (pdftex.def)             Requested size: 370.02287pt x 277.51718pt.
-<Images/cost_vns.png, id=1043, 483.30562pt x 350.05782pt>
+<Images/cost_vns.png, id=1042, 483.30562pt x 350.05782pt>
 File: Images/cost_vns.png Graphic file (type png)
 <use Images/cost_vns.png>
 Package pdftex.def Info: Images/cost_vns.png  used on input line 370.
 (pdftex.def)             Requested size: 338.31163pt x 245.03879pt.
-<Images/cost_tabu.png, id=1044, 485.56406pt x 353.06906pt>
+<Images/cost_tabu.png, id=1043, 485.56406pt x 353.06906pt>
 File: Images/cost_tabu.png Graphic file (type png)
 <use Images/cost_tabu.png>
 Package pdftex.def Info: Images/cost_tabu.png  used on input line 378.
 (pdftex.def)             Requested size: 339.89252pt x 247.14665pt.
-<Images/cost_sa.png, id=1045, 482.55281pt x 347.79938pt>
+<Images/cost_sa.png, id=1044, 482.55281pt x 347.79938pt>
 File: Images/cost_sa.png Graphic file (type png)
 <use Images/cost_sa.png>
 Package pdftex.def Info: Images/cost_sa.png  used on input line 386.
 (pdftex.def)             Requested size: 337.78465pt x 243.4579pt.
-<Images/cost_genetic.png, id=1046, 490.83376pt x 348.55219pt>
+<Images/cost_genetic.png, id=1045, 490.83376pt x 348.55219pt>
 File: Images/cost_genetic.png Graphic file (type png)
 <use Images/cost_genetic.png>
 Package pdftex.def Info: Images/cost_genetic.png  used on input line 394.
@@ -1600,12 +1600,12 @@ File: t1cmss.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 ])
 (Chapters/CPLEX_func.tex [42]
 Appendice B.
-<Images/cplex_structs.png, id=1201, 272.01625pt x 191.71625pt>
+<Images/cplex_structs.png, id=1200, 272.01625pt x 191.71625pt>
 File: Images/cplex_structs.png Graphic file (type png)
 <use Images/cplex_structs.png>
 Package pdftex.def Info: Images/cplex_structs.png  used on input line 22.
 (pdftex.def)             Requested size: 190.41006pt x 134.20045pt.
-<Images/indices_matrix.png, id=1203, 293.095pt x 282.05376pt>
+<Images/indices_matrix.png, id=1202, 293.095pt x 282.05376pt>
 File: Images/indices_matrix.png Graphic file (type png)
 <use Images/indices_matrix.png>
 Package pdftex.def Info: Images/indices_matrix.png  used on input line 33.
@@ -1679,7 +1679,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 265--267
  []
 
 [48]
-<Images/lazy_constraints.png, id=1281, 467.7475pt x 175.65625pt>
+<Images/lazy_constraints.png, id=1280, 467.7475pt x 175.65625pt>
 File: Images/lazy_constraints.png Graphic file (type png)
 <use Images/lazy_constraints.png>
 Package pdftex.def Info: Images/lazy_constraints.png  used on input line 326.
@@ -1822,7 +1822,7 @@ Overfull \hbox (0.68759pt too wide) in paragraph at lines 2--3
 ce pro-fi-le dei di-ver-si al-go-rit-mo è perprof.py[[]].
  []
 
-<Images/profile_out.png, id=1446, 500.46976pt x 401.70074pt>
+<Images/profile_out.png, id=1445, 500.46976pt x 401.70074pt>
 File: Images/profile_out.png Graphic file (type png)
 <use Images/profile_out.png>
 Package pdftex.def Info: Images/profile_out.png  used on input line 62.
@@ -1833,22 +1833,16 @@ Package pdftex.def Info: Images/profile_out.png  used on input line 62.
 Appendice E.
 [63
 
-] [64] [65]
-Underfull \hbox (badness 1776) in paragraph at lines 201--201
-[]\T1/cmr/m/n/10 Tabella E.5: |Co-sto del-la so-lu-zio-ne ot-te-nu-ta me-dian-t
-e Mul-ti-start, ge-ne-ran-do 12 istan-ze
- []
+] [64] [65] [66] [67] [68]) (Report.bbl [69] [70
 
-[66] [67]) (Report.bbl [68]) [69
-
-]
+]) [71]
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 204.
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 204.
  (Report.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 204.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 204.
 Package rerunfilecheck Info: File `Report.out' has not changed.
-(rerunfilecheck)             Checksum: 6FDE69575D68796F610CF867A92486A1;3604.
+(rerunfilecheck)             Checksum: BBBB1734FE21FDF2850F4D10C193CA8E;3604.
 
 
 LaTeX Warning: There were undefined references.
@@ -1858,10 +1852,10 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 29182 strings out of 492452
- 526848 string characters out of 3134016
- 819085 words of memory out of 3000000
- 32606 multiletter control sequences out of 15000+200000
+ 29186 strings out of 492452
+ 526882 string characters out of 3134016
+ 820167 words of memory out of 3000000
+ 32607 multiletter control sequences out of 15000+200000
  561263 words of font info for 82 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  50i,21n,67p,805b,1462s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -1904,9 +1898,9 @@ ic/amsfonts/cm/cmr7.pfb><D:/Programs/Miktex/fonts/type1/public/amsfonts/cm/cmr8
 1/public/amsfonts/cm/cmsy7.pfb><D:/Programs/Miktex/fonts/type1/public/amsfonts/
 cm/cmsy8.pfb><D:/Programs/Miktex/fonts/type1/public/amsfonts/cm/cmtt10.pfb><D:/
 Programs/Miktex/fonts/type1/public/amsfonts/cm/cmtt8.pfb>
-Output written on Report.pdf (73 pages, 1617489 bytes).
+Output written on Report.pdf (75 pages, 1622361 bytes).
 PDF statistics:
- 2491 PDF objects out of 2984 (max. 8388607)
- 497 named destinations out of 1000 (max. 500000)
+ 2501 PDF objects out of 2984 (max. 8388607)
+ 500 named destinations out of 1000 (max. 500000)
  602 words of extra memory for PDF output out of 10000 (max. 10000000)
 
