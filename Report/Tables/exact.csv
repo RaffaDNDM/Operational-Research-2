@@ -1,0 +1,57 @@
+\textit{a280.tsp} & 13.857 & 9.509 & 4.187 & 8.211 & 4.191\\
+\textit{ali535.tsp} & 251.844 & 119.427 & TIME LIMIT & 314.189 & TIME LIMIT\\
+\textit{att48.tsp} & 0.972 & 0.252 & 0.202 & 0.251 & 0.189\\
+\textit{att532.tsp} & 313.906 & 376.933 & 600.842 & 567.807 & TIME LIMIT\\
+\textit{berlin52.tsp} & 0.141 & 0.179 & 0.063 & 0.191 & 0.051\\
+\textit{bier127.tsp} & 2.439 & 1.213 & 1.283 & 1.749 & 1.291\\
+\textit{burma14.tsp} & 0.066 & 0.034 & 0.031 & 0.031 & 0.021\\
+\textit{ch130.tsp} & 2.411 & 1.031 & 1.474 & 1.771 & 1.159\\
+\textit{ch150.tsp} & 5.951 & 1.841 & 3.211 & 2.679 & 2.491\\
+\textit{d198.tsp} & 26.099 & 6.578 & 39.322 & 11.712 & 13.501\\
+\textit{d493.tsp} & 317.945 & 266.471 & TIME LIMIT & 179.002 & TIME LIMIT\\
+\textit{d657.tsp} & 458.962 & TIME LIMIT & TIME LIMIT & TIME LIMIT & TIME LIMIT\\
+\textit{eil51.tsp} & 0.749 & 0.172 & 0.167 & 0.156 & 0.121\\
+\textit{eil76.tsp} & 0.285 & 0.185 & 0.094 & 0.212 & 0.113\\
+\textit{eil101.tsp} & 1.081 & 0.261 & 0.271 & 0.354 & 0.269\\
+\textit{fl417.tsp} & 209.508 & 306.274 & TIME LIMIT & 122.981 & TIME LIMIT\\
+\textit{gil262.tsp} & 26.517 & 30.878 & 18.357 & 13.989 & 27.911\\
+\textit{gr96.tsp} & 2.131 & 0.765 & 0.421 & 0.551 & 0.708\\
+\textit{gr137.tsp} & 3.428 & 0.947 & 1.064 & 1.121 & 1.121\\
+\textit{gr202.tsp} & 19.909 & 4.104 & 6.073 & 5.531 & 6.329\\
+\textit{gr229.tsp} & 16.537 & 14.832 & 4.919 & 12.648 & 9.122\\
+\textit{gr431.tsp} & 72.726 & 35.762 & 46.931 & 46.832 & 86.982\\
+\textit{gr666.tsp} & TIME LIMIT & 190.031 & TIME LIMIT & TIME LIMIT & TIME LIMIT\\
+\textit{kroA100.tsp} & 2.011 & 0.829 & 0.861 & 0.651 & 0.882\\
+\textit{kroA150.tsp} & 10.519 & 2.603 & 2.796 & 3.412 & 2.271\\
+\textit{kroA200.tsp} & 24.679 & 13.581 & 34.077 & 8.682 & 74.918\\
+\textit{kroB100.tsp} & 4.225 & 1.552 & 0.869 & 1.271 & 0.659\\
+\textit{kroB150.tsp} & 14.636 & 4.824 & 5.791 & 4.472 & 6.111\\
+\textit{kroB200.tsp} & 12.244 & 7.161 & 6.088 & 10.427 & 8.239\\
+\textit{kroC100.tsp} & 2.628 & 0.739 & 0.631 & 0.711 & 0.769\\
+\textit{kroD100.tsp} & 2.113 & 0.496 & 0.832 & 0.673 & 0.709\\
+\textit{kroE100.tsp} & 2.477 & 1.357 & 0.681 & 0.948 & 0.931\\
+\textit{lin105.tsp} & 1.674 & 0.642 & 0.472 & 0.311 & 0.419\\
+\textit{lin318.tsp} & 47.514 & 25.434 & 37.783 & 35.308 & 100.161\\
+\textit{p654.tsp} & TIME LIMIT & 157.174 & 85.571 & TIME LIMIT & 308.872\\
+\textit{pcb442.tsp} & 243.732 & 15.792 & 36.125 & 22.309 & 35.702\\
+\textit{pr76.tsp} & 4.225 & 2.546 & 4.716 & 1.921 & 9.161\\
+\textit{pr107.tsp} & 0.614 & 0.112 & 0.081 & 0.131 & 0.081\\
+\textit{pr124.tsp} & 8.843 & 1.707 & 1.149 & 2.021 & 1.721\\
+\textit{pr136.tsp} & 2.754 & 1.582 & 1.093 & 1.409 & 0.842\\
+\textit{pr144.tsp} & 11.239 & 3.109 & 2.891 & 3.848 & 3.149\\
+\textit{pr152.tsp} & 5.479 & 4.995 & 2.038 & 4.842 & 2.771\\
+\textit{pr226.tsp} & 66.161 & 17.555 & 9.497 & 14.279 & 9.422\\
+\textit{pr299.tsp} & 108.237 & 125.979 & TIME LIMIT & 51.142 & TIME LIMIT\\
+\textit{pr439.tsp} & 409.73 & 501.036 & TIME LIMIT & 362.521 & TIME LIMIT\\
+\textit{rat99.tsp} & 1.548 & 0.345 & 0.532 & 0.321 & 0.739\\
+\textit{rat195.tsp} & 37.502 & 12.853 & 12.693 & 10.908 & 23.791\\
+\textit{rat575.tsp} & 391.694 & 281.827 & TIME LIMIT & 352.712 & TIME LIMIT\\
+\textit{rat783.tsp} & 222.909 & 381.214 & TIME LIMIT & TIME LIMIT & TIME LIMIT\\
+\textit{rd100.tsp} & 2.306 & 1.122 & 0.573 & 0.684 & 0.968\\
+\textit{rd400.tsp} & 128.746 & 80.335 & TIME LIMIT & 46.511 & 601.14\\
+\textit{st70.tsp} & 0.466 & 0.193 & 0.217 & 0.232 & 0.221\\
+\textit{u159.tsp} & 3.285 & 2.096 & 1.374 & 1.838 & 2.012\\
+\textit{u574.tsp} & 157.913 & 161.905 & TIME LIMIT & 194.281 & TIME LIMIT\\
+\textit{u724.tsp} & 440.595 & TIME LIMIT & TIME LIMIT & TIME LIMIT & TIME LIMIT\\
+\textit{ulysses16.tsp} & 0.232 & 0.121 & 0.047 & 0.051 & 0.039\\
+\textit{ulysses22.tsp} & 0.186 & 0.067 & 0.031 & 0.081 & 0.041\\

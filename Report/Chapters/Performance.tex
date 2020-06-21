@@ -55,12 +55,49 @@ Spesso questi grafici vengono rappresentati in scala logaritmica per notare al m
   \label{perf_profile} 
 \end{center} 
 \end{figure}
-
 Per creare il performance profile degli algoritmi implementati, è stato utilizzato il programma python riportato nella Sezione \ref{perf_profile_py}. 
 
 \section{Analisi degli algoritmi sviluppati}
+Nella seguente sezione vengono riportati i grafici relativi ai risultati ottenuti con le implementazione degli algoritmi descritti nei precedenti capitoli. L'intero sviluppo di tali metodologie è stato svolto in linguaggio C. I valori ottenuti ed utilizzati per realizzare le immagini contenute in questa sezione, sono consultabili nell'Appendice \ref{results}.
 \subsection{Algoritmi esatti}
-\subsubsection{Modelli simmetrici}
+Gli algoritmi basati sul modello compatto, sono stati testati con un time limit di 20 minuti sulle seguenti istanze:
+\begin{center}
+\begin{multicols}{3}
+\begin{itemize}
+\item{att48.tsp}
+\item{berlin52.tsp}
+\item{burma14.tsp}
+\item{eil101.tsp}
+\item{eil51.tsp}
+\item{eil76.tsp}
+\item{gr96.tsp}
+\item{kroA100.tsp}
+\item{kroB100.tsp}
+\item{kroB150.tsp}
+\item{kroC100.tsp}
+\item{kroD100.tsp}
+\item{kroE100.tsp}
+\item{pr124.tsp}
+\item{pr136.tsp}
+\item{pr76.tsp}
+\item{rat99.tsp}
+\item{rd100.tsp}
+\item{st70.tsp}
+\item{ulysses16.tsp}
+\end{itemize}
+\end{multicols}
+\end{center}
+Analizzando i risultati ottenuti, si nota come questi algoritmi abbiano avuto bisogno su alcune delle istanze di grandezza maggiore. 
+Visionando il performance profile in Figura \ref{pp_compact}, risulta evidente come l'aggiunta dei vincoli come lazy constraint, nel metodo di Miller, Tucker e Zemlin, garantisca un notevole miglioramento delle prestazioni rispetto alla versione originale.\\
+\begin{figure}[H] 
+\begin{center} 
+  % Requires \usepackage{graphicx} 
+  \includegraphics[scale=0.7]{Images/pp_compact}\\ 
+  \caption{\footnotesize{Performance profile degli algoritmi compatti.}}
+  \label{pp_compact} 
+\end{center} 
+\end{figure}
+Gli algoritmi esatti, che non prevedono l'uso di modelli compatti, sono invece stati testati con un time limit di 10 minuti sul seguente dataset:
 \begin{center}
 \begin{multicols}{4}
 \begin{itemize}
@@ -119,54 +156,38 @@ Per creare il performance profile degli algoritmi implementati, è stato utilizz
 \end{itemize}
 \end{multicols}
 \end{center}
-
-\begin{figure}[h] 
+Dall'analisi dei risultati ottenuti (Figura \ref{pp_exact}), è evidente come l'utilizzo del Branch \& Cut permette di ottenere prestazioni migliori, ma soprattutto come l'utilizzo delle callback generiche abbia permesso di migliorare notevolmente le prestazioni, rispetto alla versione priva di esse.\\
+L'utilizzo del patching ha avuto maggior effetto soprattutto nella prima parte dell'esecuzione del programma, in cui è molto di aiuto per CPLEX nel raggiungere l'ottimo. Successivamente le soluzioni passate al risolutore MIP, mediante le heuristic callback, vengono scartate da quest'ultimo sempre più facilmente.\\
+\begin{figure}[H] 
 \begin{center} 
   % Requires \usepackage{graphicx} 
-  \includegraphics[scale=0.8]{Images/pp_exact}\\ 
-  \caption{\footnotesize{Performance profile degli algoritmi esatti.}}
-  \label{perf_profile} 
+  \includegraphics[scale=0.75]{Images/pp_exact}\\ 
+  \caption{\footnotesize{Performance profile dei tempi di esecuzione degli algoritmi esatti implementati.}}
+  \label{pp_exact} 
 \end{center} 
 \end{figure}
-
-\subsubsection{Modelli compatti}
-\begin{center}
-\begin{multicols}{3}
-\begin{itemize}
-\item{att48.tsp}
-\item{berlin52.tsp}
-\item{burma14.tsp}
-\item{eil101.tsp}
-\item{eil51.tsp}
-\item{eil76.tsp}
-\item{gr96.tsp}
-\item{kroA100.tsp}
-\item{kroB100.tsp}
-\item{kroB150.tsp}
-\item{kroC100.tsp}
-\item{kroD100.tsp}
-\item{kroE100.tsp}
-\item{pr124.tsp}
-\item{pr136.tsp}
-\item{pr76.tsp}
-\item{rat99.tsp}
-\item{rd100.tsp}
-\item{st70.tsp}
-\item{ulysses16.tsp}
-\end{itemize}
-\end{multicols}
-\end{center}
-
-\begin{figure}[h] 
+In Figura \ref{pp_random_seed} viene confrontato invece l'algoritmo loop attraverso l'utilizzo di diversi seed, ponendo l'attenzione su come la performance variability influenzi le prestazioni delle varie soluzioni implementative.
+Il performance profile riportato in Figura \ref{pp_gap} confronta i risultati ottenuti mediante l'utilizzo dell'algoritmo loop nella sua versione classica con quelli ottenuti applicando la sua versione euristica. Nel grafico realizzato, le varianti euristiche individuano inizialmente una soluzione specificata con il gap relativo specificato 
+nel grafico ed in seguito impostano nuovamente il gap al valore di default ed individuano la soluzione ottima.
+\begin{figure}[H] 
 \begin{center} 
   % Requires \usepackage{graphicx} 
-  \includegraphics[scale=0.8]{Images/pp_compact}\\ 
-  \caption{\footnotesize{Performance profile degli algoritmi compatti.}}
-  \label{perf_profile} 
+  \includegraphics[scale=0.7]{Images/pp_random_seed}\\ 
+  \caption{\footnotesize{Performance profile dei tempi di esecuzione dell'algoritmo loop al variare del seed scelto.}}
+  \label{pp_random_seed} 
+\end{center} 
+\end{figure}
+\begin{figure}[H] 
+\begin{center} 
+  % Requires \usepackage{graphicx} 
+  \includegraphics[scale=0.7]{Images/pp_gap}\\ 
+  \caption{\footnotesize{Performance profile dei tempi di esecuzione dell'algoritmo loop al variare del seed scelto.}}
+  \label{pp_gap} 
 \end{center} 
 \end{figure}
 
 \subsection{Algoritmi math-euristici}
+Gli algoritmi math-euristici sviluppati sono stati testati sul seguente insieme di istanze, con un time limit 10 minuti:
 \begin{center}
 \begin{multicols}{3}
 \begin{itemize}
@@ -193,13 +214,13 @@ Per creare il performance profile degli algoritmi implementati, è stato utilizz
 \end{itemize}
 \end{multicols}
 \end{center}
-
+Analizzando i risultati ottenuti in Figura \ref{pp_math-heuristic} e \ref{pp_math-heuristic_zoom}) risulta evidente come le prestazioni dell'algoritmo Hard fixing siano migliori, sia nelle variante che utilizza le callback generiche che in quella che non ne fa uso, rispetto ad entrambe le soluzioni ottenute dal Soft fixing.
 \begin{figure}[h] 
 \begin{center} 
   % Requires \usepackage{graphicx} 
   \includegraphics[scale=0.8]{Images/pp_math-heuristic}\\ 
-  \caption{\footnotesize{Confronto dei vari multistart in base all'algoritmo di costruzione.}}
-  \label{perf_profile} 
+  \caption{\footnotesize{Confronto degli algoritmi math-euristici in base al tempo di esecuzione impiegato.}}
+  \label{pp_math-heuristic} 
 \end{center} 
 \end{figure}
 
@@ -207,13 +228,14 @@ Per creare il performance profile degli algoritmi implementati, è stato utilizz
 \begin{center} 
   % Requires \usepackage{graphicx} 
   \includegraphics[scale=0.8]{Images/pp_math-heuristic_zoom}\\ 
-  \caption{\footnotesize{Confronto dei vari multistart in base all'algoritmo di costruzione.}}
-  \label{perf_profile} 
+  \caption{\footnotesize{Dettaglio del confronto degli algoritmi math-euristici in base al tempo di esecuzione impiegato.}}
+  \label{pp_math-heuristic_zoom} 
 \end{center} 
 \end{figure}
-
+\vspace{10cm}
 \subsection{Algoritmi euristici}
 \subsubsection{Multi-start}\label{construction_perf}
+In questa prima sezione, vengono analizzati i diversi algoritmi di costruzione implementati, applicando l'algoritmo multistart sulle seguenti istanze:
 \begin{center}
 \begin{multicols}{4}
 \begin{itemize}
@@ -257,16 +279,19 @@ Per creare il performance profile degli algoritmi implementati, è stato utilizz
 \end{multicols}
 \end{center}
 
+In Figura \ref{pp_construction}, viene riportato il performance profile ottenuto dall'esecuzione dell'algoritmo multistart, generando 12 differenti soluzioni per ciascuna istanza del problema e restituendo solo il costo della migliore tra queste.\\
+Le soluzioni di costo minore sono quelle restituite dall'algoritmo Nearest Neighborhood, in particolare con l'aggiunta del metodo GRASP. 
+Inoltre il tempo necessario alla definizione di una soluzione mediante il metodo insertion è molto elevato. 
 \begin{figure}[h] 
 \begin{center} 
   % Requires \usepackage{graphicx} 
   \includegraphics[scale=0.8]{Images/pp_construction}\\ 
-  \caption{\footnotesize{Confronto dei vari multistart in base all'algoritmo di costruzione.}}
-  \label{perf_profile} 
+  \caption{\footnotesize{Confronto dei vari multistart in base all'algoritmo di costruzione utilizzato.}}
+  \label{pp_construction} 
 \end{center} 
 \end{figure}
-
 \subsubsection{Algoritmi meta-euristici}
+Tutti gli gli algoritmi meta-euristici sviluppati, escluso il genetico, prevedono la possibilità di utilizzare uno qualsiasi tra gli algoritmi di costruzione definiti semplicemente associande specifici valori a delle macro, sviluppate in linguaggio C. Per i motivi descritti nella sezione precedente, gli algoritmi sono stati testati utilizzando il metodo di costruzione Nearest Neighborhood e con un time limit di 10 minuti. Il primo dataset su cui sono stati svolti i test è il seguente:
 \begin{center}
 \begin{multicols}{3}
 \begin{itemize}
@@ -293,52 +318,8 @@ Per creare il performance profile degli algoritmi implementati, è stato utilizz
 \end{itemize}
 \end{multicols}
 \end{center}
-
-\begin{figure}[h] 
-\begin{center} 
-  % Requires \usepackage{graphicx} 
-  \includegraphics[scale=0.8]{Images/pp_heuristic}\\ 
-  \caption{\footnotesize{Confronto dei costi ottenuti algoritmi meta-euristici sviluppati utilizzando il Nearest Neighborhood come algoritmo di costruzione.}}
-  \label{perf_profile} 
-\end{center} 
-\end{figure}
-
-\begin{figure}[h] 
-\begin{center} 
-  % Requires \usepackage{graphicx} 
-  \includegraphics[scale=0.7]{Images/cost_vns}\\ 
-  \caption{\footnotesize{Confronto dei vari multistart in base all'algoritmo di costruzione.}}
-  \label{perf_profile} 
-\end{center} 
-\end{figure}
-
-\begin{figure}[h] 
-\begin{center} 
-  % Requires \usepackage{graphicx} 
-  \includegraphics[scale=0.7]{Images/cost_tabu}\\ 
-  \caption{\footnotesize{Confronto dei vari multistart in base all'algoritmo di costruzione.}}
-  \label{perf_profile} 
-\end{center} 
-\end{figure}
-
-\begin{figure}[h] 
-\begin{center} 
-  % Requires \usepackage{graphicx} 
-  \includegraphics[scale=0.7]{Images/cost_sa}\\ 
-  \caption{\footnotesize{Confronto dei vari multistart in base all'algoritmo di costruzione.}}
-  \label{perf_profile} 
-\end{center} 
-\end{figure}
-
-\begin{figure}[h] 
-\begin{center} 
-  % Requires \usepackage{graphicx} 
-  \includegraphics[scale=0.7]{Images/cost_genetic}\\ 
-  \caption{\footnotesize{Confronto dei vari multistart in base all'algoritmo di costruzione.}}
-  \label{perf_profile} 
-\end{center} 
-\end{figure}
-
+L'algoritmo genetico non è stato applicato al primo dataset definito all'insieme di istanze, utilizzato per ottenere i risultati mostrati in Figura \ref{pp_heuristic}. Il motivo di tale scelta, riguarda il tempo di calcolo troppo elevato per la generazione della popolazione.\\
+Per tale motivo tutti gli algoritmi meta-euristici sono stati testati nuovamente sulle seguenti istanze di dimensione minore, per ottenere un confronto più equo della soluzione del genetico con le altre:
 \begin{center}
 \begin{multicols}{3}
 \begin{itemize}
@@ -365,3 +346,53 @@ Per creare il performance profile degli algoritmi implementati, è stato utilizz
 \end{itemize}
 \end{multicols}
 \end{center}
+Analizzando i risultati ottenuti in entrambi i test (Figura \ref{pp_heuristic} e \ref{pp_genetic}), le soluzioni con costo minore sono quelle ottenute mediante il Simulated Annealing e il VNS ibribo. Nel primo caso, con istanze di grandezza maggiore, la seconda implementazione del VNS genera soluzioni di costo minore mentre nel confronto con l'algoritmo genetico, la prima implementazione del VNS risulta migliore.\\
+I grafici in Figura \ref{cost_vns}, \ref{cost_tabu}, \ref{cost_sa} e \ref{cost_genetic} rappresentano invece l'andamento del costo applicando rispettivamente il VNS ibrido, il Tabu Search, il Simulated Annealing e l'algoritmo genetico all'istanza \textit{bier127.tsp}.
+\begin{figure}[h] 
+\begin{center} 
+  % Requires \usepackage{graphicx} 
+  \includegraphics[scale=0.8]{Images/pp_heuristic}\\ 
+  \caption{\footnotesize{Confronto dei costi delle soluzioni ottenute mediante gli algoritmi meta-euristici, escluso il genetico.}}
+  \label{pp_heuristic} 
+\end{center}
+\end{figure}
+\begin{figure}[h] 
+\begin{center} 
+  % Requires \usepackage{graphicx} 
+  \includegraphics[scale=0.8]{Images/pp_genetic}\\ 
+  \caption{\footnotesize{Confronto dei costi delle soluzioni ottenute mediante tutti gli algoritmi meta-euristici.}}
+  \label{pp_genetic} 
+\end{center} 
+\end{figure}
+\begin{figure}[h]
+\begin{center} 
+  % Requires \usepackage{graphicx} 
+  \includegraphics[scale=0.7]{Images/cost_vns}\\ 
+  \caption{\footnotesize{Evoluzione del costo della soluzione attuale nell'algoritmo VNS.}}
+  \label{cost_vns} 
+\end{center} 
+\end{figure}
+\begin{figure}[h] 
+\begin{center} 
+  % Requires \usepackage{graphicx} 
+  \includegraphics[scale=0.7]{Images/cost_tabu}\\ 
+  \caption{\footnotesize{Evoluzione del costo della soluzione attuale nell'algoritmo Tabu search.}}
+  \label{cost_tabu} 
+\end{center} 
+\end{figure}
+\begin{figure}[h] 
+\begin{center} 
+  % Requires \usepackage{graphicx} 
+  \includegraphics[scale=0.7]{Images/cost_sa}\\ 
+  \caption{\footnotesize{Evoluzione del costo della soluzione attuale nell'algoritmo Simulated Annealing.}}
+  \label{cost_sa} 
+\end{center} 
+\end{figure}
+\begin{figure}[h]
+\begin{center} 
+  % Requires \usepackage{graphicx} 
+  \includegraphics[scale=0.7]{Images/cost_genetic}\\ 
+  \caption{\footnotesize{Evoluzione del costo della soluzione attuale nell'algoritmo genetico.}}
+  \label{cost_genetic} 
+\end{center} 
+\end{figure}

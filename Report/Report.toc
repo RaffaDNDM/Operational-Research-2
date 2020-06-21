@@ -8,8 +8,8 @@
 \contentsline {section}{\numberline {2.2}Algoritmi Esatti}{5}{section.2.2}% 
 \contentsline {subsection}{\numberline {2.2.1}Loop}{5}{subsection.2.2.1}% 
 \contentsline {subsection}{\numberline {2.2.2}Branch \& Cut}{6}{subsection.2.2.2}% 
-\contentsline {subsection}{\numberline {2.2.3}Patching algorithm}{8}{subsection.2.2.3}% 
-\contentsline {section}{\numberline {2.3}Algoritmi Math-Heuristici}{9}{section.2.3}% 
+\contentsline {subsection}{\numberline {2.2.3}Patching algorithm}{7}{subsection.2.2.3}% 
+\contentsline {section}{\numberline {2.3}Algoritmi Math-Euristici}{8}{section.2.3}% 
 \contentsline {subsection}{\numberline {2.3.1}Hard Fixing}{9}{subsection.2.3.1}% 
 \contentsline {subsection}{\numberline {2.3.2}Soft Fixing}{10}{subsection.2.3.2}% 
 \contentsline {chapter}{\numberline {3}Algoritmi euristici}{13}{chapter.3}% 
@@ -32,24 +32,23 @@
 \contentsline {section}{\numberline {4.3}Performance profiling}{30}{section.4.3}% 
 \contentsline {section}{\numberline {4.4}Analisi degli algoritmi sviluppati}{31}{section.4.4}% 
 \contentsline {subsection}{\numberline {4.4.1}Algoritmi esatti}{31}{subsection.4.4.1}% 
-\contentsline {subsubsection}{\numberline {4.4.1.1}Modelli simmetrici}{31}{subsubsection.4.4.1.1}% 
-\contentsline {subsubsection}{\numberline {4.4.1.2}Modelli compatti}{32}{subsubsection.4.4.1.2}% 
-\contentsline {subsection}{\numberline {4.4.2}Algoritmi math-euristici}{32}{subsection.4.4.2}% 
-\contentsline {subsection}{\numberline {4.4.3}Algoritmi euristici}{33}{subsection.4.4.3}% 
-\contentsline {subsubsection}{\numberline {4.4.3.1}Multi-start}{33}{subsubsection.4.4.3.1}% 
-\contentsline {subsubsection}{\numberline {4.4.3.2}Algoritmi meta-euristici}{33}{subsubsection.4.4.3.2}% 
-\contentsline {chapter}{\numberline {A}TSPlib}{39}{appendix.Alph1}% 
-\contentsline {chapter}{\numberline {B}ILOG CPLEX}{41}{appendix.Alph2}% 
-\contentsline {section}{\numberline {B.1}Funzionamento}{41}{section.Alph2.1}% 
-\contentsline {section}{\numberline {B.2}Funzioni}{42}{section.Alph2.2}% 
-\contentsline {subsection}{\numberline {B.2.1}Costruzione e modifica del modello}{42}{subsection.Alph2.2.1}% 
-\contentsline {subsection}{\numberline {B.2.2}Calcolo della soluzione}{45}{subsection.Alph2.2.2}% 
-\contentsline {subsection}{\numberline {B.2.3}Lazy constraints}{46}{subsection.Alph2.2.3}% 
-\contentsline {subsection}{\numberline {B.2.4}Lazy Constraint Callback}{47}{subsection.Alph2.2.4}% 
-\contentsline {subsection}{\numberline {B.2.5}Heuristic Callback}{50}{subsection.Alph2.2.5}% 
-\contentsline {subsection}{\numberline {B.2.6}Generic Callback}{51}{subsection.Alph2.2.6}% 
-\contentsline {section}{\numberline {B.3}Parametri}{54}{section.Alph2.3}% 
-\contentsline {section}{\numberline {B.4}Costanti utili}{55}{section.Alph2.4}% 
-\contentsline {chapter}{\numberline {C}Gnuplot}{57}{appendix.Alph3}% 
-\contentsline {chapter}{\numberline {D}Performance profile in python}{59}{appendix.Alph4}% 
-\contentsline {chapter}{Bibliografia}{60}{figure.caption.71}% 
+\contentsline {subsection}{\numberline {4.4.2}Algoritmi math-euristici}{34}{subsection.4.4.2}% 
+\contentsline {subsection}{\numberline {4.4.3}Algoritmi euristici}{35}{subsection.4.4.3}% 
+\contentsline {subsubsection}{\numberline {4.4.3.1}Multi-start}{35}{subsubsection.4.4.3.1}% 
+\contentsline {subsubsection}{\numberline {4.4.3.2}Algoritmi meta-euristici}{36}{subsubsection.4.4.3.2}% 
+\contentsline {chapter}{\numberline {A}TSPlib}{41}{appendix.Alph1}% 
+\contentsline {chapter}{\numberline {B}ILOG CPLEX}{43}{appendix.Alph2}% 
+\contentsline {section}{\numberline {B.1}Funzionamento}{43}{section.Alph2.1}% 
+\contentsline {section}{\numberline {B.2}Funzioni}{44}{section.Alph2.2}% 
+\contentsline {subsection}{\numberline {B.2.1}Costruzione e modifica del modello}{44}{subsection.Alph2.2.1}% 
+\contentsline {subsection}{\numberline {B.2.2}Calcolo della soluzione}{47}{subsection.Alph2.2.2}% 
+\contentsline {subsection}{\numberline {B.2.3}Lazy constraints}{48}{subsection.Alph2.2.3}% 
+\contentsline {subsection}{\numberline {B.2.4}Lazy Constraint Callback}{49}{subsection.Alph2.2.4}% 
+\contentsline {subsection}{\numberline {B.2.5}Heuristic Callback}{52}{subsection.Alph2.2.5}% 
+\contentsline {subsection}{\numberline {B.2.6}Generic Callback}{53}{subsection.Alph2.2.6}% 
+\contentsline {section}{\numberline {B.3}Parametri}{56}{section.Alph2.3}% 
+\contentsline {section}{\numberline {B.4}Costanti utili}{57}{section.Alph2.4}% 
+\contentsline {chapter}{\numberline {C}Gnuplot}{59}{appendix.Alph3}% 
+\contentsline {chapter}{\numberline {D}Performance profile in python}{61}{appendix.Alph4}% 
+\contentsline {chapter}{\numberline {E}Risultati}{63}{appendix.Alph5}% 
+\contentsline {chapter}{Bibliografia}{68}{table.Alph5.7}% 

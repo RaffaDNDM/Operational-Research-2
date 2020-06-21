@@ -7,7 +7,7 @@
 \BOOKMARK [2][-]{subsection.2.2.1}{Loop}{section.2.2}% 7
 \BOOKMARK [2][-]{subsection.2.2.2}{Branch \046 Cut}{section.2.2}% 8
 \BOOKMARK [2][-]{subsection.2.2.3}{Patching algorithm}{section.2.2}% 9
-\BOOKMARK [1][-]{section.2.3}{Algoritmi Math-Heuristici}{chapter.2}% 10
+\BOOKMARK [1][-]{section.2.3}{Algoritmi Math-Euristici}{chapter.2}% 10
 \BOOKMARK [2][-]{subsection.2.3.1}{Hard Fixing}{section.2.3}% 11
 \BOOKMARK [2][-]{subsection.2.3.2}{Soft Fixing}{section.2.3}% 12
 \BOOKMARK [0][-]{chapter.3}{Algoritmi euristici}{}% 13
@@ -30,24 +30,23 @@
 \BOOKMARK [1][-]{section.4.3}{Performance profiling}{chapter.4}% 30
 \BOOKMARK [1][-]{section.4.4}{Analisi degli algoritmi sviluppati}{chapter.4}% 31
 \BOOKMARK [2][-]{subsection.4.4.1}{Algoritmi esatti}{section.4.4}% 32
-\BOOKMARK [3][-]{subsubsection.4.4.1.1}{Modelli simmetrici}{subsection.4.4.1}% 33
-\BOOKMARK [3][-]{subsubsection.4.4.1.2}{Modelli compatti}{subsection.4.4.1}% 34
-\BOOKMARK [2][-]{subsection.4.4.2}{Algoritmi math-euristici}{section.4.4}% 35
-\BOOKMARK [2][-]{subsection.4.4.3}{Algoritmi euristici}{section.4.4}% 36
-\BOOKMARK [3][-]{subsubsection.4.4.3.1}{Multi-start}{subsection.4.4.3}% 37
-\BOOKMARK [3][-]{subsubsection.4.4.3.2}{Algoritmi meta-euristici}{subsection.4.4.3}% 38
-\BOOKMARK [0][-]{appendix.Alph1}{TSPlib}{}% 39
-\BOOKMARK [0][-]{appendix.Alph2}{ILOG CPLEX}{}% 40
-\BOOKMARK [1][-]{section.Alph2.1}{Funzionamento}{appendix.Alph2}% 41
-\BOOKMARK [1][-]{section.Alph2.2}{Funzioni}{appendix.Alph2}% 42
-\BOOKMARK [2][-]{subsection.Alph2.2.1}{Costruzione e modifica del modello}{section.Alph2.2}% 43
-\BOOKMARK [2][-]{subsection.Alph2.2.2}{Calcolo della soluzione}{section.Alph2.2}% 44
-\BOOKMARK [2][-]{subsection.Alph2.2.3}{Lazy constraints}{section.Alph2.2}% 45
-\BOOKMARK [2][-]{subsection.Alph2.2.4}{Lazy Constraint Callback}{section.Alph2.2}% 46
-\BOOKMARK [2][-]{subsection.Alph2.2.5}{Heuristic Callback}{section.Alph2.2}% 47
-\BOOKMARK [2][-]{subsection.Alph2.2.6}{Generic Callback}{section.Alph2.2}% 48
-\BOOKMARK [1][-]{section.Alph2.3}{Parametri}{appendix.Alph2}% 49
-\BOOKMARK [1][-]{section.Alph2.4}{Costanti utili}{appendix.Alph2}% 50
-\BOOKMARK [0][-]{appendix.Alph3}{Gnuplot}{}% 51
-\BOOKMARK [0][-]{appendix.Alph4}{Performance profile in python}{}% 52
-\BOOKMARK [0][-]{figure.caption.71}{Bibliografia}{}% 53
+\BOOKMARK [2][-]{subsection.4.4.2}{Algoritmi math-euristici}{section.4.4}% 33
+\BOOKMARK [2][-]{subsection.4.4.3}{Algoritmi euristici}{section.4.4}% 34
+\BOOKMARK [3][-]{subsubsection.4.4.3.1}{Multi-start}{subsection.4.4.3}% 35
+\BOOKMARK [3][-]{subsubsection.4.4.3.2}{Algoritmi meta-euristici}{subsection.4.4.3}% 36
+\BOOKMARK [0][-]{appendix.Alph1}{TSPlib}{}% 37
+\BOOKMARK [0][-]{appendix.Alph2}{ILOG CPLEX}{}% 38
+\BOOKMARK [1][-]{section.Alph2.1}{Funzionamento}{appendix.Alph2}% 39
+\BOOKMARK [1][-]{section.Alph2.2}{Funzioni}{appendix.Alph2}% 40
+\BOOKMARK [2][-]{subsection.Alph2.2.1}{Costruzione e modifica del modello}{section.Alph2.2}% 41
+\BOOKMARK [2][-]{subsection.Alph2.2.2}{Calcolo della soluzione}{section.Alph2.2}% 42
+\BOOKMARK [2][-]{subsection.Alph2.2.3}{Lazy constraints}{section.Alph2.2}% 43
+\BOOKMARK [2][-]{subsection.Alph2.2.4}{Lazy Constraint Callback}{section.Alph2.2}% 44
+\BOOKMARK [2][-]{subsection.Alph2.2.5}{Heuristic Callback}{section.Alph2.2}% 45
+\BOOKMARK [2][-]{subsection.Alph2.2.6}{Generic Callback}{section.Alph2.2}% 46
+\BOOKMARK [1][-]{section.Alph2.3}{Parametri}{appendix.Alph2}% 47
+\BOOKMARK [1][-]{section.Alph2.4}{Costanti utili}{appendix.Alph2}% 48
+\BOOKMARK [0][-]{appendix.Alph3}{Gnuplot}{}% 49
+\BOOKMARK [0][-]{appendix.Alph4}{Performance profile in python}{}% 50
+\BOOKMARK [0][-]{appendix.Alph5}{Risultati}{}% 51
+\BOOKMARK [0][-]{table.Alph5.7}{Bibliografia}{}% 52
