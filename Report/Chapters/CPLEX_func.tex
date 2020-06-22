@@ -1,13 +1,13 @@
-\chapter{ILOG CPLEX}
+\chapter{ILOG CPLEX}\label{CPLEX_func}
 In questa sezione verranno approfondite alcune funzioni di CPLEX necessarie ad implementare gli algoritmi descritti nei capitoli precedenti.
 
 \section{Funzionamento}
 Per poter utilizzare gli algoritmi di risoluzione forniti da CPLEX è necessario costruire il modello matematico del problema, legato all'istanza precedentemente descritta.\\
 CPLEX ha due meccanismi di acquisizione dell'istanza:
 \begin{enumerate}
-\item{\textbf{modalità interattiva:}\\
+\item{\textbf{modalità interattiva}\\
 in cui il modello viene letto da un file precedentemente generato (\textit{model.lp})}
-\item{\textbf{creazione nel programma:}\\
+\item{\textbf{creazione nel programma}\\
 il modello viene creato attraverso le API del linguaggio usato per la scrittura del programma}
 \end{enumerate}
 
@@ -41,7 +41,7 @@ In questa figura le celle $(i,j)$ bianche, sono quelle effettivamente utilizzate
 Per poter costruire il modello da analizzare, come prima cosa, è necessario creare un puntatore alle due strutture dati utilizzate da CPLEX.
 \lstinputlisting[caption={\footnotesize{modelTSP.txt}}, style=code, firstnumber=1, firstline=27, lastline=29, label=tsp_model, language=c]{Source/modelTSP.txt}
 La funzione alla riga 2 alloca la memoria necessaria e riempie la struttura con valori di default. Nel caso in cui non termini con successo memorizza un codice d'errore in \textit{error}.\\
-La funziona invocata nella riga successiva, invece, associa la struttura LP all'ENV che gli viene fornito. Il terzo parametro passato, nell'esempio "TSP", sarà il nome del modello. Al termine di queste operazioni verrà quindi creato un modello vuoto. All'interno del nostro programma per inizializzarlo è stata costruita la seguente funzione:
+La funziona invocata nella riga successiva, invece, associa la struttura LP all'ENV che gli viene fornito. Il terzo parametro passato, nell'esempio "TSP", sarà il nome del modello. Al termine di queste operazioni verrà quindi creato un modello vuoto. All'interno del nostro programma per inizializzarlo è stata definita la seguente funzione:
 \begin{center}
 \begin{tabular}{c}
 \begin{lstlisting}[linewidth=370pt, basicstyle=\footnotesize\sffamily,] 
@@ -57,7 +57,7 @@ void cplex_build_model(tsp_instance* tsp_in, CPXENVptr env, CPXLPptr lp);
 \textbf{lp: } & {puntatore alla struttura LP  precedentemente creata}\\
 \end{tabular}
 \end{table}
-All'interno di \textbf{cplex\_build\_model()} viene aggiunta una colonna alla volta al modello, definendo quindi anche la funzione obiettivo. Le variabili aggiunte corrispondono agli archi del grafo e per ciascuno di questi viene calcolato il costo come distanza euclidea. La funzione necessaria ad inserire colonne e definire la funzione di costo è la seguente:
+All'interno di \textbf{cplex\_build\_model()} viene aggiunta nel modello una colonna alla volta. Le variabili aggiunte corrispondono agli archi del grafo e per ciascuno di questi viene calcolato il costo come distanza euclidea. La funzione necessaria ad inserire colonne e definire la funzione di costo è la seguente:
 \begin{center}
 \begin{tabular}{c}
 \begin{lstlisting}[linewidth=400pt, basicstyle=\footnotesize\sffamily,] 
@@ -78,10 +78,10 @@ int CPXnewcols( CPXCENVptr env, CPXLPptr lp, int ccnt, double const * obj,
 &{inserire}\\
 \textbf{xctype:} & {vettore contenente la tipologia delle variabili da inserire}\\
 \textbf{colname:} & {vettore di stringhe contenenti i nomi delle variabili da inserire}\\
-\textbf{Return Value:} & {0 in caso di successo, un valore diverso da 0 se si verifica un errore}\\
+\textbf{Return Value:} & {0 in caso di successo, un valore diverso da 0 altrimenti}\\
 \end{tabular}
 \end{table}
-La generica colonna \textbf{i}, aggiunta dalla funzione, sarà definita dalle informazioni contenute all'interno della posizione \textbf{i} degli array, ricevuti come parametri. Nel programma elaborato durante il corso, viene aggiunta una colonna alla volta all'interno del modello. Per far ciò, è necessario comunque utilizzare riferimenti alle informazioni da inserire, in modo da ovviare il problema riguardante la tipologia di argomenti richiesti, che sono array. Ad esempio, nel nostro caso, la tipologia di una nuova variabile inserita sarà un riferimento al carattere \textbf{'B'}, che la identifica come binaria.\\
+Tale funzione permette però di aggiungere più colonne contemporaneamente. Per questo la generica colonna \textbf{i}, aggiunta dalla funzione, sarà definita dalle informazioni contenute all'interno della posizione \textbf{i} degli array, ricevuti come parametri. Nel programma elaborato durante il corso, viene aggiunta una colonna alla volta all'interno del modello. Per far ciò, è necessario comunque utilizzare riferimenti alle variabili da aggiungere, in modo da ovviare il problema riguardante la tipologia di argomenti richiesti, che sono array. Ad esempio, nel nostro caso, la tipologia di una nuova variabile inserita sarà un puntatore al carattere \textbf{'B'}, che la identifica come binaria.\\
 Per poter inserire il primo insieme di vincoli del problema\\
 $$
 \underset{e\in \delta(v)}\sum{\;x_e} = 2\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\forall\;v\in V \\\\
@@ -111,10 +111,10 @@ int CPXnewrows( CPXCENVptr env, CPXLPptr lp, int rcnt, double const * rhs,
 &{\textit{'R'} per vincolo definito in un intervallo}\\
 \textbf{rngval:} & {vettore di range per i valori di ogni vincolo (nel nostro caso è NULL)}\\
 \textbf{rowname} & {vettore di stringhe contenenti i nomi delle variabili da inserire}\\
-\textbf{Return Value:} & {0 in caso di successo, un valore diverso da 0 se si verifica un errore}\\
+\textbf{Return Value:} & {0 in caso di successo, un valore diverso da 0 altrimenti}\\
 \end{tabular}
 \end{table}
-In modo analogo all'inserimento delle colonne, nel nostro programma viene aggiunta una riga alla volta nel modello. L'\textbf{i}-esima riga aggiunta corrisponderà al vincolo imposto sul nodo \textbf{i}-esimo, imponendo a 1 il coefficiente della variabile $x_{k,j}$ se $k=i \;\wedge j=i$ per ogni variabile del modello. In questo modo però viene aggiunto un vincolo in cui è necessario cambiare i coefficienti delle variabili che ne prendono parte. Per fare ciò è necessaria la funzione:
+In modo analogo all'inserimento delle colonne, nel nostro programma viene aggiunta una riga alla volta nel modello. L'\textbf{i}-esima riga aggiunta corrisponderà al vincolo imposto sul nodo \textbf{i}-esimo, imponendo a 1 il coefficiente della variabile $x_{kj}$ se $k=i \;\wedge j=i$ per ogni variabile del modello. In questo modo però viene aggiunto un vincolo in cui è necessario cambiare i coefficienti delle variabili che ne prendono parte. Per fare ciò è necessaria la funzione:
 \begin{center}
 \begin{tabular}{c}
 \begin{lstlisting}[linewidth=380pt, basicstyle=\footnotesize\sffamily,]   
@@ -128,13 +128,13 @@ int CPXchgcoef(CPXCENVptr env, CPXLPptr lp, int i, int j, double newvalue);
 \textbf{env:} & {puntatore alla struttura ENV precedentemente creata}\\
 \textbf{lp:} & {puntatore alla struttura LP precedentemente creata}\\
 \textbf{i:} & {intero che specifica l'indice della riga in cui modificare il coefficiente}\\
-\textbf{j:} & {intero che specifica la colonna in cui si trova la variabile di cui modificare}\\
+\textbf{j:} & {intero che specifica la colonna in cui si trova la variabile per cui modificare}\\
 &{il coefficiente}\\
 \textbf{newvalue:} & {nuovo valore del coefficiente}\\
-\textbf{Return Value:} & {0 in caso di successo, un valore diverso da 0 se si verifica un errore}\\
+\textbf{Return Value:} & {0 in caso di successo, un valore diverso da 0 altrimenti}\\
 \end{tabular}
 \end{table}
-L'utilizzo di questa metodo per inserire nuovi vincoli è però considerato inefficiente. Al suo posto è consigliato l'utilizzo di una funzione che inserisca il vincolo con già i coefficienti delle variabili impostati al valore corretto:
+L'utilizzo di \textbf{CPXnewrows()} insieme a \textbf{CPXchgcoef()} per inserire nuovi vincoli è però considerato inefficiente. Al suo posto è consigliato l'utilizzo della seguente funzione che inserisce il vincolo con già i coefficienti delle variabili impostati al valore corretto:
 \begin{center}
 \begin{tabular}{c}
 \begin{lstlisting}[linewidth=400pt, basicstyle=\footnotesize\sffamily,]  
@@ -159,12 +159,12 @@ int CPXaddrows( CPXCENVptr env, CPXLPptr lp, int ccnt, int rcnt, int nzcnt,
 &{\textit{'E'} per vincolo $=$}\\
 &{\textit{'G'} per vincolo $\geq$}\\
 &{\textit{'R'} per vincolo definito in un intervallo}\\
-\textbf{rmatbeg:} & {vettore per definire le righe da aggiungere}\\
-\textbf{rmatind:} & {vettore per definire le righe da aggiungere}\\
-\textbf{rmatval:} & {vettore per definire le righe da aggiungere}\\
+\textbf{rmatbeg:} & {vettore con le posizioni iniziali dei coefficienti nei vincoli}\\
+\textbf{rmatind:} & {vettore contenente gli indici delle variabili appartenenti al vincolo}\\
+\textbf{rmatval:} & {vettore con i coefficienti delle variabili del vincolo}\\
 \textbf{colname:} & {vettore contenente i nomi delle nuove colonne}\\
 \textbf{rowname:} & {vettore contenente i nomi dei nuovi vincoli}\\
-\textbf{Return Value:} & {0 in caso di successo, un valore diverso da 0 se si verifica un errore}\\
+\textbf{Return Value:} & {0 in caso di successo, un valore diverso da 0 altrimenti}\\
 \end{tabular}
 \end{table}
 Per rimuovere invece delle righe, viene utilizzata la seguente funzione:
@@ -182,11 +182,11 @@ int CPXdelrows( CPXCENVptr env, CPXLPptr lp, int begin, int end );
 \textbf{lp:} & {puntatore alla struttura LP precedentemente creata}\\
 \textbf{begin:} & {indice numerico della prima riga da cancellare}\\
 \textbf{end:} & {indice numerico dell'ultima riga da cancellare}\\
-\textbf{Return Value:} & {0 in caso di successo, un valore diverso da 0 se si verifica un errore}\\
+\textbf{Return Value:} & {0 in caso di successo, un valore diverso da 0 altrimenti}\\
 \end{tabular}
 \end{table} 
 \vspace{2 cm}
-Per poter impostare una variabile $x_{i,j}$ ad una valore fissato è necessario rendere i suoi lower e upper bound alla quantità voluta. Per cambiare questi parametri viene utilizzata la seguente funzione: 
+Per poter impostare una variabile $x_{ij}$ ad una valore fissato è necessario assegnare al suo lower e al suo upper bound determinati valori tramite la seguente funzione:
 \begin{center}
 \begin{tabular}{c}
 \begin{lstlisting}[linewidth=375pt, basicstyle=\footnotesize\sffamily,]   
@@ -201,19 +201,19 @@ int CPXchgbds(CPXCENVptr env, CPXLPptr lp, int cnt, const int * indices,
 \textbf{env:} & {puntatore alla struttura ENV}\\
 \textbf{lp:} & {puntatore alla struttura LP}\\
 \textbf{cnt:} & {numero totale di bound da cambiare}\\
-\textbf{indices:} & {vettore con gli indice delle colonne corrispondenti alle variabili}\\
-&{di cui cambiare il bound}\\
-\textbf{lu:} & {array di caratteri che specificano il bound da modificare,}\\
-&{a scelta tra:}\\
-&{\textit{'U'} per upper bound}\\
-&{\textit{'L'} per lower bound}\\
-&{\textit{'B'} per entrambi}\\
+\textbf{indices:} & {vettore con gli indici delle colonne corrispondenti alle variabili}\\
+&{per cui bisogna cambiare il bound}\\
+\textbf{lu:} & {array di caratteri che specificano il bound da modificare.}\\
+&{I possibili valori di tali caratteri sono:}\\
+&{\textit{'U'} per selezionare l'upper bound}\\
+&{\textit{'L'} per selezionare il lower bound}\\
+&{\textit{'B'} per  selezionare entrambi i bound}\\
 \textbf{bd:} & {vettore con i nuovi valori}\\
-\textbf{Return Value:} & {0 in caso di successo, un valore diverso da 0 se si verifica un errore}\\
+\textbf{Return Value:} & {0 in caso di successo, un valore diverso da 0 altrimenti}\\
 \end{tabular}
 \end{table}
 \subsection{Calcolo della soluzione}
-Per ottenere la soluzione ottima del problema di ottimizzazione correlato al modello definito in CPLEX, vengono utilizzate due fasi:
+Per ottenere la soluzione ottima del problema di ottimizzazione, correlato al modello definito in CPLEX, vengono utilizzate due fasi:
 \begin{itemize}
 \item{\textbf{Risoluzione del problema di ottimizzazione}\\\\
 \begin{tabular}{c}
@@ -226,7 +226,7 @@ int CPXmipopt(CPXCENVptr env, CPXLPptr lp);
 \begin{tabular}{rl}
 \textbf{env:} & {puntatore alla struttura ENV precedentemente creata}\\
 \textbf{lp:} & {puntatore alla struttura LP precedentemente creata}\\
-\textbf{Return Value:} & {0 in caso di successo, un valore diverso da 0 se si verifica un errore}\\
+\textbf{Return Value:} & {0 in caso di successo, un valore diverso da 0 altrimenti}\\
 \end{tabular}
 \end{table}
 }
@@ -248,16 +248,16 @@ int CPXgetmipx (CPXENVptr env, CPXLPptr lp, double *x, int begin, int end);
 &{ il valore}\\
 \textbf{end:} & {indice dell'ultima variabile di cui si vuole memorizzare ed analizzare}\\
 &{il valore}\\
-\textbf{Return Value:} & {0 in caso di successo, un valore diverso da 0 se si verifica un errore}\\
+\textbf{Return Value:} & {0 in caso di successo, un valore diverso da 0 altrimenti}\\
 \end{tabular}
 \end{table}
-\\Questa funzione salva in $x$ tutte le variabili che hanno indice $i\in [begin, end]$ e quindi $x$ deve essere un vettore di almeno $end-begin+1$ valori. Nel nostro programma, vengono analizzati i valori di tutte le variabili definite.\\
+\\Questa funzione salva in $x$ tutte le variabili che hanno indice $i\in [begin, end]$ e quindi $x$ deve essere un vettore di almeno $end-begin+1$ valori. Nel nostro programma, vengono analizzati i valori di tutte le variabili definite \footnote{numero di variabili=CPXgetnumcols(env,lp);}\footnote{numero di vincoli=CPXgetnumrows(env,lp);}.\\
 Per questo motivo \textbf{begin = 0} e 
-\textbf{end = num\_colonne - 1}\footnote{numero di variabili=CPXgetnumcols(env,lp);}\footnote{numero di vincoli=CPXgetnumrows(env,lp);}.\\
+\textbf{end = num\_colonne - 1}.\\
 In seguito il nostro programma analizza la correttezza della soluzione svolgendo la verifica su:
 \begin{itemize}
 \item{\textit{valori assunti dalle variabili}\\
-ciascun $x_{i,j}$ assume valore $0$ o $1$ con una tolleranza di $\epsilon=10^{-5}$}
+ciascun $x_{ij}$ assume valore $0$ o $1$ con una tolleranza di $\epsilon=10^{-5}$}
 \item{\textit{grado di ciascun nodo}\\
 il tour è composto al massimo da due archi che tocchino lo stesso nodo}
 \end{itemize}
@@ -276,19 +276,19 @@ int CPXgetmiprelgap( CPXCENVptr env, CPXCLPptr lp, double * gap_p );
 \begin{tabular}{rl}
 \textbf{env:} & {puntatore alla struttura ENV precedentemente creata}\\
 \textbf{lp:} & {puntatore alla struttura LP precedentemente creata}\\
-\textbf{gap\_p:} & {puntatore in cui verrà salvato il gap}\\
-\textbf{Return Value:} & {0 in caso di successo, un valore diverso da 0 se si verifica un errore}\\
+\textbf{gap\_p:} & {puntatore alla variabile in cui verrà salvato il gap}\\
+\textbf{Return Value:} & {0 in caso di successo, un valore diverso da 0 altrimenti}\\
 \end{tabular}
 \end{table}
 Per un problema di minimizzazione il gap relativo viene calcolato come:
-$$\frac{bestinteger - bestobjective}{10^{-10}+|bestinteger|}$$
-dove \textbf{bestinteger} è il valore restituito dalla funzione \textbf{CPXgetobjval()} mentre               \textbf{bestobjective} da \textbf{CPXgetbestobjval()}.
+$$\frac{|bestbound - bestinteger|}{10^{-10}+|bestinteger|}$$
+dove \textbf{bestinteger} è il valore restituito dalla funzione \textbf{CPXgetobjval()} mentre \textbf{bestbound} da \textbf{CPXgetbestobjval()}.
 }
 \end{itemize}
 
-\subsection{Lazy constraints}
-Nel caso in cui si voglia verificare il soddisfacimento di un vincolo solo al termine della computazione della soluzione, è necessario inserire un \textbf{"lazy constraint"}. Questi vincoli vengono 
-dichiarati in fase di costruzione del modello e aggiunti ad un pull. Per fare ciò viene utilizzata la seguente funzione:
+\subsection{Lazy constraint}
+Nel caso in cui si voglia verificare il soddisfacimento di un vincolo solo al termine della computazione della soluzione, è necessario inserire un "\textit{lazy constraint}". Questi vincoli vengono 
+dichiarati in fase di costruzione del modello e aggiunti ad un pool. Per fare ciò viene utilizzata la seguente funzione:
 \begin{center}
 \begin{tabular}{c}
 \begin{lstlisting}[linewidth=390pt, basicstyle=\footnotesize\sffamily,]  
@@ -307,29 +307,29 @@ int CPXaddlazyconstraints( CPXCENVptr env, CPXLPptr lp, int rcnt, int nzcnt,
 \textbf{nzcnt:} & {numero di coefficienti non nulli nel vincolo}\\ 
 \textbf{rhs:} & {vettore dei termini noti dei vincoli}\\
 \textbf{sense:} & {vettore di caratteri che specifica il tipo di vincoli da inserire.}\\
-&{Ogni carattere può assumere:}\\
-&{\textit{'L'} per vincolo $\leq$}\\
-&{\textit{'E'} per vincolo $=$}\\
-&{\textit{'G'} per vincolo $\geq$}\\
-&{\textit{'R'} per vincolo definito in un intervallo}\\
-\textbf{rmatbeg:} & {vettore con le posizione iniziali dei coefficienti nei vincoli}\\
-\textbf{rmatind:} & {vettore di vettori contenenti gli indici delle variabili appartenenti al vincolo}\\
-\textbf{rmatval:} & {vettore di vettori con i coefficienti delle variabili del vincolo}\\
+&{Ogni carattere può assumere uno dei seguenti valori:}\\
+&{\textit{'L'} per un vincolo $\leq$}\\
+&{\textit{'E'} per un vincolo $=$}\\
+&{\textit{'G'} per un vincolo $\geq$}\\
+&{\textit{'R'} per un vincolo definito in un intervallo}\\
+\textbf{rmatbeg:} & {vettore con le posizioni iniziali dei coefficienti nei vincoli}\\
+\textbf{rmatind:} & {vettore contenente gli indici delle variabili appartenenti al vincolo}\\
+\textbf{rmatval:} & {vettore con i coefficienti delle variabili del vincolo}\\
 \textbf{rowname:} & {vettore con i nomi dei vincoli}\\
-\textbf{Return Value:} & {0 in caso di successo, un valore diverso da 0 se si verifica un errore}\\
+\textbf{Return Value:} & {0 in caso di successo, un valore diverso da 0 altrimenti}\\
 \end{tabular}
 \end{table}
-In modo analogo alle due funzioni precedentemente descritte per l'aggiunta di righe e colonne, nel nostro modello viene inserito un vincolo per volta. Per impostare correttamente i coefficienti delle variabili presenti nel vincolo, vengono sfruttati i due array \textit{rmatinds} e \textit{rmatval}. Come rappresentato in Figura \ref{lazy_constraints}, all'interno della posizione \textit{i}-esima del vettore di indici è presente la posizione dell'\textit{i}-esima variabile del vincolo da inserire (nell'esempio in figura $rmatinds[i]=j$). Mentre l'\textit{i}-esima posizione del vettore di valori contiene il corrispondente  coefficiente (in questo caso $c_j$).
+In modo analogo alle due funzioni precedentemente descritte per l'aggiunta di righe e colonne, nel nostro modello viene inserito un vincolo per volta. Per impostare correttamente i coefficienti delle variabili presenti nel vincolo, vengono sfruttati i due array \textit{rmatinds} e \textit{rmatval}. Come rappresentato in Figura \ref{lazy_constraints}, all'interno della posizione \textit{i}-esima del vettore di indici è presente la posizione dell'\textit{i}-esima variabile del vincolo da inserire (nell'esempio in figura $rmatinds[i]=j$). Mentre l'\textit{i}-esima posizione del vettore di valori contiene il valore del corrispondente coefficiente ($c_j$).
 \begin{figure}[h] 
 \begin{center} 
   % Requires \usepackage{graphicx} 
   \includegraphics[scale=0.5]{Images/lazy_constraints} 
-  \caption{\footnotesize{Array lazy constraints}}
+  \caption{\footnotesize{Array dei lazy constraint.}}
   \label{lazy_constraints} 
 \end{center} 
 \end{figure}
 \subsection{Lazy Constraint Callback}
-Per poter utilizzare una lazy constraint callback, precedentemente implementata, all'interno del programma, prima di tutto è necessario installarla. Questo viene fatto attraverso la seguente funzione:
+Per poter utilizzare una lazy constraint callback, precedentemente implementata all'interno del programma, prima di tutto è necessario installarla. Questo viene fatto attraverso la seguente funzione:
 \begin{center}
 \begin{tabular}{c}
 \begin{lstlisting}[linewidth=385pt, basicstyle=\footnotesize\sffamily,] 
@@ -345,11 +345,10 @@ int CPXsetlazyconstraintcallbackfunc( CPXENVptr env,
 \textbf{lazyconcallback:} & {puntatore alla callback chiamata}\\
 \textbf{cbhandle:} & {puntatore ad una struttura dati contenente le informazioni}\\
 & {da passare alla callback}\\
-\textbf{Return Value:} & {0 in caso di successo, un valore diverso da 0 se si verifica un errore}\\
+\textbf{Return Value:} & {0 in caso di successo, un valore diverso da 0 altrimenti}\\
 \end{tabular}
 \end{table}
-Una volta installata la callback è necessario cambiare l'impostazione del numero di thread utilizzati dal programma. Infatti CPLEX, non sapendo se la funzione implementata dall'utente è thread safe, impedisce lo svolgimento di elaborazioni in parallelo con le callback. A meno che questo non venga esplicitamente dichiarato dall'utente con l'impostazione del corrispondente parametro.
-Per questo può tornare utile la seguente funzione, che restituisce il numero di core presenti nel computer:\\
+CPLEX, non sapendo se la funzione implementata dall'utente sia thread safe, impedisce di default lo svolgimento di elaborazioni in parallelo utilizzando le callback. Se l'utente volesse svolgere le azioni in multithreading, deve impostare il parametro \textit{CPX\_PARAM\_THREADS} appena l'installazione della callback, mediante la funzione descritta nella Sezione \ref{param}. Per poter conoscere il numero di thread della macchina su cui si sta lavorando, CPLEX fornisce la seguente funzione:\\
 \begin{center}
 \begin{tabular}{c}
 \begin{lstlisting}[linewidth=280pt, basicstyle=\footnotesize\sffamily,]
@@ -362,10 +361,10 @@ int CPXgetnumcores(CPXCENVptr env, int * numcores_p);
 \begin{tabular}{rl}
 \textbf{env:} & {puntatore ad una struttura ENV}\\
 \textbf{numcores\_p:} & {puntatore alla variabile in cui scrivere il numero di core}\\ 
-\textbf{Return Value:} & {0 in caso di successo, un valore diverso da 0 se si verifica un errore}\\           
+\textbf{Return Value:} & {0 in caso di successo, un valore diverso da 0 altrimenti}\\           
 \end{tabular}
 \end{table} 
-Come descritto nella sezione dedicata, le callback sono funzioni lasciate appositamente vuote da CPLEX, affinché l'utente possa implementarle in maniera personalizzata. Hanno però una dichiarazione standard, qui riportata: 
+Le callback sono funzioni lasciate appositamente vuote da CPLEX, affinché l'utente possa implementarle in maniera personalizzata. Queste però hanno una dichiarazione standard, qui riportata:
 \begin{center}
 \begin{lstlisting}[linewidth=400pt, basicstyle=\footnotesize\sffamily,]     
 static int CPXPUBLIC name_function(CPXCENVptr env, void* cbdata, int wherefrom,
@@ -376,20 +375,27 @@ static int CPXPUBLIC name_function(CPXCENVptr env, void* cbdata, int wherefrom,
 \centering
 \begin{tabular}{rl}
 \textbf{env:} & {puntatore una struttura ENV}\\
-\textbf{cbdata:} & {puntatore che contiene specifiche informazioni per la callback}\\
+\textbf{cbdata:} & {puntatore che contiene specifiche informazioni necessarie alla callback}\\
 \textbf{wherefrom:} & {contiene dove è stata invocata la callback durante l'ottimizzazione} \\ 
 \textbf{cbhandle:} & {puntatore a dati privati dell'utente} \\
-\textbf{useraction\_p:} & {specifica le azioni da eseguire al termine della callback:}\\
-& {CPX\_CALLBACK\_DEFAULT: usa il nodo di CPLEX selezionato}\\
-& {CPX\_CALLBACK\_FAIL: esci dell'ottimizzazione}\\
-& {CPX\_CALLBACK\_SET: usa il nodo selezionato come definito}\\  
-& {nel valore di ritorno}\\ 
-\textbf{Return Value:} & {0 in caso di successo, un valore diverso da 0 se si verifica un errore}\\                      
+\textbf{useraction\_p:} & {puntatore ad un intero che specifica a CPLEX come proseguire la }\\
+&{computazione al termine della callback dell'utente}\\ 
+\textbf{Return Value:} & {0 in caso di successo, un valore diverso da 0 altrimenti}\\                      
 \end{tabular}
 \end{table} 
-Nell'implementarla bisogna fare particolare attenzione a renderla thread safe, se si vuole utilizzarla su più processi in parallelo. Infatti, nel caso in cui il programma lavorasse contemporaneamente con più processori, non si devono verificare interferenze di accesso agli stessi dati da parte di invocazioni diverse della callback. Quest'aspetto è lasciato a completa gestione dell'utente.\\
-%CONTROLLARE COSA VUOL DIRE CPXPUBLIC
-Per avere accesso alle variabili utilizzate dal nodo che invoca la callback è possibile chiamare la seguente funzione:
+
+L'utente deve impostare il valore di \textit{useraction\_p} con una delle seguenti macro:
+\begin{itemize}
+\item{\textbf{CPX\_CALLBACK\_DEFAULT}:\\
+l'utente dichiara a CPLEX di non aver trovato nessuna soluzione;}
+\item{\textbf{CPX\_CALLBACK\_FAIL}:\\
+CPLEX esce dall'ottimizzazione;}
+\item{\textbf{CPX\_CALLBACK\_SET}:\\
+l'utente dichiara a CPLEX di aver trovato una soluzione e gli chiede di usare la soluzione fornita;}
+\end{itemize}
+
+Nell'implementare la callback bisogna prestare attenzione nello svolgere azioni thread safe, nel caso in cui si voglia sfruttare l'architettura parallela del processore.
+Per avere accesso alla soluzione attuale dal nodo che invoca la callback è possibile chiamare la seguente funzione:
 \begin{center}
 \begin{tabular}{c}
 \begin{lstlisting}[linewidth=410pt, basicstyle=\footnotesize\sffamily,]     
@@ -398,19 +404,20 @@ int CPXgetcallbacknodex(CPXCENVptr env, void * cbdata, int wherefrom, double * x
 \end{lstlisting}
 \end{tabular}
 \end{center}
+\vspace{0.4 cm}
 \begin{table}[h]
 \centering
 \begin{tabular}{rl}
 \textbf{env:} & {puntatore una struttura ENV}\\
-\textbf{cbdata:} & {puntatore che contiene specifiche informazioni per la callback}\\
-\textbf{wherefrom:} & {contiene in che punto dell'ottimizzazione è stata invocata la callback} \\ 
+\textbf{cbdata:} & {puntatore a specifiche informazioni necessarie alla callback}\\
+\textbf{wherefrom:} & {punto dell'ottimizzazione in cui è stata invocata la callback} \\ 
 \textbf{x:} & {vettore in cui memorizzare le variabili} \\
-\textbf{begin} & {indice della prima variabile che si vuole venga restituita}\\
-\textbf{end} & {indice dell'ultima variabile che si vuole venga restituita}\\  
-\textbf{Return Value:} & {0 in caso di successo, un valore diverso da 0 se si verifica un errore}\\                               
+\textbf{begin:} & {indice della prima variabile da memorizzare}\\
+\textbf{end:} & {indice dell'ultima variabile da memorizzare}\\  
+\textbf{Return Value:} & {0 in caso di successo, un valore diverso da 0 altrimenti}\\                               
 \end{tabular}
 \end{table}
-Invece, per ottenere informazioni riguardanti il problema di ottimizzazione che si sta risolvendo all'interno di una callback implementata dall'utente, è possibile utilizzare:
+Per ottenere informazioni riguardanti il problema di ottimizzazione che si sta risolvendo all'interno di una callback implementata dall'utente, è possibile utilizzare la seguente funzione:
 \begin{center}
 \begin{tabular}{c}
 \begin{lstlisting}[linewidth=415pt, basicstyle=\footnotesize\sffamily,]  
@@ -423,27 +430,21 @@ int CPXgetcallbackinfo(CPXCENVptr env, void * cbdata, int wherefrom, int whichin
 \centering
 \begin{tabular}{rl}
 \textbf{env:} & {puntatore ad una struttura ENV}\\
-\textbf{cbdata:} & {puntatore che contiene specifiche informazioni per la callback}\\
-\textbf{wherefrom:} & {contiene in che punto dell'ottimizzazione è stata invocata la callback}\\ 
+\textbf{cbdata:} & {puntatore a specifiche informazioni necessarie alla callback}\\
+\textbf{wherefrom:} & {punto dell'ottimizzazione in cui è stata invocata la callback}\\ 
 \textbf{whichinfo:} & {macro che specifica l'informazione che si desidera conoscere} \\
 \textbf{result\_p:} & {puntatore di tipo void in cui verrà memorizzata l'informazione richiesta}\\ 
-\textbf{Return Value:} & {0 in caso di successo, un valore diverso da 0 se si verifica un errore}\\          
+\textbf{Return Value:} & {0 in caso di successo, un valore diverso da 0 altrimenti}\\          
 \end{tabular}
 \end{table}
-Macro utili da utilizzare come parametro \textit{whichinfo} possono essere:
-\begin{table}[h]
-\centering \footnotesize
-\begin{tabular}{|r|l|}
-\hline
-\textbf{CPX\_CALLBACK\_INFO\_MY\_THREAD\_NUM:} & {identifica il thread che }\\
-&{ha eseguito la chiamata}\\
-\hline
-\textbf{CPX\_CALLBACK\_INFO\_BEST\_INTEGER:} & {valore della miglior}\\
-&{soluzione intera}\\
-\hline
-\end{tabular}
-\end{table}
-\\Per conoscere il valore della funzione obiettivo del problema legato al nodo corrente che invoca la callback:
+Alcune macro utili che possono essere inserite come \textit{whichinfo} sono:
+\begin{itemize}
+\item{\textbf{CPX\_CALLBACK\_INFO\_MY\_THREAD\_NUM}: \\
+identifica il thread che ha eseguito la chiamata;}
+\item{\textbf{CPX\_CALLBACK\_INFO\_BEST\_INTEGER}: \\
+valore della miglior soluzione intera;}
+\end{itemize}
+Per conoscere il costo della soluzione legata al nodo corrente che invoca la callback, può essere utilizzata la seguente funzione:
 \begin{center}
 \begin{tabular}{c}
 \begin{lstlisting}[linewidth=380pt, basicstyle=\footnotesize\sffamily,] 
@@ -456,10 +457,10 @@ int CPXgetcallbacknodeobjval(CPXCENVptr env, void * cbdata, int wherefrom,
 \centering
 \begin{tabular}{rl}
 \textbf{env:} & {puntatore ad una struttura ENV}\\
-\textbf{cbdata:} & {puntatore che contiene specifiche informazioni per la callback}\\
-\textbf{wherefrom:} & {contiene in che punto dell'ottimizzazione è stata invocata la callback} \\ 
+\textbf{cbdata:} & {puntatore a specifiche informazioni necessarie alla callback}\\
+\textbf{wherefrom:} & {punto dell'ottimizzazione in cui è stata invocata la callback} \\ 
 \textbf{objval\_p:} & {puntatore ad una variabile in cui memorizzare il costo} \\
-\textbf{Return Value:} & {0 in caso di successo, un valore diverso da 0 se si verifica un errore}\\  
+\textbf{Return Value:} & {0 in caso di successo, un valore diverso da 0 altrimenti}\\  
 \end{tabular}
 \end{table}
 All'interno della lazy callback è necessario aggiungere il taglio voluto al nodo corrente che la invoca. Questo può essere fatto in due diverse modalità: globale o locale.\\
@@ -477,21 +478,21 @@ int CPXcutcallbackadd( CPXCENVptr env, void * cbdata, int wherefrom, int nzcnt,
 \centering
 \begin{tabular}{rl}
 \textbf{env:} & {puntatore ad una struttura ENV}\\
-\textbf{cbdata:} & {puntatore che contiene specifiche informazioni per la callback}\\
-\textbf{wherefrom:} & {contiene in che punto dell'ottimizzazione è stata invocata la callback} \\ 
+\textbf{cbdata:} & {puntatore a specifiche informazioni necessarie alla callback}\\
+\textbf{wherefrom:} & {punto dell'ottimizzazione in cui è stata invocata la callback} \\ 
 \textbf{nzcnt:} & {numero di coefficienti non nulli} \\
 \textbf{rhs:} & {valore del termine noto} \\
-\textbf{sense:} & {tipologia del taglio da aggiungere, a scelta tra} \\
-&{\textit{'L'} per vincolo $\leq$}\\
-&{\textit{'E'} per vincolo $=$}\\
-&{\textit{'G'} per vincolo $\geq$}\\
+\textbf{sense:} & {tipologia del taglio da aggiungere, a scelta tra:} \\
+&{\textit{'L'} per il vincolo $\leq$}\\
+&{\textit{'E'} per il vincolo $=$}\\
+&{\textit{'G'} per il vincolo $\geq$}\\
 \textbf{cutind:} & {vettore contente gli indici dei coefficienti del taglio} \\
 \textbf{cutval:} & {vettore contenente i coefficienti delle variabili nel taglio} \\
 \textbf{purgeable:} & {intero che specifica in che modo CPLEX deve trattare il taglio, consigliato 0} \\
-\textbf{Return Value:} & {0 in caso di successo, un valore diverso da 0 se si verifica un errore}\\  
+\textbf{Return Value:} & {0 in caso di successo, un valore diverso da 0 altrimenti}\\  
 \end{tabular}
 \end{table}
-Nella seconda modalità, locale, il taglio aggiunto sarà visibile solo ai nodi discendenti di quello che invoca la callback. Viene implementata con la seguente chiamata:
+Nella modalità locale invece, il taglio aggiunto sarà visibile solo ai nodi discendenti di quello che invoca la callback. In questo caso il taglio viene aggiunto mediante la seguente chiamata:
 \begin{center}
 \begin{tabular}{c}
 \begin{lstlisting}[linewidth=400pt, basicstyle=\footnotesize\sffamily,] 
@@ -504,21 +505,21 @@ int CPXcutcallbackaddlocal( CPXCENVptrenv, void *cbdata, int wherefrom,
 \centering
 \begin{tabular}{rl}
 \textbf{env:} & {puntatore ad una struttura ENV}\\
-\textbf{cbdata:} & {puntatore che contiene specifiche informazioni per la callback}\\
-\textbf{wherefrom:} & {contiene in che punto dell'ottimizzazione è stata invocata la callback} \\ 
+\textbf{cbdata:} & {puntatore a specifiche informazioni necessarie alla callback}\\
+\textbf{wherefrom:} & {punto dell'ottimizzazione in cui è stata invocata la callback} \\ 
 \textbf{nzcnt:} & {numero di coefficienti non nulli} \\
 \textbf{rhs:} & {valore del termine noto} \\
 \textbf{sense:} & {tipologia del taglio da aggiungere, a scelta tra} \\
-&{\textit{'L'} per vincolo $\leq$}\\
-&{\textit{'E'} per vincolo $=$}\\
-&{\textit{'G'} per vincolo $\geq$}\\
+&{\textit{'L'} per il vincolo $\leq$}\\
+&{\textit{'E'} per il vincolo $=$}\\
+&{\textit{'G'} per il vincolo $\geq$}\\
 \textbf{cutind:} & {vettore contente gli indici dei coefficienti del taglio} \\
 \textbf{cutval:} & {vettore contenente i coefficienti delle variabili nel taglio} \\
-\textbf{Return Value:} & {0 in caso di successo, un valore diverso da 0 se si verifica un errore}\\ 
+\textbf{Return Value:} & {0 in caso di successo, un valore diverso da 0 altrimenti}\\ 
 \end{tabular}
 \end{table}
 \subsection{Heuristic Callback}
-Per poter suggerire a CPLEX una soluzione del problema in esame calcolata dall'utente, è necessario utilizzare un particolare tipo di callback, detta \textit{heuristic callback}. Questa, dopo essere stata installata, verrà invocata ad ogni nodo dell'albero del branch and cut.\\
+Per poter suggerire a CPLEX una soluzione del problema calcolata dall'utente, è necessario utilizzare un particolare tipo di callback, detta \textit{heuristic callback}. Questa, dopo essere stata installata, verrà invocata ogni volta che viene trovata una nuova soluzione per il sottoproblema corrente.\\
 Per installare la callback viene utilizzata la seguente funzione:
 \begin{center}
 \begin{tabular}{c}
@@ -535,10 +536,10 @@ int CPXsetheuristiccallbackfunc(CPXENVptr env,
 \textbf{env:} & {puntatore ad una struttura ENV}\\
 \textbf{heuristiccallback:} & {puntatore all'heuristic callback scritta dall'utente}\\
 \textbf{cbhandle:} & {puntatore a dati privati dell'utente}\\
-\textbf{Return Value:} & {0 in caso di successo, un valore diverso da 0 se si verifica un errore}\\
+\textbf{Return Value:} & {0 in caso di successo, un valore diverso da 0 altrimenti}\\
 \end{tabular}
 \end{table}
-La callback dell'utente deve avere la dichiarazione specificata di seguito:
+La callback creata dall'utente deve rispettare la seguente dichiarazione:
 \begin{center}
 \begin{tabular}{c}
 \begin{lstlisting}[linewidth=382pt, basicstyle=\footnotesize\sffamily,] 
@@ -551,29 +552,35 @@ La callback dell'utente deve avere la dichiarazione specificata di seguito:
 \centering
 \begin{tabular}{rl}
 \textbf{env:} & {puntatore ad una struttura ENV}\\
-\textbf{cbdata:} & {puntatore che contiene specifiche informazioni per la callback}\\
-\textbf{wherefrom:} & {contiene in che punto dell'ottimizzazione è stata invocata la callback} \\ 
+\textbf{cbdata:} & {puntatore a specifiche informazioni necessarie alla callback}\\
+\textbf{wherefrom:} & {punto dell'ottimizzazione in cui è stata invocata la callback} \\ 
 \textbf{cbhandle:} & {puntatore a dati privati dell'utente}\\
-\textbf{objval\_p:} & {puntatore ad una variabile che in ingresso contiene il valore della funzione}\\
-&{ obiettivo del problema e in uscita il valore della funzione obiettivo trovata}\\
-&{nella funzione stessa, se esiste}\\
-\textbf{x:} & {vettore che in ingresso contiene una soluzione valida per il problema }\\
-&{e in uscita i valori della soluzione trovata nella funzione, se presente}\\
-\textbf{checkfeas\_p:} & {puntatore che specifica se CPLEX deve verificare la soluzione trovata}\\
-&{oppure no}\\
+\textbf{objval\_p:} & {puntatore ad una variabile che inizialmente contiene il costo della soluzione}\\
+&{attuale e in seguito verrà riempito con il costo della soluzione}\\
+&{trovata dall'utente}\\
+\textbf{x:} & {vettore contenente inizialmente la soluzione attuale del problema}\\
+&{ed in seguito sostituito dalla soluzione trovata dall'utente}\\
+\textbf{checkfeas\_p:} & {puntatore che specifica se CPLEX debba verificare la fattibilità della}\\
+&{soluzione trovata oppure no}\\
 \textbf{useraction\_p:} & {puntatore ad un intero che specifica a CPLEX come proseguire la }\\
-&{computazione al termine della callback dell'utente, scelto tra:}\\
-&{\textit{CPX\_CALLBACK\_DEFAULT}: nessuna soluzione trovata}\\
-&{\textit{CPX\_CALLBACK\_FAIL}: uscire dall'ottimizzazione}\\
-&{\textit{CPX\_CALLBACK\_SET}: usare la soluzione fornita dall'utente}\\
-\textbf{Return Value:} & {0 in caso di successo, un valore diverso da 0 se si verifica un errore}\\
+&{computazione al termine della callback dell'utente.}\\
+\textbf{Return Value:} & {0 in caso di successo, un valore diverso da 0 altrimenti}\\
 \end{tabular}
 \end{table}
 
+L'utente deve impostare il valore di \textit{useraction\_p} con una delle seguenti macro:
+\begin{itemize}
+\item{\textbf{CPX\_CALLBACK\_DEFAULT}:\\
+l'utente dichiara a CPLEX di non aver trovato nessuna soluzione;}
+\item{\textbf{CPX\_CALLBACK\_FAIL}:\\
+CPLEX esce dall'ottimizzazione;}
+\item{\textbf{CPX\_CALLBACK\_SET}:\\
+l'utente dichiara a CPLEX di aver trovato una soluzione e chiede di usare la soluzione fornita;}
+\end{itemize}
+
 \subsection{Generic Callback}% cambiare titolo da Lazy Constraint Callback General a general callback
-Per evitare che alcune procedure interne a CPLEX vengano disattivate nel momento dell'installazione di una callback, recentemente ne è stata sviluppata una particolare tipologia, detta \textit{generic}. Questa non è relativa a una specifica versione di callback, come quelle descritte nelle sezioni precedenti, ma può essere invocata in contesti diversi e con diversi scopi.\\
+Per evitare che alcune procedure interne a CPLEX vengano disattivate nel momento dell'installazione di una callback, recentemente è stata sviluppata una particolare tipologia di callback, detta \textit{generic}. Questa non è relativa a una specifica versione di callback, come quelle descritte nelle sezioni precedenti, ma può essere invocata in contesti diversi e con diversi scopi.\\
 Per installare una generic callback viene utilizzata la seguente funzione, in cui  è necessario specificare il contesto in cui invocare la callback:
-\vspace{1 cm}
 \begin{center}
 \begin{tabular}{c}
 \begin{lstlisting}[linewidth=380pt, basicstyle=\footnotesize\sffamily,]    
@@ -587,21 +594,20 @@ int CPXcallbacksetfunc ( CPXENVptr env, CPXLPptr lp, CPXLONG contextmask,
 \begin{tabular}{rl}
 \textbf{env:} & {puntatore ad una struttura ENV}\\
 \textbf{lp:} & {puntatore alla struttura LP}\\
-\textbf{contextmask:} & {specifica in quali contesti deve essere invocata la callback, è possibile }\\
-&{metterne in or anche più di uno e gestire poi i singoli casi dall'interno}\\
-&{della funzione}\\
+\textbf{contextmask:} & {contesto sul quale deve essere invocata la callback (è possibile metterne}\\
+&{più di uno utilizzando l'or bitwise e gestire poi i singoli casi }\\
+&{dall'interno della funzione)}\\
 \textbf{callback:} & {puntatore alla callback scritta dall'utente} \\
 \textbf{userhandle:} & {puntatore ad una struttura che contiene i dati da passare alla callback} \\
-\textbf{Return Value:} & {0 in caso di successo, un valore diverso da 0 se si verifica un errore}\\
+\textbf{Return Value:} & {0 in caso di successo, un valore diverso da 0 altrimenti}\\
 \end{tabular}
 \end{table}
-Il parametro \textit{contextmask} può variare a seconda dello scopo della callback creata. Alcuni possibili valori sono:
+Alcuni possibili valori di \textit{contextmask} sono:
 \begin{itemize}
-\item{\textbf{CPX\_CALLBACKCONTEXT\_CANDIDATE}:\\la callback verrà invocata quando viene trovata da CPLEX una nuova soluzione possibile che l'utente potrà rifiutare;}
+\item{\textbf{CPX\_CALLBACKCONTEXT\_CANDIDATE}:\\la callback verrà invocata quando viene trovata da CPLEX una nuova soluzione ammissibile che l'utente poi potrà rifiutare;}
 \item{\textbf{CPX\_CALLBACKCONTEXT\_LOCAL\_PROGRESS}: \\la callback verrà invocata nel momento in cui un thread effettua un progresso, non ancora noto globalmente, nella soluzione del problema. In questo contesto l'utente può suggerire a CPLEX una soluzione da cui proseguire la computazione (analogamente alle heuristic callback).}\\
 \end{itemize}
-L'utente può specificare più contesti con una sola installazione, è sufficiente separare le macro desiderate con l'operatore or bitwise ('|').\\
-La user-callback implementata deve avere questa dichiarazione:
+La callback implementata dall'utente deve avere questa dichiarazione:
 \begin{center}
 \begin{tabular}{c}
 \begin{lstlisting}[linewidth=350pt, basicstyle=\footnotesize\sffamily,]    
@@ -613,38 +619,33 @@ static int CPXPUBLIC name_general_callback(CPXCALLBACKCONTEXTptr
 \begin{table}[h]
 \centering
 \begin{tabular}{rl}
-\textbf{contex:} & {puntatore ad una struttura di contesto della callback}\\
-%opaque callback context structure, verificare traduzione
+\textbf{context:} & {puntatore alla struttura del contesto della callback}\\
 \textbf{contextid:} & {intero che specifica il contesto in cui viene invocata la callback}\\
 \textbf{userhandle:} & {argomento passato alla callback nell'installazione}\\
-\textbf{Return Value:} & {0 in caso di successo, un valore diverso da 0 se si verifica un errore}\\
+\textbf{Return Value:} & {0 in caso di successo, un valore diverso da 0 altrimenti}\\
 \end{tabular}
 \end{table}
-L'utente può installare una sola user-callback, ma al suo interno può distinguere il contesto in cui è stata invocata grazie al parametro \textit{contextid}.\\
+L'utente può installare una sola callback, ma al suo interno può distinguere il contesto in cui è stata invocata grazie al parametro \textit{contextid}.\\
 Per poter accedere alla soluzione candidata e al suo costo, deve essere presente la seguente chiamata, che è specifica per il contesto \textbf{CPX\_CALLBACKCONTEXT\_CANDIDATE}:
 \begin{center}
 \begin{tabular}{c}
 \begin{lstlisting}[linewidth=380pt, basicstyle=\footnotesize\sffamily,]
 int CPXcallbackgetcandidatepoint( CPXCALLBACKCONTEXptr context, double *x, 
-		CPXDIM begin, CPXDIM end, double *obj_p, );    
+		CPXDIM begin, CPXDIM end, double *obj_p);    
 \end{lstlisting}
+\vspace{0.2 cm}
 \end{tabular}
 \end{center}
 \begin{table}[h]
 \centering
 \begin{tabular}{rl}
-\textbf{contex:} & {contesto, come passato alla callback scritta dall'utente}\\
-\textbf{x:} & {vettore dove memorizzare i valori richiesti}\\
-\textbf{begin:} & {indice prima colonna richiesta}\\
-\textbf{end:} & {indice dell'ultima colonna richiesta}\\
-\end{tabular}
-\end{table}
-\begin{table}[h]
-\centering
-\begin{tabular}{rl}
-\textbf{obi\_p:} & {buffer in cui memorizzare il costo della soluzione candidata,}\\
-&{può essere NULL}\\
-\textbf{Return Value:} & {0 in caso di successo, un valore diverso da 0 se si verifica un errore}\\
+\textbf{context:} & {contesto (lo stesso passato alla callback scritta dall'utente)}\\
+\textbf{x:} & {vettore dove memorizzare le variabili richieste}\\
+\textbf{begin:} & {indice prima variabile richiesta}\\
+\textbf{end:} & {indice dell'ultima variabile richiesta}\\
+\textbf{obj\_p:} & {puntatore alla variabile in cui memorizzare il costo della}\\
+&{soluzione candidata, può essere NULL}\\
+\textbf{Return Value:} & {0 in caso di successo, un valore diverso da 0 altrimenti}\\
 \end{tabular}
 \end{table}
 Per poter scartare una soluzione, nel caso in cui violi alcuni tagli specificati nella chiamata stessa, viene utilizzata la seguente funzione. Anche questa è specifica per il contesto 
@@ -661,18 +662,18 @@ int CPXcallbackrejectcandidate( CPXCALLBACKCONTEXTptr context, int rcnt, int nzc
 \begin{table}[h]
 \centering
 \begin{tabular}{rl}
-\textbf{contex:} & {contesto, come passato alla callback scritta dall'utente}\\
+\textbf{context:} & {contesto (lo stesso passato alla callback scritta dall'utente)}\\
 \textbf{rcnt:} & {numero di vincoli che tagliano la soluzione}\\
 \textbf{nzcnt:} & {numero di coefficienti non nulli nel vincolo}\\
-\textbf{rhs:} & {vettore di termini noti}\\
-\textbf{sense:} & {vettore con la tipologia dei vincoli specificati}\\
-\textbf{rmatbeg:} & {vettore di indici che specifica dove inizia ogni vincolo}\\
+\textbf{rhs:} & {vettore dei termini noti}\\
+\textbf{sense:} & {vettore con la tipologia dei vincoli}\\
+\textbf{rmatbeg:} & {vettore di indici che specifica dove inizi ogni vincolo}\\
 \textbf{rmatind:} & {vettore di indici delle colonne con coefficienti non nulli}\\
 \textbf{rmatval:} & {coefficienti non nulli delle colonne specificate}\\
-\textbf{Return Value:} & {0 in caso di successo, un valore diverso da 0 se si verifica un errore}\\
+\textbf{Return Value:} & {0 in caso di successo, un valore diverso da 0 altrimenti}\\
 \end{tabular}
 \end{table}
-Per suggerire a CPLEX la soluzione da cui proseguire nella computazione dev'essere utilizzata la funzione:
+Per suggerire a CPLEX una soluzione da sfruttare nel proseguimento della computazione dev'essere utilizzata la seguente funzione:
 \begin{center}
 \begin{tabular}{c}
 \begin{lstlisting}[linewidth=365pt, basicstyle=\footnotesize\sffamily,]
@@ -685,36 +686,33 @@ int CPXcallbackpostheursoln( CPXCALLBACKCONTEXTptr context, CPXDIM cnt,
 \begin{table}[h]
 \centering
 \begin{tabular}{rl}
-\textbf{contex:} & {contesto, come passato alla callback scritta dall'utente}\\
+\textbf{context:} & {contesto (lo stesso passato alla callback scritta dall'utente)}\\
 \textbf{cnt:} & {numero di elementi nei vettori ind e val}\\
 \textbf{ind:} & {vettore di indici non nulli dei valori della soluzione}\\
-\textbf{val:} & {vettore di valori non nulli della soluzione, possono essere NaN nel caso in cui }\\
-&{la soluzione sia parziale}\\
+\textbf{val:} & {vettore di valori non nulli della soluzione (possono essere NaN nel caso in cui }\\
+&{la soluzione sia parziale)}\\
 \textbf{obj:} & {costo della nuova soluzione}\\
 \textbf{strat:} & {strategia con cui CPLEX deve completare la nuova soluzione, nel caso sia }\\
-&{parziale, scelta tra:}\\
-&{\textit{CPXCALLBACKSOLUTION\_NOCHECK} affinchè CPLEX}\\ 
-&{non controlli l'attuabilità della soluzione (che deve essere completa) }\\
-&{\textit{CPXCALLBACKSOLUTION\_CHECKFEAS} affinchè CPLEX}\\
-&{controlli solamente se la soluzione è attuabile (la soluzione proposta }\\
-&{deve essere completa)}\\
-&{\textit{CPXCALLBACKSOLUTION\_PROPAGATE} affinchè CPLEX }\\
+&{parziale}\\
+\textbf{Return Value:} & {0 in caso di successo, un valore diverso da 0 altrimenti}\\
 \end{tabular}
 \end{table}
-\begin{table}[h]
-\centering
-\begin{tabular}{rl}
-&{cerchi di completare la soluzione attraverso la propagazione del bound}\\
-&{\textit{CPXCALLBACKSOLUTION\_SOLVE} affinchè CPLEX}\\ 
-&{fissi le variabili specificate nella soluzione e cerchi di risolvere il risultante }\\
-&{problema ridotto}\\
-\textbf{Return Value:} & {0 in caso di successo, un valore diverso da 0 se si verifica un errore}\\
-\end{tabular}
-\end{table}
+
+La soluzione proposta dall'utente può anche essere incompleta, CPLEX provvederà poi a completarla seguendo le istruzioni fornite dal parametro \textit{strat}. Questo può assumere i seguenti valori:
+\begin{itemize}
+\item{\textbf{CPXCALLBACKSOLUTION\_NOCHECK}: \\
+in questo caso CPLEX non controllerà la fattibilità della soluzione proposta, che deve però essere completa;}
+\item{\textbf{CPXCALLBACKSOLUTION\_CHECKFEAS}:\\
+in questo caso CPLEX si limiterà a controllare la fattibilità della soluzione proposta, senza completarla, la soluzione non può perciò essere parziale;}
+\item{\textbf{CPXCALLBACKSOLUTION\_PROPAGATE}:\\
+se la soluzione fornita è parziale, in questo caso CPLEX cercherà di completare la soluzione attraverso la propagazione del bound;}
+\item{\textbf{CPXCALLBACKSOLUTION\_SOLVE}:\\
+se la soluzione fornita è parziale, CPLEX fisserà le variabili specificate nella soluzione e cercherà di risolvere il risultante problema ridotto;}
+\end{itemize}
 CPLEX utilizzerà la soluzione proposta dall'utente solo nel caso in cui questa abbia costo inferiore all'incumbent.
 \section{Parametri}\label{param}
 Con le seguenti funzioni è possibile modificare i parametri di configurazione di CPLEX, altrimenti impostati ai valori di default.
-Nel caso in cui si tratti di parametri di tipo INT è necessario invocare:\\
+Nel caso in cui si tratti di parametri di tipo \texttt{int} è necessario invocare:\\
 \begin{center}
 \begin{tabular}{c}
 \begin{lstlisting}[linewidth=330pt, basicstyle=\footnotesize\sffamily,]     
@@ -722,7 +720,7 @@ int CPXsetintparam(CPXENVptr env, int whichparam, int newvalue);
 \end{lstlisting}
 \end{tabular}
 \end{center}
-mentre se di tipo DOUBLE:\\
+mentre se di tipo \texttt{double}:\\
 \begin{center}
 \begin{tabular}{c}
 \begin{lstlisting}[linewidth=340pt, basicstyle=\footnotesize\sffamily,]  
@@ -735,68 +733,49 @@ In entrambe le funzioni:
 \centering
 \begin{tabular}{rl}
 \textbf{env:} & {puntatore alla struttura ENV di cui si vogliono cambiare i parametri}\\
-\textbf{whichparam:} & {intero corrispondente al parametro da modificare (vedi Tabella \ref{param_table})}\\
+\textbf{whichparam:} & {id del parametro da modificare (vedi Tabella \ref{param_table})}\\
 \textbf{newvalue:} & {nuovo valore (rispettivamente intero o double) del parametro}\\
-\textbf{Return Value:} & {0 in caso di successo, un valore diverso da 0 se si verifica un errore}\\
+\textbf{Return Value:} & {0 in caso di successo, un valore diverso da 0 altrimenti}\\
 \end{tabular}
 \end{table}
-\begin{table}[h]
-\centering\footnotesize
-\begin{tabular}{|l|l|}
+{\footnotesize
+\begin{longtable}[h]{rl}
 \hline
-\multirow{2}{*}{\textbf{CPX\_PARAM\_EPGAP}} & {tolleranza dell'intervallo tra la migliore funzione obiettivo intera}\\
+\multicolumn{1}{c}{\textbf{Parametro}}&\multicolumn{1}{c}{\textbf{Descrizione}}\\
+\hline
+{\textbf{CPX\_PARAM\_EPGAP}} & {tolleranza dell'intervallo tra la migliore funzione obiettivo intera}\\
 & { e la funzione obiettivo del miglior nodo rimanente.}\\
+\textbf{CPX\_PARAM\_INTSOLLIM}&{numero di soluzioni MIP intere che CPLEX deve trovare prima}\\
+&{di terminare la computazione.}\\
+\textbf{CPX\_PARAM\_MIPCBREDLP} & {permette, dalla callback che la chiama, di accedere al modello originale }\\
+&{del problema e non a quello ridotto.}\\
+{\textbf{CPX\_PARAM\_NODELIM}} & {massimo numero di nodi da risolvere prima che l'algoritmo termini}\\
+& {senza aver aggiunto l'ottimalità (0 impone di fermarsi alla radice).}\\
+\textbf{CPX\_PARAM\_POLISHTIME} & {tempo in secondi dedicato da CPLEX nel fare il polish della soluzione.}\\
+{\textbf{CPX\_PARAM\_POPULATELIM}} & {numero di soluzioni MIP generate per il pool di soluzioni durante}\\
+& {ogni chiamata alla procedura populate.}\\
+\textbf{CPX\_PARAM\_RANDOMSEED}&{random seed utilizzato da CPLEX.}\\
+\textbf{CPX\_PARAM\_RINSHEUR} & {frequenza (ogni quanti nodi) con cui deve essere invocato da CPLEX}\\
+&{l'algoritmo euristico Rins.}\\
+\textbf{CPX\_PARAM\_SCRIND} & {abilita la stampa dei messaggi di log di CPLEX.}\\
+\textbf{CPX\_PARAM\_THREADS} & {numero massimo di thread utilizzabili. }\\
+\textbf{CPX\_PARAM\_TIMELIMIT}&{tempo massimo che CPLEX ha a disposizione nel calcolo della soluzione.}\\
 \hline
-\multirow{3}{*}{\textbf{CPX\_PARAM\_NODELIM}} & {massimo numero di nodi da risolvere prima che l'algoritmo}\\
-& { termini senza aver aggiunto l'ottimalità}\\
-& {(0 impone di fermarsi alla radice).}\\
-\hline
-\multirow{2}{*}{\textbf{CPX\_PARAM\_POPULATELIM}} & {limita il numero di soluzioni MIP generate per il pool  }\\
-& {di soluzioni durante ogni chiamata alla procedura populate.}\\
-\hline
-\textbf{CPX\_PARAM\_SCRIND} & {visione o meno dei messaggi di log di CPLEX.}\\
-\hline
-\textbf{CPX\_PARAM\_MIPCBREDLP} & {permette, dalla callback chiamata, di accedere  }\\
-&{al modello originale del problema e non a quello ridotto .}\\
-\hline
-\textbf{CPX\_PARAM\_THREADS} & {imposta il numero massimo di thread utilizzabili. }\\
-\hline
-\textbf{CPX\_PARAM\_RINSHEUR} & {imposta la frequenza (ogni quanti nodi) con cui deve}\\
-&{essere invocato da CPLEX l'algoritmo euristico Rins.}\\
-\hline
-\textbf{CPX\_PARAM\_POLISHTIME} & {imposta quanto tempo in secondi deve dedicare CPLEX}\\
-&{a fare il polish della soluzione.}\\
-\hline
-\end{tabular}
-\end{table}
-\begin{table}[h]
-\centering\footnotesize
-\begin{tabular}{|l|l|}
-\hline
-\textbf{CPX\_PARAM\_INTSOLLIM}&{imposta il numero di soluzioni MIP da trovare prima di fermarsi.}\\
-\hline
-\textbf{CPX\_PARAM\_TIMELIMIT}&{imposta il tempo massimo per il calcolo della soluzione.}\\
-\hline
-\textbf{CPX\_PARAM\_RANDOMSEED}&{imposta il random seed.}\\
-\hline
-\end{tabular}
 \caption{Parametri.}\label{param_table}
-\end{table}
-\vspace{2 cm}
+\end{longtable}}
+
 \section{Costanti utili}
-Di seguito sono riportate alcune macro utili di CPLEX, insieme ai loro corrispondenti valori:
+Di seguito vengono riportate alcune macro utili di CPLEX, insieme ai loro corrispondenti valori:
 \begin{table}[h]
 \footnotesize\centering
-\begin{tabular}{|r|l|}
+\begin{tabular}{rcl}
 \hline
-\textbf{CPX\_ON} & {\textbf{1}}\\
-{} & {valore da assegnare ad alcuni parametri per abilitarli}\\
+\multicolumn{1}{c}{\textbf{Macro}}&\multicolumn{1}{c}{\textbf{Valore}} &\multicolumn{1}{c}{\textbf{Descrizione}}\\
 \hline
-\textbf{CPX\_OFF} & {0}\\
-{} & {valore da assegnare ad alcuni parametri per disabilitarli}\\
-\hline
-\textbf{CPX\_INFBOUND} & {$+\infty$}\\
-{} & {massimo valore intero utilizzabile in CPLEX}\\
+\textbf{CPX\_ON} & {\textbf{1}} & {valore da assegnare ad alcuni parametri per abilitarli}\\
+\textbf{CPX\_OFF} & {0} & {valore da assegnare ad alcuni parametri per disabilitarli}\\
+\textbf{CPX\_INFBOUND} & {$+\infty$ } & {massimo valore intero utilizzabile in CPLEX ($10^{20}$)}\\
 \hline
 \end{tabular}
+\caption{Macro.}
 \end{table}

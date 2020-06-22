@@ -1,5 +1,5 @@
 \chapter{Performance}\label{PERF_PROF}
-La metrica di confronto, utilizzata nell'analisi degli algoritmi, è il tempo complessivo di creazione e risoluzione del modello. Ciascuna modalità di risoluzione viene applicata a diverse istanze di TSPlib, con un numero differente di nodi.  
+Le metriche di confronto, utilizzate nell'analisi degli algoritmi, sono il tempo complessivo di creazione e risoluzione del modello ed il costo della soluzione ottenuta. Ciascuna modalità di risoluzione viene applicata a diverse istanze di TSPlib, con un numero differente di nodi.  
 \section{Performance variabilty}
 Nel corso degli anni '90, gli ingegneri di CPLEX scoprirono che il tempo di risoluzione variasse significativamente in diversi sistemi operativi. Con alcune istanze, le performance migliori si avevano su UNIX mentre con altre su Windows.\\
 Il motivo di tale comportamento venne in seguito studiato ed attribuito alla diversa scelta effettuata dai sistemi operativi nel decretare l'ordine delle variabili su cui viene svolto l'albero decisionale.\\
@@ -13,10 +13,6 @@ definisce il seme da cui CPLEX genera una sequenza di numeri pseudo-casuali (ved
 Nel momento in cui CPLEX nota che diverse variabili frazionarie hanno lo stesso valore, il risolutore sceglie casualmente su quale di queste applicare il Branch.}
 \item{\textbf{Gap}\\
 intervallo massimo, tra il valore della migliore funzione obiettivo intera e il valore della funzione di costo del miglior nodo rimanente, che permette di decretare il raggiungimento dell'ottimo secondo CPLEX (vedi Sezione \ref{param}).}
-\item{\textbf{Node limit}\\
-massimo numero di nodi risolti prima che l'algoritmo termini senza raggiungere l'ottimalità (vedi Sezione \ref{param}).}
-\item{\textbf{Populate limit}\\
-massimo numero di soluzioni MIP generate per il pool di soluzioni durante ogni chiamata della procedura di popolazione (vedi Sezione \ref{param}).}
 \end{itemize}
 La variazione del primo di questi parametri permette di apportare significative modifiche al tempo di risoluzione, non modficando la reale ottimalità della soluzione.\\
 La variazione degli altri parametri permette invece di ottenere una soluzione meta-euristica, ovvero un'approssimazione più lasca di quella ottima.
@@ -87,7 +83,6 @@ Gli algoritmi basati sul modello compatto, sono stati testati con un time limit 
 \end{itemize}
 \end{multicols}
 \end{center}
-Analizzando i risultati ottenuti, si nota come questi algoritmi abbiano avuto bisogno su alcune delle istanze di grandezza maggiore. 
 Visionando il performance profile in Figura \ref{pp_compact}, risulta evidente come l'aggiunta dei vincoli come lazy constraint, nel metodo di Miller, Tucker e Zemlin, garantisca un notevole miglioramento delle prestazioni rispetto alla versione originale.\\
 \begin{figure}[H] 
 \begin{center} 
@@ -167,13 +162,13 @@ L'utilizzo del patching ha avuto maggior effetto soprattutto nella prima parte d
 \end{center} 
 \end{figure}
 In Figura \ref{pp_random_seed} viene confrontato invece l'algoritmo loop attraverso l'utilizzo di diversi seed, ponendo l'attenzione su come la performance variability influenzi le prestazioni delle varie soluzioni implementative.
-Il performance profile riportato in Figura \ref{pp_gap} confronta i risultati ottenuti mediante l'utilizzo dell'algoritmo loop nella sua versione classica con quelli ottenuti applicando la sua versione euristica. Nel grafico realizzato, le varianti euristiche individuano inizialmente una soluzione specificata con il gap relativo specificato 
+Il performance profile riportato in Figura \ref{pp_gap} confronta i risultati ottenuti mediante l'utilizzo dell'algoritmo loop nella sua versione classica con quelli ottenuti applicando la sua versione euristica. Nel grafico realizzato, le varianti euristiche individuano inizialmente una soluzione utilizzando il gap relativo evidenziato 
 nel grafico ed in seguito impostano nuovamente il gap al valore di default ed individuano la soluzione ottima.
 \begin{figure}[H] 
 \begin{center} 
   % Requires \usepackage{graphicx} 
   \includegraphics[scale=0.7]{Images/pp_random_seed}\\ 
-  \caption{\footnotesize{Performance profile dei tempi di esecuzione dell'algoritmo loop al variare del seed scelto.}}
+  \caption{\footnotesize{Performance profile dei tempi di esecuzione dell'algoritmo loop al variare del seed.}}
   \label{pp_random_seed} 
 \end{center} 
 \end{figure}
@@ -181,11 +176,12 @@ nel grafico ed in seguito impostano nuovamente il gap al valore di default ed in
 \begin{center} 
   % Requires \usepackage{graphicx} 
   \includegraphics[scale=0.7]{Images/pp_gap}\\ 
-  \caption{\footnotesize{Performance profile dei tempi di esecuzione dell'algoritmo loop al variare del seed scelto.}}
+  \caption{\footnotesize{Performance profile dei tempi di esecuzione dell'algoritmo loop euristico al variare del gap.}}
   \label{pp_gap} 
 \end{center} 
 \end{figure}
 
+\vspace{2cm}
 \subsection{Algoritmi math-euristici}
 Gli algoritmi math-euristici sviluppati sono stati testati sul seguente insieme di istanze, con un time limit 10 minuti:
 \begin{center}
@@ -219,7 +215,7 @@ Analizzando i risultati ottenuti in Figura \ref{pp_math-heuristic} e \ref{pp_mat
 \begin{center} 
   % Requires \usepackage{graphicx} 
   \includegraphics[scale=0.8]{Images/pp_math-heuristic}\\ 
-  \caption{\footnotesize{Confronto degli algoritmi math-euristici in base al tempo di esecuzione impiegato.}}
+  \caption{\footnotesize{Confronto degli algoritmi math-euristici in base al costo della soluzione ottenuta.}}
   \label{pp_math-heuristic} 
 \end{center} 
 \end{figure}
@@ -228,7 +224,7 @@ Analizzando i risultati ottenuti in Figura \ref{pp_math-heuristic} e \ref{pp_mat
 \begin{center} 
   % Requires \usepackage{graphicx} 
   \includegraphics[scale=0.8]{Images/pp_math-heuristic_zoom}\\ 
-  \caption{\footnotesize{Dettaglio del confronto degli algoritmi math-euristici in base al tempo di esecuzione impiegato.}}
+  \caption{\footnotesize{Dettaglio del confronto degli algoritmi math-euristici in base al costo della soluzione ottenuta.}}
   \label{pp_math-heuristic_zoom} 
 \end{center} 
 \end{figure}
@@ -279,7 +275,7 @@ In questa prima sezione, vengono analizzati i diversi algoritmi di costruzione i
 \end{multicols}
 \end{center}
 
-In Figura \ref{pp_construction}, viene riportato il performance profile ottenuto dall'esecuzione dell'algoritmo multistart, generando 12 differenti soluzioni per ciascuna istanza del problema e restituendo solo il costo della migliore tra queste.\\
+In Figura \ref{pp_construction}, viene riportato il performance profile ottenuto dall'esecuzione dell'algoritmo multistart, generando 40 differenti soluzioni per ciascuna istanza del problema e restituendo solo il costo della migliore tra queste.\\
 Le soluzioni di costo minore sono quelle restituite dall'algoritmo Nearest Neighborhood, in particolare con l'aggiunta del metodo GRASP. 
 Inoltre il tempo necessario alla definizione di una soluzione mediante il metodo insertion è molto elevato. 
 \begin{figure}[h] 
@@ -291,7 +287,7 @@ Inoltre il tempo necessario alla definizione di una soluzione mediante il metodo
 \end{center} 
 \end{figure}
 \subsubsection{Algoritmi meta-euristici}
-Tutti gli gli algoritmi meta-euristici sviluppati, escluso il genetico, prevedono la possibilità di utilizzare uno qualsiasi tra gli algoritmi di costruzione definiti semplicemente associande specifici valori a delle macro, sviluppate in linguaggio C. Per i motivi descritti nella sezione precedente, gli algoritmi sono stati testati utilizzando il metodo di costruzione Nearest Neighborhood e con un time limit di 10 minuti. Il primo dataset su cui sono stati svolti i test è il seguente:
+Tutti gli algoritmi meta-euristici sviluppati, escluso il genetico, prevedono la possibilità di utilizzare uno qualsiasi tra gli algoritmi di costruzione definiti semplicemente associando specifici valori a delle macro, sviluppate in linguaggio C. Per i motivi descritti nella sezione precedente, gli algoritmi sono stati testati utilizzando il metodo di costruzione Nearest Neighborhood e con un time limit di 10 minuti. In questi test, è stata impostata una macro che permette al multistart di essere eseguito in multithreading in questo intervallo di tempo, generando iterativamente 8 soluzioni alla volta. Il primo dataset su cui sono stati svolti i test è il seguente:
 \begin{center}
 \begin{multicols}{3}
 \begin{itemize}
@@ -392,7 +388,7 @@ I grafici in Figura \ref{cost_vns}, \ref{cost_tabu}, \ref{cost_sa} e \ref{cost_g
 \begin{center} 
   % Requires \usepackage{graphicx} 
   \includegraphics[scale=0.7]{Images/cost_genetic}\\ 
-  \caption{\footnotesize{Evoluzione del costo della soluzione attuale nell'algoritmo genetico.}}
+  \caption{\footnotesize{Evoluzione del costo medio della popolazione e del costo della soluzione migliore nell'algoritmo genetico.}}
   \label{cost_genetic} 
 \end{center} 
 \end{figure}

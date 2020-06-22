@@ -1,4 +1,16 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
+
+\bibitem{ILOG}
+\url{https://www.ibm.com/it-it/products/ilog-cplex-optimization-studio}.
+
+\bibitem{FICO}
+\url{https://www.fico.com/en/products/fico-xpress-optimization}.
+
+\bibitem{GUROBI}
+\url{https://www.gurobi.com}.
+
+\bibitem{CBC}
+\url{https://www.coin-or.org/Cbc/}.
 
 \bibitem{concorde}
 \url{http://www.math.uwaterloo.ca/tsp/concorde/index.html}.
@@ -6,18 +18,14 @@
 \bibitem{monnalisa}
 \url{http://www.math.uwaterloo.ca/tsp/data/ml/monalisa.html}.
 
-\bibitem{salvagnin_perf}
-E.~D. Dolan and J.J. Mor{\'e}.
-\newblock Benchmarking optimization software with performance profiles.
-\newblock {\em Mathematical Programming}, 91(2):201--213, 2002.
+\bibitem{COMPACT_CITE}
+H.~Williams A.~Orman.
+\newblock A survey of different integer programming formulations of the
+  travelling salesman problem.
+\newblock In {\em Optimisation, Econometric and Financial Analysis}, pages
+  96--98. Springer, 2007.
 
-\bibitem{TSP}
-Matteo Fischetti.
-\newblock Alcuni problemi np-difficili.
-\newblock In {\em Lezioni di Ricerca Operativa}, pages 183--185. Kindle Direct
-  Publishing, 2018.
-
-\bibitem{VNS}
+\bibitem{VNS_CITE}
 P.~Hansen, N.~Mladenovic, J.~Brimberg, J.~A.~Moreno Pèrez, M.~Gendreau, and
   J.~Potvin.
 \newblock Variable neighborhood search.
@@ -28,14 +36,21 @@ S.~Liu L.~Fang, P.~Chen.
 \newblock Particle swarm optimization with simulated annealing for tsp.
 \newblock 6:206--210, 2007.
 
+\bibitem{TSP}
+Fischetti M.
+\newblock Alcuni problemi np-difficili.
+\newblock In {\em Lezioni di Ricerca Operativa}, pages 183--185. Kindle Direct
+  Publishing, 2018.
+
+\bibitem{local_branching}
+A.~Lodi M.~Fischetti.
+\newblock Local branching.
+\newblock {\em Ser. B}, 98:23–47, 2003.
+
 \bibitem{hybrid_VNS}
 Anup~Dewanji Samrat~Hore, Aditya~Chatterjee.
 \newblock Improving variable neighborhood search to solve the traveling
   salesman problem.
 \newblock volume~98, pages 83--91. Elsevier, 2018.
-
-\bibitem{Tabu}
-E.~Taillard, A.~Hertz, and D.~de~Werra.
-\newblock A tutorial on tabu search.
 
 \end{thebibliography}
