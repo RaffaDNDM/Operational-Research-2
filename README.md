@@ -4,7 +4,7 @@
   - Compact solvers.
     1. [Gavish Graves solver.](https://github.com/RaffaDNDM/Operational-Research-2/blob/master/TSP/TSP/gg_solver.h)
     2. [MTZ solver.](https://github.com/RaffaDNDM/Operational-Research-2/blob/master/TSP/TSP/mtz_solver.h)
-  - [Branch&Cut.](https://github.com/RaffaDNDM/Operational-Research-2/blob/master/TSP/TSP/bc_solver.h)
+  - Branch&Cut.
     1. [Loop solver.](https://github.com/RaffaDNDM/Operational-Research-2/blob/master/TSP/TSP/loop_solver.h)
     2. [Lazy Constraint callback.](https://github.com/RaffaDNDM/Operational-Research-2/blob/master/TSP/TSP/bc_solver.h)
     3. [Lazy Constraint callback + Heuristic callback (Patching).](https://github.com/RaffaDNDM/Operational-Research-2/blob/master/TSP/TSP/bc_solver.h)
