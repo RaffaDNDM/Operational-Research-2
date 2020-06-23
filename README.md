@@ -33,4 +33,4 @@
 
 All the previous implemented algorithms and the used CPLEX functions are explained in the [report](https://github.com/RaffaDNDM/Operational-Research-2/blob/master/Report/Report.pdf).
 In the same file you can find also the explanation of tsp instances format in tsplib dataset, used in training and test phases.
-In the report, there is also the explanation of Gnuplot tool, used to show result of algorithm and python programs used to keep input instances and generate performance profile of several algorithms.
+In the report, there is also the explanation of Gnuplot tool, used to show results of algorithm and python programs used to keep input instances and generate performance profile of several algorithms.
