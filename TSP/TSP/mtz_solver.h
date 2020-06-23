@@ -10,6 +10,12 @@
 
 #include "cplex_solver.h"
 
+/**
+	@brief CPLEX solver with MTZ model.
+	@param env pointer to the ENV structure, used by CPLEX solver
+	@param lp pointer to the LP structure, used by CPLEX solver
+	@param tsp_in reference to tsp instance structure
+*/
 void mtz_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in);
 
 /**

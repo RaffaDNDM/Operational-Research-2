@@ -60,7 +60,7 @@ typedef struct
 #define MAX_NUM_EPOCHS 100
 
 /**
-	@brief Compute the solution of the instance invoking the correct function.
+	@brief Compute the solution of the instance invoking the correct function (MULTITHREADING).
 	@param param pointer to a structure with the needed information for the computation
 */
 
@@ -214,82 +214,6 @@ void greedy_refinement_for_tabu_search(tsp_instance* tsp_in, int* visited_nodes,
 	int min_tenure, int* num_tabu_edges, double* cost);
 
 /**
-	@brief Compute the Simulated Annealing algorithm.
-	@param tsp_in reference to tsp instance structure
-	@param visited_nodes array with sequence of the visited nodes
-	@param best_cost cost of the solution
-	@param deadline time limit
-*/
-
-void simulated_annealing(tsp_instance* tsp_in, int* visited_nodes, double* best_cost, double deadline);
-
-/**
-	@brief Manage the genetic algorithm.
-	@param tsp_in reference to tsp instance structure
-*/
-
-void genetic_solver(tsp_instance* tsp_in);
-
-/** 
-	@brief Build the first element of the population fo the genetic algorithm.
-	@param param information needed for the construction
-*/
-
-void construction(void* param);
-
-/**
-	@brief Compute the evolution of the genetic algorithm.
-	@param tsp_in reference to tsp instance structure
-	@param members visited nodes if each member of the population
-	@param fitnesses cost of the solution of each member of the population
-	@param best_index index of the members with the minimum cost
-	@param worst_members array with the members with the maximum cost
-	@param sum_prob sum of the probabilities
-	@param sum_fitnesses sum of the fitnesses 
-	@param start starting time of the computation
-*/
-
-void evolution(tsp_instance* tsp_in, int** members, double* fitnesses, int* best_index, int* worst_members, double* sum_prob, double* sum_fitnesses, time_t start);
-
-/** 
-	@brief Compute the crossover in the evolution of the genetic algorithm.
-	@param tsp_in reference to tsp instance structure
-	@param members visited nodes if each member of the population
-	@param fitnesses cost of the solution of each member of the population
-	@param best_index index of the members with the minimum cost
-	@param worst_members array with the members with the maximum cost
-	@param sum_prob sum of the probabilities
-	@param sum_fitnesses sum of the fitnesses
-	@param seed random seed
-	@param index first_index of worst_members
-*/
-
-void crossover(tsp_instance* tsp_in, int** members, double* fitnesses, int* best_index, int* worst_members, double* sum_prob, double* sum_fitnesses, int seed, int* index);
-
-/**
-	@brief Compute the mutation in the evolution of the genetic algorithm.
-	@param tsp_in reference to tsp instance structure
-	@param members visited nodes if each member of the population
-	@param fitnesses cost of the solution of each member of the population
-	@param best_index index of the members with the minimum cost
-	@param worst_members array with the members with the maximum cost
-	@param sum_prob sum of the probabilities
-	@param sum_fitnesses sum of the fitnesses
-	@param seed random seed
-	@param index  first_index of worst_members
-*/
-
-void mutation(tsp_instance* tsp_in, int** members, double* fitnesses, int* best_index, int* worst_members, double* sum_prob, double* sum_fitnesses, int seed, int* index);
-
-/**
-	@brief Update the array with the worst members of the population.
-	@param fitnesses cost of the solution of each member of the population
-	@param worst_members array with the members with the maximum cost
-*/
-
-void update_worst(double* fitnesses, int* worst_members);
-
-/**
 	@brief Check if an edge is in the tabu list, return 1 if the edge is forbidden, 0 otherwise
 	@param tabu_list  list of the tabu edges
 	@param tenure dimension of the tabu list
@@ -309,6 +233,82 @@ int check_tabu_list(int** tabu_list, int tenure, int node1, int node2);
 */
 
 double move2opt_for_tabu_search(tsp_instance* tsp_in, int* succ, int** tabu_list, int* tenure, tabu_list_params* params);
+
+/**
+	@brief Compute the Simulated Annealing algorithm.
+	@param tsp_in reference to tsp instance structure
+	@param visited_nodes array with sequence of the visited nodes
+	@param best_cost cost of the solution
+	@param deadline time limit
+*/
+
+void simulated_annealing(tsp_instance* tsp_in, int* visited_nodes, double* best_cost, double deadline);
+
+/**
+	@brief Manage the genetic algorithm.
+	@param tsp_in reference to tsp instance structure
+*/
+
+void genetic_solver(tsp_instance* tsp_in);
+
+/** 
+	@brief Build the first element of the population fo the genetic algorithm (MULTITHREADING).
+	@param param information needed for the construction
+*/
+
+void construction(void* param);
+
+/**
+	@brief Compute the evolution of the genetic algorithm.
+	@param tsp_in reference to tsp instance structure
+	@param members visited nodes of each member of the population
+	@param fitnesses cost of the solution of each member of the population
+	@param best_index index of the member with the minimum cost
+	@param worst_members array with the indices of members with maximum cost
+	@param sum_prob sum of the probabilities
+	@param sum_fitnesses sum of the fitnesses
+	@param start starting time of the computation
+*/
+
+void evolution(tsp_instance* tsp_in, int** members, double* fitnesses, int* best_index, int* worst_members, double* sum_prob, double* sum_fitnesses, time_t start);
+
+/** 
+	@brief Compute the crossover in the evolution of the genetic algorithm.
+	@param tsp_in reference to tsp instance structure
+	@param members visited nodes of each member of the population
+	@param fitnesses cost of the solution of each member of the population
+	@param best_index index of the member with the minimum cost
+	@param worst_members array with the indices of members with maximum cost
+	@param sum_prob sum of the probabilities
+	@param sum_fitnesses sum of the fitnesses
+	@param seed random seed
+	@param index first_index of worst_members
+*/
+
+void crossover(tsp_instance* tsp_in, int** members, double* fitnesses, int* best_index, int* worst_members, double* sum_prob, double* sum_fitnesses, int seed, int* index);
+
+/**
+	@brief Compute the mutation in the evolution of the genetic algorithm.
+	@param tsp_in reference to tsp instance structure
+	@param members visited nodes of each member of the population
+	@param fitnesses cost of the solution of each member of the population
+	@param best_index index of the member with the minimum cost
+	@param worst_members array with the indices of members with maximum cost
+	@param sum_prob sum of the probabilities
+	@param sum_fitnesses sum of the fitnesses
+	@param seed random seed
+	@param index first_index of worst_members
+*/
+
+void mutation(tsp_instance* tsp_in, int** members, double* fitnesses, int* best_index, int* worst_members, double* sum_prob, double* sum_fitnesses, int seed, int* index);
+
+/**
+	@brief Update the array with the worst members of the population.
+	@param fitnesses cost of the solution of each member of the population
+	@param worst_members array with the indices of members with maximum cost
+*/
+
+void update_worst(double* fitnesses, int* worst_members);
 
 
 #endif
