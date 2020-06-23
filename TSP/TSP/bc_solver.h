@@ -10,8 +10,6 @@
 
 #include "cplex_solver.h"
 
-
-
 /**
 	@brief Branch&Cut solver with lazy callbacks.
 	@param env pointer to the ENV structure, used by CPLEX solver
@@ -34,7 +32,7 @@ void bc_solver(CPXENVptr env, CPXLPptr lp, tsp_instance* tsp_in, int* succ, int*
 static int CPXPUBLIC sec_callback(CPXCENVptr env, void* cbdata, int wherefrom, void* cbhandle, int* useraction_p);
 
 /**
-	@brief Lazy Callback for adding of sec constraints (using general callbacks).
+	@brief Lazy Callback for adding of sec constraints and compute the patching (using general callbacks).
 	@param context pointer to the context of the callback
 	@param contextid specific the context in which call the callback
 	@param cbhandle argument pass to the callback in the installation
@@ -80,10 +78,28 @@ void cplex_change_coeff(tsp_instance* tsp_in, CPXENVptr env, CPXLPptr lp, double
 */
 void local_branching(tsp_instance* tsp_in, CPXENVptr env, CPXLPptr lp, double* x_best, int freedom);
 
+/**
+	@brief Function that implements the patching algorithm.
+	@param tsp_in reference to tsp instance structure
+	@param x_star array that contains the solution with subtour
+	@param objval cost if the solution in x_star
+	@param thread id of the thread that invoke the function
+*/
+
 int patching(tsp_instance* tsp_in, double* x_star, double objval, int thread);
 
-static int CPXPUBLIC heuristic_callback(CPXCENVptr env, void* cbdata, int wherefrom, void* cbhandle, double* objval_p, double* x, int* checkfeas_p, int* useraction_p);
+/**
+	@brief Heuristic callback for suggest a new solution to CPLEX.
+	@param env pointer to the ENV structure, used by CPLEX solver
+	@param cbdata pointer at specific information for the callback
+	@param wherefrom where the callback is called in the optimization
+	@param cbhandle argument pass to the callback in the installation
+	@param objval_p on entry contains the cost of the subproblem, on return the cost of the solution suggested
+	@param x on entry contains primal solution values for the subproblem, on return the solution suggested by the function 
+	@param checkfeas_p specific if CPLEX should check or not the solution suggested
+	@param useraction_p specific what to do at the end of the callback
+*/
 
-static int CPXPUBLIC general_heuristic_callback(CPXCALLBACKCONTEXTptr context, CPXLONG contextid, void* cbhandle);
+static int CPXPUBLIC heuristic_callback(CPXCENVptr env, void* cbdata, int wherefrom, void* cbhandle, double* objval_p, double* x, int* checkfeas_p, int* useraction_p);
 
 #endif

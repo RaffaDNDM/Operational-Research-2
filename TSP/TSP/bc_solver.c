@@ -657,7 +657,7 @@ int patching(tsp_instance* tsp_in, double* x_star, double objval, int thread)
 				double cost_h_j; //[comp1[i+1], comp2[j]]
 				double cost_k_i; //[comp2[j+1], comp1[i]]
 
-				if (comp[j] != 1) //ho selezionato la prima componente , ora la espando unendola alla più vicina
+				if (comp[j] != 1) //expand the first component
 				{
 
 					if (tsp_in->integerDist)
@@ -769,8 +769,6 @@ int patching(tsp_instance* tsp_in, double* x_star, double objval, int thread)
 		{
 			for (i = 0; visited_nodes2[i] != node2; i++);
 
-			//for (count=0; count < num_nodes_vn2 - 1; count++)
-			//while( visited_nodes2[(i + 1) % num_nodes_vn2] != succ_node1)
 			while (visited_nodes2[(i ) % num_nodes_vn2] != succ_node1)
 			{
 				succ[visited_nodes2[(i + 1) % num_nodes_vn2]] = visited_nodes2[i];
@@ -885,7 +883,7 @@ static int CPXPUBLIC heuristic_callback(CPXCENVptr env, void* cbdata, int wheref
 			*objval_p = tsp_in->cost_heu_sol[thread_min];
 
 			tsp_in->cost_heu_sol[thread_min] = CPX_INFBOUND;
-			tsp_in->present_heu_sol[thread_min] = 0; //soluzione non più valida
+			tsp_in->present_heu_sol[thread_min] = 0; 
 
 			*useraction_p = CPX_CALLBACK_SET;
 			*checkfeas_p = 1;
@@ -908,7 +906,7 @@ static int CPXPUBLIC heuristic_callback(CPXCENVptr env, void* cbdata, int wheref
 			*objval_p = tsp_in->cost_heu_sol[thread];
 
 			tsp_in->cost_heu_sol[thread] = CPX_INFBOUND;
-			tsp_in->present_heu_sol[thread] = 0; //soluzione non più valida
+			tsp_in->present_heu_sol[thread] = 0; 
 
 			*useraction_p = CPX_CALLBACK_SET;
 			*checkfeas_p = 1;
@@ -963,7 +961,7 @@ static int CPXPUBLIC general_heuristic_callback(CPXCALLBACKCONTEXTptr context, C
 			assert(CPXcallbackpostheursoln(context, tsp_in->num_nodes, indices, values, tsp_in->cost_heu_sol[thread_min], CPXCALLBACKSOLUTION_NOCHECK) == 0);
 
 			tsp_in->cost_heu_sol[thread_min] = CPX_INFBOUND;
-			tsp_in->present_heu_sol[thread_min] = 0; //soluzione non più valida
+			tsp_in->present_heu_sol[thread_min] = 0; 
 		}
 	}
 	else
@@ -986,7 +984,7 @@ static int CPXPUBLIC general_heuristic_callback(CPXCALLBACKCONTEXTptr context, C
 			assert(CPXcallbackpostheursoln(context, tsp_in->num_nodes, indices, values, tsp_in->cost_heu_sol[thread], CPXCALLBACKSOLUTION_NOCHECK) == 0);
 
 			tsp_in->cost_heu_sol[thread] = CPX_INFBOUND;
-			tsp_in->present_heu_sol[thread] = 0; //soluzione non più valida
+			tsp_in->present_heu_sol[thread] = 0; 
 
 		}
 	}

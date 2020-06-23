@@ -31,8 +31,6 @@
 #define	SOL_LIMIT 5
 #define SEED 500
 
-
-
 /**
 	@brief CPLEX solver, call the select algorithm.
 	@param tsp_in reference to tsp instance structure

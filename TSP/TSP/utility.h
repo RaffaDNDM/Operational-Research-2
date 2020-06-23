@@ -67,6 +67,14 @@ void print_cost(tsp_instance* tsp_in);
 */
 int xpos(tsp_instance* tsp_in, int i, int j);
 
+/**
+	@brief Return the position of the element (i,j) in the matrix of corresponding edges, created from the nodes in the graph.
+			Don't need the use of a reference to tsp instance structure
+	@param i first index
+	@param j second index
+	param num_nodes number of nodes in the instance
+*/
+
 int generic_xpos(int i, int j, int num_nodes);
 
 /**

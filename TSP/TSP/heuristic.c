@@ -249,15 +249,14 @@ void* computeSolution(void* param)
 void nearest_neighborhood(tsp_instance* tsp_in, int* visited_nodes, double* best_cost, int seed, int first_node) 
 {
 	int* nodes = (int*)calloc((size_t)tsp_in->num_nodes, sizeof(int));
-	//vettore di dim num nodes -> nodes utilizzato per fare le verifiche in min_cost
-	//metto a 1 i nodi visitati
+	//vettore di dim num nodes -> nodes needed to chek in min_cost
 
 	(*best_cost) = 0.0;
 
 	#ifdef MULTI_START
 		visited_nodes[0] = first_node;
 		nodes[visited_nodes[0]] = 1;
-		//i = first_node;//aggiunto
+		//i = first_node;
 	#else
 		visited_nodes[0] = 0;
 		nodes[0] = 1;
@@ -268,7 +267,6 @@ void nearest_neighborhood(tsp_instance* tsp_in, int* visited_nodes, double* best
 	int i = visited_nodes[0];
 	int iter = 0;
 	for (; i < (tsp_in->num_nodes); i++)
-	//for(; iter< tsp_in->num_nodes; iter++)
 	{
 		double min_dist = DBL_MAX;
 		int best = tsp_in->num_nodes;
@@ -292,7 +290,7 @@ void nearest_neighborhood(tsp_instance* tsp_in, int* visited_nodes, double* best
 		}
 		else
 		{
-			visited_nodes[count] = best;//aggiungere nodo a visited nodes
+			visited_nodes[count] = best;
 			count++;
 		}
 
@@ -749,7 +747,7 @@ void greedy_refinement(tsp_instance* tsp_in, int* visited_nodes, double* best_co
 		check_cost = (*best_cost);
 
 		int i = 0;
-		for (; i < tsp_in->num_nodes; i++)//aggiunto i=0 dentro
+		for (; i < tsp_in->num_nodes; i++)
 		{
 			double cost_i_k; //cost [i, succ[i]]
 			if (tsp_in->integerDist)
@@ -786,7 +784,7 @@ void greedy_refinement(tsp_instance* tsp_in, int* visited_nodes, double* best_co
 						dist(j, succ[j], tsp_in, &cost_j_h);
 						dist(i, j, tsp_in, &cost_i_j);
 						dist(succ[i], succ[j], tsp_in, &cost_k_h);
-						//dist(i, succ[i], tsp_in, &cost_i_k);//aggiunto
+						//dist(i, succ[i], tsp_in, &cost_i_k);
 					}
 					double delta = cost_i_j + cost_k_h - cost_i_k - cost_j_h;
 					if (delta < 0.0)
@@ -832,7 +830,7 @@ void greedy_refinement(tsp_instance* tsp_in, int* visited_nodes, double* best_co
 	{
 		node = succ[i];
 		i = node;
-		visited_nodes[count] = node;  //inserirlo nell'algoritmo
+		visited_nodes[count] = node;  
 		//printf("[ %d ] count: %d\n", greedy_count, visited_nodes[count]);
 	}
 
@@ -1121,7 +1119,7 @@ int new_random_sol(tsp_instance* tsp_in, int* local_min_visited_nodes, double* l
 	(*local_cost) += delta;
 }
 
-void update_solution(int* visited_nodes, double* sol, int num_nodes)//necessario aver già allocato sol , un vettore di double generico
+void update_solution(int* visited_nodes, double* sol, int num_nodes)//needed sol already allocated 
 {
 	int num_edges = num_nodes * (num_nodes - 1) / 2;
 
@@ -1134,7 +1132,7 @@ void update_solution(int* visited_nodes, double* sol, int num_nodes)//necessario
 
 }
 
-void succ_construction(int* visited_nodes, int* succ, int num_nodes)//succ deve essere gia' allocato
+void succ_construction(int* visited_nodes, int* succ, int num_nodes)//needed succ already allocated 
 {
 	int i;
 	for (i = 0; i < num_nodes; i++)
@@ -1204,7 +1202,7 @@ void tabu_search(tsp_instance* tsp_in, int* visited_nodes, double* best_cost, do
 			}
 			#endif 
 
-		}//terminato il greedy devo riampliare la tabu list fino al massimo
+		}
 		else
 		{
 			
@@ -1215,7 +1213,7 @@ void tabu_search(tsp_instance* tsp_in, int* visited_nodes, double* best_cost, do
 			
 		}
 
-		if (actual_cost < *best_cost)//controllare precisione
+		if (actual_cost < *best_cost)
 		{
 			*best_cost = actual_cost;
 			
@@ -1255,7 +1253,7 @@ double move2opt_for_tabu_search(tsp_instance* tsp_in, int* succ, int** tabu_list
 	int end_edge2 = -1;
 
 	int i=0;
-	for (; i < tsp_in->num_nodes; i++)//aggiunto i=0 dentro
+	for (; i < tsp_in->num_nodes; i++)
 	{
 		double cost_i_k = 0.0; //cost [i, succ[i]]
 
@@ -1293,7 +1291,7 @@ double move2opt_for_tabu_search(tsp_instance* tsp_in, int* succ, int** tabu_list
 					dist(j, succ[j], tsp_in, &cost_j_h);
 					dist(i, j, tsp_in, &cost_i_j);
 					dist(succ[i], succ[j], tsp_in, &cost_k_h);
-					dist(i, succ[i], tsp_in, &cost_i_k);//aggiunto
+					dist(i, succ[i], tsp_in, &cost_i_k);
 				}
 				double delta = cost_i_j + cost_k_h - cost_i_k - cost_j_h;
 
@@ -1386,7 +1384,6 @@ void add_element(int* list1, int* list2, int dimension, int element1, int elemen
 void greedy_refinement_for_tabu_search(tsp_instance* tsp_in, int* succ, int** tabu_list, tabu_list_params* param, int max_tenure, 
 	int min_tenure, int* num_tabu_edges, double* best_cost)
 {
-	//la tabu list ad ogni iterazione deve diminuire la sua dimensione, prima la scelta e poi la riduzione
 	double check_cost;
 
 	do
@@ -1528,7 +1525,7 @@ void greedy_refinement_for_tabu_search(tsp_instance* tsp_in, int* succ, int** ta
 void simulated_annealing(tsp_instance* tsp_in, int* visited_nodes, double* best_cost, double deadline)
 {
 	//static int count_cost = 0;
-	//visited_nodes contiene la prima soluzione calcolata esternamente alla funzione, best cost il suo costo
+
 	#ifndef MULTI_START
 	//printf("%d %.2lf\n", count_cost, *best_cost);
 	//count_cost++;
@@ -1668,8 +1665,8 @@ void simulated_annealing(tsp_instance* tsp_in, int* visited_nodes, double* best_
 			{
 				int accept = 0;
 				
-				double expo = (new_cost - cost) / t; //esponende della e nel calcolo della probabilità
-				int magnitude =(int) floor(expo / x); //ordine di grandezza della probabilità
+				double expo = (new_cost - cost) / t; 
+				int magnitude =(int) floor(expo / x); 
 				double coeff = exp(expo - magnitude * x);
 
 				int k;
@@ -1724,8 +1721,6 @@ void simulated_annealing(tsp_instance* tsp_in, int* visited_nodes, double* best_
 			time_t end_inner_iteration =  clock();
 
 			remaining_time = remaining_time - ((double)(end_inner_iteration - start_inner_iteration) /(double) CLOCKS_PER_SEC);
-			//remaining_time = remaining_time - ((double)(end_inner_iteration - start_inner_iteration) / 400.0);
-
 
 			if (remaining_time <= 0.0 )
 				break;
