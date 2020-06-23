@@ -9,17 +9,16 @@ Da questi studi, evinse che il Branch and Cut è un sistema caotico e che quindi
 Per questo motivo, alcuni algoritmi prensentati in questo report, sono stati studiati al variare di alcune condizioni iniziali:
 \begin{itemize}
 \item{\textbf{Random Seed}\\
-definisce il seme da cui CPLEX genera una sequenza di numeri pseudo-casuali (vedi Sezione \ref{param}).\\
-Nel momento in cui CPLEX nota che diverse variabili frazionarie hanno lo stesso valore, il risolutore sceglie casualmente su quale di queste applicare il Branch.}
+definisce il seme da cui CPLEX genera una sequenza di numeri pseudo-casuali (vedi Sezione \ref{param}). Nel momento in cui CPLEX nota che diverse variabili frazionarie hanno lo stesso valore, il risolutore sceglie casualmente su quale di queste applicare il Branch.}
 \item{\textbf{Gap}\\
 intervallo massimo, tra il valore della migliore funzione obiettivo intera e il valore della funzione di costo del miglior nodo rimanente, che permette di decretare il raggiungimento dell'ottimo secondo CPLEX (vedi Sezione \ref{param}).}
 \end{itemize}
 La variazione del primo di questi parametri permette di apportare significative modifiche al tempo di risoluzione, non modficando la reale ottimalità della soluzione.\\
-La variazione degli altri parametri permette invece di ottenere una soluzione meta-euristica, ovvero un'approssimazione più lasca di quella ottima.
+La variazione dell'altro parametro permette invece di ottenere una soluzione euristica, ovvero un'approssimazione più lasca di quella ottima.
  
 \section{Analisi tabulare}
 Un metodo non molto efficiente per lo studio delle performance degli algoritmi, utilizza una struttura tabulare in cui viene inserita una riga per ogni istanza del problema.\\ Inoltre vengono riportati i tempi di esecuzione degli algoritmi su ognuno dei grafi analizzati. Nell'ultima riga per ciascun algoritmo viene riportata la media geometrica dei suoi tempi di esecuzione (vedi esempio in Tabella \ref{result_table}).\\
-Solitamente viene impostato un TIME LIMIT uguale per tutti gli algoritmi. Questo rappresenta nella tabella il valore del tempo di esecuzione per un algoritmo che ha impiegato un ammontare di tempo, maggiore o uguale a TIME LIMIT. Spesso viene dato più peso al TIME LIMIT, inserendolo nella tabella con, ad esempio, peso 10 (ovvero TIME LIMIT*10).\\ La debolezza di tale calcolo delle performance risiede nel fatto che non sempre la media descrive  l'efficienza di un soluzione. Infatti non influisce unicamente il tempo di risoluzione del modello ma anche quello necessario alla sua creazione. 
+Solitamente viene impostato un TIME LIMIT uguale per tutti gli algoritmi. Questo rappresenta nella tabella il valore del tempo di esecuzione per un algoritmo che ha impiegato un tempo maggiore o uguale a TIME LIMIT. Spesso viene dato più peso al TIME LIMIT, inserendolo nella tabella con, ad esempio, peso 10 (ovvero TIME LIMIT*10).\\ La debolezza di tale calcolo delle performance risiede nel fatto che non sempre la media descrive  l'efficienza di un soluzione. Infatti non influisce unicamente il tempo di risoluzione del modello ma anche quello necessario alla sua creazione. 
 
 \begin{table}[h]
 \centering
@@ -42,7 +41,7 @@ Solitamente viene impostato un TIME LIMIT uguale per tutti gli algoritmi. Questo
 \section{Performance profiling}
 Questo metodo prevede la classificazione dei tempi di esecuzione degli algoritmi in base al numero percentuale di successi, rispetto a un fattore moltiplicativo (ratio) del tempo di esecuzione (vedi Figura \ref{perf_profile}).\\
 L'andamento del performance profile di un algoritmo è monotono crescente. Il valore assunto per ogni ratio dagli algoritmi all'interno del grafico è la percentuale del numero di istanze che l'algoritmo risolve con quel fattore rispetto all'ottimo di quel caso.\\
-Spesso questi grafici vengono rappresentati in scala logaritmica per notare al meglio le differenze ed avere una migliore raffigurazione, più semplice da essere analizzata visivamente.
+Spesso questi grafici vengono rappresentati in scala logaritmica per notare al meglio le differenze ed avere una migliore raffigurazione.\\
 \begin{figure}[h] 
 \begin{center} 
   % Requires \usepackage{graphicx} 
@@ -54,7 +53,7 @@ Spesso questi grafici vengono rappresentati in scala logaritmica per notare al m
 Per creare il performance profile degli algoritmi implementati, è stato utilizzato il programma python riportato nella Sezione \ref{perf_profile_py}. 
 
 \section{Analisi degli algoritmi sviluppati}
-Nella seguente sezione vengono riportati i grafici relativi ai risultati ottenuti con le implementazione degli algoritmi descritti nei precedenti capitoli. L'intero sviluppo di tali metodologie è stato svolto in linguaggio C. I valori ottenuti ed utilizzati per realizzare le immagini contenute in questa sezione, sono consultabili nell'Appendice \ref{results}.
+Nella seguente sezione vengono riportati i grafici relativi ai risultati ottenuti con le implementazioni degli algoritmi descritti nei precedenti capitoli. I valori ottenuti ed utilizzati per realizzare le immagini contenute in questa sezione, sono consultabili nell'Appendice \ref{results}.
 \subsection{Algoritmi esatti}
 Gli algoritmi basati sul modello compatto, sono stati testati con un time limit di 20 minuti sulle seguenti istanze:
 \begin{center}
@@ -151,8 +150,8 @@ Gli algoritmi esatti, che non prevedono l'uso di modelli compatti, sono invece s
 \end{itemize}
 \end{multicols}
 \end{center}
-Dall'analisi dei risultati ottenuti (Figura \ref{pp_exact}), è evidente come l'utilizzo del Branch \& Cut permette di ottenere prestazioni migliori, ma soprattutto come l'utilizzo delle callback generiche abbia permesso di migliorare notevolmente le prestazioni, rispetto alla versione priva di esse.\\
-L'utilizzo del patching ha avuto maggior effetto soprattutto nella prima parte dell'esecuzione del programma, in cui è molto di aiuto per CPLEX nel raggiungere l'ottimo. Successivamente le soluzioni passate al risolutore MIP, mediante le heuristic callback, vengono scartate da quest'ultimo sempre più facilmente.\\
+Dall'analisi dei risultati ottenuti (Figura \ref{pp_exact}), è evidente come l'utilizzo del Branch \& Cut permetta di ottenere prestazioni migliori, ma soprattutto come l'utilizzo delle callback generiche abbia permesso di migliorare notevolmente le prestazioni, rispetto alla versione priva di esse.\\
+L'utilizzo del patching ha avuto maggior effetto soprattutto nella prima parte dell'esecuzione del programma, in cui risulta essere molto di aiuto per CPLEX nel raggiungere l'ottimo. Successivamente le soluzioni passate al risolutore MIP, mediante le heuristic callback, vengono scartate da quest'ultimo sempre più spesso.\\
 \begin{figure}[H] 
 \begin{center} 
   % Requires \usepackage{graphicx} 
@@ -210,7 +209,7 @@ Gli algoritmi math-euristici sviluppati sono stati testati sul seguente insieme 
 \end{itemize}
 \end{multicols}
 \end{center}
-Analizzando i risultati ottenuti in Figura \ref{pp_math-heuristic} e \ref{pp_math-heuristic_zoom}) risulta evidente come le prestazioni dell'algoritmo Hard fixing siano migliori, sia nelle variante che utilizza le callback generiche che in quella che non ne fa uso, rispetto ad entrambe le soluzioni ottenute dal Soft fixing.
+Analizzando i risultati ottenuti in Figura \ref{pp_math-heuristic} e \ref{pp_math-heuristic_zoom}) risulta evidente come le prestazioni dell'algoritmo Hard fixing siano migliori, sia nella variante che utilizza le callback generiche che in quella che non ne fa uso, rispetto ad entrambe le soluzioni ottenute dal Soft fixing.
 \begin{figure}[h] 
 \begin{center} 
   % Requires \usepackage{graphicx} 
@@ -277,7 +276,7 @@ In questa prima sezione, vengono analizzati i diversi algoritmi di costruzione i
 
 In Figura \ref{pp_construction}, viene riportato il performance profile ottenuto dall'esecuzione dell'algoritmo multistart, generando 40 differenti soluzioni per ciascuna istanza del problema e restituendo solo il costo della migliore tra queste.\\
 Le soluzioni di costo minore sono quelle restituite dall'algoritmo Nearest Neighborhood, in particolare con l'aggiunta del metodo GRASP. 
-Inoltre il tempo necessario alla definizione di una soluzione mediante il metodo insertion è molto elevato. 
+Inoltre si è notato come il tempo necessario alla definizione di una soluzione mediante il metodo insertion sia molto elevato. 
 \begin{figure}[h] 
 \begin{center} 
   % Requires \usepackage{graphicx} 
@@ -287,7 +286,8 @@ Inoltre il tempo necessario alla definizione di una soluzione mediante il metodo
 \end{center} 
 \end{figure}
 \subsubsection{Algoritmi meta-euristici}
-Tutti gli algoritmi meta-euristici sviluppati, escluso il genetico, prevedono la possibilità di utilizzare uno qualsiasi tra gli algoritmi di costruzione definiti semplicemente associando specifici valori a delle macro, sviluppate in linguaggio C. Per i motivi descritti nella sezione precedente, gli algoritmi sono stati testati utilizzando il metodo di costruzione Nearest Neighborhood e con un time limit di 10 minuti. In questi test, è stata impostata una macro che permette al multistart di essere eseguito in multithreading in questo intervallo di tempo, generando iterativamente 8 soluzioni alla volta. Il primo dataset su cui sono stati svolti i test è il seguente:
+Tutti gli algoritmi meta-euristici sviluppati, escluso il genetico, prevedono la possibilità di utilizzare uno qualsiasi tra gli algoritmi di costruzione definiti, semplicemente associando specifici valori a delle macro.\\
+Per i motivi descritti nella sezione precedente, gli algoritmi sono stati testati però utilizzando il metodo di costruzione Nearest Neighborhood e con un time limit di 10 minuti. In questi test, è stata impostata una macro che permette al multistart di essere eseguito in multithreading in questo intervallo di tempo, generando iterativamente 8 soluzioni alla volta. Il primo dataset su cui sono stati svolti i test è il seguente:
 \begin{center}
 \begin{multicols}{3}
 \begin{itemize}
@@ -314,7 +314,7 @@ Tutti gli algoritmi meta-euristici sviluppati, escluso il genetico, prevedono la
 \end{itemize}
 \end{multicols}
 \end{center}
-L'algoritmo genetico non è stato applicato al primo dataset definito all'insieme di istanze, utilizzato per ottenere i risultati mostrati in Figura \ref{pp_heuristic}. Il motivo di tale scelta, riguarda il tempo di calcolo troppo elevato per la generazione della popolazione.\\
+L'algoritmo genetico non è stato applicato a questo primo dataset. Il motivo di tale scelta, riguarda il tempo di calcolo troppo elevato per la generazione della popolazione.\\
 Per tale motivo tutti gli algoritmi meta-euristici sono stati testati nuovamente sulle seguenti istanze di dimensione minore, per ottenere un confronto più equo della soluzione del genetico con le altre:
 \begin{center}
 \begin{multicols}{3}

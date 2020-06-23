@@ -1,8 +1,8 @@
 \chapter{Algoritmi euristici}\label{HEURISTIC}
-In questo capitolo verranno trattati algoritmi euristici che non fanno uso di CPLEX. La necessità di non utilizzare CPLEX si ha per istanze con un elevato numero di nodi.\\
-Per queste istanze la risoluzione del tableau attraverso CPLEX diventerebbe molto un'operazione molto onerosa per via dell'alto numero di variabili che verranno create e su cui verrà svolto il calcolo.\\
-Attraverso gli algoritmi euristici, viene computata un'approssimazione della soluzione ottima e spesso però può essere sfruttata inizialmente dal risolutore CPLEX. Ad esempio questo può essere aggiunta prima della computazione, utilizzando la funzione \textit{CPXaddmipstarts()}, o ,se già definita, può essere modificata tramite \textit{CPXchgmipstarts()}.\\
-Un algoritmo euristico, affinché funzioni al meglio, deve essere composto da due fasi che si alternino:
+In questo capitolo verranno trattati algoritmi euristici che non fanno uso di CPLEX. La necessità di non utilizzare CPLEX si ha per istanze con un elevato numero di nodi per cui la risoluzione del tableau diventerebbe un'operazione molto onerosa per via dell'alto numero di variabili coinvolte.\\
+Attraverso gli algoritmi euristici, viene computata un'approssimazione della soluzione ottima che spesso può essere anche sfruttata inizialmente dal risolutore CPLEX, per aiutarlo nello risoluzione di problemi anche più complessi.\\
+Ad esempio può essere aggiunta prima della computazione, utilizzando la funzione \textit{CPXaddmipstarts()}, o ,se già definita, può essere modificata tramite \textit{CPXchgmipstarts()}.\\
+Per progettare un efficiente algoritmo euristico, questo deve essere composto da due fasi che si alternino:
 \begin{itemize}
 \item{\textbf{Intensificazione o raffinamento}\\
 In questa fase la soluzione corrente viene migliorata fino al raggiungimento di un ottimo (locale o globale) nello spazio delle soluzioni.
@@ -16,12 +16,12 @@ Fase in cui la soluzione viene perturbata con una politica predefinita affinché
 \section{Algoritmi di costruzione}\label{construction_alg}
 Questa tipologia di algoritmi euristici è fondamentale per la computazione di una prima soluzione ammissibile del problema.
 \subsection{Nearest Neighborhood}
-Questo algoritmo è basato su un approccio di tipo greedy. L'algoritmo sceglie inizialmente un nodo generico tra quelli che compongono il grafo ed in seguito seleziona iterativamente degli archi del grafo, secondo il criterio enunciato nella seguente sezione.\\
-In ciascuna iterazione vengono analizzati gli archi uscenti dal nodo selezionato all'iterazione precedente e viene aggiunto il ramo collega l'estremo più vicino. Il nuovo nodo raggiunto verrà impostato come punto di partenza nell'analisi dei costi dell'iterazione successiva (vedi Figura \ref{nearest_neighborhood}).
+L'algoritmo Nearest Neighborhood è basato su un approccio di tipo greedy. Inizialmente viene selezionato un nodo generico tra quelli che compongono il grafo ed in seguito vengono aggiunti iterativamente degli archi del grafo, secondo il criterio enunciato nella seguente sezione.\\
+In ciascuna iterazione vengono analizzati gli archi uscenti dal nodo selezionato all'iterazione precedente e viene selezionato tra questi il ramo collegato all'estremo più vicino. Il nuovo nodo raggiunto verrà impostato come punto di partenza nell'analisi dei costi dell'iterazione successiva (vedi Figura \ref{nearest_neighborhood}).
 All'ultima iterazione viene selezionato invece l'arco che collega l'ultimo nodo visitato al nodo scelto randomicamente all'inizio dell'algoritmo.\\
 Il problema di questo algoritmo è che in ogni iterazione viene selezionato esclusivamente il vertice più vicino a quello scelto precedentemente, senza però cercare di prevedere e migliorare la futura evoluzione del costo del tour, creato dall'algoritmo.\\
 Come in Figura \ref{nearest_neighborhood}, la scelta dell'arco di costo minimo non implica che in seguito venga generata la soluzione ottima. La scelta del nodo iniziale è fondamentale in quanto una perturbazione della partenza genera un tour differente.\\
-Definito \textbf{n} come il numero di nodi presenti nel grafo, si avranno quindi n soluzioni differenti, ottenute ciascuna attraverso l'applicazione dell'algoritmo partendo da una diversa scelta iniziale. In seguito tra queste possibili soluzioni, verrà selezionata quella di costo minore.\\
+Definito \textbf{n} come il numero di nodi presenti nel grafo, si avranno quindi n soluzioni differenti, ottenute ciascuna attraverso l'applicazione dell'algoritmo partendo da una diversa scelta iniziale.\\
 \begin{figure}[H] 
 \begin{center} 
   \includegraphics[scale=0.3]{Images/nearest_neighborhood}\\ 
@@ -31,20 +31,20 @@ Definito \textbf{n} come il numero di nodi presenti nel grafo, si avranno quindi
 \end{figure}
 
 \subsection{Heuristic Insertion}
-L'algoritmo seguente usa un approccio simile al precedente ma prevede inizialmente la selezione di un ciclo a cui apportare modifiche, per ottenere una soluzione iniziale ammissibile del problema. Per definire il ciclo di partenza vengono utilizzati diversi metodi. Di seguito sono riportati i due più utilizzati:
+L'algoritmo seguente usa un approccio simile al precedente ma prevede inizialmente la selezione di un ciclo, a cui verranno apportate modifiche per ottenere una soluzione iniziale ammissibile del problema. Per definire il ciclo di partenza vengono utilizzati diversi metodi. Di seguito sono riportati i due più utilizzati:
 \begin{itemize}
 \item{\textbf{Selezione di due nodi}\\
-Vengono scelti i due nodi più lontani tra loro nel grafo, o due nodi casuali, e vengono collegati mediante i due possibili archi orientati.
+Vengono scelti i due nodi più lontani tra loro nel grafo, o due nodi casuali, e vengono collegati mediante i due archi orientati, che li connettono tra loro.
 }
 \item{\textbf{Inizializzazione geometrica}\\
 Nel caso in cui i nodi del grafo appartengano ad uno spazio bidimensionale, ne viene calcolata la convex-hull e questa viene utilizzata come ciclo di partenza.
 }
 \end{itemize}
 Questa prima soluzione viene modificata iterativamente e per ogni coppia di nodi non appartenenti al ciclo \textbf{C}, restituito dall'iterazione precedente, viene calcolato l'extramileage $\Delta_h$ come segue:
-$$\Delta_h = \underset{(a,b)\in C}{min} c_{ah}+c_{hb}-c_{ay}$$
+$$\Delta_h = \underset{(a,b)\in C}{min} (c_{ah}+c_{hb}-c_{ay})$$
 con $c_{ij}=$ costo dell'arco che collega i a j (vedi Figura \ref{partial_cycle}).\\
 Alla fine di ciascuna iterazione viene aggiunto nel grafo il nodo \textbf{k} che minimizza l'\textbf{extra-mileage} (vedi Figura \ref{insertion}):\\
-$$k = arg\underset{h}{min}\Delta_{h}$$
+$$k = arg\underset{h}{min}\;\Delta_{h}$$
 \begin{figure}[H] 
 \begin{center} 
   \includegraphics[scale=0.2]{Images/partial_cycle}\\ 
@@ -80,7 +80,7 @@ ad < \alpha \;+\; \delta \\ \notag
 cb < \gamma \;+\; \beta
 \end{cases} 
 \Rightarrow
-\;\;ad+cb<\alpha + \delta +\gamma + beta
+\;\;ad+cb<\alpha + \delta +\gamma + \beta
 \end{equation}. 
 \begin{figure}[H] 
 \begin{center} 
@@ -109,9 +109,9 @@ Applicando una 2-opt move al circuito attuale, viene generato un tour appartenen
   \label{two_optimality}
 \end{center}
 \end{figure}
-Poichè il calcolo del $\Delta$ avviene in tempo costante e deve essere fatto per ogni coppia di rami, il tempo complessivo per la computazione è $O(n^2)$, con $n$ nodi dell'istanza del problema.\\
+Poichè il calcolo del $\Delta$ avviene in tempo costante e deve essere svolto per ogni coppia di rami, il tempo complessivo per la computazione è $O(n^2)$, con $n$ pari al numero di nodi dell'istanza.\\
 Un procedimento analogo a tale algoritmo viene utilizzato anche nel Soft Fixing, in cui però la dimensione dell'intorno in cui cercare la nuova soluzione varia (vedi Figura \ref{local_exe}).\\
-Nel programma sviluppato, è stata utilizzata questo algoritmo per rimuovere gli incroci all'interno del tour.
+Nel programma sviluppato, è stata utilizzata questo tecnica per rimuovere gli incroci all'interno di un tour.
  
 \subsection{Algoritmo di 3 ottimalità}
 L'algoritmo di 3 ottimalità è analogo a quello analizzato nella sezione precedente, ma considera intorni di grandezza maggiore. In questo caso, quindi, due soluzioni nell'intorno differiscono per 3 rami. In Figura \ref{three_optimality} viene riportata la rappresentazione delle possibili 3-opt move.\\
@@ -122,16 +122,16 @@ L'algoritmo di 3 ottimalità è analogo a quello analizzato nella sezione preced
   \label{three_optimality}
 \end{center}
 \end{figure}
-L'algoritmo impiega in tutto $O(n^3)$ (con $n$ numero di nodi) per trovare un ottimo locale, essendo $O(n^3)$ il numero di terne di rami esistenti e poiché il numero di possibili scambi di 3 ottimalità è costante. Su istanze con un elevato numero di nodi, il tempo di calcolo risulterebbe essere troppo lungo per il calcolo di una soluzione. All'interno del programma sviluppato, non è stata implementato tale algoritmo.
+L'algoritmo impiega in tutto $O(n^3)$ (con $n$ numero di nodi) per trovare un ottimo locale, essendo $O(n^3)$ il numero di terne di rami esistenti e poiché il numero di possibili scambi di 3 ottimalità è costante. Su istanze con un elevato numero di nodi, il tempo di calcolo risulterebbe essere troppo lungo per riuscire a computare una soluzione. All'interno del programma sviluppato, non è stata implementato tale algoritmo.
 
 \section{Meta-euristici}
-Gli algoritmi di raffinamento appena visti si occupano di migliorare il più possibile una soluzione già calcolata attraverso meccanismi di local search. In questo modo, dopo un determinato numero di iterazioni, viene raggiunto un ottimo locale.\\
+Gli algoritmi di raffinamento appena visti si occupano di migliorare il più possibile una soluzione già calcolata, attraverso meccanismi di local search. In questo modo, dopo un determinato numero di iterazioni, viene raggiunto un nuovo ottimo locale.\\
 Gli algoritmi descritti in questa sezione perturbano la soluzione allontanandola dall'attuale ottimo locale e cercando di avvicinarsi il più possibile all'ottimo globale.\\
-Questi metodi rappresentano approcci più generali di quelli descritti precedentemente e sono plasmabili e applicabili anche a problemi differenti rispetto al TSP. Tali tecniche infatti permettono essenzialmente di esplorare lo spazio delle soluzioni, evitando di stazionare in minimi o massimi locali con valori della funzione obiettivo molto lontani dall'ottimo globale.
+Questi metodi rappresentano approcci più generali di quelli descritti precedentemente e sono applicabili anche a problemi differenti rispetto al TSP. Tali tecniche infatti permettono essenzialmente di esplorare lo spazio delle soluzioni, evitando di stazionare in minimi o massimi locali con valori della funzione obiettivo molto lontani dall'ottimo globale.
 
 \subsection{Multi-start}
 Un primo e intuitivo approccio per allontanarsi da un ottimo locale è quello descritto dalla politica multi-start. Questa consiste nel definire diverse soluzioni attraverso un algoritmo di costruzione tra quelli descritti, ad esempio, nella Sezione \ref{construction_alg}.\\
-A ciascuno di esse viene poi applicato un algoritmo di raffinazione e viene scelta solo quella con costo migliore tra tutte le soluzioni generate. In questo modo vengono analizzati diversi ottimi locali nello spazio delle soluzioni (vedi Figura \ref{multi_start}). 
+A ciascuna di esse viene poi applicato un algoritmo di raffinamento ed in seguito  viene scelta solo la soluzione con costo minore tra quelle generate. In questo modo vengono analizzati diversi ottimi locali nello spazio delle soluzioni (vedi Figura \ref{multi_start}). 
 \begin{figure}[H] 
 \begin{center} 
   \includegraphics[scale=0.4]{Images/multistart}\\ 
@@ -139,7 +139,7 @@ A ciascuno di esse viene poi applicato un algoritmo di raffinazione e viene scel
   \label{multi_start}
 \end{center}
 \end{figure}
-Un lato negativo di tale approccio consiste nel fatto che ogni volta che viene scelta una nuova soluzione di partenza, vengono perse le informazioni relative alla sequenza ottenuta utilizzando un altro tour iniziale. La soluzione implementata all'interno del programma è basata sul multithreading. Infatti viene generato un numero di soluzioni pari al numero di thread specificati.\\
+Un lato negativo di tale approccio consiste nel fatto che ogni volta che viene generata una nuova soluzione del problema, vengono perse le informazioni relative ai generati in precedenza. La soluzione implementata all'interno del programma è basata sul multithreading. Infatti viene generato un numero di soluzioni pari al numero di thread specificati.\\
 Ciascun thread genera parallelamente agli altri una nuova soluzione e solo al termine della computazione, la confronta con la migliore. Nel caso in cui il costo della soluzione trovata sia inferiore a questa, la aggiorna. \\
 Nella Sezione \ref{construction_perf} viene analizzato il costo ottenuto dalla nostra implementazione, utilizzando 12 thread e modificando l'algoritmo di costruzione utilizzato.\\
 
@@ -155,6 +155,17 @@ Nel caso in cui non si trovi una nuova soluzione, di costo migliore di quella at
 \end{figure}
 L'algoritmo termina allo scadere di una deadline, inserita dall'utente, o dopo un determinato numero di iterazioni, restituendo la miglior soluzione trovata fino a quell'istante. Utilizzando questo approccio gran parte della soluzione di partenza viene conservata evitando di perdere le informazioni elaborate precedentemente eseguendo l'algoritmo.\\
 La nostra implementazione dell'algoritmo VNS non è però quella classica ma una variante detta VNS ibrido\cite{hybrid_VNS}. Nell'Algoritmo \ref{VNS} viene descritto lo pseudo-codice di tale metodo.\\
+Partendo dalla sequenza di visita dei nodi nella soluzione locale, passata in ingresso all'algoritmo, la procedura analizza tutti i tour ottenuti invertendo due nodi a distanza k nella sequenza, con $k=1,...,n/2$. Se viene individuata una soluzione con costo inferiore, allora questa viene considerata come il nuovo ottimo locale. Invece se non dovesse esistere alcuno scambio migliorativo, viene scelta in maniera randomica una nuova soluzione dall'insieme:
+$$\biggl\{\{y\}\cup \bigcup_{k=1}^{\lceil n/2 \rceil}{N_k(y)}\biggr\}$$
+con probabilità pari a:
+$$p=\frac{costo^{-1}(x)}{\underset{z \in {\bigcup_{k=1}^{\lceil n/2 \rceil}{N_k(y)}}}\sum{costo^{-1}(z)}}$$
+Nell'implementazione sono state sviluppate due versioni di questo algoritmo, in base alle probabilità utilizzate nel selezionare due nodi da scambiare: 
+\begin{itemize}
+\item{\textbf{Hybrid VNS}\\
+questa prima soluzione segue la procedura precedentemente descritta e seleziona una nuova sequenza dall'insieme $\{{y}\cup \bigcup_{k=1}^{\lceil n/2 \rceil}{N_k(y)}\}$ e poi vi applica un algoritmo di raffinamento.\\\\} 
+\item{\textbf{Hybrid VNS Uniform}\\
+questa variante invece seleziona due nodi della sequenza di visita, secondo una probabilità uniforme, e li scambia. La sequenza risultante, dopo essere stata migliorata mediante un algoritmo di raffinamento, viene utilizzata come nuovo minimo locale.}
+\end{itemize}
 \begin{algorithm}[h]
 \DontPrintSemicolon
 \KwIn {$\mathtt{x =\{x_1,x_2,...,x_n\}}$= sequenza di visita dei nodi nella soluzione di partenza (ottimo locale)\newline}
@@ -188,21 +199,10 @@ $\mathtt{k\gets}1$\;
 }
  \caption{VNS ibrido}\label{VNS}
 \end{algorithm}
-Partendo dalla sequenza di visita dei nodi nella soluzione locale, passata in ingresso all'algoritmo, la procedura analizza tutte i circuiti ottenuti invertendo due nodi a distanza k nella sequenza, con $k=1,...,n/2$. Se viene individuata una soluzione con costo inferiore, allora questa viene considerata come il nuovo ottimo locale. Invece se non dovesse esistere alcuno scambio migliorativo, viene scelta in maniera randomica una nuova soluzione dall'insieme:
-$$\biggl\{{y}\cup \bigcup_{k=1}^{\lceil n/2 \rceil}{N_k(y)}\biggr\}$$
-con probabilità pari a:
-$$p=\frac{costo^{-1}(x)}{\underset{z \in {\bigcup_{k=1}^{\lceil n/2 \rceil}{N_k(y)}}}\sum{costo^{-1}(z)}}$$
-Nell'implementazione sono state sviluppate due versioni di questo algoritmo, in base alle probabilità utilizzata nel selezionare due nodi da scambiare: 
-\begin{itemize}
-\item{\textbf{Hybrid VNS}\\
-questa prima soluzione segue la procedura precedentemente descritta e seleziona una nuova sequenza dall'insieme $\{{y}\cup \bigcup_{k=1}^{\lceil n/2 \rceil}{N_k(y)}\}$ e poi vi applica un algoritmo di raffinamento.\\\\} 
-\item{\textbf{Hybrid VNS Uniform}\\
-questa variante invece seleziona due nodi della sequenza di visita, secondo una probabilità uniforme, e li scambia. La sequenza risultante, dopo essere stata migliorata mediante un algoritmo di raffinamento, viene utilizzata come nuovo minimo locale.}
-\end{itemize}
 \subsection{Tabu Search}
 Il metodo Tabu Search fu ideato da Fred W. Glover. Dato un ottimo locale, l'idea di Glover permette di modificare la soluzione corrispondente anche peggiorandone il costo, con l'obiettivo di esplorare maggiormente lo spazio delle soluzioni. Ad ogni iterazione dell'algoritmo la soluzione viene modificata con un nuovo tour, appartenente al suo intorno 2-ottimalità.\\
 Per evitare che queste modifiche portino ad esplorare minimi locali già visitati, viene creata una lista di "mosse vietate", detta \textit{Tabu List}. In questo modo il costo del tour attuale viene aumentato per un certo numero di iterazioni, finché le uniche modifiche ammissibili della soluzione corrente permettano solo di migliorare il valore della funzione obiettivo. Questa fase rappresenta la diversificazione della soluzione.\\
-In seguito viene effettuata una fase di intensificazione, mediante l'algoritmo di 2-ottimalità, fino al raggiungimento di un nuovo minimo locale.\\
+In seguito viene effettuata una fase di intensificazione, mediante l'applicazione dell'algoritmo di 2-ottimalità, fino al raggiungimento di un nuovo minimo locale.\\
 Nella nostra implementazione la lista viene riempita con i rami che vengono rimossi dal tour attuale per creare la nuova soluzione.\\
 Aumentando costantemente di dimensione la lista Tabu si rischia, ad un certo punto, che non sia più possibile modificare il tour presente. Per evitare ciò generalmente viene scelta una capienza massima della lista, detta \textit{tenure}. Una volta riempita la Tabu list i rami vengono aggiunti rispettando la politica FIFO (First In First Out).\\
 Per aumentare le prestazioni dell'algoritmo è possibile far variare le dimensioni della Tabu List tra due valori. Nella fase di diversificazione le dimensioni della lista aumentano fino ad una soglia massima, mentre durante l'intensificazione la tenure diminuisce fino ad un valore minimo fissato, per lasciare maggiore libertà all'algoritmo di 2-ottimalità. Nella nostra implementazione la tenure massima ha valore pari ad 1/5 del numero di nodi dell'istanza da risolvere, mentre quella minima è pari alla metà di quest'ultima (vedi Figura \ref{tenure}). Questa variante dell'algoritmo, implementata anche nel nostro programma, in letteratura è conosciuta con il nome di \textit{Reactive Tabu Search}.
@@ -259,7 +259,7 @@ Nel corso delle iterazioni, la soluzione corrente può essere aggiornata con un'
   \label{simulated_annealing}
 \end{center}
 \end{figure}
-Per variare la temperatura, nella nostra implementazione abbiamo utilizzato la seguente formula \cite{SA}:
+Per variare la temperatura, è stata utilizzata la seguente formula \cite{SA}:
 $$T = \alpha^{i}\:T\_max \;+\; T\_min$$
 dove \textit{T\_max} è la massima temperatura iniziale, \textit{T\_min} è la minima temperatura che può essere raggiunta, \textit{i} è il numero di iterazioni eseguite fino a quel momento e \textit{$\alpha$} è un parametro scelto all'inizio dell'esecuzione. Nello sviluppare questo procedimento sono stati utilizzati i seguenti valori:
 \begin{itemize}
@@ -269,7 +269,7 @@ dove \textit{T\_max} è la massima temperatura iniziale, \textit{T\_min} è la m
 \item{\textit{$\alpha$} = 0.99}
 \end{multicols}
 \end{itemize}
-Una volta raggiunta la temperatura minima, nel caso in cui non sia scaduto il tempo a disposizione, $T$ viene impostata nuovamente a \textit{T\_max}, per poter procedere sfruttare l'intera deadline fornita dall'utente.\\ 
+Una volta raggiunta la temperatura minima, nel caso in cui non sia scaduto il tempo a disposizione, $T$ viene impostata nuovamente a \textit{T\_max} e il numero di iterazioni viene resettato, per poter continuare la computazione sfruttando l'intera deadline fornita dall'utente.\\ 
 La funzione di probabilità da noi adottata nello sviluppo di quest'algoritmo è la seguente\cite{SA}:
 $$P = 
 \begin{cases}
@@ -279,10 +279,10 @@ exp(- \frac{\Delta costo}{T}) & se\; \Delta costo \;>\;0\\
 $$ 
 Per poter gestire al meglio valori della probabilità troppo vicini allo zero, $exp(\Delta costo/T)$ viene fattorizzato in notazione scientifica, analizzando il rapporto tra la variazione di costo e la temperatura.\\Per questo motivo una soluzione peggiore viene accettata solo se si verificano entrambe le condizioni:
 \begin{itemize}
-\item{viene estratto il numero 1 per un numero di volte pari all'ordine di grandezza nell'intervallo [1,10];}
-\item{viene estratto 0 nell'intervallo [0, mantissa).}
+\item{viene estratto randomicamente il numero 1 dall'insieme $\{1,...,10\}$ per un numero di volte pari all'ordine di grandezza della quantità fattorizzata;}
+\item{viene estratto randomicamente 0 nell'intervallo $[0, mantissa)$.}
 \end{itemize} 
- Con il procedere delle iterazioni, l'aggiornamento ad un costo peggiore avviene sempre meno di frequente. Ciò permette di ottenere solo aggiornamenti con soluzioni più vantaggiose. Esiste un teorema secondo il quale se la temperatura varia in maniera estremamente lenta e si dispone di un numero estremamente elevato di iterazioni, questo algoritmo garantisce di trovare l'ottimo globale. Concretamente queste ipotesi sono molto difficili da realizzare, ma è statisticamente possibile dichiarare che l'approccio del Simulated Annealing restituisca una buona soluzione.
+Con il procedere delle iterazioni, l'aggiornamento ad un costo peggiore avviene sempre meno di frequente. Ciò permette di ottenere solo aggiornamenti con soluzioni più vantaggiose. Esiste un teorema secondo il quale se la temperatura varia in maniera estremamente lenta e si dispone di un numero estremamente elevato di iterazioni, questo algoritmo garantisce di trovare l'ottimo globale. Concretamente queste ipotesi sono molto difficili da realizzare, ma è statisticamente possibile dichiarare che l'approccio del Simulated Annealing restituisca una buona soluzione.\\\\
  \begin{algorithm}[H]
 \DontPrintSemicolon
 \KwIn{$\mathtt{x}$=soluzione di un'istanza di TSP corrispondente ad un ottimo locale\newline
@@ -317,20 +317,20 @@ $\mathtt{y}= best\_solution()$\;
 \caption{Simulated Annealing}
 \end{algorithm}
 \subsection{Algoritmo genetico}
-L'algoritmo genetico è legato alla teoria dell'evoluzione di Darwin, con cui condivide numerosi concetti. Da un punto di vista teorico, l'algoritmo costruisce in prima battuta una serie di individui, che costituiscono una popolazione.\\
+L'algoritmo genetico è legato alla teoria dell'evoluzione di Darwin, con cui condivide numerosi concetti. Da un punto di vista teorico, l'algoritmo crea inizialmente una serie di individui, che costituiscono la popolazione.\\
 In seguito, attraverso mutazioni dei singoli soggetti e la riproduzione di questi, viene creata una nuova popolazione. Il concetto fondamentale alla base di tale algoritmo è che associando ad un individuo uno punteggio, detto fitness, lo si possa selezionare con una certa probabilità per far evolvere la specie.\\
 Applicando tale concetto al Travelling Salesman Problem, ad ogni individuo $i$ viene associata una fitness pari a:
 $$fitness_i=\frac{1}{costo_i}$$
 dove $costo_i$ rappresenta il valore della funzione obiettivo per l'istanza $i$.\\
 La popolazione iniziale è stata generata utilizzando l'algoritmo nearest neighbour ma utilizzando un diverso nodo di partenza per ciascuno di essi ed applicando anche la variante GRASP. Ogni individuo della popolazione è stato poi rappresentato come la sequenza di visita dei nodi della corrispondente soluzione.\\
-In fase di testing, abbiamo notato che la creazione della popolazione costituisca il vero collo di bottiglia dell'intero algoritmo.\\
-Per ridurre al minimo il carico computazionale di tale fase, questa è stata implementata in multithreading. I risultati sono complessivamente migliorati, anche se questa fase resta ancora un'operazione molto costoso in termini di tempo di calcolo.
+In fase di testing, abbiamo notato che la creazione della popolazione costituisca il vero collo di bottiglia dell'intero algoritmo. Per ridurre al minimo il carico computazionale di tale fase, questa è stata implementata in multithreading.\\
+I risultati sono complessivamente migliorati, anche se questa fase resta ancora un'operazione molto costosa in termini di tempo di calcolo.
 In seguito la fase di evoluzione della popolazione viene effettuata generando nuovi individui a partire dalla popolazione attuale ed utilizzando le seguenti tecniche:
 \begin{itemize}
 \item{\textbf{Crossover}\\
 in questa operazione vengono selezionati in maniera randomica due individui della popolazione e a partire da questi, vengono creati nuovi tour che ereditano dai genitori delle caratteristiche. Nel nostro caso ciascun nuovo individuo eredita metà della sequenza di visita da uno dei suoi genitori, e la restante parte viene ereditata dall'altro.}
 \item{\textbf{Mutazione}\\
-in questa fase un certo numero di individui viene selezionato in maniera casuale e da ciascuno di questi, viene generato un nuovo tour attraverso una sua permutazione casuale.}
+in questa fase un certo numero di individui viene selezionato in maniera casuale e da ciascuno di questi, viene generato un nuovo tour attraverso una sua permutazione randomica.}
 \end{itemize}
 Utilizzando iterativamente tali tecniche e rimuovendo gli individui di costo peggiore dalla popolazione, si riduce complessivamente il costo medio delle istanze nella popolazione e di conseguenza anche il costo della migliore soluzione. All'interno del programma sviluppato, le precedenti tecniche non sono state applicate contemporaneamente in ogni iterazione ma in istanti differenti, secondo quanto descritto nel seguente algoritmo.\\
 
@@ -344,7 +344,7 @@ Utilizzando iterativamente tali tecniche e rimuovendo gli individui di costo peg
  \BlankLine
  \While{$\mathtt{num\_epochs} < MAX\_NUM\_EPOCHS$}{
   \BlankLine  
-  \If{$num\_epochs\;mod\;3 == 0$}{
+  \If{$num\_epochs\;mod\;5 == 0$}{
      \BlankLine    
      $\mathtt{crossover(}population, best\_cost\mathtt{)}$\;
   }
@@ -360,8 +360,7 @@ Utilizzando iterativamente tali tecniche e rimuovendo gli individui di costo peg
  $\mathtt{y}\gets best_member(population)$
  \caption{Evoluzione}
 \end{algorithm}
-La fase di crossover viene applicata più di rado, poiché la generazione di nuovi figli a partire dai genitori richiede molto più tempo della creazione dello stesso numero di individui mediante mutazione.\\
-Gli algoritmi di crossover e mutazione, utilizzati nel programma sviluppato, sono descritti e illustrati di seguito.\\\\
+La fase di crossover viene applicata più di rado, poiché la generazione di nuovi figli a partire dai genitori richiede molto più tempo della creazione dello stesso numero di individui mediante mutazione. Gli algoritmi di crossover e mutazione, utilizzati nel programma sviluppato, sono descritti e illustrati di seguito.\\\\
 \begin{algorithm}[h]
 \DontPrintSemicolon
 \KwIn {$\mathtt{population}$= popolazione di numerosi tour generati mediante un algoritmo di costruzione\newline
