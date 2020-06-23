@@ -1,7 +1,7 @@
 \chapter{Risoluzione del problema tramite CPLEX}\label{CPLEX} 
 \section{Algoritmi Esatti}
 \subsection{Modelli compatti}
-I modelli compatti del Travelling Salesman Problem, sono formulazioni matematiche in cui il numero di variabili e di vincoli è polinomiale nella taglia dell'istanza. In particolare, in quelle analizzate in seguito,esse sono entrambe $O(n^2)$, con \textit{n = numero di nodi}.\\
+I modelli compatti del Travelling Salesman Problem, sono formulazioni matematiche in cui il numero di variabili e di vincoli è polinomiale nella taglia dell'istanza. In particolare, in quelle analizzate in seguito, esse sono entrambe $O(n^2)$, con \textit{n = numero di nodi}.\\
 I modelli compatti sono però applicabili solo a grafi orientati. Quindi ciascuna variabile $x_{ij}$ del modello simmetrico deve essere convertita nelle due variabili $x_{ij}$ e $x_{ji}$ del corrispondente modello orientato (vedi Capitolo \ref{intro}). Questo comporta un significativo rallentamento nella computazione della soluzione, in quanto il metodo di risoluzione, nel momento in cui si trovi a scartare un ramo $(i,j)$ dalla possibile soluzione, deve verificare comunque se il corrispondente lato $(j,i)$ potrebbe invece farne parte. Tale controllo risulta però inutile, poichè i due rami vengono associati alla stessa variabile nel modello simmetrico iniziale.
 \subsubsection{Formulazione di Miller, Tucker e Zemlin}
 Nella formulazione del modello di Miller, Tucker e Zemlin, detta anche formulazione sequenziale, per ogni nodo \textit{i} del grafo viene introdotta una nuova variabile $u_i$, che rappresenta la posizione di tale vertice all'interno del circuito restituito. Vengono introdotti inoltre nuovi vincoli basati sulle variabili $u_i$ che garantiscono la formazione di un unico tour e l'eliminazione di tutti i possibili subtour. Nello specifico il modello utilizzato da Miller, Tucker e Zemlin è il seguente\cite{COMPACT_CITE}:
@@ -46,11 +46,11 @@ Negli anni '60, Jacques F. Benders sviluppò un approccio generale, applicabile 
 Per ovviare tale problema, il metodo Loop costruisce inizialmente il modello senza quei vincoli e li aggiunge solo in seguito durante la risoluzione. L'algoritmo di Benders calcola una soluzione e valuta se questa rispetti tutti i vincoli non inseriti nel modello. Nel caso in cui dovesse trovarne uno che non viene rispettato, lo inserisce nel modello.\\ 
 Nel caso del TSP, i vincoli in numero esponenziale sono i Subtour Elimination (SEC), che hanno la seguente forma:
 \begin{align}
-&\underset{e\in E(S)}\sum{x_{e}} \leq \mid S\mid - 1\;\forall\;S\underset{\neq}{\subset}V\; : \; \mid S\mid\geq 2
+&\underset{e\in E(S)}\sum{x_{e}} \leq \mid S\mid - 1\;\;\;\forall\;S\underset{\neq}{\subset}V\; : \; \mid S\mid\geq 2
 \end{align}
 o equivalentemente:
 \begin{align}
-&\underset{e\in \delta(S)}\sum{x_{e}}\geq 2\;\forall\;S\underset{\neq}{\subset}V\; : \; \mid S\mid\geq 2
+&\underset{e\in \delta(S)}\sum{x_{e}}\geq 2\;\;\;\forall\;S\underset{\neq}{\subset}V\; : \; \mid S\mid\geq 2
 \end{align}
 Definendo il modello per il problema del commesso viaggiatore, vengono rimossi i SEC. In seguito viene risolto il problema e nel caso in cui la soluzione abbia più di una componente connessa, viene aggiunto al modello un vincolo di Subtour Elimination per ogni ciclo generato. Il processo viene ripetuto iterativamente, come mostrato nel seguente pseudocodice, fino a che la soluzione non sia costituita da un unico tour.\\\\
 \begin{algorithm}[H]
@@ -76,7 +76,7 @@ Definendo il modello per il problema del commesso viaggiatore, vengono rimossi i
 All'aumentare del numero di vincoli inseriti nel modello, il costo della soluzione peggiora o resta invariato rispetto al costo di quella elaborata all'iterazione precedente del metodo Loop.\\
 Il numero di iterazioni che vengono effettuate dall'algoritmo non è calcolabile a priori e potrebbe essere anche molto elevato. Nel caso peggiore verranno inseriti tutti i vincoli di Subtour Elimination, ovvero un numero esponenziale di disequazioni, soprattutto nel caso di istanze clusterizzate.\\
 L'introduzione di nuovi SEC, solo nel momento in cui si presenta una loro violazione, permette di ridurre la dimensione del modello ma diminuisce l'attività di pre-processamento svolta da CPLEX prima di risolvere il problema. Inoltre il problema principale del metodo Loop è la generazione di un nuovo albero completo di branching ad ogni nuova iterazione.\\
-In passato, con le versioni del MIP solver di CPLEX, questa operazione era molto onerosa mentre attualmente il metodo loop garantisce la risoluzione, anche di istanze molto grandi, in tempi ragionevoli. Questo non accade invece per il Branch \& Bound in quanto vengono aggiunte nuove ramificazioni all'albero già esistente.\\
+In passato, con le versioni del MIP solver di CPLEX, questa operazione era molto onerosa mentre attualmente il metodo Loop garantisce la risoluzione, anche di istanze molto grandi, in tempi ragionevoli. Questo non accade invece per il Branch \& Bound in quanto vengono aggiunte nuove ramificazioni all'albero già esistente.\\
 Il metodo Loop può essere modificato svolgendo prima l'algoritmo Loop con l'aggiunta di parametri differenti da quelli utilizzati di default del risolutore CPLEX e solo in seguito effettuando l'algoritmo di Benders, questa volta utilizzando le impostazioni di default di CPLEX. \\
 Quest'ottimizzazione è basata sul fatto che CPLEX salvi alcune soluzioni, ottenute in precedenza dal risolutore sullo stesso modello, e le sfrutti come bound nel nuovo modello. Per questo motivo, la soluzione euristica ottenuta nella prima fase viene sfruttata come bound nella seconda.
 
@@ -105,7 +105,7 @@ In particolari casi, però, CPLEX può ritenere più conveniente distruggere l'i
 Attraverso l'utilizzo delle callback è possibile accedere a numerose informazioni relative alle elaborazioni fatte da CPLEX. Per questo motivo, alcune procedure vengono automaticamente disattivate, affinché l'utente non possa venire a conoscenza di particolari dettagli implementativi. Un esempio è la dynamic search. Tale blocco può causare però un drastico rallentamento nel calcolo della risoluzione.\\
 Nelle ultime versioni di CPLEX sono state introdotte le \textit{generic callback} che permettono di mantenere attivi tutti i meccanismi presenti all'interno del programma per la computazione della soluzione e di ovviare quindi tale problema.  
 \subsection{Patching}
-Negli algoritmi analizzati nelle precedenti sezioni può succedere che CPLEX, prima di trovare il tour ottimo, computi soluzioni con più componenti connesse. Per evitare che vengano scartate senza essere sfruttate, per via dei vincoli di subtour elimination, è possibile utilizzare questo l'algoritmo Patching per costruire un nuovo tour ammissibile dalla soluzione attuale.\\
+Negli algoritmi analizzati nelle precedenti sezioni può succedere che CPLEX, prima di trovare il tour ottimo, computi soluzioni con più componenti connesse. Per evitare che vengano scartate senza essere sfruttate, per via dei vincoli di subtour elimination, è possibile utilizzare questo algoritmo Patching per costruire un nuovo tour ammissibile dalla soluzione attuale.\\
 Due componenti connesse all'interno della soluzione calcolata da CPLEX, grazie all'eliminazione di un ramo da ciascuna di esse ($\{a, a'\}$ e  $\{b, b'\}$ rispettivamente), vengono unite in un unico tour. Per fare ciò vengono analizzate le due possibili configurazioni.\\
 \begin{figure}[H] 
 \begin{center} 
@@ -113,7 +113,7 @@ Due componenti connesse all'interno della soluzione calcolata da CPLEX, grazie a
   \caption{\footnotesize{Esempio di patching}} \label{patching} 
 \end{center} 
 \end{figure}
-I nuovi collegamenti possibili tra le due componenti prevedono l'inserimento degli coppia di rami $\{a, b\}$ e $\{a', b'\}$ o dei due lati $\{a, b'\}$ e $\{a', b\}$ (vedi Figura \ref{patching}). In fase di unione viene selezionata la coppia che comporterebbe nella soluzione la minima variazione di costo. Tale scelta garantisce di unire le due componenti senza creare alcun incrocio.\\
+I nuovi collegamenti possibili tra le due componenti prevedono l'inserimento della coppia di rami $\{a, b\}$ e $\{a', b'\}$ o dei due lati $\{a, b'\}$ e $\{a', b\}$ (vedi Figura \ref{patching}). In fase di unione viene selezionata la coppia che comporterebbe nella soluzione la minima variazione di costo. Tale scelta garantisce di unire le due componenti senza creare alcun incrocio.\\
 Per scegliere la coppia di rami $(a, a')$ e $(b, b')$ da rimuovere e di conseguenza le componenti coinvolte nell'unione, è necessario minimizzare la variazione del costo complessivo dovuta alla creazione del nuovo tour: 
 $$\underset{\forall \; a,b \in V :\;\;[comp(a)=comp(a')] \wedge [comp(b)=comp(b')] \wedge [comp(a)\neq comp(b)]}{min}(\Delta \;(a, a',b, b'), \Delta' \;(a, a', b, b'))$$ dove:
 \begin{align}
@@ -140,7 +140,7 @@ Per garantire che le callback siano thread-safe, la struttura dati ausiliaria, u
 \KwIn {$\mathtt{x}$= soluzione di un problema di TSP con più componenti connesse\newline}
 \KwOut {$\mathtt{y}$= soluzione intera formata da un'unica componente connessa}
 \BlankLine
-$\mathtt{n\_comps \gets} numero componenti connesse della soluzione$\;
+$\mathtt{n\_comps \gets} \;numero\; componenti\; connesse \;della\; soluzione$\;
 \BlankLine
 $\mathtt{c_1\gets}\{0,...,0\}$\;
 \BlankLine
@@ -221,7 +221,7 @@ $\mathtt{n \gets}n+1$\;
 \end{algorithm}
 
 \subsection{Soft Fixing}\label{soft_fixing}
-Il metodo seguente fa utilizzo di vincoli aggiuntivi, detti di \textbf{Local Branching}\cite{local_branching}. L'approccio utilizzato è simile a quello dell'Hard Fixing, in questo caso però la scelta delle variabili da imporre a $1$ non avviene in maniera randomica ma viene lasciata a CPLEX.\\
+Il metodo seguente fa utilizzo di vincoli aggiuntivi, detti di \textit{Local Branching}\cite{local_branching}. L'approccio utilizzato è simile a quello dell'Hard Fixing, in questo caso però la scelta delle variabili da imporre a $1$ non avviene in maniera randomica ma viene lasciata a CPLEX.\\
 Partendo da una soluzione intera ammissibile del TSP $x^H$, viene aggiunto un vincolo sulle sue variabili con valore $1$:\\
 $$\underset{e\in E\; : \; {x_e}^{H}=1}\sum{x_e}\;\geq\; 0.9\;n$$
 dove la sommatoria indica il numero di variabili, uguali a $1$ in $x^H$, che non cambieranno il loro valore e \textbf{n} indica il numero di archi selezionati in $x^H$, pari al numero di nodi.\\

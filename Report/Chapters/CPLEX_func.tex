@@ -110,7 +110,7 @@ int CPXnewrows( CPXCENVptr env, CPXLPptr lp, int rcnt, double const * rhs,
 &{\textit{'G'} per vincolo $\geq$}\\
 &{\textit{'R'} per vincolo definito in un intervallo}\\
 \textbf{rngval:} & {vettore di range per i valori di ogni vincolo (nel nostro caso è NULL)}\\
-\textbf{rowname} & {vettore di stringhe contenenti i nomi delle variabili da inserire}\\
+\textbf{rowname:} & {vettore di stringhe contenenti i nomi delle variabili da inserire}\\
 \textbf{Return Value:} & {0 in caso di successo, un valore diverso da 0 altrimenti}\\
 \end{tabular}
 \end{table}
@@ -575,7 +575,7 @@ l'utente dichiara a CPLEX di non aver trovato nessuna soluzione;}
 \item{\textbf{CPX\_CALLBACK\_FAIL}:\\
 CPLEX esce dall'ottimizzazione;}
 \item{\textbf{CPX\_CALLBACK\_SET}:\\
-l'utente dichiara a CPLEX di aver trovato una soluzione e chiede di usare la soluzione fornita;}
+l'utente dichiara a CPLEX di aver trovato una soluzione e chiede  a CPLEX di usare la soluzione fornita;}
 \end{itemize}
 
 \subsection{Generic Callback}% cambiare titolo da Lazy Constraint Callback General a general callback
@@ -773,7 +773,7 @@ Di seguito vengono riportate alcune macro utili di CPLEX, insieme ai loro corris
 \multicolumn{1}{c}{\textbf{Macro}}&\multicolumn{1}{c}{\textbf{Valore}} &\multicolumn{1}{c}{\textbf{Descrizione}}\\
 \hline
 \textbf{CPX\_ON} & {\textbf{1}} & {valore da assegnare ad alcuni parametri per abilitarli}\\
-\textbf{CPX\_OFF} & {0} & {valore da assegnare ad alcuni parametri per disabilitarli}\\
+\textbf{CPX\_OFF} & {\textbf{0}} & {valore da assegnare ad alcuni parametri per disabilitarli}\\
 \textbf{CPX\_INFBOUND} & {$+\infty$ } & {massimo valore intero utilizzabile in CPLEX ($10^{20}$)}\\
 \hline
 \end{tabular}

@@ -1,7 +1,7 @@
 \chapter{Algoritmi euristici}\label{HEURISTIC}
 In questo capitolo verranno trattati algoritmi euristici che non fanno uso di CPLEX. La necessità di non utilizzare CPLEX si ha per istanze con un elevato numero di nodi per cui la risoluzione del tableau diventerebbe un'operazione molto onerosa per via dell'alto numero di variabili coinvolte.\\
 Attraverso gli algoritmi euristici, viene computata un'approssimazione della soluzione ottima che spesso può essere anche sfruttata inizialmente dal risolutore CPLEX, per aiutarlo nello risoluzione di problemi anche più complessi.\\
-Ad esempio può essere aggiunta prima della computazione, utilizzando la funzione \textit{CPXaddmipstarts()}, o ,se già definita, può essere modificata tramite \textit{CPXchgmipstarts()}.\\
+Ad esempio può essere aggiunta prima della computazione, utilizzando la funzione \textit{CPXaddmipstarts()}, o, se già definita, può essere modificata tramite \textit{CPXchgmipstarts()}.\\
 Per progettare un efficiente algoritmo euristico, questo deve essere composto da due fasi che si alternino:
 \begin{itemize}
 \item{\textbf{Intensificazione o raffinamento}\\
@@ -41,7 +41,7 @@ Nel caso in cui i nodi del grafo appartengano ad uno spazio bidimensionale, ne v
 }
 \end{itemize}
 Questa prima soluzione viene modificata iterativamente e per ogni coppia di nodi non appartenenti al ciclo \textbf{C}, restituito dall'iterazione precedente, viene calcolato l'extramileage $\Delta_h$ come segue:
-$$\Delta_h = \underset{(a,b)\in C}{min} (c_{ah}+c_{hb}-c_{ay})$$
+$$\Delta_h = \underset{(a,b)\in C}{min} (c_{ah}+c_{hb}-c_{ab})$$
 con $c_{ij}=$ costo dell'arco che collega i a j (vedi Figura \ref{partial_cycle}).\\
 Alla fine di ciascuna iterazione viene aggiunto nel grafo il nodo \textbf{k} che minimizza l'\textbf{extra-mileage} (vedi Figura \ref{insertion}):\\
 $$k = arg\underset{h}{min}\;\Delta_{h}$$
@@ -139,7 +139,7 @@ A ciascuna di esse viene poi applicato un algoritmo di raffinamento ed in seguit
   \label{multi_start}
 \end{center}
 \end{figure}
-Un lato negativo di tale approccio consiste nel fatto che ogni volta che viene generata una nuova soluzione del problema, vengono perse le informazioni relative ai generati in precedenza. La soluzione implementata all'interno del programma è basata sul multithreading. Infatti viene generato un numero di soluzioni pari al numero di thread specificati.\\
+Un lato negativo di tale approccio consiste nel fatto che ogni volta che viene generata una nuova soluzione del problema, vengono perse le informazioni relative ai tour generati in precedenza. La soluzione implementata all'interno del programma è basata sul multithreading. Infatti viene generato un numero di soluzioni pari al numero di thread specificati.\\
 Ciascun thread genera parallelamente agli altri una nuova soluzione e solo al termine della computazione, la confronta con la migliore. Nel caso in cui il costo della soluzione trovata sia inferiore a questa, la aggiorna. \\
 Nella Sezione \ref{construction_perf} viene analizzato il costo ottenuto dalla nostra implementazione, utilizzando 12 thread e modificando l'algoritmo di costruzione utilizzato.\\
 
@@ -148,8 +148,8 @@ Il Variable Neighborhood Search (VNS) è un algoritmo che cerca di migliorare l'
 Nel caso in cui non si trovi una nuova soluzione, di costo migliore di quella attuale nei vari intorni di grandezza k, l'algoritmo prevede che venga scelto un certo numero di rami in maniera randomica da sostituire con altri lati\cite{VNS_CITE}. In questo modo si impone un aggiornamento peggiorativo in termini di costo, nella speranza che nel nuovo intorno selezionato sia possibile trovare una soluzione che si allontani dall'ottimo locale di partenza (vedi Figura \ref{VNS_img}).\\
  \begin{figure}[H] 
 \begin{center} 
-  \includegraphics[scale=0.3]{Images/VNS}\\ 
-  \caption{\footnotesize{Aggiornamento di una soluzione in un minimo locale.}}
+  \includegraphics[scale=0.4]{Images/VNS}\\ 
+  \caption{\footnotesize{Esempio di analisi dello spazio delle soluzioni fatto dal VNS.}}
   \label{VNS_img}
 \end{center}
 \end{figure}
@@ -162,7 +162,7 @@ $$p=\frac{costo^{-1}(x)}{\underset{z \in {\bigcup_{k=1}^{\lceil n/2 \rceil}{N_k(
 Nell'implementazione sono state sviluppate due versioni di questo algoritmo, in base alle probabilità utilizzate nel selezionare due nodi da scambiare: 
 \begin{itemize}
 \item{\textbf{Hybrid VNS}\\
-questa prima soluzione segue la procedura precedentemente descritta e seleziona una nuova sequenza dall'insieme $\{{y}\cup \bigcup_{k=1}^{\lceil n/2 \rceil}{N_k(y)}\}$ e poi vi applica un algoritmo di raffinamento.\\\\} 
+questa prima soluzione segue la procedura precedentemente descritta e seleziona una nuova sequenza dall'insieme $\{{y}\cup \bigcup_{k=1}^{\lceil n/2 \rceil}{N_k(y)}\}$ e poi vi applica un algoritmo di raffinamento.} 
 \item{\textbf{Hybrid VNS Uniform}\\
 questa variante invece seleziona due nodi della sequenza di visita, secondo una probabilità uniforme, e li scambia. La sequenza risultante, dopo essere stata migliorata mediante un algoritmo di raffinamento, viene utilizzata come nuovo minimo locale.}
 \end{itemize}
@@ -181,8 +181,8 @@ $\mathtt{k\gets}1$\;
   $N_k(y) = \{ (y_1,...,y_{(i+k)mod\;n},...,y_i, ..., y_n)\; :\; 1\leq i\leq n\}$\;
   \BlankLine
   \If{$\underset{z\in N_k(y)}{min}\{cost(z)\}<cost(x)$}{
-	 $\mathtt{x\gets} \underset{z\in N_k(y)}{argmin(cost(z)}$\;
-     $\mathtt{y\gets} \underset{z\in N_k(y)}{argmin(cost(z)}$\;
+	 $\mathtt{x\gets} \underset{z\in N_k(y)}{argmin(cost(z))}$\;
+     $\mathtt{y\gets} \underset{z\in N_k(y)}{argmin(cost(z))}$\;
 	 $\mathtt{break}$\;
      \BlankLine
   }
@@ -200,11 +200,11 @@ $\mathtt{k\gets}1$\;
  \caption{VNS ibrido}\label{VNS}
 \end{algorithm}
 \subsection{Tabu Search}
-Il metodo Tabu Search fu ideato da Fred W. Glover. Dato un ottimo locale, l'idea di Glover permette di modificare la soluzione corrispondente anche peggiorandone il costo, con l'obiettivo di esplorare maggiormente lo spazio delle soluzioni. Ad ogni iterazione dell'algoritmo la soluzione viene modificata con un nuovo tour, appartenente al suo intorno 2-ottimalità.\\
+Il metodo Tabu Search fu ideato da Fred W. Glover. Dato un ottimo locale, l'idea di Glover permette di modificare la soluzione corrispondente anche peggiorandone il costo, con l'obiettivo di esplorare maggiormente lo spazio delle soluzioni. Ad ogni iterazione dell'algoritmo la soluzione viene modificata con un nuovo tour, appartenente al suo intorno di 2-ottimalità.\\
 Per evitare che queste modifiche portino ad esplorare minimi locali già visitati, viene creata una lista di "mosse vietate", detta \textit{Tabu List}. In questo modo il costo del tour attuale viene aumentato per un certo numero di iterazioni, finché le uniche modifiche ammissibili della soluzione corrente permettano solo di migliorare il valore della funzione obiettivo. Questa fase rappresenta la diversificazione della soluzione.\\
 In seguito viene effettuata una fase di intensificazione, mediante l'applicazione dell'algoritmo di 2-ottimalità, fino al raggiungimento di un nuovo minimo locale.\\
 Nella nostra implementazione la lista viene riempita con i rami che vengono rimossi dal tour attuale per creare la nuova soluzione.\\
-Aumentando costantemente di dimensione la lista Tabu si rischia, ad un certo punto, che non sia più possibile modificare il tour presente. Per evitare ciò generalmente viene scelta una capienza massima della lista, detta \textit{tenure}. Una volta riempita la Tabu list i rami vengono aggiunti rispettando la politica FIFO (First In First Out).\\
+Aumentando costantemente di dimensione la lista Tabu si rischia, ad un certo punto, che non sia più possibile modificare il tour presente. Per evitare ciò generalmente viene scelta una capienza massima della lista, detta \textit{tenure}. Una volta riempita la Tabu List i rami vengono aggiunti rispettando la politica FIFO (First In First Out).\\
 Per aumentare le prestazioni dell'algoritmo è possibile far variare le dimensioni della Tabu List tra due valori. Nella fase di diversificazione le dimensioni della lista aumentano fino ad una soglia massima, mentre durante l'intensificazione la tenure diminuisce fino ad un valore minimo fissato, per lasciare maggiore libertà all'algoritmo di 2-ottimalità. Nella nostra implementazione la tenure massima ha valore pari ad 1/5 del numero di nodi dell'istanza da risolvere, mentre quella minima è pari alla metà di quest'ultima (vedi Figura \ref{tenure}). Questa variante dell'algoritmo, implementata anche nel nostro programma, in letteratura è conosciuta con il nome di \textit{Reactive Tabu Search}.
  \begin{figure}[H] 
 \begin{center} 
@@ -292,7 +292,7 @@ $\mathtt{deadline}$=time limit complessivo dell'algoritmo\newline
 }
 \KwOut {$\mathtt{y}$= miglior soluzione trovata}
 \BlankLine
-$\mathtt{T} \gets T_{min}$\;
+$\mathtt{T} \gets T_{max}$\;
 \BlankLine
 \While{$'deadline\;not\;expired'$}{
 $\mathtt{x' \gets move\_random\_2opt(}x\mathtt{)}$\;
@@ -357,7 +357,7 @@ Utilizzando iterativamente tali tecniche e rimuovendo gli individui di costo peg
   \BlankLine
  }
  
- $\mathtt{y}\gets best_member(population)$
+ $\mathtt{y}\gets best\_member(population)$
  \caption{Evoluzione}
 \end{algorithm}
 La fase di crossover viene applicata più di rado, poiché la generazione di nuovi figli a partire dai genitori richiede molto più tempo della creazione dello stesso numero di individui mediante mutazione. Gli algoritmi di crossover e mutazione, utilizzati nel programma sviluppato, sono descritti e illustrati di seguito.\\\\

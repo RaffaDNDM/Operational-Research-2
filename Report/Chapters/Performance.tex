@@ -6,7 +6,7 @@ Il motivo di tale comportamento venne in seguito studiato ed attribuito alla div
 Le scelte svolte inizialmente, nella definizione dei primi nodi dell'albero, si ripercuotono sulla sua successiva evoluzione.\\
 Proprio per questo motivo, su alcune istanze, UNIX riusciva a risolvere il problema in tempo minore rispetto a Windows, mentre su altre accadeva l'opposto.\\
 Da questi studi, evinse che il Branch and Cut è un sistema caotico e che quindi piccole variazioni delle condizioni iniziali generano grandi differenze nei risultati finali.\\
-Per questo motivo, alcuni algoritmi prensentati in questo report, sono stati studiati al variare di alcune condizioni iniziali:
+Per questo motivo, alcuni algoritmi presentati in questo report, sono stati studiati al variare di alcune condizioni iniziali:
 \begin{itemize}
 \item{\textbf{Random Seed}\\
 definisce il seme da cui CPLEX genera una sequenza di numeri pseudo-casuali (vedi Sezione \ref{param}). Nel momento in cui CPLEX nota che diverse variabili frazionarie hanno lo stesso valore, il risolutore sceglie casualmente su quale di queste applicare il Branch.}
@@ -42,6 +42,8 @@ Solitamente viene impostato un TIME LIMIT uguale per tutti gli algoritmi. Questo
 Questo metodo prevede la classificazione dei tempi di esecuzione degli algoritmi in base al numero percentuale di successi, rispetto a un fattore moltiplicativo (ratio) del tempo di esecuzione (vedi Figura \ref{perf_profile}).\\
 L'andamento del performance profile di un algoritmo è monotono crescente. Il valore assunto per ogni ratio dagli algoritmi all'interno del grafico è la percentuale del numero di istanze che l'algoritmo risolve con quel fattore rispetto all'ottimo di quel caso.\\
 Spesso questi grafici vengono rappresentati in scala logaritmica per notare al meglio le differenze ed avere una migliore raffigurazione.\\
+Per creare il performance profile degli algoritmi implementati, è stato utilizzato il programma python riportato nella Sezione \ref{perf_profile_py}. 
+
 \begin{figure}[h] 
 \begin{center} 
   % Requires \usepackage{graphicx} 
@@ -50,7 +52,6 @@ Spesso questi grafici vengono rappresentati in scala logaritmica per notare al m
   \label{perf_profile} 
 \end{center} 
 \end{figure}
-Per creare il performance profile degli algoritmi implementati, è stato utilizzato il programma python riportato nella Sezione \ref{perf_profile_py}. 
 
 \section{Analisi degli algoritmi sviluppati}
 Nella seguente sezione vengono riportati i grafici relativi ai risultati ottenuti con le implementazioni degli algoritmi descritti nei precedenti capitoli. I valori ottenuti ed utilizzati per realizzare le immagini contenute in questa sezione, sono consultabili nell'Appendice \ref{results}.
@@ -209,7 +210,7 @@ Gli algoritmi math-euristici sviluppati sono stati testati sul seguente insieme 
 \end{itemize}
 \end{multicols}
 \end{center}
-Analizzando i risultati ottenuti in Figura \ref{pp_math-heuristic} e \ref{pp_math-heuristic_zoom}) risulta evidente come le prestazioni dell'algoritmo Hard fixing siano migliori, sia nella variante che utilizza le callback generiche che in quella che non ne fa uso, rispetto ad entrambe le soluzioni ottenute dal Soft fixing.
+Analizzando i risultati ottenuti in Figura \ref{pp_math-heuristic} e \ref{pp_math-heuristic_zoom} risulta evidente come le prestazioni dell'algoritmo Hard fixing siano migliori, sia nella variante che utilizza le callback generiche che in quella che non ne fa uso, rispetto ad entrambe le soluzioni ottenute dal Soft fixing.
 \begin{figure}[h] 
 \begin{center} 
   % Requires \usepackage{graphicx} 
