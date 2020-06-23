@@ -7,7 +7,7 @@
       2. [MTZ solver.](https://github.com/RaffaDNDM/Operational-Research-2/blob/master/TSP/TSP/mtz_solver.h)
     - Non compact solvers.
       1. [Loop solver.](https://github.com/RaffaDNDM/Operational-Research-2/blob/master/TSP/TSP/loop_solver.h)
-      2. [Loop solver variante euristica.](https://github.com/RaffaDNDM/Operational-Research-2/blob/master/TSP/TSP/loop_solver.h)
+      2. [Heuristic Loop solver.](https://github.com/RaffaDNDM/Operational-Research-2/blob/master/TSP/TSP/loop_solver.h)
       3. [Lazy Constraint callback.](https://github.com/RaffaDNDM/Operational-Research-2/blob/master/TSP/TSP/bc_solver.h)
       4. [Lazy Constraint callback + Heuristic callback (Patching).](https://github.com/RaffaDNDM/Operational-Research-2/blob/master/TSP/TSP/bc_solver.h)
       5. [Generic callback.](https://github.com/RaffaDNDM/Operational-Research-2/blob/master/TSP/TSP/bc_solver.h)
