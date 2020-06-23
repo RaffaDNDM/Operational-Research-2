@@ -27,7 +27,7 @@
     2. [Hybrid Variable Neighborhood Search (VNS).](https://github.com/RaffaDNDM/Operational-Research-2/blob/master/TSP/TSP/heuristic.h)
     3. [Reactive Tabu Search.](https://github.com/RaffaDNDM/Operational-Research-2/blob/master/TSP/TSP/heuristic.h)
     4. [Simulating anealing.](https://github.com/RaffaDNDM/Operational-Research-2/blob/master/TSP/TSP/heuristic.h)
-    5. [Genetic algorithms.](https://github.com/RaffaDNDM/Operational-Research-2/blob/master/TSP/TSP/heuristic.h)
+    5. [Genetic algorithms (using multithreading).](https://github.com/RaffaDNDM/Operational-Research-2/blob/master/TSP/TSP/heuristic.h)
 
 ### Report about used techniques
 
