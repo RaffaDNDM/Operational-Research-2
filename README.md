@@ -10,7 +10,7 @@
     3. [Lazy Constraint callback + Heuristic callback (Patching).](https://github.com/RaffaDNDM/Operational-Research-2/blob/master/TSP/TSP/bc_solver.h)
     4. [Generic callback.](https://github.com/RaffaDNDM/Operational-Research-2/blob/master/TSP/TSP/bc_solver.h)
     5. [Generic callback (Patching).](https://github.com/RaffaDNDM/Operational-Research-2/blob/master/TSP/TSP/bc_solver.h)
-- Math-heuristic approaches
+- CPLEX math-heuristic solvers.
   1. [Hard Fixing.](https://github.com/RaffaDNDM/Operational-Research-2/blob/master/TSP/TSP/bc_solver.h)
   2. [Soft fixing.](https://github.com/RaffaDNDM/Operational-Research-2/blob/master/TSP/TSP/bc_solver.h)
 - Heuristic solvers.
