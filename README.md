@@ -1,6 +1,6 @@
 # Operational-Research-2
 ### Algorithms of integer linear programming applied to TSP problem
--CPLEX
+ - CPLEX
   - Exact solvers.
     - Compact solvers.
       1. [Gavish Graves solver.](https://github.com/RaffaDNDM/Operational-Research-2/blob/master/TSP/TSP/gg_solver.h)
