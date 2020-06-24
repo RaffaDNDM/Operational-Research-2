@@ -30,6 +30,13 @@
     5. [Genetic algorithms (using multithreading).](https://github.com/RaffaDNDM/Operational-Research-2/blob/master/TSP/TSP/heuristic.h)
 
 ### Report about used techniques
-
 All the previous implemented algorithms and the used CPLEX functions are explained in the [report](https://github.com/RaffaDNDM/Operational-Research-2/blob/master/Report/Report.pdf).
 In the same file you can find also the explanation of tsp instances format in TSPlib dataset, used in training and test phases. In the report, there is also the explanation of Gnuplot tool, used to show results of algorithm and python programs used to keep input instances and generate performance profile of several algorithms.
+
+### Documentation
+If you want to compile the documentation, you need to type on terminal: 
+
+    cd TSP\TSP
+    doxygen Doxyfile
+
+If you don't have doxygen program, you can install it following this [link.](https://www.doxygen.nl/download.html)
