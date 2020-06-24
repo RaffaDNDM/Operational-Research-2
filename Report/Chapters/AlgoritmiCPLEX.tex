@@ -158,12 +158,12 @@ $\mathtt{y \gets} c_1$\;
 \caption{Patching}
 \end{algorithm}
 
-\section{Algoritmi Math-Euristici}
-Gli algoritmi euristici sono progettati per risolvere istanze del problema in tempi significativamente più brevi rispetto agli algoritmi esatti. Di conseguenza, però, al termine della computazione non garantiscono di ottenere una soluzione ottima, ma solo una sua buona approssimazione ammissibile. Gli algoritmi Math-euristici sfruttano l'approccio utilizzato dai metodi euristici unito alla programmazione matematica, introducendo nuovi vincoli al modello. L'algoritmo che maggiormente rappresenta questo metodo è il Soft Fixing (vedi Sezione \ref{soft_fixing}). \\
-Durante la computazione della soluzione, CPLEX utilizza diversi algoritmi euristici e math-euristici e, variando alcuni parametri, è possibile cambiare la frequenza con cui vengono applicati o il tempo a loro dedicato. 
+\section{Algoritmi Mat-Euristici}
+Gli algoritmi euristici sono progettati per risolvere istanze del problema in tempi significativamente più brevi rispetto agli algoritmi esatti. Di conseguenza, però, al termine della computazione non garantiscono di ottenere una soluzione ottima, ma solo una sua buona approssimazione ammissibile. Gli algoritmi mat-euristici sfruttano l'approccio utilizzato dai metodi euristici unito alla programmazione matematica, introducendo nuovi vincoli al modello. L'algoritmo che maggiormente rappresenta questo metodo è il Soft Fixing (vedi Sezione \ref{soft_fixing}). \\
+Durante la computazione della soluzione, CPLEX utilizza diversi algoritmi euristici e mat-euristici e, variando alcuni parametri, è possibile cambiare la frequenza con cui vengono applicati o il tempo a loro dedicato. 
 
 \subsection{Hard Fixing}\label{hard fixing}
-Un primo algoritmo math-euristico di semplice implementazione è l'Hard Fixing, composto dalle seguenti fasi:
+Un primo algoritmo mat-euristico di semplice implementazione è l'Hard Fixing, composto dalle seguenti fasi:
 \begin{enumerate}
 \item{Impostazione di un time limit per la computazione di una soluzione;}
 \item{Calcolo della soluzione;}

@@ -7,7 +7,7 @@
 \BOOKMARK [2][-]{subsection.2.1.2}{Loop}{section.2.1}% 7
 \BOOKMARK [2][-]{subsection.2.1.3}{Branch \046 Cut}{section.2.1}% 8
 \BOOKMARK [2][-]{subsection.2.1.4}{Patching}{section.2.1}% 9
-\BOOKMARK [1][-]{section.2.2}{Algoritmi Math-Euristici}{chapter.2}% 10
+\BOOKMARK [1][-]{section.2.2}{Algoritmi Mat-Euristici}{chapter.2}% 10
 \BOOKMARK [2][-]{subsection.2.2.1}{Hard Fixing}{section.2.2}% 11
 \BOOKMARK [2][-]{subsection.2.2.2}{Soft Fixing}{section.2.2}% 12
 \BOOKMARK [0][-]{chapter.3}{Algoritmi euristici}{}% 13
@@ -26,11 +26,11 @@
 \BOOKMARK [2][-]{subsection.3.3.5}{Algoritmo genetico}{section.3.3}% 26
 \BOOKMARK [0][-]{chapter.4}{Performance}{}% 27
 \BOOKMARK [1][-]{section.4.1}{Performance variabilty}{chapter.4}% 28
-\BOOKMARK [1][-]{section.4.2}{Analisi tabulare}{chapter.4}% 29
+\BOOKMARK [1][-]{section.4.2}{Analisi tabellare}{chapter.4}% 29
 \BOOKMARK [1][-]{section.4.3}{Performance profiling}{chapter.4}% 30
 \BOOKMARK [1][-]{section.4.4}{Analisi degli algoritmi sviluppati}{chapter.4}% 31
 \BOOKMARK [2][-]{subsection.4.4.1}{Algoritmi esatti}{section.4.4}% 32
-\BOOKMARK [2][-]{subsection.4.4.2}{Algoritmi math-euristici}{section.4.4}% 33
+\BOOKMARK [2][-]{subsection.4.4.2}{Algoritmi mat-euristici}{section.4.4}% 33
 \BOOKMARK [2][-]{subsection.4.4.3}{Algoritmi euristici}{section.4.4}% 34
 \BOOKMARK [3][-]{subsubsection.4.4.3.1}{Multi-start}{subsection.4.4.3}% 35
 \BOOKMARK [3][-]{subsubsection.4.4.3.2}{Algoritmi meta-euristici}{subsection.4.4.3}% 36
@@ -49,4 +49,3 @@
 \BOOKMARK [0][-]{appendix.Alph3}{Gnuplot}{}% 49
 \BOOKMARK [0][-]{appendix.Alph4}{Performance profile in python}{}% 50
 \BOOKMARK [0][-]{appendix.Alph5}{Risultati}{}% 51
-\BOOKMARK [0][-]{table.Alph5.8}{Bibliografia}{}% 52

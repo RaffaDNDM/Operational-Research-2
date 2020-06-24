@@ -16,8 +16,8 @@ intervallo massimo, tra il valore della migliore funzione obiettivo intera e il 
 La variazione del primo di questi parametri permette di apportare significative modifiche al tempo di risoluzione, non modficando la reale ottimalità della soluzione.\\
 La variazione dell'altro parametro permette invece di ottenere una soluzione euristica, ovvero un'approssimazione più lasca di quella ottima.
  
-\section{Analisi tabulare}
-Un metodo non molto efficiente per lo studio delle performance degli algoritmi, utilizza una struttura tabulare in cui viene inserita una riga per ogni istanza del problema.\\ Inoltre vengono riportati i tempi di esecuzione degli algoritmi su ognuno dei grafi analizzati. Nell'ultima riga per ciascun algoritmo viene riportata la media geometrica dei suoi tempi di esecuzione (vedi esempio in Tabella \ref{result_table}).\\
+\section{Analisi tabellare}
+Un metodo non molto efficiente per lo studio delle performance degli algoritmi, utilizza una struttura tabellare in cui viene inserita una riga per ogni istanza del problema.\\ Inoltre vengono riportati i tempi di esecuzione degli algoritmi su ognuno dei grafi analizzati. Nell'ultima riga per ciascun algoritmo viene riportata la media geometrica dei suoi tempi di esecuzione (vedi esempio in Tabella \ref{result_table}).\\
 Solitamente viene impostato un TIME LIMIT uguale per tutti gli algoritmi. Questo rappresenta nella tabella il valore del tempo di esecuzione per un algoritmo che ha impiegato un tempo maggiore o uguale a TIME LIMIT. Spesso viene dato più peso al TIME LIMIT, inserendolo nella tabella con, ad esempio, peso 10 (ovvero TIME LIMIT*10).\\ La debolezza di tale calcolo delle performance risiede nel fatto che non sempre la media descrive  l'efficienza di un soluzione. Infatti non influisce unicamente il tempo di risoluzione del modello ma anche quello necessario alla sua creazione. 
 
 \begin{table}[h]
@@ -182,8 +182,8 @@ nel grafico ed in seguito impostano nuovamente il gap al valore di default ed in
 \end{figure}
 
 \vspace{2cm}
-\subsection{Algoritmi math-euristici}
-Gli algoritmi math-euristici sviluppati sono stati testati sul seguente insieme di istanze, con un time limit 10 minuti:
+\subsection{Algoritmi mat-euristici}
+Gli algoritmi mat-euristici sviluppati sono stati testati sul seguente insieme di istanze, con un time limit 10 minuti:
 \begin{center}
 \begin{multicols}{3}
 \begin{itemize}
@@ -210,13 +210,13 @@ Gli algoritmi math-euristici sviluppati sono stati testati sul seguente insieme 
 \end{itemize}
 \end{multicols}
 \end{center}
-Analizzando i risultati ottenuti in Figura \ref{pp_math-heuristic} e \ref{pp_math-heuristic_zoom} risulta evidente come le prestazioni dell'algoritmo Hard fixing siano migliori, sia nella variante che utilizza le callback generiche che in quella che non ne fa uso, rispetto ad entrambe le soluzioni ottenute dal Soft fixing.
+Analizzando i risultati ottenuti in Figura \ref{pp_mat-heuristic} e \ref{pp_mat-heuristic_zoom} risulta evidente come le prestazioni dell'algoritmo Hard fixing siano migliori, sia nella variante che utilizza le callback generiche che in quella che non ne fa uso, rispetto ad entrambe le soluzioni ottenute dal Soft fixing.
 \begin{figure}[h] 
 \begin{center} 
   % Requires \usepackage{graphicx} 
   \includegraphics[scale=0.8]{Images/pp_math-heuristic}\\ 
-  \caption{\footnotesize{Confronto degli algoritmi math-euristici in base al costo della soluzione ottenuta.}}
-  \label{pp_math-heuristic} 
+  \caption{\footnotesize{Confronto degli algoritmi mat-euristici in base al costo della soluzione ottenuta.}}
+  \label{pp_mat-heuristic} 
 \end{center} 
 \end{figure}
 
@@ -224,8 +224,8 @@ Analizzando i risultati ottenuti in Figura \ref{pp_math-heuristic} e \ref{pp_mat
 \begin{center} 
   % Requires \usepackage{graphicx} 
   \includegraphics[scale=0.8]{Images/pp_math-heuristic_zoom}\\ 
-  \caption{\footnotesize{Dettaglio del confronto degli algoritmi math-euristici in base al costo della soluzione ottenuta.}}
-  \label{pp_math-heuristic_zoom} 
+  \caption{\footnotesize{Dettaglio del confronto degli algoritmi mat-euristici in base al costo della soluzione ottenuta.}}
+  \label{pp_mat-heuristic_zoom} 
 \end{center} 
 \end{figure}
 \vspace{10cm}
