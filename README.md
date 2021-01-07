@@ -1,4 +1,4 @@
-# Operational-Research-2
+# Operations-Research-2
 ### Algorithms of integer linear programming applied to TSP problem
  - CPLEX
    - Exact solvers.
@@ -40,3 +40,6 @@ If you want to compile the documentation, you need to type on terminal:
     doxygen Doxyfile
 
 If you don't have doxygen program, you can install it following this [link.](https://www.doxygen.nl/download.html)
+
+###Authors
+The project was developed by [CristiFab](https://github.com/CristiFab) and [RaffaDNDM](https://github.com/RaffaDNDM).
