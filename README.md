@@ -41,5 +41,5 @@ If you want to compile the documentation, you need to type on terminal:
 
 If you don't have doxygen program, you can install it following this [link.](https://www.doxygen.nl/download.html)
 
-###Authors
+### Authors
 The project was developed by [CristiFab](https://github.com/CristiFab) and [RaffaDNDM](https://github.com/RaffaDNDM).
